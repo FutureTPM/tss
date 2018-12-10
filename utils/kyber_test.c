@@ -14,10 +14,25 @@
 
 int verbose = FALSE;
 
-int main(void) {
+static void print_usage(void) {
+    printf("Usage: kyber_test -k=[NUM]\n");
+    printf("\t-k: security level of Kyber\n");
+}
+
+int main(int argc, char **argv) {
     TPM_RC			rc = 0;
     TSS_CONTEXT			*tssContext = NULL;
+    KYBER_KeyGen_In 	in;
     KYBER_KeyGen_Out 	out;
+
+    // Arg Checking
+    if (argc < 2 || argc > 3) {
+        print_usage();
+        exit(1);
+    } else {
+        // Set Kyber security level
+        sscanf(argv[1], "-k=%hhu", &in.sec_sel);
+    }
 
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
     TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "3");
@@ -31,31 +46,35 @@ int main(void) {
     if (rc == 0) {
         rc = TSS_Execute(tssContext,
                  (RESPONSE_PARAMETERS *)&out,
-                 NULL,
+                 (COMMAND_PARAMETERS *)&in,
                  NULL,
                  TPM_CC_KYBER_KeyGen,
                  TPM_RH_NULL, NULL, 0);
     }
 
-    printf("Kyber Public Key: [\n");
-    for (size_t i = 0; i < 736; i++) {
-        printf("%02X", out.public_key.b.buffer[i]);
+    if (rc == 0) {
+        printf("Kyber Public Key: [\n");
+        for (size_t i = 0; i < out.public_key.b.size; i++) {
+            printf("%02X", out.public_key.b.buffer[i]);
 
-        if (i != 735) {
-            printf(", ");
+            if ((int)i != (out.public_key.b.size - 1)) {
+                printf(", ");
+            }
         }
-    }
-    printf("]\n");
+        printf("]\n");
 
-    printf("Kyber Secret Key: [\n");
-    for (size_t i = 0; i < 1632; i++) {
-        printf("%02X", out.secret_key.b.buffer[i]);
+        printf("Kyber Secret Key: [\n");
+        for (size_t i = 0; i < out.secret_key.b.size; i++) {
+            printf("%02X", out.secret_key.b.buffer[i]);
 
-        if (i != 1631) {
-            printf(", ");
+            if ((int)i != (out.secret_key.b.size - 1)) {
+                printf(", ");
+            }
         }
+        printf("]\n");
+    } else {
+        printf("Key Generation Failed\n");
     }
-    printf("]\n");
 
     {
         TPM_RC rc1 = TSS_Delete(tssContext);

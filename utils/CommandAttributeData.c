@@ -935,6 +935,10 @@ const COMMAND_ATTRIBUTES    s_commandAttributes [] = {
     (COMMAND_ATTRIBUTES)(CC_EncryptDecrypt2            *  // 0x0193
 			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
 #endif
+#if (PAD_LIST || CC_KYBER_KeyGen)
+    (COMMAND_ATTRIBUTES)(CC_KYBER_KeyGen               *  // 0x0197
+			 (IS_IMPLEMENTED+NO_SESSIONS)),
+#endif
 
 #if (PAD_LIST || CC_Vendor_TCG_Test)
     (COMMAND_ATTRIBUTES)(CC_Vendor_TCG_Test            *  // 0x0000

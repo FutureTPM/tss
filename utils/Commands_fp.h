@@ -498,4 +498,7 @@ NV_Certify_In_Unmarshal(NV_Certify_In *target, BYTE **buffer, uint32_t *size, TP
 UINT16
 NV_Certify_Out_Marshal(NV_Certify_Out *source, TPMI_ST_COMMAND_TAG tag, BYTE **buffer, uint32_t *size);
 
+TPM_RC
+KYBER_KeyGen_In_Unmarshal(KYBER_KeyGen_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
+
 #endif

@@ -390,6 +390,8 @@ extern "C" {
 
     TPM_RC
     TSS_KYBER_KeyGen_Out_Unmarshalu(KYBER_KeyGen_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_KYBER_KeyGen_In_Marshalu(const KYBER_KeyGen_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
 
     /* Deprecated functions */
 

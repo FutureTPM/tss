@@ -625,9 +625,9 @@ static const MARSHAL_TABLE marshalTable [] = {
      (UnmarshalInFunction_t)NV_Certify_In_Unmarshal},
 
     {TPM_CC_KYBER_KeyGen, "TPM2_KYBER_KeyGen",
-     NULL,
+     (MarshalInFunction_t)TSS_KYBER_KeyGen_In_Marshalu,
      (UnmarshalOutFunction_t)TSS_KYBER_KeyGen_Out_Unmarshalu,
-     NULL},
+     (UnmarshalInFunction_t)KYBER_KeyGen_In_Unmarshal},
 
 #ifdef TPM_TPM20
     {NTC2_CC_PreConfig,"NTC2_CC_PreConfig",

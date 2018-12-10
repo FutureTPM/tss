@@ -7712,5 +7712,14 @@ TSS_KYBER_KeyGen_Out_Unmarshalu(KYBER_KeyGen_Out *target, TPM_ST tag, BYTE **buf
     return rc;
 }
 
+TPM_RC
+TSS_KYBER_KeyGen_In_Marshalu(const KYBER_KeyGen_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+        rc = TSS_UINT8_Marshalu(&source->sec_sel, written, buffer, size);
+    }
+    return rc;
+}
 
 #endif /* TPM 2.0 */
