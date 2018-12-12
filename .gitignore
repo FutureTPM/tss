@@ -9,6 +9,7 @@ utils/libibmtssutils.so
 
 utils/shutdown
 utils/kyber_test
+utils/kyber_test_dec
 utils/activatecredential
 utils/certify
 utils/certifycreation

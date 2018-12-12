@@ -179,6 +179,7 @@
 
 #include <KYBER_KeyGen_fp.h>
 #include <KYBER_Enc_fp.h>
+#include <KYBER_Dec_fp.h>
 
 TPM_RC
 Startup_In_Unmarshal(Startup_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
@@ -503,5 +504,7 @@ TPM_RC
 KYBER_KeyGen_In_Unmarshal(KYBER_KeyGen_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 TPM_RC
 KYBER_Enc_In_Unmarshal(KYBER_Enc_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
+TPM_RC
+KYBER_Dec_In_Unmarshal(KYBER_Dec_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 
 #endif

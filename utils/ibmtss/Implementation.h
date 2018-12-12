@@ -339,6 +339,7 @@
 /* Kyber Mods */
 #define CC_KYBER_KeyGen                   (CC_YES*ALG_KYBER)
 #define CC_KYBER_Enc                      (CC_YES*ALG_KYBER)
+#define CC_KYBER_Dec                      (CC_YES*ALG_KYBER)
 /* Kyber Mods */
 
 #define  CC_NTC2_PreConfig                CC_YES
@@ -1264,6 +1265,12 @@ typedef  UINT32             TPM_CC;
 #if CC_KYBER_Enc == YES
 #define TPM_CC_KYBER_Enc                      (TPM_CC)(0x00000198)
 #endif
+#ifndef CC_KYBER_Dec
+#   define CC_KYBER_Dec NO
+#endif
+#if CC_KYBER_Dec == YES
+#define TPM_CC_KYBER_Dec                      (TPM_CC)(0x00000199)
+#endif
 /* Kyber Mods */
 
 #define  TPM_CC_AC_GetCapability		(TPM_CC)(0x00000194)
@@ -1271,7 +1278,7 @@ typedef  UINT32             TPM_CC;
 #define  TPM_CC_Policy_AC_SendSelect		(TPM_CC)(0x00000196)
 
 /* Compile variable. May increase based on implementation. */
-#define  TPM_CC_LAST				(TPM_CC)(0x00000198)
+#define  TPM_CC_LAST				(TPM_CC)(0x00000199)
 
 #ifndef CC_Vendor_TCG_Test
 #   define CC_Vendor_TCG_Test NO
@@ -1425,6 +1432,9 @@ typedef  UINT32             TPM_CC;
 					  + (ADD_FILL || CC_CreateLoaded)               /* 0x00000191 */ \
 					  + (ADD_FILL || CC_PolicyAuthorizeNV)          /* 0x00000192 */ \
 					  + (ADD_FILL || CC_EncryptDecrypt2)            /* 0x00000193 */ \
+					  + (ADD_FILL || CC_KYBER_KeyGen)               /* 0x00000197 */ \
+					  + (ADD_FILL || CC_KYBER_Enc)                  /* 0x00000198 */ \
+					  + (ADD_FILL || CC_KYBER_Dec)                  /* 0x00000199 */ \
 					  + (ADD_FILL || CC_PolicyNvWritten)            /* 0x0000018f */ \
 					  )
 

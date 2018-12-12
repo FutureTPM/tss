@@ -2285,3 +2285,16 @@ KYBER_Enc_In_Unmarshal(KYBER_Enc_In *target, BYTE **buffer, uint32_t *size, TPM_
     }
     return rc;
 }
+
+TPM_RC
+KYBER_Dec_In_Unmarshal(KYBER_Dec_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+    buffer = buffer;
+    size = size;
+
+    if (rc == TPM_RC_SUCCESS) {
+        target->sec_sel = handles[0];
+    }
+    return rc;
+}

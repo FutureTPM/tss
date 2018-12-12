@@ -498,6 +498,8 @@ ntc2lockconfig:		ntc2lockconfig.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) ntc2lockconfig.o $(LNALIBS) -o ntc2lockconfig
 kyber_test:			ibmtss/tss.h kyber_test.o objecttemplates.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) kyber_test.o objecttemplates.o $(LNALIBS) -o kyber_test
+kyber_test_dec:			ibmtss/tss.h kyber_test_dec.o objecttemplates.o $(LIBTSS) $(LIBTSSUTILS)
+			$(CC) $(LNFLAGS) $(LNAFLAGS) kyber_test_dec.o objecttemplates.o $(LNALIBS) -o kyber_test_dec
 
 # for applications, not for TSS library
 
