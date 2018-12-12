@@ -166,6 +166,7 @@
 #include "ZGen_2Phase_fp.h"
 
 #include "KYBER_KeyGen_fp.h"
+#include "KYBER_Enc_fp.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -389,9 +390,15 @@ extern "C" {
     TSS_NV_Certify_In_Marshalu(const NV_Certify_In *source, UINT16 *written, BYTE **buffer, uint32_t *size);
 
     TPM_RC
+    TSS_TPM2B_KYBER_PUBLIC_KEY_Marshalu(const TPM2B_KYBER_PUBLIC_KEY *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
     TSS_KYBER_KeyGen_Out_Unmarshalu(KYBER_KeyGen_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_KYBER_KeyGen_In_Marshalu(const KYBER_KeyGen_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_KYBER_KeyGen_In_Marshalu(KYBER_KeyGen_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_KYBER_Enc_Out_Unmarshalu(KYBER_Enc_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_KYBER_Enc_In_Marshalu(KYBER_Enc_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
 
     /* Deprecated functions */
 

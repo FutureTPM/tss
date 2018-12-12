@@ -470,6 +470,15 @@ extern "C" {
     LIB_EXPORT TPM_RC
     TSS_TPM2B_CREATION_DATA_Unmarshalu(TPM2B_CREATION_DATA *target, BYTE **buffer, uint32_t *size);
 
+    LIB_EXPORT TPM_RC
+    TSS_TPM2B_KYBER_PUBLIC_KEY_Unmarshalu(TPM2B_KYBER_PUBLIC_KEY *target, BYTE **buffer, uint32_t *size);
+    LIB_EXPORT TPM_RC
+    TSS_TPM2B_KYBER_SECRET_KEY_Unmarshalu(TPM2B_KYBER_SECRET_KEY *target, BYTE **buffer, uint32_t *size);
+    LIB_EXPORT TPM_RC
+    TSS_TPM2B_KYBER_SHARED_KEY_Unmarshalu(TPM2B_KYBER_SHARED_KEY *target, BYTE **buffer, uint32_t *size);
+    LIB_EXPORT TPM_RC
+    TSS_TPM2B_KYBER_CIPHER_TEXT_Unmarshalu(TPM2B_KYBER_CIPHER_TEXT *target, BYTE **buffer, uint32_t *size);
+
     /* These functions are deprecated.  They were adapted from the TPM side, but the signed size
        caused static analysis tool warnings. */
 
@@ -671,8 +680,6 @@ extern "C" {
     TPM_RC TPMS_CONTEXT_Unmarshal(TPMS_CONTEXT *target, BYTE **buffer, INT32 *size);
     TPM_RC TPMS_CREATION_DATA_Unmarshal(TPMS_CREATION_DATA *target, BYTE **buffer, INT32 *size);
     TPM_RC TPM2B_CREATION_DATA_Unmarshal(TPM2B_CREATION_DATA *target, BYTE **buffer, INT32 *size);
-    TPM_RC TSS_TPM2B_KYBER_PUBLIC_KEY_Unmarshalu(TPM2B_KYBER_PUBLIC_KEY *target, BYTE **buffer, uint32_t *size);
-    TPM_RC TSS_TPM2B_KYBER_SECRET_KEY_Unmarshalu(TPM2B_KYBER_SECRET_KEY *target, BYTE **buffer, uint32_t *size);
 
 #ifdef __cplusplus
 }

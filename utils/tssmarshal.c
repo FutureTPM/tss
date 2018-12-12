@@ -5922,6 +5922,16 @@ TSS_TPM2B_CREATION_DATA_Marshalu(const TPM2B_CREATION_DATA *source, uint16_t *wr
     return rc;
 }
 
+TPM_RC
+TSS_TPM2B_KYBER_PUBLIC_KEY_Marshalu(const TPM2B_KYBER_PUBLIC_KEY *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+	rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+    }
+    return rc;
+}
+
 /* Deprecated functions that use a sized value for the size parameter.  The recommended functions
    use an unsigned value.
 
@@ -7713,11 +7723,39 @@ TSS_KYBER_KeyGen_Out_Unmarshalu(KYBER_KeyGen_Out *target, TPM_ST tag, BYTE **buf
 }
 
 TPM_RC
-TSS_KYBER_KeyGen_In_Marshalu(const KYBER_KeyGen_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_KYBER_KeyGen_In_Marshalu(KYBER_KeyGen_In *source, uint16_t *written,
+        BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
         rc = TSS_UINT8_Marshalu(&source->sec_sel, written, buffer, size);
+    }
+    return rc;
+}
+
+TPM_RC
+TSS_KYBER_Enc_Out_Unmarshalu(KYBER_Enc_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+    if (rc == 0) {
+        rc = TSS_TPM2B_KYBER_SHARED_KEY_Unmarshalu(&target->shared_key, buffer, size);
+    }
+    if (rc == 0) {
+        rc = TSS_TPM2B_KYBER_CIPHER_TEXT_Unmarshalu(&target->cipher_text, buffer, size);
+    }
+    return rc;
+}
+
+TPM_RC
+TSS_KYBER_Enc_In_Marshalu(KYBER_Enc_In *source, uint16_t *written,
+        BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+        rc = TSS_UINT8_Marshalu(&source->sec_sel, written, buffer, size);
+    }
+    if (rc == 0) {
+        rc = TSS_TPM2B_KYBER_PUBLIC_KEY_Marshalu(&source->public_key, written, buffer, size);
     }
     return rc;
 }

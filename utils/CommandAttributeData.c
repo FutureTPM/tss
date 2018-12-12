@@ -466,6 +466,10 @@ const TPMA_CC_TSS    s_ccAttr [] = {
     {{0x0197, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_KYBER_KeyGen
 #endif
 
+#if (PAD_LIST || CC_KYBER_Enc)
+    {{0x0198, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_KYBER_Enc
+#endif
+
     {{0x0000, 0, 0, 0, 0, 0, 0, 0, 0}},     // kg - terminator?
 };
 

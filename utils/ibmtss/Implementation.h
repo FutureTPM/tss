@@ -338,6 +338,7 @@
 
 /* Kyber Mods */
 #define CC_KYBER_KeyGen                   (CC_YES*ALG_KYBER)
+#define CC_KYBER_Enc                      (CC_YES*ALG_KYBER)
 /* Kyber Mods */
 
 #define  CC_NTC2_PreConfig                CC_YES
@@ -1257,6 +1258,12 @@ typedef  UINT32             TPM_CC;
 #if CC_KYBER_KeyGen == YES
 #define TPM_CC_KYBER_KeyGen                   (TPM_CC)(0x00000197)
 #endif
+#ifndef CC_KYBER_Enc
+#   define CC_KYBER_Enc NO
+#endif
+#if CC_KYBER_Enc == YES
+#define TPM_CC_KYBER_Enc                      (TPM_CC)(0x00000198)
+#endif
 /* Kyber Mods */
 
 #define  TPM_CC_AC_GetCapability		(TPM_CC)(0x00000194)
@@ -1264,7 +1271,7 @@ typedef  UINT32             TPM_CC;
 #define  TPM_CC_Policy_AC_SendSelect		(TPM_CC)(0x00000196)
 
 /* Compile variable. May increase based on implementation. */
-#define  TPM_CC_LAST				(TPM_CC)(0x00000197)
+#define  TPM_CC_LAST				(TPM_CC)(0x00000198)
 
 #ifndef CC_Vendor_TCG_Test
 #   define CC_Vendor_TCG_Test NO

@@ -19,11 +19,23 @@ static void print_usage(void) {
     printf("\t-k: security level of Kyber\n");
 }
 
+static void print_array(unsigned char * buffer, size_t size) {
+    for (size_t i = 0; i < size; i++) {
+        printf("%02X", buffer[i]);
+
+        if (i != (size - 1)) {
+            printf(", ");
+        }
+    }
+}
+
 int main(int argc, char **argv) {
     TPM_RC			rc = 0;
     TSS_CONTEXT			*tssContext = NULL;
-    KYBER_KeyGen_In 	in;
-    KYBER_KeyGen_Out 	out;
+    KYBER_KeyGen_In 	key_in;
+    KYBER_KeyGen_Out 	key_out;
+    KYBER_Enc_In 	    enc_in;
+    KYBER_Enc_Out 	    enc_out;
 
     // Arg Checking
     if (argc < 2 || argc > 3) {
@@ -31,7 +43,8 @@ int main(int argc, char **argv) {
         exit(1);
     } else {
         // Set Kyber security level
-        sscanf(argv[1], "-k=%hhu", &in.sec_sel);
+        sscanf(argv[1], "-k=%hhu", &key_in.sec_sel);
+        enc_in.sec_sel = key_in.sec_sel;
     }
 
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
@@ -45,35 +58,49 @@ int main(int argc, char **argv) {
     /* call TSS to execute the command */
     if (rc == 0) {
         rc = TSS_Execute(tssContext,
-                 (RESPONSE_PARAMETERS *)&out,
-                 (COMMAND_PARAMETERS *)&in,
+                 (RESPONSE_PARAMETERS *)&key_out,
+                 (COMMAND_PARAMETERS *)&key_in,
                  NULL,
                  TPM_CC_KYBER_KeyGen,
                  TPM_RH_NULL, NULL, 0);
     }
 
     if (rc == 0) {
-        printf("Kyber Public Key: [\n");
-        for (size_t i = 0; i < out.public_key.b.size; i++) {
-            printf("%02X", out.public_key.b.buffer[i]);
-
-            if ((int)i != (out.public_key.b.size - 1)) {
-                printf(", ");
-            }
-        }
+        printf("Kyber Public Key: [");
+        print_array(key_out.public_key.b.buffer, key_out.public_key.b.size);
         printf("]\n");
 
-        printf("Kyber Secret Key: [\n");
-        for (size_t i = 0; i < out.secret_key.b.size; i++) {
-            printf("%02X", out.secret_key.b.buffer[i]);
-
-            if ((int)i != (out.secret_key.b.size - 1)) {
-                printf(", ");
-            }
-        }
+        printf("Kyber Secret Key: [");
+        print_array(key_out.secret_key.b.buffer, key_out.secret_key.b.size);
         printf("]\n");
+
+        // Copy public key to the encryption input parameters
+        memcpy(enc_in.public_key.b.buffer, key_out.public_key.b.buffer, key_out.public_key.b.size);
+        enc_in.public_key.b.size = key_out.public_key.b.size;
     } else {
         printf("Key Generation Failed\n");
+    }
+
+    printf("Encrypting with Generated Keys\n");
+    if (rc == 0) {
+        rc = TSS_Execute(tssContext,
+                 (RESPONSE_PARAMETERS *)&enc_out,
+                 (COMMAND_PARAMETERS *)&enc_in,
+                 NULL,
+                 TPM_CC_KYBER_Enc,
+                 TPM_RH_NULL, NULL, 0);
+    }
+
+    if (rc == 0) {
+        printf("Kyber Shared Key: [");
+        print_array(enc_out.shared_key.b.buffer, enc_out.shared_key.b.size);
+        printf("]\n");
+
+        printf("Kyber Cipher Text: [");
+        print_array(enc_out.cipher_text.b.buffer, enc_out.cipher_text.b.size);
+        printf("]\n");
+    } else {
+        printf("Encryption Failed\n");
     }
 
     {
@@ -83,96 +110,6 @@ int main(int argc, char **argv) {
         }
     }
 
-    /*
-      validate the creation data
-    */
-    //{
-    //    uint16_t	written = 0;;
-    //    uint8_t		*buffer = NULL;		/* for the free */
-    //    uint32_t 	sizeInBytes;
-    //    TPMT_HA		digest;
-
-    //    /* get the digest size from the Name algorithm */
-    //    if (rc == 0) {
-    //        sizeInBytes = TSS_GetDigestSize(nalg);
-    //        if (out.creationHash.b.size != sizeInBytes) {
-    //            printf("create: failed, "
-    //                   "creationData size %u incompatible with name algorithm %04x\n",
-    //                   out.creationHash.b.size, nalg);
-    //            rc = EXIT_FAILURE;
-    //        }
-    //    }
-    //    /* re-marshal the output structure */
-    //    if (rc == 0) {
-    //        rc = TSS_Structure_Marshal(&buffer,	/* freed @1 */
-    //                       &written,
-    //                       &out.creationData.creationData,
-    //                       (MarshalFunction_t)TSS_TPMS_CREATION_DATA_Marshal);
-    //    }
-    //    /* recalculate the creationHash from creationData */
-    //    if (rc == 0) {
-    //        digest.hashAlg = nalg;			/* Name digest algorithm */
-    //        rc = TSS_Hash_Generate(&digest,
-    //                   written, buffer,
-    //                   0, NULL);
-    //    }
-    //    /* compare the digest to creation hash */
-    //    if (rc == 0) {
-    //        int irc;
-    //        irc = memcmp((uint8_t *)&digest.digest, &out.creationHash.b.buffer, sizeInBytes);
-    //        if (irc != 0) {
-    //        printf("create: failed, creationData hash does not match creationHash\n");
-    //        rc = EXIT_FAILURE;
-    //        }
-    //    }
-    //    free(buffer);	/* @1 */
-    //}
-
-    ///* save the private key */
-    //if ((rc == 0) && (privateKeyFilename != NULL)) {
-    //    rc = TSS_File_WriteStructure(&out.outPrivate,
-    //                     (MarshalFunction_t)TSS_TPM2B_PRIVATE_Marshal,
-    //                     privateKeyFilename);
-    //}
-
-    ///* save the public key */
-    //if ((rc == 0) && (publicKeyFilename != NULL)) {
-    //    rc = TSS_File_WriteStructure(&out.outPublic,
-    //                     (MarshalFunction_t)TSS_TPM2B_PUBLIC_Marshal,
-    //                     publicKeyFilename);
-    //}
-
-    ///* save the optional PEM public key */
-    //if ((rc == 0) && (pemFilename != NULL)) {
-    //    rc = convertPublicToPEM(&out.outPublic,
-    //                pemFilename);
-    //}
-
-    ///* save the optional creation ticket */
-    //if ((rc == 0) && (ticketFilename != NULL)) {
-    //    rc = TSS_File_WriteStructure(&out.creationTicket,
-    //                     (MarshalFunction_t)TSS_TPMT_TK_CREATION_Marshal,
-    //                     ticketFilename);
-    //}
-
-    ///* save the optional creation hash */
-    //if ((rc == 0) && (creationHashFilename != NULL)) {
-    //    rc = TSS_File_WriteBinaryFile(out.creationHash.b.buffer,
-    //                      out.creationHash.b.size,
-    //                      creationHashFilename);
-    //}
-
-    //if (rc == 0) {
-    //    if (verbose) printf("create: success\n");
-    //} else {
-    //    const char *msg;
-    //    const char *submsg;
-    //    const char *num;
-    //    printf("create: failed, rc %08x\n", rc);
-    //    TSS_ResponseCode_toString(&msg, &submsg, &num, rc);
-    //    printf("%s%s%s\n", msg, submsg, num);
-    //    rc = EXIT_FAILURE;
-    //}
     return rc;
 }
 
