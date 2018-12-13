@@ -155,6 +155,7 @@ ALL += 	activatecredential$(EXE)		\
 	tpm2pem$(EXE)				\
 	kyber_test$(EXE)				\
 	kyber_test_dec$(EXE)				\
+	kyber_test_enc$(EXE)				\
 	tpmpublic2eccpoint$(EXE)
 
 ALL	+= 					\

@@ -124,11 +124,17 @@ int main(int argc, char **argv) {
                  TPM_RH_NULL, NULL, 0);
     }
 
-    if (rc == 0) {
-        printf("Kyber Shared Key: [");
+    if (rc == 0 &&
+            dec_out.shared_key.b.size == enc_out.shared_key.b.size &&
+            memcmp(dec_out.shared_key.b.buffer, enc_out.shared_key.b.buffer, dec_out.shared_key.b.size) == 0) {
+        printf("Decryption Succeeded\n");
+    } else {
+        printf("Encrypted Kyber Shared Key: [");
+        print_array(enc_out.shared_key.b.buffer, enc_out.shared_key.b.size);
+        printf("]\n");
+        printf("Decrypted Kyber Shared Key: [");
         print_array(dec_out.shared_key.b.buffer, dec_out.shared_key.b.size);
         printf("]\n");
-    } else {
         printf("Decryption Failed\n");
     }
 
