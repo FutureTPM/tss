@@ -2769,7 +2769,9 @@ typedef struct tdNTC2_CFG_STRUCT {
 			   is locked. */
 } NTC2_CFG_STRUCT;
 
-/* Kyber Mods */
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
 #define MAX_KYBER_PUBLIC_KEY_SIZE 1440
 #define MAX_KYBER_SECRET_KEY_SIZE 3168
 #define MAX_KYBER_CIPHER_TEXT_SIZE 1504
@@ -2805,8 +2807,34 @@ typedef union {
     }            t;
     TPM2B        b;
 } TPM2B_KYBER_SHARED_KEY;
-/* Kyber Mods */
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
 
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
+#define MAX_DILITHIUM_PUBLIC_KEY_SIZE 1760
+#define MAX_DILITHIUM_SECRET_KEY_SIZE 3856
+
+typedef union {
+    struct {
+	UINT16                  size;
+	BYTE                    buffer[MAX_DILITHIUM_PUBLIC_KEY_SIZE];
+    }            t;
+    TPM2B        b;
+} TPM2B_DILITHIUM_PUBLIC_KEY;
+
+typedef union {
+    struct {
+	UINT16                  size;
+	BYTE                    buffer[MAX_DILITHIUM_SECRET_KEY_SIZE];
+    }            t;
+    TPM2B        b;
+} TPM2B_DILITHIUM_SECRET_KEY;
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 #ifdef __cplusplus
 }
 #endif

@@ -165,9 +165,23 @@
 #include "VerifySignature_fp.h"
 #include "ZGen_2Phase_fp.h"
 
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
 #include "KYBER_KeyGen_fp.h"
 #include "KYBER_Enc_fp.h"
 #include "KYBER_Dec_fp.h"
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
+#include "DILITHIUM_KeyGen_fp.h"
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 
 #ifdef __cplusplus
 extern "C" {
@@ -390,6 +404,9 @@ extern "C" {
     TPM_RC
     TSS_NV_Certify_In_Marshalu(const NV_Certify_In *source, UINT16 *written, BYTE **buffer, uint32_t *size);
 
+    /*****************************************************************************/
+    /*                                Kyber Mods                                 */
+    /*****************************************************************************/
     TPM_RC
     TSS_TPM2B_KYBER_PUBLIC_KEY_Marshalu(const TPM2B_KYBER_PUBLIC_KEY *source, uint16_t *written, BYTE **buffer, uint32_t *size);
     TPM_RC
@@ -409,7 +426,25 @@ extern "C" {
     TSS_KYBER_Dec_Out_Unmarshalu(KYBER_Dec_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
     TPM_RC
     TSS_KYBER_Dec_In_Marshalu(KYBER_Dec_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    /*****************************************************************************/
+    /*                                Kyber Mods                                 */
+    /*****************************************************************************/
 
+    /*****************************************************************************/
+    /*                             Dilithium Mods                                */
+    /*****************************************************************************/
+    TPM_RC
+    TSS_TPM2B_DILITHIUM_PUBLIC_KEY_Marshalu(const TPM2B_DILITHIUM_PUBLIC_KEY *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_DILITHIUM_SECRET_KEY_Marshalu(const TPM2B_DILITHIUM_SECRET_KEY *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+
+    TPM_RC
+    TSS_DILITHIUM_KeyGen_Out_Unmarshalu(DILITHIUM_KeyGen_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_DILITHIUM_KeyGen_In_Marshalu(DILITHIUM_KeyGen_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    /*****************************************************************************/
+    /*                             Dilithium Mods                                */
+    /*****************************************************************************/
     /* Deprecated functions */
 
     TPM_RC

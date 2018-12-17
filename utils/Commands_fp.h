@@ -177,9 +177,23 @@
 #include <ibmtss/ZGen_2Phase_fp.h>
 #include <ibmtss/NTC_fp.h>
 
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
 #include <KYBER_KeyGen_fp.h>
 #include <KYBER_Enc_fp.h>
 #include <KYBER_Dec_fp.h>
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
+#include <DILITHIUM_KeyGen_fp.h>
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 
 TPM_RC
 Startup_In_Unmarshal(Startup_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
@@ -500,11 +514,25 @@ NV_Certify_In_Unmarshal(NV_Certify_In *target, BYTE **buffer, uint32_t *size, TP
 UINT16
 NV_Certify_Out_Marshal(NV_Certify_Out *source, TPMI_ST_COMMAND_TAG tag, BYTE **buffer, uint32_t *size);
 
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
 TPM_RC
 KYBER_KeyGen_In_Unmarshal(KYBER_KeyGen_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 TPM_RC
 KYBER_Enc_In_Unmarshal(KYBER_Enc_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 TPM_RC
 KYBER_Dec_In_Unmarshal(KYBER_Dec_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
 
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
+TPM_RC
+DILITHIUM_KeyGen_In_Unmarshal(DILITHIUM_KeyGen_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 #endif

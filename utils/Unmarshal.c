@@ -4346,6 +4346,9 @@ TSS_TPM2B_CREATION_DATA_Unmarshalu(TPM2B_CREATION_DATA *target, BYTE **buffer, u
     return rc;
 }
 
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
 TPM_RC
 TSS_TPM2B_KYBER_PUBLIC_KEY_Unmarshalu(TPM2B_KYBER_PUBLIC_KEY *target, BYTE **buffer, uint32_t *size)
 {
@@ -4389,7 +4392,37 @@ TSS_TPM2B_KYBER_CIPHER_TEXT_Unmarshalu(TPM2B_KYBER_CIPHER_TEXT *target, BYTE **b
     }
     return rc;
 }
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
 
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
+TPM_RC
+TSS_TPM2B_DILITHIUM_PUBLIC_KEY_Unmarshalu(TPM2B_DILITHIUM_PUBLIC_KEY *target, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPM2B_Unmarshalu(&target->b, sizeof(target->t.buffer), buffer, size);
+    }
+    return rc;
+}
+
+TPM_RC
+TSS_TPM2B_DILITHIUM_SECRET_KEY_Unmarshalu(TPM2B_DILITHIUM_SECRET_KEY *target, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPM2B_Unmarshalu(&target->b, sizeof(target->t.buffer), buffer, size);
+    }
+    return rc;
+}
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 
 /* Deprecated functions that use a sized value for the size parameter.  The recommended functions
    use an unsigned value.

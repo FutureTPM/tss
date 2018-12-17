@@ -2260,6 +2260,9 @@ NV_Certify_In_Unmarshal(NV_Certify_In *target, BYTE **buffer, uint32_t *size, TP
     return rc;
 }
 
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
 TPM_RC
 KYBER_KeyGen_In_Unmarshal(KYBER_KeyGen_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
 {
@@ -2298,3 +2301,26 @@ KYBER_Dec_In_Unmarshal(KYBER_Dec_In *target, BYTE **buffer, uint32_t *size, TPM_
     }
     return rc;
 }
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
+
+
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
+TPM_RC
+DILITHIUM_KeyGen_In_Unmarshal(DILITHIUM_KeyGen_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+    buffer = buffer;
+    size = size;
+
+    if (rc == TPM_RC_SUCCESS) {
+        target->mode = handles[0];
+    }
+    return rc;
+}
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/

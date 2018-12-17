@@ -215,9 +215,21 @@
 #define  ALG_CFB               ALG_YES
 #define  ALG_ECB               ALG_YES
 
-/* Kyber Mods */
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
 #define  ALG_KYBER                      ALG_YES
-/* Kyber Mods */
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
+#define  ALG_DILITHIUM                  ALG_YES
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 
 // From Vendor-Specific: Table 6 - Defines for Implemented Commands
 
@@ -336,11 +348,23 @@
 #define  CC_EncryptDecrypt2               CC_YES
 #define  CC_Vendor_TCG_Test               CC_YES
 
-/* Kyber Mods */
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
 #define CC_KYBER_KeyGen                   (CC_YES*ALG_KYBER)
 #define CC_KYBER_Enc                      (CC_YES*ALG_KYBER)
 #define CC_KYBER_Dec                      (CC_YES*ALG_KYBER)
-/* Kyber Mods */
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
+#define CC_DILITHIUM_KeyGen                   (CC_YES*ALG_DILITHIUM)
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 
 #define  CC_NTC2_PreConfig                CC_YES
 #define  CC_NTC2_LockPreConfig            CC_YES
@@ -505,12 +529,27 @@
 #define  TPM_ALG_ECB                 (TPM_ALG_ID)(ALG_ECB_VALUE)
 #endif
 
-/* Kyber Mods */
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
 #define     ALG_KYBER_VALUE             0x002A
 #if defined ALG_KYBER && ALG_KYBER == YES
 #define TPM_ALG_KYBER                   (TPM_ALG_ID)(ALG_KYBER_VALUE)
 #endif   // ALG_KYBER
-/* Kyber Mods */
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
+#define     ALG_DILITHIUM_VALUE             0x002B
+#if defined ALG_DILITHIUM && ALG_DILITHIUM == YES
+#define TPM_ALG_DILITHIUM                   (TPM_ALG_ID)(ALG_DILITHIUM_VALUE)
+#endif   // ALG_DILITHIUM
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 
 //     From TCG Algorithm Registry: Table 3 - Definition of TPM_ECC_CURVE Constants
 
@@ -1252,7 +1291,9 @@ typedef  UINT32             TPM_CC;
 #define  TPM_CC_EncryptDecrypt2               (TPM_CC)(0x00000193)
 #endif
 
-/* Kyber Mods */
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
 #ifndef CC_KYBER_KeyGen
 #   define CC_KYBER_KeyGen NO
 #endif
@@ -1271,14 +1312,29 @@ typedef  UINT32             TPM_CC;
 #if CC_KYBER_Dec == YES
 #define TPM_CC_KYBER_Dec                      (TPM_CC)(0x00000199)
 #endif
-/* Kyber Mods */
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
+#ifndef CC_DILITHIUM_KeyGen
+#   define CC_DILITHIUM_KeyGen NO
+#endif
+#if CC_DILITHIUM_KeyGen == YES
+#define TPM_CC_DILITHIUM_KeyGen                   (TPM_CC)(0x0000019A)
+#endif
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 
 #define  TPM_CC_AC_GetCapability		(TPM_CC)(0x00000194)
 #define  TPM_CC_AC_Send				(TPM_CC)(0x00000195)
 #define  TPM_CC_Policy_AC_SendSelect		(TPM_CC)(0x00000196)
 
 /* Compile variable. May increase based on implementation. */
-#define  TPM_CC_LAST				(TPM_CC)(0x00000199)
+#define  TPM_CC_LAST				(TPM_CC)(0x0000019A)
 
 #ifndef CC_Vendor_TCG_Test
 #   define CC_Vendor_TCG_Test NO
@@ -1428,6 +1484,7 @@ typedef  UINT32             TPM_CC;
 					  + (ADD_FILL || CC_PolicyPassword)             /* 0x0000018c */ \
 					  + (ADD_FILL || CC_ZGen_2Phase)                /* 0x0000018d */ \
 					  + (ADD_FILL || CC_EC_Ephemeral)               /* 0x0000018e */ \
+					  + (ADD_FILL || CC_PolicyNvWritten)            /* 0x0000018f */ \
 					  + (ADD_FILL || CC_PolicyTemplate)             /* 0x00000190 */ \
 					  + (ADD_FILL || CC_CreateLoaded)               /* 0x00000191 */ \
 					  + (ADD_FILL || CC_PolicyAuthorizeNV)          /* 0x00000192 */ \
@@ -1435,7 +1492,7 @@ typedef  UINT32             TPM_CC;
 					  + (ADD_FILL || CC_KYBER_KeyGen)               /* 0x00000197 */ \
 					  + (ADD_FILL || CC_KYBER_Enc)                  /* 0x00000198 */ \
 					  + (ADD_FILL || CC_KYBER_Dec)                  /* 0x00000199 */ \
-					  + (ADD_FILL || CC_PolicyNvWritten)            /* 0x0000018f */ \
+					  + (ADD_FILL || CC_DILITHIUM_KeyGen)           /* 0x0000019A */ \
 					  )
 
 #define VENDOR_COMMAND_ARRAY_SIZE   ( 0				\
