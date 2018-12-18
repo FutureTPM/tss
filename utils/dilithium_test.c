@@ -34,6 +34,8 @@ int main(int argc, char **argv) {
     TSS_CONTEXT			*tssContext = NULL;
     DILITHIUM_KeyGen_In 	key_in;
     DILITHIUM_KeyGen_Out 	key_out;
+    DILITHIUM_Sign_In 	    sign_in;
+    DILITHIUM_Sign_Out 	    sign_out;
 
     // Arg Checking
     if (argc < 2 || argc > 3) {
@@ -42,6 +44,7 @@ int main(int argc, char **argv) {
     } else {
         // Set Kyber security level
         sscanf(argv[1], "-m=%hhu", &key_in.mode);
+        sign_in.mode = key_in.mode;
     }
 
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
@@ -70,8 +73,35 @@ int main(int argc, char **argv) {
         printf("Dilithium Secret Key: [");
         print_array(key_out.secret_key.b.buffer, key_out.secret_key.b.size);
         printf("]\n");
+
+        // Copy secret key to the decryption input parameters
+        memcpy(sign_in.secret_key.b.buffer, key_out.secret_key.b.buffer, key_out.secret_key.b.size);
+        sign_in.secret_key.b.size = key_out.secret_key.b.size;
     } else {
         printf("Key Generation Failed\n");
+    }
+
+    /* call TSS to execute the command */
+    if (rc == 0) {
+        // Set message to sign
+        unsigned char msg[] = "Dilithium message to be signed in TPM simulator!";
+        memcpy(&sign_in.message.b.buffer, &msg, 48);
+        sign_in.message.b.size = 48;
+
+        rc = TSS_Execute(tssContext,
+                 (RESPONSE_PARAMETERS *)&sign_out,
+                 (COMMAND_PARAMETERS *)&sign_in,
+                 NULL,
+                 TPM_CC_DILITHIUM_Sign,
+                 TPM_RH_NULL, NULL, 0);
+    }
+
+    if (rc == 0) {
+        printf("Dilithium Signed Message: [");
+        print_array(sign_out.signed_message.b.buffer, sign_out.signed_message.b.size);
+        printf("]\n");
+    } else {
+        printf("Signing Message Failed\n");
     }
 
     {

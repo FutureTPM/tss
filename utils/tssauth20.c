@@ -652,6 +652,11 @@ static const MARSHAL_TABLE marshalTable [] = {
      (MarshalInFunction_t)TSS_DILITHIUM_KeyGen_In_Marshalu,
      (UnmarshalOutFunction_t)TSS_DILITHIUM_KeyGen_Out_Unmarshalu,
      (UnmarshalInFunction_t)DILITHIUM_KeyGen_In_Unmarshal},
+
+    {TPM_CC_DILITHIUM_Sign, "TPM2_DILITHIUM_Sign",
+     (MarshalInFunction_t)TSS_DILITHIUM_Sign_In_Marshalu,
+     (UnmarshalOutFunction_t)TSS_DILITHIUM_Sign_Out_Unmarshalu,
+     (UnmarshalInFunction_t)DILITHIUM_Sign_In_Unmarshal},
 /*****************************************************************************/
 /*                             Dilithium Mods                                */
 /*****************************************************************************/

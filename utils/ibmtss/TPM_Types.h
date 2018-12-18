@@ -2816,6 +2816,8 @@ typedef union {
 /*****************************************************************************/
 #define MAX_DILITHIUM_PUBLIC_KEY_SIZE 1760
 #define MAX_DILITHIUM_SECRET_KEY_SIZE 3856
+#define MAX_DILITHIUM_MESSAGE_SIZE 4192
+#define MAX_DILITHIUM_SIGNED_MESSAGE_SIZE 4192+3366
 
 typedef union {
     struct {
@@ -2832,6 +2834,22 @@ typedef union {
     }            t;
     TPM2B        b;
 } TPM2B_DILITHIUM_SECRET_KEY;
+
+typedef union {
+    struct {
+	UINT16                  size;
+	BYTE                    buffer[MAX_DILITHIUM_MESSAGE_SIZE];
+    }            t;
+    TPM2B        b;
+} TPM2B_DILITHIUM_MESSAGE;
+
+typedef union {
+    struct {
+	UINT16                  size;
+	BYTE                    buffer[MAX_DILITHIUM_SIGNED_MESSAGE_SIZE];
+    }            t;
+    TPM2B        b;
+} TPM2B_DILITHIUM_SIGNED_MESSAGE;
 /*****************************************************************************/
 /*                             Dilithium Mods                                */
 /*****************************************************************************/

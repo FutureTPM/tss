@@ -486,6 +486,9 @@ const TPMA_CC_TSS    s_ccAttr [] = {
 #if (PAD_LIST || CC_DILITHIUM_KeyGen)
     {{0x019A, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_DILITHIUM_KeyGen
 #endif
+#if (PAD_LIST || CC_DILITHIUM_Sign)
+    {{0x019B, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_DILITHIUM_Sign
+#endif
 /*****************************************************************************/
 /*                             Dilithium Mods                                */
 /*****************************************************************************/

@@ -179,6 +179,7 @@
 /*                             Dilithium Mods                                */
 /*****************************************************************************/
 #include "DILITHIUM_KeyGen_fp.h"
+#include "DILITHIUM_Sign_fp.h"
 /*****************************************************************************/
 /*                             Dilithium Mods                                */
 /*****************************************************************************/
@@ -437,11 +438,18 @@ extern "C" {
     TSS_TPM2B_DILITHIUM_PUBLIC_KEY_Marshalu(const TPM2B_DILITHIUM_PUBLIC_KEY *source, uint16_t *written, BYTE **buffer, uint32_t *size);
     TPM_RC
     TSS_TPM2B_DILITHIUM_SECRET_KEY_Marshalu(const TPM2B_DILITHIUM_SECRET_KEY *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_DILITHIUM_MESSAGE_Marshalu(const TPM2B_DILITHIUM_MESSAGE *source, uint16_t *written, BYTE **buffer, uint32_t *size);
 
     TPM_RC
     TSS_DILITHIUM_KeyGen_Out_Unmarshalu(DILITHIUM_KeyGen_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
     TPM_RC
     TSS_DILITHIUM_KeyGen_In_Marshalu(DILITHIUM_KeyGen_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+
+    TPM_RC
+    TSS_DILITHIUM_Sign_Out_Unmarshalu(DILITHIUM_Sign_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_DILITHIUM_Sign_In_Marshalu(DILITHIUM_Sign_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
     /*****************************************************************************/
     /*                             Dilithium Mods                                */
     /*****************************************************************************/
