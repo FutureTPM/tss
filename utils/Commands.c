@@ -2323,7 +2323,20 @@ DILITHIUM_KeyGen_In_Unmarshal(DILITHIUM_KeyGen_In *target, BYTE **buffer, uint32
 }
 
 TPM_RC
-DILITHIUM_Sign_In_Unmarshal(DILITHIUM_KeyGen_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
+DILITHIUM_Sign_In_Unmarshal(DILITHIUM_Sign_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+    buffer = buffer;
+    size = size;
+
+    if (rc == TPM_RC_SUCCESS) {
+        target->mode = handles[0];
+    }
+    return rc;
+}
+
+TPM_RC
+DILITHIUM_Verify_In_Unmarshal(DILITHIUM_Verify_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
 {
     TPM_RC rc = TPM_RC_SUCCESS;
     buffer = buffer;

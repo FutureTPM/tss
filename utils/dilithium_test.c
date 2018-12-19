@@ -36,6 +36,8 @@ int main(int argc, char **argv) {
     DILITHIUM_KeyGen_Out 	key_out;
     DILITHIUM_Sign_In 	    sign_in;
     DILITHIUM_Sign_Out 	    sign_out;
+    DILITHIUM_Verify_In 	verify_in;
+    DILITHIUM_Verify_Out 	verify_out;
 
     // Arg Checking
     if (argc < 2 || argc > 3) {
@@ -45,6 +47,7 @@ int main(int argc, char **argv) {
         // Set Kyber security level
         sscanf(argv[1], "-m=%hhu", &key_in.mode);
         sign_in.mode = key_in.mode;
+        verify_in.mode = key_in.mode;
     }
 
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
@@ -74,9 +77,12 @@ int main(int argc, char **argv) {
         print_array(key_out.secret_key.b.buffer, key_out.secret_key.b.size);
         printf("]\n");
 
-        // Copy secret key to the decryption input parameters
+        // Copy secret key to the signing input parameters
         memcpy(sign_in.secret_key.b.buffer, key_out.secret_key.b.buffer, key_out.secret_key.b.size);
         sign_in.secret_key.b.size = key_out.secret_key.b.size;
+        // Copy public key to the verification input parameters
+        memcpy(verify_in.public_key.b.buffer, key_out.public_key.b.buffer, key_out.public_key.b.size);
+        verify_in.public_key.b.size = key_out.public_key.b.size;
     } else {
         printf("Key Generation Failed\n");
     }
@@ -100,8 +106,43 @@ int main(int argc, char **argv) {
         printf("Dilithium Signed Message: [");
         print_array(sign_out.signed_message.b.buffer, sign_out.signed_message.b.size);
         printf("]\n");
+
+        // Copy secret key to the decryption input parameters
+        memcpy(verify_in.signed_message.b.buffer, sign_out.signed_message.b.buffer, sign_out.signed_message.b.size);
+        verify_in.signed_message.b.size = sign_out.signed_message.b.size;
     } else {
         printf("Signing Message Failed\n");
+    }
+
+    /* call TSS to execute the command */
+    if (rc == 0) {
+        rc = TSS_Execute(tssContext,
+                 (RESPONSE_PARAMETERS *)&verify_out,
+                 (COMMAND_PARAMETERS *)&verify_in,
+                 NULL,
+                 TPM_CC_DILITHIUM_Verify,
+                 TPM_RH_NULL, NULL, 0);
+    }
+
+    if (rc == 0) {
+        printf("Dilithium Message: [");
+        print_array(verify_out.message.b.buffer, verify_out.message.b.size);
+        printf("]\n");
+
+        printf("Message to be Signed:\n");
+        for(size_t i = 0; i < sign_in.message.b.size; i++) {
+            printf("%c", sign_in.message.b.buffer[i]);
+        }
+        printf("\n");
+
+        printf("Verified Message:\n");
+        for(size_t i = 0; i < verify_out.message.b.size; i++) {
+            printf("%c", verify_out.message.b.buffer[i]);
+        }
+        printf("\n");
+        printf("Verification Succeeded\n");
+    } else {
+        printf("Verification Failed\n");
     }
 
     {

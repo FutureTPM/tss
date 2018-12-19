@@ -4431,6 +4431,17 @@ TSS_TPM2B_DILITHIUM_SIGNED_MESSAGE_Unmarshalu(TPM2B_DILITHIUM_SIGNED_MESSAGE *ta
     }
     return rc;
 }
+
+TPM_RC
+TSS_TPM2B_DILITHIUM_MESSAGE_Unmarshalu(TPM2B_DILITHIUM_MESSAGE *target, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPM2B_Unmarshalu(&target->b, sizeof(target->t.buffer), buffer, size);
+    }
+    return rc;
+}
 /*****************************************************************************/
 /*                             Dilithium Mods                                */
 /*****************************************************************************/

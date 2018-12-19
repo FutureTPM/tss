@@ -5990,6 +5990,16 @@ TSS_TPM2B_DILITHIUM_MESSAGE_Marshalu(const TPM2B_DILITHIUM_MESSAGE *source, uint
     }
     return rc;
 }
+
+TPM_RC
+TSS_TPM2B_DILITHIUM_SIGNED_MESSAGE_Marshalu(const TPM2B_DILITHIUM_SIGNED_MESSAGE *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+	rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+    }
+    return rc;
+}
 /*****************************************************************************/
 /*                             Dilithium Mods                                */
 /*****************************************************************************/
@@ -7905,6 +7915,33 @@ TSS_DILITHIUM_Sign_In_Marshalu(DILITHIUM_Sign_In *source, uint16_t *written,
     }
     if (rc == 0) {
         rc = TSS_TPM2B_DILITHIUM_SECRET_KEY_Marshalu(&source->secret_key, written, buffer, size);
+    }
+    return rc;
+}
+
+TPM_RC
+TSS_DILITHIUM_Verify_Out_Unmarshalu(DILITHIUM_Verify_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+    if (rc == 0) {
+        rc = TSS_TPM2B_DILITHIUM_MESSAGE_Unmarshalu(&target->message, buffer, size);
+    }
+    return rc;
+}
+
+TPM_RC
+TSS_DILITHIUM_Verify_In_Marshalu(DILITHIUM_Verify_In *source, uint16_t *written,
+        BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+        rc = TSS_UINT8_Marshalu(&source->mode, written, buffer, size);
+    }
+    if (rc == 0) {
+        rc = TSS_TPM2B_DILITHIUM_PUBLIC_KEY_Marshalu(&source->public_key, written, buffer, size);
+    }
+    if (rc == 0) {
+        rc = TSS_TPM2B_DILITHIUM_SIGNED_MESSAGE_Marshalu(&source->signed_message, written, buffer, size);
     }
     return rc;
 }

@@ -192,6 +192,7 @@
 /*****************************************************************************/
 #include <DILITHIUM_KeyGen_fp.h>
 #include <DILITHIUM_Sign_fp.h>
+#include <DILITHIUM_Verify_fp.h>
 /*****************************************************************************/
 /*                             Dilithium Mods                                */
 /*****************************************************************************/
@@ -534,7 +535,9 @@ KYBER_Dec_In_Unmarshal(KYBER_Dec_In *target, BYTE **buffer, uint32_t *size, TPM_
 TPM_RC
 DILITHIUM_KeyGen_In_Unmarshal(DILITHIUM_KeyGen_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 TPM_RC
-DILITHIUM_Sign_In_Unmarshal(DILITHIUM_KeyGen_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
+DILITHIUM_Sign_In_Unmarshal(DILITHIUM_Sign_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
+TPM_RC
+DILITHIUM_Verify_In_Unmarshal(DILITHIUM_Verify_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 /*****************************************************************************/
 /*                             Dilithium Mods                                */
 /*****************************************************************************/
