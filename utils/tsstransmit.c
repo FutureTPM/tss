@@ -88,12 +88,12 @@ TPM_RC TSS_TransmitPlatform(TSS_CONTEXT *tssContext, uint32_t command, const cha
     if ((strcmp(tssContext->tssInterfaceType, "dev") == 0)) {
 	if (tssVerbose) printf("TSS_TransmitPlatform: device %s unsupported\n",
 			       tssContext->tssInterfaceType);
-	rc = TSS_RC_INSUPPORTED_INTERFACE;	
+	rc = TSS_RC_INSUPPORTED_INTERFACE;
     }
     else {
 	if (tssVerbose) printf("TSS_TransmitPlatform: device %s unsupported\n",
 			       tssContext->tssInterfaceType);
-	rc = TSS_RC_INSUPPORTED_INTERFACE;	
+	rc = TSS_RC_INSUPPORTED_INTERFACE;
     }
     return rc;
 }
@@ -118,7 +118,7 @@ TPM_RC TSS_Transmit(TSS_CONTEXT *tssContext,
     }
     else
 #endif
-	
+
     if ((strcmp(tssContext->tssInterfaceType, "dev") == 0)) {
 #ifdef TPM_POSIX	/* transmit through Linux device driver */
 	rc = TSS_Dev_Transmit(tssContext,
@@ -136,14 +136,14 @@ TPM_RC TSS_Transmit(TSS_CONTEXT *tssContext,
 #else
 	if (tssVerbose) printf("TSS_Transmit: device %s unsupported\n",
 			       tssContext->tssInterfaceType);
-	rc = TSS_RC_INSUPPORTED_INTERFACE;	
+	rc = TSS_RC_INSUPPORTED_INTERFACE;
 #endif
 #endif
     }
     else {
 	if (tssVerbose) printf("TSS_Transmit: device %s unsupported\n",
 			       tssContext->tssInterfaceType);
-	rc = TSS_RC_INSUPPORTED_INTERFACE;	
+	rc = TSS_RC_INSUPPORTED_INTERFACE;
     }
     return rc;
 }
@@ -173,14 +173,14 @@ TPM_RC TSS_Close(TSS_CONTEXT *tssContext)
 #else
 	    if (tssVerbose) printf("TSS_Transmit: device %s unsupported\n",
 				   tssContext->tssInterfaceType);
-	    rc = TSS_RC_INSUPPORTED_INTERFACE;	
+	    rc = TSS_RC_INSUPPORTED_INTERFACE;
 #endif
 #endif
 	}
 	else {
 	    if (tssVerbose) printf("TSS_Transmit: device %s unsupported\n",
 				   tssContext->tssInterfaceType);
-	    rc = TSS_RC_INSUPPORTED_INTERFACE;	
+	    rc = TSS_RC_INSUPPORTED_INTERFACE;
 	}
 	tssContext->tssFirstTransmit = TRUE;
     }

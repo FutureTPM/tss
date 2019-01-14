@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
 */
 
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
     TPMI_DH_OBJECT		parentHandle = 0;
     const char			*publicKeyFilename = NULL;
     const char			*privateKeyFilename = NULL;
-    const char			*parentPassword = NULL; 
+    const char			*parentPassword = NULL;
     TPMI_SH_AUTH_SESSION    	sessionHandle0 = TPM_RS_PW;
     unsigned int		sessionAttributes0 = 0;
     TPMI_SH_AUTH_SESSION    	sessionHandle1 = TPM_RH_NULL;
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
     unsigned int		sessionAttributes2 = 0;
 
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
-    TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "1");
+    TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "3");
 
     for (i=1 ; (i<argc) && (rc == 0) ; i++) {
 	if (strcmp(argv[i],"-hp") == 0) {
@@ -275,5 +275,5 @@ static void printUsage(void)
     printf("\t01\tcontinue\n");
     printf("\t20\tcommand decrypt\n");
     printf("\t40\tresponse encrypt\n");
-    exit(1);	
+    exit(1);
 }

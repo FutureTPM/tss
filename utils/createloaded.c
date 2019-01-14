@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
  */
 
@@ -75,6 +75,7 @@ int main(int argc, char *argv[])
     int				rev116 = FALSE;
     TPMI_ALG_PUBLIC 		algPublic = TPM_ALG_RSA;
     TPMI_ECC_CURVE		curveID = TPM_ECC_NONE;
+    TPMI_DILITHIUM_MODE	dilithium_mode = TPM_DILITHIUM_MODE_NONE;
     TPMI_ALG_HASH		halg = TPM_ALG_SHA256;
     TPMI_ALG_HASH		nalg = TPM_ALG_SHA256;
     const char			*policyFilename = NULL;
@@ -82,8 +83,8 @@ int main(int argc, char *argv[])
     const char			*privateKeyFilename = NULL;
     const char			*pemFilename = NULL;
     const char 			*dataFilename = NULL;
-    const char			*keyPassword = NULL; 
-    const char			*parentPassword = NULL; 
+    const char			*keyPassword = NULL;
+    const char			*parentPassword = NULL;
     TPMI_SH_AUTH_SESSION    	sessionHandle0 = TPM_RS_PW;
     unsigned int		sessionAttributes0 = 0;
     TPMI_SH_AUTH_SESSION    	sessionHandle1 = TPM_RH_NULL;
@@ -98,7 +99,7 @@ int main(int argc, char *argv[])
     addObjectAttributes.val = 0;
     addObjectAttributes.val |= TPMA_OBJECT_NODA;
     deleteObjectAttributes.val = 0;
- 	
+
     for (i=1 ; (i<argc) && (rc == 0) ; i++) {
 	if (strcmp(argv[i],"-hp") == 0) {
 	    i++;
@@ -158,6 +159,27 @@ int main(int argc, char *argv[])
 	}
 	else if (strcmp(argv[i], "-rsa") == 0) {
 	    algPublic = TPM_ALG_RSA;
+	}
+	else if (strcmp(argv[i], "-dilithium") == 0) {
+	    algPublic = TPM_ALG_DILITHIUM;
+	    i++;
+	    if (i < argc) {
+            if (strcmp(argv[i],"mode=0") == 0) {
+                dilithium_mode = TPM_DILITHIUM_MODE_0;
+            } else if (strcmp(argv[i],"mode=1") == 0) {
+                dilithium_mode = TPM_DILITHIUM_MODE_1;
+            } else if (strcmp(argv[i],"mode=2") == 0) {
+                dilithium_mode = TPM_DILITHIUM_MODE_2;
+            } else if (strcmp(argv[i],"mode=3") == 0) {
+                dilithium_mode = TPM_DILITHIUM_MODE_3;
+            } else {
+                printf("Bad parameter %s for -dilithium\n", argv[i]);
+                printUsage();
+            }
+        } else {
+            printf("-dilithium option needs a value\n");
+            printUsage();
+	    }
 	}
 	else if (strcmp(argv[i], "-ecc") == 0) {
 	    algPublic = TPM_ALG_ECC;
@@ -476,7 +498,7 @@ int main(int argc, char *argv[])
 	    rc = asymPublicTemplate(&publicArea,
 				    addObjectAttributes, deleteObjectAttributes,
 				    keyType, algPublic, curveID, nalg, halg,
-				    policyFilename);
+				    policyFilename, dilithium_mode);
 	    break;
 	  case TYPE_DES:
 	    rc = symmetricCipherTemplate(&publicArea,
@@ -495,7 +517,7 @@ int main(int argc, char *argv[])
 						addObjectAttributes, deleteObjectAttributes,
 						nalg, halg,
 						policyFilename);
-	} 
+	}
     }
     /* marshal the TPMT_PUBLIC into the TPM2B_TEMPLATE */
     if (rc == 0) {
@@ -512,7 +534,7 @@ int main(int argc, char *argv[])
 	    /* derived key has TPMS_CONTEXT parameter */
 	    publicArea.unique.derive.label.t.size = 0;
 	    publicArea.unique.derive.context.t.size = 0;
-	    /* sensitiveDataOrigin has to be CLEAR in a derived object */	
+	    /* sensitiveDataOrigin has to be CLEAR in a derived object */
 	    publicArea.objectAttributes.val &= ~TPMA_OBJECT_SENSITIVEDATAORIGIN;
 	    rc = TSS_TPMT_PUBLIC_D_Marshalu(&publicArea, &written, &buffer, &size);
 	}
@@ -600,5 +622,5 @@ static void printUsage(void)
     printf("\t01\tcontinue\n");
     printf("\t20\tcommand decrypt\n");
     printf("\t40\tresponse encrypt\n");
-    exit(1);	
+    exit(1);
 }

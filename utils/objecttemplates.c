@@ -79,7 +79,8 @@ TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
 			  TPMI_ECC_CURVE curveID,	/* for ECC */
 			  TPMI_ALG_HASH nalg,		/* Name algorithm */
 			  TPMI_ALG_HASH halg,		/* hash algorithm */
-			  const char *policyFilename)	/* binary policy, NULL means empty */
+			  const char *policyFilename,	/* binary policy, NULL means empty */
+              TPMI_DILITHIUM_MODE dilithium_mode) // Dilithium mode to be used
 {
     TPM_RC			rc = 0;
 
@@ -287,8 +288,7 @@ TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
           case TYPE_DILITHIUM_UNRESTRICTED:
             publicArea->parameters.dilithiumDetail.scheme.scheme = TPM_ALG_DILITHIUM;
             publicArea->parameters.dilithiumDetail.scheme.details.dilithium.hashAlg = halg;
-            // TODO: Make this non static
-            publicArea->parameters.dilithiumDetail.mode = 2;
+            publicArea->parameters.dilithiumDetail.mode = dilithium_mode;
             break;
 	      case TYPE_SI:
 	      case TYPE_ST:

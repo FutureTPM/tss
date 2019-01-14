@@ -318,7 +318,7 @@ echo "Primary Dilithium Signing Key"
 echo ""
 
 echo "Create primary signing key - Dilithium 80000001"
-${PREFIX}createprimary -si -opu tmppub.bin -dilithium -pwdk sig > run.out
+${PREFIX}createprimary -si -opu tmppub.bin -dilithium mode=2 -pwdk sig > run.out
 checkSuccess $?
 
 for HALG in ${ITERATE_ALGS}

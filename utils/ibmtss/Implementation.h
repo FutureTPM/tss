@@ -540,6 +540,12 @@
 #if defined ALG_DILITHIUM && ALG_DILITHIUM == YES
 #define TPM_ALG_DILITHIUM                   (TPM_ALG_ID)(ALG_DILITHIUM_VALUE)
 #endif   // ALG_DILITHIUM
+
+#define  TPM_DILITHIUM_MODE_NONE (TPM_DILITHIUM_MODE)(0x04)
+#define  TPM_DILITHIUM_MODE_0    (TPM_DILITHIUM_MODE)(0x00)
+#define  TPM_DILITHIUM_MODE_1    (TPM_DILITHIUM_MODE)(0x01)
+#define  TPM_DILITHIUM_MODE_2    (TPM_DILITHIUM_MODE)(0x02)
+#define  TPM_DILITHIUM_MODE_3    (TPM_DILITHIUM_MODE)(0x03)
 /*****************************************************************************/
 /*                             Dilithium Mods                                */
 /*****************************************************************************/

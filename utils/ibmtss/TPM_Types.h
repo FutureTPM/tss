@@ -157,6 +157,8 @@ typedef UINT16 TPM_ALG_ID;
 
 typedef UINT16 TPM_ECC_CURVE;
 
+typedef UINT8  TPM_DILITHIUM_MODE;
+
 /* Table 16 - Definition of (UINT32) TPM_RC Constants (Actions) <OUT> */
 
 typedef UINT32 TPM_RC;
@@ -2241,6 +2243,8 @@ typedef TPM_ALG_ID TPMI_ALG_ECC_SCHEME;
 /* Table 164 - Definition of {ECC} (TPM_ECC_CURVE) TPMI_ECC_CURVE Type */
 
 typedef TPM_ECC_CURVE TPMI_ECC_CURVE;
+
+typedef TPM_DILITHIUM_MODE TPMI_DILITHIUM_MODE;
 
 /* Table 165 - Definition of (TPMT_SIG_SCHEME) {ECC} TPMT_ECC_SCHEME Structure */
 

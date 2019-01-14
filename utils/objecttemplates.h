@@ -69,7 +69,8 @@ extern "C" {
 			      TPMI_ECC_CURVE curveID,
 			      TPMI_ALG_HASH nalg,
 			      TPMI_ALG_HASH halg,
-			      const char *policyFilename);
+			      const char *policyFilename,
+                  TPMI_DILITHIUM_MODE dilithium_mode);
     TPM_RC symmetricCipherTemplate(TPMT_PUBLIC *publicArea,
 				   TPMA_OBJECT addObjectAttributes,
 				   TPMA_OBJECT deleteObjectAttributes,

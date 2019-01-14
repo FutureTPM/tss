@@ -77,7 +77,7 @@ ${PREFIX}create -hp 80000000 -ecc nistp256 -si -kt f -kt p -opr signeccpriv.bin 
 checkSuccess $?
 
 echo "Create an unrestricted Dilithium signing key under the primary key"
-${PREFIX}create -hp 80000000 -dilithium -dilu -kt f -kt p -opr signdilpriv.bin -opu signdilpub.bin -pwdp sto -pwdk sig > run.out
+${PREFIX}create -hp 80000000 -dilithium mode=2 -dilu -kt f -kt p -opr signdilpriv.bin -opu signdilpub.bin -pwdp sto -pwdk sig > run.out
 checkSuccess $?
 
 echo "Create a restricted RSA signing key under the primary key"
@@ -85,7 +85,7 @@ ${PREFIX}create -hp 80000000 -sir -kt f -kt p -opr signrpriv.bin -opu signrpub.b
 checkSuccess $?
 
 echo "Create a restricted Dilithium signing key under the primary key"
-${PREFIX}create -hp 80000000 -dilithium -dilr -kt f -kt p -opr signdilrpriv.bin -opu signdilrpub.bin -pwdp sto -pwdk sig > run.out
+${PREFIX}create -hp 80000000 -dilithium mode=2 -dilr -kt f -kt p -opr signdilrpriv.bin -opu signdilrpub.bin -pwdp sto -pwdk sig > run.out
 checkSuccess $?
 
 echo "Create an RSA decryption key under the primary key"
