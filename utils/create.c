@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
     unsigned int		sessionAttributes2 = 0;
 
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
-    TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "1");
+    TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "3");
 
     /* command line argument defaults */
     addObjectAttributes.val = 0;
@@ -143,6 +143,14 @@ int main(int argc, char *argv[])
 	    keyType = TYPE_DAAR;
 	    keyTypeSpecified++;
 	}
+	else if (strcmp(argv[i], "-dilu") == 0) {
+	    keyType = TYPE_DILITHIUM_UNRESTRICTED;
+	    keyTypeSpecified++;
+	}
+	else if (strcmp(argv[i], "-dilr") == 0) {
+	    keyType = TYPE_DILITHIUM_RESTRICTED;
+	    keyTypeSpecified++;
+	}
 	else if (strcmp(argv[i], "-sir") == 0) {
 	    keyType = TYPE_SIR;
 	    keyTypeSpecified++;
@@ -164,6 +172,9 @@ int main(int argc, char *argv[])
 	}
 	else if (strcmp(argv[i], "-rsa") == 0) {
 	    algPublic = TPM_ALG_RSA;
+	}
+	else if (strcmp(argv[i], "-dilithium") == 0) {
+	    algPublic = TPM_ALG_DILITHIUM;
 	}
 	else if (strcmp(argv[i], "-ecc") == 0) {
 	    algPublic = TPM_ALG_ECC;
@@ -523,6 +534,8 @@ int main(int argc, char *argv[])
 	  case TYPE_DEO:
 	  case TYPE_SI:
 	  case TYPE_SIR:
+      case TYPE_DILITHIUM_RESTRICTED:
+      case TYPE_DILITHIUM_UNRESTRICTED:
 	  case TYPE_GP:
 	    rc = asymPublicTemplate(&in.inPublic.publicArea,
 				    addObjectAttributes, deleteObjectAttributes,

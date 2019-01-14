@@ -175,16 +175,6 @@
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
 
-/*****************************************************************************/
-/*                             Dilithium Mods                                */
-/*****************************************************************************/
-#include "DILITHIUM_KeyGen_fp.h"
-#include "DILITHIUM_Sign_fp.h"
-#include "DILITHIUM_Verify_fp.h"
-/*****************************************************************************/
-/*                             Dilithium Mods                                */
-/*****************************************************************************/
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -440,24 +430,20 @@ extern "C" {
     TPM_RC
     TSS_TPM2B_DILITHIUM_SECRET_KEY_Marshalu(const TPM2B_DILITHIUM_SECRET_KEY *source, uint16_t *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_TPM2B_DILITHIUM_MESSAGE_Marshalu(const TPM2B_DILITHIUM_MESSAGE *source, uint16_t *written, BYTE **buffer, uint32_t *size);
-    TPM_RC
     TSS_TPM2B_DILITHIUM_SIGNED_MESSAGE_Marshalu(const TPM2B_DILITHIUM_SIGNED_MESSAGE *source, uint16_t *written, BYTE **buffer, uint32_t *size);
 
     TPM_RC
-    TSS_DILITHIUM_KeyGen_Out_Unmarshalu(DILITHIUM_KeyGen_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+    TSS_TPMS_DILITHIUM_PARMS_Marshalu(const TPMS_DILITHIUM_PARMS *source, uint16_t *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_DILITHIUM_KeyGen_In_Marshalu(DILITHIUM_KeyGen_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
-
+    TSS_TPMS_SIG_SCHEME_DILITHIUM_Marshalu(const TPMS_SIG_SCHEME_DILITHIUM *source, uint16_t *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_DILITHIUM_Sign_Out_Unmarshalu(DILITHIUM_Sign_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+    TSS_TPMS_SIGNATURE_DILITHIUM_Marshalu(const TPMS_SIGNATURE_DILITHIUM *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    UINT16
+    TPMT_DILITHIUM_SCHEME_Marshal(TPMT_DILITHIUM_SCHEME *source, BYTE **buffer, INT32 *size);
     TPM_RC
-    TSS_DILITHIUM_Sign_In_Marshalu(DILITHIUM_Sign_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
-
+    TSS_TPMI_ALG_DILITHIUM_SCHEME_Marshalu(const TPMI_ALG_DILITHIUM_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_DILITHIUM_Verify_Out_Unmarshalu(DILITHIUM_Verify_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
-    TPM_RC
-    TSS_DILITHIUM_Verify_In_Marshalu(DILITHIUM_Verify_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_TPMT_DILITHIUM_SCHEME_Marshalu(const TPMT_DILITHIUM_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size);
     /*****************************************************************************/
     /*                             Dilithium Mods                                */
     /*****************************************************************************/

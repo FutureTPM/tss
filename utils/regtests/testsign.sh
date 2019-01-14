@@ -52,7 +52,7 @@ ${PREFIX}load -hp 80000000 -ipr signpriv.bin -ipu signpub.bin -pwdp sto > run.ou
 checkSuccess $?
 
 echo "Create an RSA key pair in PEM format using openssl"
-  
+
 openssl genrsa -out tmpkeypair.pem -aes256 -passout pass:rrrr 2048 > run.out
 
 echo "Convert key pair to plaintext DER format"
@@ -89,7 +89,7 @@ do
 	${PREFIX}loadexternal -halg $HALG -scheme $SCHEME -ider tmpkeypair.der > run.out
 	checkSuccess $?
 
-	echo "Use the TPM as a crypto coprocessor to sign - $HALG $SCHEME" 
+	echo "Use the TPM as a crypto coprocessor to sign - $HALG $SCHEME"
 	${PREFIX}sign -hk 80000002 -halg $HALG -scheme $SCHEME -if policies/aaa -os sig.bin > run.out
 	checkSuccess $?
 
@@ -100,7 +100,7 @@ do
 	echo "Flush the openssl signing key"
 	${PREFIX}flushcontext -ha 80000002 > run.out
 	checkSuccess $?
-    
+
     done
 
 done
@@ -118,7 +118,7 @@ ${PREFIX}load -hp 80000000 -ipr signeccpriv.bin -ipu signeccpub.bin -pwdp sto > 
 checkSuccess $?
 
 echo "Create an ECC key pair in PEM format using openssl"
-  
+
 openssl ecparam -name prime256v1 -genkey -noout -out tmpkeypairecc.pem > run.out
 
 echo "Convert key pair to plaintext DER format"
@@ -152,7 +152,7 @@ do
     ${PREFIX}loadexternal -halg $HALG -ecc -ider tmpkeypairecc.der > run.out
     checkSuccess $?
 
-    echo "Use the TPM as a crypto coprocessor to sign - $HALG" 
+    echo "Use the TPM as a crypto coprocessor to sign - $HALG"
     ${PREFIX}sign -hk 80000002 -halg $HALG -ecc -if policies/aaa -os sig.bin > run.out
     checkSuccess $?
 
@@ -171,6 +171,59 @@ ${PREFIX}flushcontext -ha 80000001 > run.out
 checkSuccess $?
 
 echo ""
+echo "Dilithium Signing key"
+echo ""
+
+echo "Load the Dilithium signing key under the primary key"
+${PREFIX}load -hp 80000000 -ipr signdilpriv.bin -ipu signdilpub.bin -pwdp sto > run.out
+checkSuccess $?
+
+for HALG in ${ITERATE_ALGS}
+do
+
+    echo "Sign a digest - $HALG"
+    ${PREFIX}sign -hk 80000001 -halg $HALG -dilithium -if policies/aaa -os sig.bin -pwdk sig > run.out
+    checkSuccess $?
+
+    echo "Verify the Dilithium signature using the TPM - $HALG"
+    ${PREFIX}verifysignature -hk 80000001 -halg $HALG -dilithium -if policies/aaa -is sig.bin > run.out
+    checkSuccess $?
+
+    #echo "Verify the signature using PEM - $HALG"
+    #${PREFIX}verifysignature -ipem signeccpub.pem -halg $HALG -if policies/aaa -is sig.bin > run.out
+    #checkSuccess $?
+
+    #echo "Read the public part"
+    #${PREFIX}readpublic -ho 80000001 -opem tmppub.pem > run.out
+    #checkSuccess $?
+
+    #echo "Verify the signature using readpublic PEM - $HALG"
+    #${PREFIX}verifysignature -ipem tmppub.pem -halg $HALG -if policies/aaa -is sig.bin > run.out
+    #checkSuccess $?
+
+    #echo "Load the openssl key pair in the NULL hierarchy 80000002 - $HALG"
+    #${PREFIX}loadexternal -halg $HALG -ecc -ider tmpkeypairecc.der > run.out
+    #checkSuccess $?
+
+    #echo "Use the TPM as a crypto coprocessor to sign - $HALG"
+    #${PREFIX}sign -hk 80000002 -halg $HALG -ecc -if policies/aaa -os sig.bin > run.out
+    #checkSuccess $?
+
+    #echo "Verify the signature - $HALG"
+    #${PREFIX}verifysignature -hk 80000002 -halg $HALG -ecc -if policies/aaa -is sig.bin > run.out
+    #checkSuccess $?
+
+    #echo "Flush the openssl signing key"
+    #${PREFIX}flushcontext -ha 80000002 > run.out
+    #checkSuccess $?
+
+done
+
+echo "Flush the Dilithium signing key"
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+echo ""
 echo "Primary RSA Signing Key"
 echo ""
 
@@ -180,7 +233,7 @@ checkSuccess $?
 
 for HALG in ${ITERATE_ALGS}
 do
-    
+
     echo "Sign a digest - $HALG"
     ${PREFIX}sign -hk 80000001 -halg $HALG -if policies/aaa -os sig.bin -pwdk sig -ipu tmppub.bin > run.out
     checkSuccess $?
@@ -225,9 +278,9 @@ checkSuccess $?
 
 for HALG in ${ITERATE_ALGS}
 do
-    
+
     echo "Sign a digest - $HALG"
-    ${PREFIX}sign -hk 80000001 -halg $HALG -ecc -if policies/aaa -os sig.bin -pwdk sig > run.out 
+    ${PREFIX}sign -hk 80000001 -halg $HALG -ecc -if policies/aaa -os sig.bin -pwdk sig > run.out
     checkSuccess $?
 
     echo "Verify the signature - $HALG"
@@ -261,6 +314,51 @@ ${PREFIX}flushcontext -ha 80000001 > run.out
 checkSuccess $?
 
 echo ""
+echo "Primary Dilithium Signing Key"
+echo ""
+
+echo "Create primary signing key - Dilithium 80000001"
+${PREFIX}createprimary -si -opu tmppub.bin -dilithium -pwdk sig > run.out
+checkSuccess $?
+
+for HALG in ${ITERATE_ALGS}
+do
+
+    echo "Sign a digest - $HALG"
+    ${PREFIX}sign -hk 80000001 -halg $HALG -dilithium -if policies/aaa -os sig.bin -pwdk sig > run.out
+    checkSuccess $?
+
+    echo "Verify the signature - $HALG"
+    ${PREFIX}verifysignature -hk 80000001 -halg $HALG -if policies/aaa -is sig.bin > run.out
+    checkSuccess $?
+
+    #echo "Verify the signature using PEM - $HALG"
+    #${PREFIX}verifysignature -ipem tmppub.pem -halg $HALG -if policies/aaa -is sig.bin > run.out
+    #checkSuccess $?
+
+    #echo "Read the public part"
+    #${PREFIX}readpublic -ho 80000001 -opem tmppub.pem > run.out
+    #checkSuccess $?
+
+    #echo "Verify the signature using readpublic PEM - $HALG"
+    #${PREFIX}verifysignature -ipem tmppub.pem -halg $HALG -if policies/aaa -is sig.bin > run.out
+    #checkSuccess $?
+
+    #echo "Convert TPM public key to PEM"
+    #${PREFIX}tpm2pem -ipu tmppub.bin -opem tmppub.pem > run.out
+    #checkSuccess $?
+
+    #echo "Verify the signature using createprimary converted PEM - $HALG"
+    #${PREFIX}verifysignature -ipem tmppub.pem -halg $HALG -if policies/aaa -is sig.bin > run.out
+    #checkSuccess $?
+
+done
+
+echo "Flush the primary signing key"
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+echo ""
 echo "Restricted Signing Key"
 echo ""
 
@@ -285,7 +383,7 @@ echo ""
 # convert to der
 # > openssl rsa -inform pem -outform der -in rsaprivkey.pem -out rsaprivkey.der -passin pass:rrrr
 # extract the public key
-# > openssl pkey -inform pem -outform pem -in rsaprivkey.pem -passin pass:rrrr -pubout -out rsapubkey.pem 
+# > openssl pkey -inform pem -outform pem -in rsaprivkey.pem -passin pass:rrrr -pubout -out rsapubkey.pem
 # sign a test message msg.bin
 # > openssl dgst -sha1 -sign rsaprivkey.pem -passin pass:rrrr -out pssig.bin msg.bin
 

@@ -68,12 +68,12 @@ extern "C" {
 #define printf tssSwallowRc = 0 && TSS_SwallowPrintf
 
     #endif
-    
-    LIB_EXPORT 
+
+    LIB_EXPORT
     uint32_t TSS_Array_Scan(unsigned char **data, size_t *len, const char *string);
-    LIB_EXPORT 
+    LIB_EXPORT
     void TSS_PrintAll(const char *string, const unsigned char* buff, uint32_t length);
-    LIB_EXPORT 
+    LIB_EXPORT
     void TSS_PrintAlli(const char *string, unsigned int indent,
 		       const unsigned char* buff, uint32_t length);
     LIB_EXPORT
@@ -275,6 +275,13 @@ extern "C" {
     void TSS_TPMS_CREATION_DATA_Print(TPMS_CREATION_DATA *source, unsigned int indent);
     LIB_EXPORT
     void TSS_TPM2B_CREATION_DATA_Print(TPM2B_CREATION_DATA *source, unsigned int indent);
+
+    LIB_EXPORT
+    void TSS_TPMS_DILITHIUM_PARMS_Print(TPMS_DILITHIUM_PARMS *source, unsigned int indent);
+    LIB_EXPORT
+    void TSS_TPMT_DILITHIUM_SCHEME_Print(TPMT_DILITHIUM_SCHEME *source, unsigned int indent);
+    LIB_EXPORT
+    void TSS_TPMI_DILITHIUM_MODE_Print(const char *string, BYTE source, unsigned int indent);
 
 #ifdef __cplusplus
 }

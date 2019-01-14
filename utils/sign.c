@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
 */
 
@@ -77,21 +77,21 @@ int main(int argc, char *argv[])
     const char			*ticketFilename = NULL;
     const char			*publicKeyFilename = NULL;
     const char			*signatureFilename = NULL;
-    const char			*keyPassword = NULL; 
+    const char			*keyPassword = NULL;
     TPMI_SH_AUTH_SESSION    	sessionHandle0 = TPM_RS_PW;
     unsigned int		sessionAttributes0 = 0;
     TPMI_SH_AUTH_SESSION    	sessionHandle1 = TPM_RH_NULL;
     unsigned int		sessionAttributes1 = 0;
     TPMI_SH_AUTH_SESSION    	sessionHandle2 = TPM_RH_NULL;
     unsigned int		sessionAttributes2 = 0;
- 
+
     unsigned char 		*data = NULL;	/* message */
     size_t 			length;
     uint32_t           		sizeInBytes;	/* hash algorithm mapped to size */
     TPMT_HA 			digest;		/* digest of the message */
 
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
-    TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "1");
+    TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "3");
 
     /* command line argument defaults */
     for (i=1 ; (i<argc) && (rc == 0) ; i++) {
@@ -143,12 +143,15 @@ int main(int argc, char *argv[])
 	else if (strcmp(argv[i], "-rsa") == 0) {
 	    scheme = TPM_ALG_RSASSA;
 	}
+	else if (strcmp(argv[i], "-dilithium") == 0) {
+	    scheme = TPM_ALG_DILITHIUM;
+	}
 	else if (strcmp(argv[i], "-ecc") == 0) {
 	    scheme = TPM_ALG_ECDSA;
 	}
 	else if (strcmp(argv[i], "-ecdaa") == 0) {
 	    scheme = TPM_ALG_ECDAA;
-        }	
+        }
 	else if (strcmp(argv[i],"-scheme") == 0) {
             i++;
 	    if (i < argc) {
@@ -334,9 +337,12 @@ int main(int argc, char *argv[])
 	    (scheme == TPM_ALG_RSAPSS)) {
 	    in.inScheme.details.rsassa.hashAlg = halg;
 	}
+	else if (scheme == TPM_ALG_DILITHIUM) {
+        in.inScheme.details.dilithium.hashAlg = halg;
+    }
 	else if (scheme == TPM_ALG_ECDAA) {
 	    in.inScheme.details.ecdaa.hashAlg = halg;
-	    rc = TSS_File_ReadStructure(&in.inScheme.details.ecdaa.count, 
+	    rc = TSS_File_ReadStructure(&in.inScheme.details.ecdaa.count,
 					(UnmarshalFunction_t)TSS_UINT16_Unmarshalu,
 					counterFilename);
 	}
@@ -436,7 +442,7 @@ int main(int argc, char *argv[])
     }
     return rc;
 }
-    
+
 static void printUsage(void)
 {
     printf("\n");
@@ -450,6 +456,7 @@ static void printUsage(void)
     printf("\t[-halg\t(sha1, sha256, sha384, sha512) (default sha256)]\n");
     printf("\t[-rsa\t(default)]\n");
     printf("\t[-scheme  RSA signing scheme (rsassa rsapss) (default rsassa)]\n");
+    printf("\t[-dilithium\t Dilithium signing scheme]\n");
     printf("\t[-ecc\t ECDSA signing scheme]\n");
     printf("\t[-ecdaa\t ECDAA signing scheme]\n");
     printf("\t[-cf\tinput counter file (commit count required for ECDAA scheme]\n");
@@ -461,5 +468,5 @@ static void printUsage(void)
     printf("\t-se[0-2] session handle / attributes (default PWAP)\n");
     printf("\t01\tcontinue\n");
     printf("\t20\tcommand decrypt\n");
-    exit(1);	
+    exit(1);
 }

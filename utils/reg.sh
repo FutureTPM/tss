@@ -58,7 +58,7 @@
 # storage and signing keys under them, ready to load.
 # The exception is the last test case, which rolls the seeds.
 
-# This is a namespace prefix 
+# This is a namespace prefix
 # For the basic tarball, PREFIX is set to ./   (the current directory)
 
 PREFIX=./
@@ -160,6 +160,10 @@ cleanup()
     rm -f signpriv.bin
     rm -f signpub.bin
     rm -f signpub.pem
+    rm -f signdilpriv.bin
+    rm -f signdilpub.bin
+    rm -f signdilrpriv.bin
+    rm -f signdilrpub.bin
     rm -f signeccpriv.bin
     rm -f signeccpub.bin
     rm -f signeccpub.pem

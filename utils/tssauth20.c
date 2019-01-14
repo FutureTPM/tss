@@ -645,27 +645,6 @@ static const MARSHAL_TABLE marshalTable [] = {
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
 
-/*****************************************************************************/
-/*                             Dilithium Mods                                */
-/*****************************************************************************/
-    {TPM_CC_DILITHIUM_KeyGen, "TPM2_DILITHIUM_KeyGen",
-     (MarshalInFunction_t)TSS_DILITHIUM_KeyGen_In_Marshalu,
-     (UnmarshalOutFunction_t)TSS_DILITHIUM_KeyGen_Out_Unmarshalu,
-     (UnmarshalInFunction_t)DILITHIUM_KeyGen_In_Unmarshal},
-
-    {TPM_CC_DILITHIUM_Sign, "TPM2_DILITHIUM_Sign",
-     (MarshalInFunction_t)TSS_DILITHIUM_Sign_In_Marshalu,
-     (UnmarshalOutFunction_t)TSS_DILITHIUM_Sign_Out_Unmarshalu,
-     (UnmarshalInFunction_t)DILITHIUM_Sign_In_Unmarshal},
-
-    {TPM_CC_DILITHIUM_Verify, "TPM2_DILITHIUM_Verify",
-     (MarshalInFunction_t)TSS_DILITHIUM_Verify_In_Marshalu,
-     (UnmarshalOutFunction_t)TSS_DILITHIUM_Verify_Out_Unmarshalu,
-     (UnmarshalInFunction_t)DILITHIUM_Verify_In_Unmarshal},
-/*****************************************************************************/
-/*                             Dilithium Mods                                */
-/*****************************************************************************/
-
 #ifdef TPM_TPM20
     {NTC2_CC_PreConfig,"NTC2_CC_PreConfig",
      (MarshalInFunction_t)TSS_NTC2_PreConfig_In_Marshalu,

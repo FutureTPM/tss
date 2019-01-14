@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
 */
 
@@ -84,10 +84,10 @@ int main(int argc, char *argv[])
     const char			*ticketFilename = NULL;
     const char			*creationHashFilename = NULL;
     const char 			*dataFilename = NULL;
-    const char			*keyPassword = NULL; 
-    const char			*parentPassword = NULL; 
-    const char			*parentPasswordFilename = NULL; 
-    const char			*parentPasswordPtr = NULL; 
+    const char			*keyPassword = NULL;
+    const char			*parentPassword = NULL;
+    const char			*parentPasswordFilename = NULL;
+    const char			*parentPasswordPtr = NULL;
     uint8_t			*parentPasswordBuffer = NULL;		/* for the free */
     size_t 			parentPasswordLength = 0;
     TPMI_SH_AUTH_SESSION    	sessionHandle0 = TPM_RS_PW;
@@ -96,9 +96,9 @@ int main(int argc, char *argv[])
     unsigned int		sessionAttributes1 = 0;
     TPMI_SH_AUTH_SESSION    	sessionHandle2 = TPM_RH_NULL;
     unsigned int		sessionAttributes2 = 0;
-    
+
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
-    TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "1");
+    TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "3");
 
     /* command line argument defaults */
     addObjectAttributes.val = 0;
@@ -154,6 +154,14 @@ int main(int argc, char *argv[])
 	    keyType = TYPE_DAAR;
 	    keyTypeSpecified++;
 	}
+	else if (strcmp(argv[i], "-dilu") == 0) {
+	    keyType = TYPE_DILITHIUM_UNRESTRICTED;
+	    keyTypeSpecified++;
+	}
+	else if (strcmp(argv[i], "-dilr") == 0) {
+	    keyType = TYPE_DILITHIUM_RESTRICTED;
+	    keyTypeSpecified++;
+	}
 	else if (strcmp(argv[i], "-kh") == 0) {
 	    keyType = TYPE_KH;
 	    keyTypeSpecified++;
@@ -171,6 +179,9 @@ int main(int argc, char *argv[])
 	}
 	else if (strcmp(argv[i], "-rsa") == 0) {
 	    algPublic = TPM_ALG_RSA;
+	}
+	else if (strcmp(argv[i], "-dilithium") == 0) {
+	    algPublic = TPM_ALG_DILITHIUM;
 	}
 	else if (strcmp(argv[i], "-ecc") == 0) {
 	    algPublic = TPM_ALG_ECC;
@@ -502,7 +513,7 @@ int main(int argc, char *argv[])
     if (rc == 0) {
 	/* command auth from string */
 	if (parentPassword != NULL) {
-	    parentPasswordPtr = parentPassword; 
+	    parentPasswordPtr = parentPassword;
 	}
 	/* command parent from file */
 	else if (parentPasswordFilename != NULL) {
@@ -588,6 +599,8 @@ int main(int argc, char *argv[])
 	  case TYPE_DEO:
 	  case TYPE_SI:
 	  case TYPE_SIR:
+      case TYPE_DILITHIUM_RESTRICTED:
+      case TYPE_DILITHIUM_UNRESTRICTED:
 	  case TYPE_GP:
 	    rc = asymPublicTemplate(&in.inPublic.publicArea,
 				    addObjectAttributes, deleteObjectAttributes,
@@ -686,7 +699,7 @@ int main(int argc, char *argv[])
 	/* recalculate the creationHash from creationData */
 	if (rc == 0) {
 	    digest.hashAlg = nalg;			/* Name digest algorithm */
-	    rc = TSS_Hash_Generate(&digest,	
+	    rc = TSS_Hash_Generate(&digest,
 				   written, buffer,
 				   0, NULL);
 	}
@@ -778,5 +791,5 @@ static void printUsage(void)
     printf("\t01\tcontinue\n");
     printf("\t20\tcommand decrypt\n");
     printf("\t40\tresponse encrypt\n");
-    exit(1);	
+    exit(1);
 }

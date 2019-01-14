@@ -110,7 +110,8 @@
 #ifdef TPM_TSS_SO_0
 #define MAX_CONTEXT_SIZE		2048
 #else
-#define MAX_CONTEXT_SIZE		5120
+//#define MAX_CONTEXT_SIZE		5120
+#define MAX_CONTEXT_SIZE		8192
 #endif
 
 #define MAX_DIGEST_BUFFER		2048
@@ -356,16 +357,6 @@
 #define CC_KYBER_Dec                      (CC_YES*ALG_KYBER)
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
-/*****************************************************************************/
-
-/*****************************************************************************/
-/*                             Dilithium Mods                                */
-/*****************************************************************************/
-#define CC_DILITHIUM_KeyGen                   (CC_YES*ALG_DILITHIUM)
-#define CC_DILITHIUM_Sign                     (CC_YES*ALG_DILITHIUM)
-#define CC_DILITHIUM_Verify                   (CC_YES*ALG_DILITHIUM)
-/*****************************************************************************/
-/*                             Dilithium Mods                                */
 /*****************************************************************************/
 
 #define  CC_NTC2_PreConfig                CC_YES
@@ -1318,37 +1309,12 @@ typedef  UINT32             TPM_CC;
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
 
-/*****************************************************************************/
-/*                             Dilithium Mods                                */
-/*****************************************************************************/
-#ifndef CC_DILITHIUM_KeyGen
-#   define CC_DILITHIUM_KeyGen NO
-#endif
-#if CC_DILITHIUM_KeyGen == YES
-#define TPM_CC_DILITHIUM_KeyGen                   (TPM_CC)(0x0000019A)
-#endif
-#ifndef CC_DILITHIUM_Sign
-#   define CC_DILITHIUM_Sign NO
-#endif
-#if CC_DILITHIUM_Sign == YES
-#define TPM_CC_DILITHIUM_Sign                     (TPM_CC)(0x0000019B)
-#endif
-#ifndef CC_DILITHIUM_Verify
-#   define CC_DILITHIUM_Verify NO
-#endif
-#if CC_DILITHIUM_Verify == YES
-#define TPM_CC_DILITHIUM_Verify                   (TPM_CC)(0x0000019C)
-#endif
-/*****************************************************************************/
-/*                             Dilithium Mods                                */
-/*****************************************************************************/
-
 #define  TPM_CC_AC_GetCapability		(TPM_CC)(0x00000194)
 #define  TPM_CC_AC_Send				(TPM_CC)(0x00000195)
 #define  TPM_CC_Policy_AC_SendSelect		(TPM_CC)(0x00000196)
 
 /* Compile variable. May increase based on implementation. */
-#define  TPM_CC_LAST				(TPM_CC)(0x0000019C)
+#define  TPM_CC_LAST				(TPM_CC)(0x00000199)
 
 #ifndef CC_Vendor_TCG_Test
 #   define CC_Vendor_TCG_Test NO
@@ -1506,9 +1472,6 @@ typedef  UINT32             TPM_CC;
 					  + (ADD_FILL || CC_KYBER_KeyGen)               /* 0x00000197 */ \
 					  + (ADD_FILL || CC_KYBER_Enc)                  /* 0x00000198 */ \
 					  + (ADD_FILL || CC_KYBER_Dec)                  /* 0x00000199 */ \
-					  + (ADD_FILL || CC_DILITHIUM_KeyGen)           /* 0x0000019A */ \
-					  + (ADD_FILL || CC_DILITHIUM_Sign)             /* 0x0000019B */ \
-					  + (ADD_FILL || CC_DILITHIUM_Verify)           /* 0x0000019C */ \
 					  )
 
 #define VENDOR_COMMAND_ARRAY_SIZE   ( 0				\

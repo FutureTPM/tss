@@ -54,18 +54,20 @@
 
 #include "objecttemplates.h"
 
-/* asymPublicTemplate() is a template for an ECC or RSA 2048 key.
+/* asymPublicTemplate() is a template for an ECC, RSA 2048 key, or Dilithium key.
 
    It can create these types:
 
    TYPE_ST:   storage key (decrypt, restricted, RSA NULL scheme, EC NULL scheme)
    TYPE_DEN:  decryption key (not storage key, RSA NULL scheme, EC NULL scheme)
    TYPE_DEO:  decryption key (not storage key, RSA OAEP scheme, EC NULL scheme)
-   TYPE_SI:   signing key (unrestricted, RSA NULL schemem EC NULL scheme)
-   TYPE_SIR:  signing key (restricted, RSA RSASSA scheme, EC ECDSA scheme)
+   TYPE_SI:   signing key (unrestricted, RSA NULL schemem EC NULL scheme, Dilithium NULL scheme)
+   TYPE_SIR:  signing key (restricted, RSA RSASSA scheme, EC ECDSA scheme, Dilithium mode=2 scheme)
    TYPE_GP:   general purpose key
    TYPE_DAA:  signing key (unrestricted, ECDAA)
    TYPE_DAAR: signing key (restricted, ECDAA)
+   TYPE_DILITHIUM_UNRESTRICTED:  signing key (unrestricted, Dilithium)
+   TYPE_DILITHIUM_RESTRICTED: signing key (restricted, Dilithium)
 */
 
 TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
@@ -73,7 +75,7 @@ TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
 								   here */
 			  TPMA_OBJECT deleteObjectAttributes,
 			  int keyType,			/* see above */
-			  TPMI_ALG_PUBLIC algPublic,	/* RSA or ECC */	
+			  TPMI_ALG_PUBLIC algPublic,	/* RSA, ECC, or Dilithium */
 			  TPMI_ECC_CURVE curveID,	/* for ECC */
 			  TPMI_ALG_HASH nalg,		/* Name algorithm */
 			  TPMI_ALG_HASH halg,		/* hash algorithm */
@@ -86,7 +88,7 @@ TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
 	publicArea->objectAttributes.val &= ~deleteObjectAttributes.val;
 	/* Table 185 - TPM2B_PUBLIC inPublic */
 	/* Table 184 - TPMT_PUBLIC publicArea */
-	publicArea->type = algPublic;		/* RSA or ECC */
+	publicArea->type = algPublic;		/* RSA, ECC or Dilithium */
 	publicArea->nameAlg = nalg;
 
 	/* Table 32 - TPMA_OBJECT objectAttributes */
@@ -108,12 +110,14 @@ TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
 	    break;
 	  case TYPE_SI:
 	  case TYPE_DAA:
+      case TYPE_DILITHIUM_UNRESTRICTED:
 	    publicArea->objectAttributes.val |= TPMA_OBJECT_SIGN;
 	    publicArea->objectAttributes.val &= ~TPMA_OBJECT_DECRYPT;
 	    publicArea->objectAttributes.val &= ~TPMA_OBJECT_RESTRICTED;
 	    break;
 	  case TYPE_SIR:
 	  case TYPE_DAAR:
+      case TYPE_DILITHIUM_RESTRICTED:
 	    publicArea->objectAttributes.val |= TPMA_OBJECT_SIGN;
 	    publicArea->objectAttributes.val &= ~TPMA_OBJECT_DECRYPT;
 	    publicArea->objectAttributes.val |= TPMA_OBJECT_RESTRICTED;
@@ -140,16 +144,16 @@ TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
 	      case TYPE_SI:
 	      case TYPE_SIR:
 	      case TYPE_GP:
-		/* Non-storage keys must have TPM_ALG_NULL for the symmetric algorithm */
-		publicArea->parameters.rsaDetail.symmetric.algorithm = TPM_ALG_NULL;
-		break;
+            /* Non-storage keys must have TPM_ALG_NULL for the symmetric algorithm */
+            publicArea->parameters.rsaDetail.symmetric.algorithm = TPM_ALG_NULL;
+            break;
 	      case TYPE_ST:
-		publicArea->parameters.rsaDetail.symmetric.algorithm = TPM_ALG_AES;
-		/* Table 125 - TPMU_SYM_KEY_BITS keyBits */
-		publicArea->parameters.rsaDetail.symmetric.keyBits.aes = 128;
-		/* Table 126 - TPMU_SYM_MODE mode */
-		publicArea->parameters.rsaDetail.symmetric.mode.aes = TPM_ALG_CFB;
-		break;
+            publicArea->parameters.rsaDetail.symmetric.algorithm = TPM_ALG_AES;
+            /* Table 125 - TPMU_SYM_KEY_BITS keyBits */
+            publicArea->parameters.rsaDetail.symmetric.keyBits.aes = 128;
+            /* Table 126 - TPMU_SYM_MODE mode */
+            publicArea->parameters.rsaDetail.symmetric.mode.aes = TPM_ALG_CFB;
+            break;
 	    }
 
 	    /* Table 155 - Definition of {RSA} TPMT_RSA_SCHEME scheme */
@@ -158,26 +162,26 @@ TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
 	      case TYPE_GP:
 	      case TYPE_ST:
 	      case TYPE_SI:
-		publicArea->parameters.rsaDetail.scheme.scheme = TPM_ALG_NULL;
-		break;
+            publicArea->parameters.rsaDetail.scheme.scheme = TPM_ALG_NULL;
+            break;
 	      case TYPE_DEO:
-		publicArea->parameters.rsaDetail.scheme.scheme = TPM_ALG_OAEP;
-		/* Table 152 - Definition of TPMU_ASYM_SCHEME details */
-		/* Table 152 - Definition of TPMU_ASYM_SCHEME rsassa */
-		/* Table 142 - Definition of {RSA} Types for RSA Signature Schemes */
-		/* Table 135 - Definition of TPMS_SCHEME_HASH hashAlg */
-		publicArea->parameters.rsaDetail.scheme.details.oaep.hashAlg = halg;
-		break;
+            publicArea->parameters.rsaDetail.scheme.scheme = TPM_ALG_OAEP;
+            /* Table 152 - Definition of TPMU_ASYM_SCHEME details */
+            /* Table 152 - Definition of TPMU_ASYM_SCHEME rsassa */
+            /* Table 142 - Definition of {RSA} Types for RSA Signature Schemes */
+            /* Table 135 - Definition of TPMS_SCHEME_HASH hashAlg */
+            publicArea->parameters.rsaDetail.scheme.details.oaep.hashAlg = halg;
+            break;
 	      case TYPE_SIR:
-		publicArea->parameters.rsaDetail.scheme.scheme = TPM_ALG_RSASSA;
-		/* Table 152 - Definition of TPMU_ASYM_SCHEME details */
-		/* Table 152 - Definition of TPMU_ASYM_SCHEME rsassa */
-		/* Table 142 - Definition of {RSA} Types for RSA Signature Schemes */
-		/* Table 135 - Definition of TPMS_SCHEME_HASH hashAlg */
-		publicArea->parameters.rsaDetail.scheme.details.rsassa.hashAlg = halg;
-		break;
+            publicArea->parameters.rsaDetail.scheme.scheme = TPM_ALG_RSASSA;
+            /* Table 152 - Definition of TPMU_ASYM_SCHEME details */
+            /* Table 152 - Definition of TPMU_ASYM_SCHEME rsassa */
+            /* Table 142 - Definition of {RSA} Types for RSA Signature Schemes */
+            /* Table 135 - Definition of TPMS_SCHEME_HASH hashAlg */
+            publicArea->parameters.rsaDetail.scheme.details.rsassa.hashAlg = halg;
+            break;
 	    }
-	
+
 	    /* Table 159 - Definition of {RSA} (TPM_KEY_BITS) TPMI_RSA_KEY_BITS Type keyBits */
 	    publicArea->parameters.rsaDetail.keyBits = 2048;
 	    publicArea->parameters.rsaDetail.exponent = 0;
@@ -185,7 +189,7 @@ TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
 	    /* Table 177 - Definition of TPMU_PUBLIC_ID */
 	    publicArea->unique.rsa.t.size = 0;
 	}
-	else {	/* algPublic == TPM_ALG_ECC */
+	else if (algPublic == TPM_ALG_ECC) {	/* algPublic == TPM_ALG_ECC */
 	    /* Table 181 - Definition of {ECC} TPMS_ECC_PARMS Structure eccDetail */
 	    /* Table 129 - Definition of TPMT_SYM_DEF_OBJECT Structure symmetric */
 	    switch (keyType) {
@@ -196,16 +200,16 @@ TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
 	      case TYPE_DAA:
 	      case TYPE_DAAR:
 	      case TYPE_GP:
-		/* Non-storage keys must have TPM_ALG_NULL for the symmetric algorithm */
-		publicArea->parameters.eccDetail.symmetric.algorithm = TPM_ALG_NULL;
-		break;
-	      case TYPE_ST:
-		publicArea->parameters.eccDetail.symmetric.algorithm = TPM_ALG_AES;
-		/* Table 125 - TPMU_SYM_KEY_BITS keyBits */
-		publicArea->parameters.eccDetail.symmetric.keyBits.aes = 128;
-		/* Table 126 - TPMU_SYM_MODE mode */
-		publicArea->parameters.eccDetail.symmetric.mode.aes = TPM_ALG_CFB;
-		break;
+            /* Non-storage keys must have TPM_ALG_NULL for the symmetric algorithm */
+            publicArea->parameters.eccDetail.symmetric.algorithm = TPM_ALG_NULL;
+            break;
+          case TYPE_ST:
+            publicArea->parameters.eccDetail.symmetric.algorithm = TPM_ALG_AES;
+            /* Table 125 - TPMU_SYM_KEY_BITS keyBits */
+            publicArea->parameters.eccDetail.symmetric.keyBits.aes = 128;
+            /* Table 126 - TPMU_SYM_MODE mode */
+            publicArea->parameters.eccDetail.symmetric.mode.aes = TPM_ALG_CFB;
+            break;
 	    }
 	    /* Table 166 - Definition of (TPMT_SIG_SCHEME) {ECC} TPMT_ECC_SCHEME Structure scheme */
 	    /* Table 164 - Definition of (TPM_ALG_ID) {ECC} TPMI_ALG_ECC_SCHEME Type scheme */
@@ -214,54 +218,86 @@ TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
 	      case TYPE_SI:
 	      case TYPE_DEN:
 	      case TYPE_DEO:
-		publicArea->parameters.eccDetail.scheme.scheme = TPM_ALG_NULL;
-		/* Table 165 - Definition of {ECC} (TPM_ECC_CURVE) TPMI_ECC_CURVE Type */
-		/* Table 10 - Definition of (UINT16) {ECC} TPM_ECC_CURVE Constants curveID */
-		publicArea->parameters.eccDetail.curveID = curveID;
-		/* Table 150 - Definition of TPMT_KDF_SCHEME Structure kdf */
-		/* Table 64 - Definition of (TPM_ALG_ID) TPMI_ALG_KDF Type */
-		publicArea->parameters.eccDetail.kdf.scheme = TPM_ALG_NULL;
-		break;
+            publicArea->parameters.eccDetail.scheme.scheme = TPM_ALG_NULL;
+            /* Table 165 - Definition of {ECC} (TPM_ECC_CURVE) TPMI_ECC_CURVE Type */
+            /* Table 10 - Definition of (UINT16) {ECC} TPM_ECC_CURVE Constants curveID */
+            publicArea->parameters.eccDetail.curveID = curveID;
+            /* Table 150 - Definition of TPMT_KDF_SCHEME Structure kdf */
+            /* Table 64 - Definition of (TPM_ALG_ID) TPMI_ALG_KDF Type */
+            publicArea->parameters.eccDetail.kdf.scheme = TPM_ALG_NULL;
+            break;
 	      case TYPE_SIR:
-		publicArea->parameters.eccDetail.scheme.scheme = TPM_ALG_ECDSA;
-		/* Table 152 - Definition of TPMU_ASYM_SCHEME details */
-		/* Table 143 - Definition of {ECC} Types for ECC Signature Schemes */
-		publicArea->parameters.eccDetail.scheme.details.ecdsa.hashAlg = halg;
-		/* Table 165 - Definition of {ECC} (TPM_ECC_CURVE) TPMI_ECC_CURVE Type */
-		/* Table 10 - Definition of (UINT16) {ECC} TPM_ECC_CURVE Constants curveID */
-		publicArea->parameters.eccDetail.curveID = curveID;
-		/* Table 150 - Definition of TPMT_KDF_SCHEME Structure kdf */
-		/* Table 64 - Definition of (TPM_ALG_ID) TPMI_ALG_KDF Type */
-		publicArea->parameters.eccDetail.kdf.scheme = TPM_ALG_NULL;
-		/* Table 149 - Definition of TPMU_KDF_SCHEME Union <IN/OUT, S> */
-		/* Table 148 - Definition of Types for KDF Schemes, hash-based key-
-		   or mask-generation functions */
-		/* Table 135 - Definition of TPMS_SCHEME_HASH Structure hashAlg */
-		publicArea->parameters.eccDetail.kdf.details.mgf1.hashAlg = halg;
-		break;
+            publicArea->parameters.eccDetail.scheme.scheme = TPM_ALG_ECDSA;
+            /* Table 152 - Definition of TPMU_ASYM_SCHEME details */
+            /* Table 143 - Definition of {ECC} Types for ECC Signature Schemes */
+            publicArea->parameters.eccDetail.scheme.details.ecdsa.hashAlg = halg;
+            /* Table 165 - Definition of {ECC} (TPM_ECC_CURVE) TPMI_ECC_CURVE Type */
+            /* Table 10 - Definition of (UINT16) {ECC} TPM_ECC_CURVE Constants curveID */
+            publicArea->parameters.eccDetail.curveID = curveID;
+            /* Table 150 - Definition of TPMT_KDF_SCHEME Structure kdf */
+            /* Table 64 - Definition of (TPM_ALG_ID) TPMI_ALG_KDF Type */
+            publicArea->parameters.eccDetail.kdf.scheme = TPM_ALG_NULL;
+            /* Table 149 - Definition of TPMU_KDF_SCHEME Union <IN/OUT, S> */
+            /* Table 148 - Definition of Types for KDF Schemes, hash-based key-
+               or mask-generation functions */
+            /* Table 135 - Definition of TPMS_SCHEME_HASH Structure hashAlg */
+            publicArea->parameters.eccDetail.kdf.details.mgf1.hashAlg = halg;
+            break;
 	      case TYPE_DAA:
 	      case TYPE_DAAR:
-		publicArea->parameters.eccDetail.scheme.scheme = TPM_ALG_ECDAA;
-		publicArea->parameters.eccDetail.scheme.details.ecdaa.hashAlg = halg;
-		publicArea->parameters.eccDetail.scheme.details.ecdaa.count = 1;
-		publicArea->parameters.eccDetail.curveID = curveID;
-		publicArea->parameters.eccDetail.kdf.scheme = TPM_ALG_NULL;
-		publicArea->unique.ecc.y.t.size = 0;
-		publicArea->unique.ecc.x.t.size = 0;
-		break;
+            publicArea->parameters.eccDetail.scheme.scheme = TPM_ALG_ECDAA;
+            publicArea->parameters.eccDetail.scheme.details.ecdaa.hashAlg = halg;
+            publicArea->parameters.eccDetail.scheme.details.ecdaa.count = 1;
+            publicArea->parameters.eccDetail.curveID = curveID;
+            publicArea->parameters.eccDetail.kdf.scheme = TPM_ALG_NULL;
+            break;
 	      case TYPE_ST:
-		publicArea->parameters.eccDetail.scheme.scheme = TPM_ALG_NULL;
-		publicArea->parameters.eccDetail.scheme.details.anySig.hashAlg = 0;
-		publicArea->parameters.eccDetail.curveID = TPM_ECC_NIST_P256;
-		publicArea->parameters.eccDetail.kdf.scheme = TPM_ALG_NULL;
-		publicArea->parameters.eccDetail.kdf.details.mgf1.hashAlg = 0;
-		break;
+            publicArea->parameters.eccDetail.scheme.scheme = TPM_ALG_NULL;
+            publicArea->parameters.eccDetail.scheme.details.anySig.hashAlg = 0;
+            publicArea->parameters.eccDetail.curveID = TPM_ECC_NIST_P256;
+            publicArea->parameters.eccDetail.kdf.scheme = TPM_ALG_NULL;
+            publicArea->parameters.eccDetail.kdf.details.mgf1.hashAlg = 0;
+            break;
 	    }
 	    /* Table 177 - TPMU_PUBLIC_ID unique */
 	    /* Table 177 - Definition of TPMU_PUBLIC_ID */
 	    publicArea->unique.ecc.x.t.size = 0;
 	    publicArea->unique.ecc.y.t.size = 0;
-	}
+	} else { /* algPublic == TPM_ALG_DILITHIUM */
+	    switch (keyType) {
+	      case TYPE_GP:
+	      case TYPE_SI:
+	      case TYPE_SIR:
+          case TYPE_DILITHIUM_RESTRICTED:
+          case TYPE_DILITHIUM_UNRESTRICTED:
+            /* Non-storage keys must have TPM_ALG_NULL for the symmetric algorithm */
+            publicArea->parameters.dilithiumDetail.symmetric.algorithm = TPM_ALG_NULL;
+            break;
+          case TYPE_ST:
+            publicArea->parameters.dilithiumDetail.symmetric.algorithm = TPM_ALG_AES;
+            publicArea->parameters.dilithiumDetail.symmetric.keyBits.aes = 128;
+            publicArea->parameters.dilithiumDetail.symmetric.mode.aes = TPM_ALG_CFB;
+            break;
+	    }
+
+	    switch (keyType) {
+	      case TYPE_GP:
+	      case TYPE_SIR:
+          case TYPE_DILITHIUM_RESTRICTED:
+          case TYPE_DILITHIUM_UNRESTRICTED:
+            publicArea->parameters.dilithiumDetail.scheme.scheme = TPM_ALG_DILITHIUM;
+            publicArea->parameters.dilithiumDetail.scheme.details.dilithium.hashAlg = halg;
+            // TODO: Make this non static
+            publicArea->parameters.dilithiumDetail.mode = 2;
+            break;
+	      case TYPE_SI:
+	      case TYPE_ST:
+            publicArea->parameters.dilithiumDetail.scheme.scheme = TPM_ALG_NULL;
+            publicArea->parameters.dilithiumDetail.scheme.details.anySig.hashAlg = 0;
+            publicArea->parameters.dilithiumDetail.mode = 0;
+	    }
+
+    }
     }
     if (rc == 0) {
 	rc = getPolicy(publicArea, policyFilename);
@@ -282,7 +318,7 @@ TPM_RC symmetricCipherTemplate(TPMT_PUBLIC *publicArea,		/* output */
 			       const char *policyFilename)	/* binary policy, NULL means empty */
 {
     TPM_RC rc = 0;
-    
+
     if (rc == 0) {
 	publicArea->objectAttributes = addObjectAttributes;
 
@@ -319,7 +355,7 @@ TPM_RC symmetricCipherTemplate(TPMT_PUBLIC *publicArea,		/* output */
 	}
 	/* Table 177 - TPMU_PUBLIC_ID unique */
 	/* Table 72 - Definition of TPM2B_DIGEST Structure */
-	publicArea->unique.sym.t.size = 0; 
+	publicArea->unique.sym.t.size = 0;
     }
     if (rc == 0) {
 	rc = getPolicy(publicArea, policyFilename);
@@ -374,7 +410,7 @@ TPM_RC keyedHashPublicTemplate(TPMT_PUBLIC *publicArea,		/* output */
 	}
 	/* Table 177 - TPMU_PUBLIC_ID unique */
 	/* Table 72 - Definition of TPM2B_DIGEST Structure */
-	publicArea->unique.sym.t.size = 0; 
+	publicArea->unique.sym.t.size = 0;
     }
     if (rc == 0) {
 	rc = getPolicy(publicArea, policyFilename);
@@ -434,7 +470,7 @@ TPM_RC derivationParentPublicTemplate(TPMT_PUBLIC *publicArea,		/* output */
 	}
 	/* Table 177 - TPMU_PUBLIC_ID unique */
 	/* Table 72 - Definition of TPM2B_DIGEST Structure */
-	publicArea->unique.sym.t.size = 0; 
+	publicArea->unique.sym.t.size = 0;
     }
     if (rc == 0) {
 	rc = getPolicy(publicArea, policyFilename);
@@ -484,7 +520,7 @@ TPM_RC blPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
 	}
 	/* Table 177 - TPMU_PUBLIC_ID unique */
 	/* Table 72 - Definition of TPM2B_DIGEST Structure */
-	publicArea->unique.sym.t.size = 0; 
+	publicArea->unique.sym.t.size = 0;
     }
     if (rc == 0) {
 	rc = getPolicy(publicArea, policyFilename);
@@ -515,6 +551,7 @@ void printUsageTemplate(void)
     printf("\t[Asymmetric Key Algorithm]\n");
     printf("\n");
     printf("\t-rsa (default)\n");
+    printf("\t-dilithium\n");
     printf("\t-ecc curve\n");
     printf("\t\tbnp256\n");
     printf("\t\tnistp256\n");
@@ -534,6 +571,8 @@ void printUsageTemplate(void)
     printf("\t\t-sir\trestricted signing (RSA RSASSA, EC ECDSA scheme)\n");
     printf("\t\t-dau\tunrestricted ECDAA signing key pair\n");
     printf("\t\t-dar\trestricted ECDAA signing key pair\n");
+    printf("\t\t-dilu\tunrestricted Dilithium signing key pair\n");
+    printf("\t\t-dilr\trestricted Dilithium signing key pair\n");
     printf("\t\t-kh\tkeyed hash (hmac)\n");
     printf("\t\t-dp\tderivation parent\n");
     printf("\t\t-gp\tgeneral purpose, not storage\n");
@@ -549,5 +588,5 @@ void printUsageTemplate(void)
     printf("\n");
     printf("\t[-nalg\tname hash algorithm (sha1, sha256, sha384, sha512) (default sha256)]\n");
     printf("\t[-halg\tscheme hash algorithm (sha1, sha256, sha384, sha512) (default sha256)]\n");
-    return;	
+    return;
 }

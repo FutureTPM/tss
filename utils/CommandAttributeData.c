@@ -480,22 +480,6 @@ const TPMA_CC_TSS    s_ccAttr [] = {
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
 
-/*****************************************************************************/
-/*                             Dilithium Mods                                */
-/*****************************************************************************/
-#if (PAD_LIST || CC_DILITHIUM_KeyGen)
-    {{0x019A, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_DILITHIUM_KeyGen
-#endif
-#if (PAD_LIST || CC_DILITHIUM_Sign)
-    {{0x019B, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_DILITHIUM_Sign
-#endif
-#if (PAD_LIST || CC_DILITHIUM_Verify)
-    {{0x019C, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_DILITHIUM_Verify
-#endif
-/*****************************************************************************/
-/*                             Dilithium Mods                                */
-/*****************************************************************************/
-
     {{0x0000, 0, 0, 0, 0, 0, 0, 0, 0}},     // kg - terminator?
 };
 
@@ -982,25 +966,6 @@ const COMMAND_ATTRIBUTES    s_commandAttributes [] = {
 #endif
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
-/*****************************************************************************/
-
-/*****************************************************************************/
-/*                             Dilithium Mods                                */
-/*****************************************************************************/
-#if (PAD_LIST || CC_DILITHIUM_KeyGen)
-    (COMMAND_ATTRIBUTES)(CC_DILITHIUM_KeyGen               *  // 0x019A
-			 (IS_IMPLEMENTED+NO_SESSIONS)),
-#endif
-#if (PAD_LIST || CC_DILITHIUM_Sign)
-    (COMMAND_ATTRIBUTES)(CC_DILITHIUM_Sign                 *  // 0x019B
-			 (IS_IMPLEMENTED+NO_SESSIONS)),
-#endif
-#if (PAD_LIST || CC_DILITHIUM_Verify)
-    (COMMAND_ATTRIBUTES)(CC_DILITHIUM_Verify               *  // 0x019C
-			 (IS_IMPLEMENTED+NO_SESSIONS)),
-#endif
-/*****************************************************************************/
-/*                             Dilithium Mods                                */
 /*****************************************************************************/
 
 #if (PAD_LIST || CC_Vendor_TCG_Test)

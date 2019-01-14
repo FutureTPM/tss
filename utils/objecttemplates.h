@@ -44,7 +44,7 @@
 
 #define TYPE_BL		1
 #define TYPE_ST		2
-#define TYPE_DEN	3	
+#define TYPE_DEN	3
 #define TYPE_DEO	4
 #define TYPE_SI		5
 #define TYPE_SIR	6
@@ -54,6 +54,8 @@
 #define TYPE_DP		10
 #define TYPE_DAA        11
 #define TYPE_DAAR       12
+#define TYPE_DILITHIUM_UNRESTRICTED        13
+#define TYPE_DILITHIUM_RESTRICTED       14
 
 #ifdef __cplusplus
 extern "C" {
@@ -64,7 +66,7 @@ extern "C" {
 			      TPMA_OBJECT deleteObjectAttributes,
 			      int type,
 			      TPMI_ALG_PUBLIC algPublic,
-			      TPMI_ECC_CURVE curveID,			       
+			      TPMI_ECC_CURVE curveID,
 			      TPMI_ALG_HASH nalg,
 			      TPMI_ALG_HASH halg,
 			      const char *policyFilename);

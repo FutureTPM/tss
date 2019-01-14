@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
 */
 
@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
     unsigned int		sessionAttributes2 = 0;
 
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
-    TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "1"); 
+    TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "3");
 
     /* command line argument defaults */
     for (i=1 ; (i<argc) && (rc == 0) ; i++) {
@@ -155,6 +155,9 @@ int main(int argc, char *argv[])
 	}
 	else if (strcmp(argv[i], "-ecc") == 0) {
 	    algPublic = TPM_ALG_ECC;
+	}
+	else if (strcmp(argv[i], "-dilithium") == 0) {
+	    algPublic = TPM_ALG_DILITHIUM;
 	}
 	else if (strcmp(argv[i],"-if") == 0) {
 	    i++;
@@ -462,10 +465,11 @@ static void printUsage(void)
     printf("\n");
     printf("\t[-rsa\t(default)]\n");
     printf("\t[-ecc\t]\n");
+    printf("\t[-dilithium\t]\n");
     printf("\n");
     printf("\t-se[0-2] session handle / attributes (default NULL)\n");
     printf("\t01\tcontinue\n");
     printf("\t20\tcommand decrypt\n");
     printf("\t80\taudit\n");
-    exit(1);	
+    exit(1);
 }

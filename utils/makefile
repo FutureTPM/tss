@@ -502,8 +502,6 @@ kyber_test_dec:		ibmtss/tss.h kyber_test_dec.o objecttemplates.o $(LIBTSS) $(LIB
 			$(CC) $(LNFLAGS) $(LNAFLAGS) kyber_test_dec.o objecttemplates.o $(LNALIBS) -o kyber_test_dec
 kyber_test_enc:		ibmtss/tss.h kyber_test_enc.o objecttemplates.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) kyber_test_enc.o objecttemplates.o $(LNALIBS) -o kyber_test_enc
-dilithium_test:		ibmtss/tss.h dilithium_test.o objecttemplates.o $(LIBTSS) $(LIBTSSUTILS)
-			$(CC) $(LNFLAGS) $(LNAFLAGS) dilithium_test.o objecttemplates.o $(LNALIBS) -o dilithium_test
 
 # for applications, not for TSS library
 

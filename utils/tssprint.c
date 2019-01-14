@@ -71,7 +71,7 @@ uint32_t TSS_Array_Scan(unsigned char **data,	/* output binary, freed by caller 
 {
     uint32_t rc = 0;
     size_t strLength;
-    
+
     if (rc == 0) {
 	strLength = strlen(string);
 	if ((strLength %2) != 0) {
@@ -108,7 +108,7 @@ void TSS_PrintAll(const char *string, const unsigned char* buff, uint32_t length
 }
 
 /* TSS_PrintAlli() prints 'string', the length, and then the entire byte array
-   
+
    Each line indented 'indent' spaces.
 */
 
@@ -268,6 +268,9 @@ void TSS_TPM_ALG_ID_Print(const char *string, TPM_ALG_ID source, unsigned int in
 	break;
       case  ALG_ECB_VALUE:
 	printf("%s TPM_ALG_ECB\n", string);
+	break;
+      case  ALG_DILITHIUM_VALUE:
+	printf("%s TPM_ALG_DILITHIUM\n", string);
 	break;
       default:
 	printf("%s TPM_ALG_ID value %04hx unknown\n", string, source);
@@ -724,7 +727,7 @@ void TSS_TPM_CLOCK_ADJUST_Print(const char *string, TPM_CLOCK_ADJUST source, uns
 
 /* Table 18 - Definition of (UINT16) TPM_EO Constants <IN/OUT> */
 
-void TSS_TPM_EO_Print(const char *string, TPM_EO source, unsigned int indent) 
+void TSS_TPM_EO_Print(const char *string, TPM_EO source, unsigned int indent)
 {
     printf("%*s", indent, "");
     switch (source) {
@@ -772,7 +775,7 @@ void TSS_TPM_EO_Print(const char *string, TPM_EO source, unsigned int indent)
 
 /* Table 19 - Definition of (UINT16) TPM_ST Constants <IN/OUT, S> */
 
-void TSS_TPM_ST_Print(const char *string, TPM_ST source, unsigned int indent) 
+void TSS_TPM_ST_Print(const char *string, TPM_ST source, unsigned int indent)
 {
     printf("%*s", indent, "");
     switch (source) {
@@ -832,7 +835,7 @@ void TSS_TPM_ST_Print(const char *string, TPM_ST source, unsigned int indent)
 
 /* Table 20 - Definition of (UINT16) TPM_SU Constants <IN> */
 
-void TSS_TPM_SU_Print(const char *string, TPM_SU source, unsigned int indent) 
+void TSS_TPM_SU_Print(const char *string, TPM_SU source, unsigned int indent)
 {
     printf("%*s", indent, "");
     switch (source) {
@@ -858,10 +861,10 @@ void TSS_TPM_SE_Print(const char *string, TPM_SE source, unsigned int indent)
 	printf("%s TPM_SE_HMAC\n", string);
 	break;
       case TPM_SE_POLICY:
-	printf("%s TPM_SE_POLICY\n", string); 
+	printf("%s TPM_SE_POLICY\n", string);
 	break;
       case TPM_SE_TRIAL:
-	printf("%s TPM_SE_TRIAL\n", string); 
+	printf("%s TPM_SE_TRIAL\n", string);
 	break;
       default:
 	printf("%s TPM_SE value %02x unknown\n", string, source);
@@ -1004,13 +1007,13 @@ void TSS_TPMA_OBJECT_Print(const char *string, TPMA_OBJECT source, unsigned int 
 
 void TSS_TPMA_SESSION_Print(TPMA_SESSION source, unsigned int indent)
 {
-    
+
     if (source.val & TPMA_SESSION_CONTINUESESSION) printf("%*s" "TPMA_SESSION: continue\n", indent, "");
-    if (source.val & TPMA_SESSION_AUDITEXCLUSIVE) printf("%*s" "TPMA_SESSION: auditexclusive\n", indent, ""); 
-    if (source.val & TPMA_SESSION_AUDITRESET) printf("%*s" "TPMA_SESSION: auditreset\n", indent, ""); 
-    if (source.val & TPMA_SESSION_DECRYPT) printf("%*s" "TPMA_SESSION: decrypt\n", indent, ""); 
-    if (source.val & TPMA_SESSION_ENCRYPT) printf("%*s" "TPMA_SESSION: encrypt\n", indent, ""); 
-    if (source.val & TPMA_SESSION_AUDIT) printf("%*s" "TPMA_SESSION: audit\n", indent, ""); 
+    if (source.val & TPMA_SESSION_AUDITEXCLUSIVE) printf("%*s" "TPMA_SESSION: auditexclusive\n", indent, "");
+    if (source.val & TPMA_SESSION_AUDITRESET) printf("%*s" "TPMA_SESSION: auditreset\n", indent, "");
+    if (source.val & TPMA_SESSION_DECRYPT) printf("%*s" "TPMA_SESSION: decrypt\n", indent, "");
+    if (source.val & TPMA_SESSION_ENCRYPT) printf("%*s" "TPMA_SESSION: encrypt\n", indent, "");
+    if (source.val & TPMA_SESSION_AUDIT) printf("%*s" "TPMA_SESSION: audit\n", indent, "");
     return;
 }
 
@@ -1121,7 +1124,7 @@ void TSS_TPMU_HA_Print(TPMU_HA *source, uint32_t selector, unsigned int indent)
 
 void TSS_TPMT_HA_Print(TPMT_HA *source, unsigned int indent)
 {
-    TSS_TPM_ALG_ID_Print("hashAlg", source->hashAlg, indent+2);	
+    TSS_TPM_ALG_ID_Print("hashAlg", source->hashAlg, indent+2);
     TSS_TPMU_HA_Print(&source->digest, source->hashAlg, indent+2);
     return;
 }
@@ -1151,7 +1154,7 @@ void TSS_TPMS_PCR_SELECTION_Print(TPMS_PCR_SELECTION *source, unsigned int inden
 void TSS_TPMT_TK_CREATION_Print(TPMT_TK_CREATION *source, unsigned int indent)
 {
     TSS_TPM_ST_Print("tag", source->tag, indent);
-    TSS_TPM_HANDLE_Print("hierarchy", source->hierarchy, indent);	
+    TSS_TPM_HANDLE_Print("hierarchy", source->hierarchy, indent);
     TSS_TPM2B_Print("TPMT_TK_CREATION digest", indent, &source->digest.b);
     return;
 }
@@ -1161,17 +1164,17 @@ void TSS_TPMT_TK_CREATION_Print(TPMT_TK_CREATION *source, unsigned int indent)
 void TSS_TPMT_TK_VERIFIED_Print(TPMT_TK_VERIFIED *source, unsigned int indent)
 {
     TSS_TPM_ST_Print("tag", source->tag, indent);
-    TSS_TPM_HANDLE_Print("hierarchy", source->hierarchy, indent);	
+    TSS_TPM_HANDLE_Print("hierarchy", source->hierarchy, indent);
     TSS_TPM2B_Print("TPMT_TK_VERIFIED digest", indent, &source->digest.b);
     return;
 }
-	
+
 /* Table 95 - Definition of TPMT_TK_AUTH Structure */
 
 void TSS_TPMT_TK_AUTH_Print(TPMT_TK_AUTH *source, unsigned int indent)
 {
     TSS_TPM_ST_Print("tag", source->tag, indent);
-    TSS_TPM_HANDLE_Print("hierarchy", source->hierarchy, indent);	
+    TSS_TPM_HANDLE_Print("hierarchy", source->hierarchy, indent);
     TSS_TPM2B_Print("TPMT_TK_AUTH digest", indent, &source->digest.b);
     return;
 }
@@ -1181,7 +1184,7 @@ void TSS_TPMT_TK_AUTH_Print(TPMT_TK_AUTH *source, unsigned int indent)
 void TSS_TPMT_TK_HASHCHECK_Print(TPMT_TK_HASHCHECK *source, unsigned int indent)
 {
     TSS_TPM_ST_Print("tag", source->tag, indent);
-    TSS_TPM_HANDLE_Print("hierarchy", source->hierarchy, indent);	
+    TSS_TPM_HANDLE_Print("hierarchy", source->hierarchy, indent);
     TSS_TPM2B_Print("TPMT_TK_AUTH digest", indent, &source->digest.b);
     return;
 }
@@ -1271,7 +1274,7 @@ void TSS_TPMS_TIME_INFO_Print(TPMS_TIME_INFO *source, unsigned int indent)
     TSS_TPMS_CLOCK_INFO_Print(&source->clockInfo, indent+2);
     return;
 }
-    
+
 /* Table 117 - Definition of TPMS_TIME_ATTEST_INFO Structure <OUT> */
 
 void TSS_TPMS_TIME_ATTEST_INFO_Print(TPMS_TIME_ATTEST_INFO *source, unsigned int indent)
@@ -1309,7 +1312,7 @@ void TSS_TPMS_COMMAND_AUDIT_INFO_Print(TPMS_COMMAND_AUDIT_INFO *source, unsigned
     TSS_TPM2B_Print("TPMS_COMMAND_AUDIT_INFO commandDigest", indent, &source->commandDigest.b);
     return;
 }
-  
+
 /* Table 121 - Definition of TPMS_SESSION_AUDIT_INFO Structure */
 
 void TSS_TPMS_SESSION_AUDIT_INFO_Print(TPMS_SESSION_AUDIT_INFO *source, unsigned int indent)
@@ -1446,7 +1449,7 @@ void TSS_TPM2B_ATTEST_Print(TPM2B_ATTEST *source, unsigned int indent)
 
 void TSS_TPMS_AUTH_COMMAND_Print(TPMS_AUTH_COMMAND *source, unsigned int indent)
 {
-    TSS_TPM_HANDLE_Print("sessionHandle", source->sessionHandle, indent);	
+    TSS_TPM_HANDLE_Print("sessionHandle", source->sessionHandle, indent);
     TSS_TPM2B_Print("TPMS_AUTH_COMMAND nonce", indent, &source->nonce.b);
     TSS_TPMA_SESSION_Print(source->sessionAttributes, indent);
     TSS_TPM2B_Print("TPMS_AUTH_COMMAND hmac", indent, &source->hmac.b);
@@ -1511,7 +1514,7 @@ void TSS_TPMT_SYM_DEF_Print(TPMT_SYM_DEF *source, unsigned int indent)
 {
     TSS_TPM_ALG_ID_Print("algorithm", source->algorithm, indent);
     TSS_TPMU_SYM_KEY_BITS_Print(&source->keyBits, source->algorithm, indent);
-    TSS_TPM_ALG_ID_Print("mode", source->mode.sym, indent);		
+    TSS_TPM_ALG_ID_Print("mode", source->mode.sym, indent);
     return;
 }
 
@@ -1741,7 +1744,7 @@ void TSS_TPMT_ASYM_SCHEME_Print(TPMT_ASYM_SCHEME *source, unsigned int indent)
     }
     return;
 }
-	
+
 /* Table 165 - Definition of {RSA} TPMT_RSA_SCHEME Structure */
 
 void TSS_TPMT_RSA_SCHEME_Print(TPMT_RSA_SCHEME *source, unsigned int indent)
@@ -1819,6 +1822,22 @@ void TSS_TPMT_ECC_SCHEME_Print(TPMT_ECC_SCHEME *source, unsigned int indent)
     if (source->scheme != TPM_ALG_NULL) {
 	TSS_TPM_ALG_ID_Print("details", source->details.anySig.hashAlg, indent+2);
     }
+    return;
+}
+
+void TSS_TPMT_DILITHIUM_SCHEME_Print(TPMT_DILITHIUM_SCHEME *source, unsigned int indent)
+{
+    TSS_TPM_ALG_ID_Print("scheme", source->scheme, indent+2);
+    if (source->scheme != TPM_ALG_NULL) {
+	TSS_TPM_ALG_ID_Print("details", source->details.anySig.hashAlg, indent+2);
+    }
+    return;
+}
+
+void TSS_TPMI_DILITHIUM_MODE_Print(const char *string, BYTE source, unsigned int indent)
+{
+    printf("%*s", indent, "");
+	printf("%s TPMI_DILITHIUM_MODE %d\n", string, source);
     return;
 }
 
@@ -1909,7 +1928,7 @@ void TSS_TPMU_SIGNATURE_Print(TPMU_SIGNATURE *source, TPMI_ALG_SIG_SCHEME select
 #endif
      default:
 	printf("%*s" "TPMU_SIGNATURE selection %04hx not implemented\n", indent, "", selector);
-	
+
     }
 }
 
@@ -1945,6 +1964,11 @@ void TSS_TPMI_ALG_PUBLIC_Print(const char *string, TPMI_ALG_PUBLIC source, unsig
 	printf("%s TPM_ALG_ECC\n", string);
 	break;
 #endif
+#ifdef TPM_ALG_DILITHIUM
+      case TPM_ALG_DILITHIUM:
+	printf("%s TPM_ALG_DILITHIUM\n", string);
+	break;
+#endif
 #ifdef TPM_ALG_SYMCIPHER
       case TPM_ALG_SYMCIPHER:
 	printf("%s TPM_ALG_SYMCIPHER\n", string);
@@ -1955,7 +1979,7 @@ void TSS_TPMI_ALG_PUBLIC_Print(const char *string, TPMI_ALG_PUBLIC source, unsig
     }
     return;
 }
-    
+
 /* Table 187 - Definition of TPMU_PUBLIC_ID Union <IN/OUT, S> */
 
 void TSS_TPMU_PUBLIC_ID_Print(TPMU_PUBLIC_ID *source, TPMI_ALG_PUBLIC selector, unsigned int indent)
@@ -1971,8 +1995,13 @@ void TSS_TPMU_PUBLIC_ID_Print(TPMU_PUBLIC_ID *source, TPMI_ALG_PUBLIC selector, 
 	TSS_TPM2B_Print("TPM_ALG_SYMCIPHER sym", indent, &source->sym.b);
 	break;
 #endif
+#ifdef TPM_ALG_DILITHIUM
+      case TPM_ALG_DILITHIUM:
+	TSS_TPM2B_Print("TPM_ALG_DILITHIUM dilithium", indent, &source->dilithium.b);
+	break;
+#endif
 #ifdef TPM_ALG_RSA
-      case TPM_ALG_RSA: 
+      case TPM_ALG_RSA:
 	TSS_TPM2B_Print("TPM_ALG_RSA rsa", indent, &source->rsa.b);
 	break;
 #endif
@@ -2027,6 +2056,14 @@ void TSS_TPMS_ECC_PARMS_Print(TPMS_ECC_PARMS *source, unsigned int indent)
     return;
 }
 
+void TSS_TPMS_DILITHIUM_PARMS_Print(TPMS_DILITHIUM_PARMS *source, unsigned int indent)
+{
+    TSS_TPMT_SYM_DEF_OBJECT_Print(&source->symmetric, indent);
+    TSS_TPMT_DILITHIUM_SCHEME_Print(&source->scheme, indent);
+    TSS_TPMI_DILITHIUM_MODE_Print("mode", source->mode, indent);
+    return;
+}
+
 /* Table 192 - Definition of TPMU_PUBLIC_PARMS Union <IN/OUT, S> */
 
 void TSS_TPMU_PUBLIC_PARMS_Print(TPMU_PUBLIC_PARMS *source, uint32_t selector, unsigned int indent)
@@ -2054,6 +2091,12 @@ void TSS_TPMU_PUBLIC_PARMS_Print(TPMU_PUBLIC_PARMS *source, uint32_t selector, u
 	TSS_TPMS_ECC_PARMS_Print(&source->eccDetail, indent);
 	break;
 #endif
+#ifdef TPM_ALG_DILITHIUM
+      case TPM_ALG_DILITHIUM:
+	printf("%*s" "TPMU_PUBLIC_PARMS dilithiumDetail\n", indent, "");
+	TSS_TPMS_DILITHIUM_PARMS_Print(&source->dilithiumDetail, indent);
+	break;
+#endif
       default:
 	printf("%*s" "TPMU_PUBLIC_PARMS: selector %04x not implemented\n", indent, "", selector);
     }
@@ -2074,10 +2117,10 @@ void TSS_TPMT_PUBLIC_Print(TPMT_PUBLIC *source, unsigned int indent)
 {
     TSS_TPMI_ALG_PUBLIC_Print("type", source->type, indent);
     TSS_TPM_ALG_ID_Print("nameAlg", source->nameAlg, indent);
-    TSS_TPMA_OBJECT_Print("objectAttributes", source->objectAttributes, indent);	
+    TSS_TPMA_OBJECT_Print("objectAttributes", source->objectAttributes, indent);
     TSS_TPM2B_Print("authPolicy", indent, &source->authPolicy.b);
-    TSS_TPMU_PUBLIC_PARMS_Print(&source->parameters, source->type, indent);		
-    TSS_TPMU_PUBLIC_ID_Print(&source->unique, source->type, indent);			
+    TSS_TPMU_PUBLIC_PARMS_Print(&source->parameters, source->type, indent);
+    TSS_TPMU_PUBLIC_ID_Print(&source->unique, source->type, indent);
     return;
 }
 
@@ -2086,7 +2129,7 @@ void TSS_TPMT_PUBLIC_Print(TPMT_PUBLIC *source, unsigned int indent)
 void TSS_TPM2B_PUBLIC_Print(const char *string, TPM2B_PUBLIC *source, unsigned int indent)
 {
     printf("%*s" "%s\n", indent, "", string);
-    TSS_TPMT_PUBLIC_Print(&source->publicArea, indent+2);		
+    TSS_TPMT_PUBLIC_Print(&source->publicArea, indent+2);
     return;
 }
 

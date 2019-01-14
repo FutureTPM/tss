@@ -4626,6 +4626,16 @@ TSS_TPMS_SIG_SCHEME_RSAPSS_Marshalu(const TPMS_SIG_SCHEME_RSAPSS *source, uint16
     return rc;
 }
 
+TPM_RC
+TSS_TPMS_SIG_SCHEME_DILITHIUM_Marshalu(const TPMS_SIG_SCHEME_DILITHIUM *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+	rc = TSS_TPMS_SCHEME_HASH_Marshalu(source, written, buffer, size);
+    }
+    return rc;
+}
+
 /* Table 143 - Definition of {ECC} Types for ECC Signature Schemes */
 
 TPM_RC
@@ -4693,6 +4703,13 @@ TSS_TPMU_SIG_SCHEME_Marshalu(const TPMU_SIG_SCHEME *source, uint16_t *written, B
       case TPM_ALG_ECDSA:
 	if (rc == 0) {
 	    rc = TSS_TPMS_SIG_SCHEME_ECDSA_Marshalu(&source->ecdsa, written, buffer, size);
+	}
+	break;
+#endif
+#ifdef TPM_ALG_DILITHIUM
+      case TPM_ALG_DILITHIUM:
+	if (rc == 0) {
+	    rc = TSS_TPMS_SIG_SCHEME_DILITHIUM_Marshalu(&source->dilithium, written, buffer, size);
 	}
 	break;
 #endif
@@ -4923,6 +4940,13 @@ TSS_TPMU_ASYM_SCHEME_Marshalu(const TPMU_ASYM_SCHEME  *source, uint16_t *written
 	}
 	break;
 #endif
+#ifdef TPM_ALG_DILITHIUM
+      case TPM_ALG_DILITHIUM:
+	if (rc == 0) {
+	    rc = TSS_TPMS_SIG_SCHEME_DILITHIUM_Marshalu(&source->dilithium, written, buffer, size);
+	}
+	break;
+#endif
 #ifdef TPM_ALG_ECDSA
       case TPM_ALG_ECDSA:
 	if (rc == 0) {
@@ -4976,6 +5000,16 @@ TSS_TPMU_ASYM_SCHEME_Marshalu(const TPMU_ASYM_SCHEME  *source, uint16_t *written
 /* Table 154 - Definition of (TPM_ALG_ID) {RSA} TPMI_ALG_RSA_SCHEME Type */
 
 TPM_RC
+TSS_TPMI_ALG_DILITHIUM_SCHEME_Marshalu(const TPMI_ALG_DILITHIUM_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+	rc = TSS_TPM_ALG_ID_Marshalu(source, written, buffer, size);
+    }
+    return rc;
+}
+
+TPM_RC
 TSS_TPMI_ALG_RSA_SCHEME_Marshalu(const TPMI_ALG_RSA_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
@@ -4993,6 +5027,19 @@ TSS_TPMT_RSA_SCHEME_Marshalu(const TPMT_RSA_SCHEME *source, uint16_t *written, B
     TPM_RC rc = 0;
     if (rc == 0) {
 	rc = TSS_TPMI_ALG_RSA_SCHEME_Marshalu(&source->scheme, written, buffer, size);
+    }
+    if (rc == 0) {
+	rc = TSS_TPMU_ASYM_SCHEME_Marshalu(&source->details, written, buffer, size, source->scheme);
+    }
+    return rc;
+}
+
+TPM_RC
+TSS_TPMT_DILITHIUM_SCHEME_Marshalu(const TPMT_DILITHIUM_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+	rc = TSS_TPMI_ALG_DILITHIUM_SCHEME_Marshalu(&source->scheme, written, buffer, size);
     }
     if (rc == 0) {
 	rc = TSS_TPMU_ASYM_SCHEME_Marshalu(&source->details, written, buffer, size, source->scheme);
@@ -5256,6 +5303,22 @@ TSS_TPMS_SIGNATURE_ECC_Marshalu(const TPMS_SIGNATURE_ECC *source, uint16_t *writ
 /* Table 171 - Definition of Types for {ECC} TPMS_SIGNATURE_ECC */
 
 TPM_RC
+TSS_TPMS_SIGNATURE_DILITHIUM_Marshalu(const TPMS_SIGNATURE_DILITHIUM *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+	rc = TSS_TPMI_ALG_HASH_Marshalu(&source->hash, written, buffer, size);
+    }
+    if (rc == 0) {
+	rc = TSS_TPM2B_DILITHIUM_SIGNED_MESSAGE_Marshalu(&source->sig, written, buffer, size);
+    }
+    if (rc == 0) {
+	rc = TSS_UINT8_Marshalu(&source->mode, written, buffer, size);
+    }
+    return rc;
+}
+
+TPM_RC
 TSS_TPMS_SIGNATURE_ECDSA_Marshalu(const TPMS_SIGNATURE_ECDSA *source, uint16_t *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
@@ -5306,6 +5369,13 @@ TSS_TPMU_SIGNATURE_Marshalu(const TPMU_SIGNATURE *source, uint16_t *written, BYT
       case TPM_ALG_RSASSA:
 	if (rc == 0) {
 	    rc = TSS_TPMS_SIGNATURE_RSASSA_Marshalu(&source->rsassa, written, buffer, size);
+	}
+	break;
+#endif
+#ifdef TPM_ALG_DILITHIUM
+      case TPM_ALG_DILITHIUM:
+	if (rc == 0) {
+	    rc = TSS_TPMS_SIGNATURE_DILITHIUM_Marshalu(&source->dilithium, written, buffer, size);
 	}
 	break;
 #endif
@@ -5419,6 +5489,13 @@ TSS_TPMU_PUBLIC_ID_Marshalu(const TPMU_PUBLIC_ID *source, uint16_t *written, BYT
 	}
 	break;
 #endif
+#ifdef TPM_ALG_DILITHIUM
+      case TPM_ALG_DILITHIUM:
+	if (rc == 0) {
+	    rc = TSS_TPM2B_DILITHIUM_PUBLIC_KEY_Marshalu(&source->dilithium, written, buffer, size);
+	}
+	break;
+#endif
 #ifdef TPM_ALG_RSA
       case TPM_ALG_RSA:
 	if (rc == 0) {
@@ -5471,6 +5548,22 @@ TSS_TPMS_RSA_PARMS_Marshalu(const TPMS_RSA_PARMS *source, uint16_t *written, BYT
     }
     return rc;
 }
+
+TPM_RC
+TSS_TPMS_DILITHIUM_PARMS_Marshalu(const TPMS_DILITHIUM_PARMS *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+	rc = TSS_TPMT_SYM_DEF_OBJECT_Marshalu(&source->symmetric, written, buffer, size);
+    }
+    if (rc == 0) {
+	rc = TSS_TPMT_DILITHIUM_SCHEME_Marshalu(&source->scheme, written, buffer, size);
+    }
+    if (rc == 0) {
+	rc = TSS_UINT8_Marshalu(&source->mode, written, buffer, size);
+    }
+    return rc;
+}
 /* Table 181 - Definition of {ECC} TPMS_ECC_PARMS Structure */
 
 TPM_RC
@@ -5510,6 +5603,13 @@ TSS_TPMU_PUBLIC_PARMS_Marshalu(const TPMU_PUBLIC_PARMS *source, uint16_t *writte
       case TPM_ALG_SYMCIPHER:
 	if (rc == 0) {
 	    rc = TSS_TPMS_SYMCIPHER_PARMS_Marshalu(&source->symDetail, written, buffer, size);
+	}
+	break;
+#endif
+#ifdef TPM_ALG_DILITHIUM
+      case TPM_ALG_DILITHIUM:
+	if (rc == 0) {
+	    rc = TSS_TPMS_DILITHIUM_PARMS_Marshalu(&source->dilithiumDetail, written, buffer, size);
 	}
 	break;
 #endif
@@ -5652,6 +5752,13 @@ TSS_TPMU_SENSITIVE_COMPOSITE_Marshalu(const TPMU_SENSITIVE_COMPOSITE *source, ui
       case TPM_ALG_RSA:
 	if (rc == 0) {
 	    rc = TSS_TPM2B_PRIVATE_KEY_RSA_Marshalu(&source->rsa, written, buffer, size);
+	}
+	break;
+#endif
+#ifdef TPM_ALG_DILITHIUM
+      case TPM_ALG_DILITHIUM:
+	if (rc == 0) {
+	    rc = TSS_TPM2B_DILITHIUM_SECRET_KEY_Marshalu(&source->dilithium, written, buffer, size);
 	}
 	break;
 #endif
@@ -5973,16 +6080,6 @@ TSS_TPM2B_DILITHIUM_PUBLIC_KEY_Marshalu(const TPM2B_DILITHIUM_PUBLIC_KEY *source
 
 TPM_RC
 TSS_TPM2B_DILITHIUM_SECRET_KEY_Marshalu(const TPM2B_DILITHIUM_SECRET_KEY *source, uint16_t *written, BYTE **buffer, uint32_t *size)
-{
-    TPM_RC rc = 0;
-    if (rc == 0) {
-	rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
-    }
-    return rc;
-}
-
-TPM_RC
-TSS_TPM2B_DILITHIUM_MESSAGE_Marshalu(const TPM2B_DILITHIUM_MESSAGE *source, uint16_t *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -7863,89 +7960,5 @@ TSS_KYBER_Dec_In_Marshalu(KYBER_Dec_In *source, uint16_t *written,
 }
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
-/*****************************************************************************/
-
-/*****************************************************************************/
-/*                             Dilithium Mods                                */
-/*****************************************************************************/
-TPM_RC
-TSS_DILITHIUM_KeyGen_Out_Unmarshalu(DILITHIUM_KeyGen_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
-{
-    TPM_RC rc = TPM_RC_SUCCESS;
-    if (rc == 0) {
-        rc = TSS_TPM2B_DILITHIUM_PUBLIC_KEY_Unmarshalu(&target->public_key, buffer, size);
-    }
-    if (rc == 0) {
-        rc = TSS_TPM2B_DILITHIUM_SECRET_KEY_Unmarshalu(&target->secret_key, buffer, size);
-    }
-    return rc;
-}
-
-TPM_RC
-TSS_DILITHIUM_KeyGen_In_Marshalu(DILITHIUM_KeyGen_In *source, uint16_t *written,
-        BYTE **buffer, uint32_t *size)
-{
-    TPM_RC rc = 0;
-    if (rc == 0) {
-        rc = TSS_UINT8_Marshalu(&source->mode, written, buffer, size);
-    }
-    return rc;
-}
-
-TPM_RC
-TSS_DILITHIUM_Sign_Out_Unmarshalu(DILITHIUM_Sign_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
-{
-    TPM_RC rc = TPM_RC_SUCCESS;
-    if (rc == 0) {
-        rc = TSS_TPM2B_DILITHIUM_SIGNED_MESSAGE_Unmarshalu(&target->signed_message, buffer, size);
-    }
-    return rc;
-}
-
-TPM_RC
-TSS_DILITHIUM_Sign_In_Marshalu(DILITHIUM_Sign_In *source, uint16_t *written,
-        BYTE **buffer, uint32_t *size)
-{
-    TPM_RC rc = 0;
-    if (rc == 0) {
-        rc = TSS_UINT8_Marshalu(&source->mode, written, buffer, size);
-    }
-    if (rc == 0) {
-        rc = TSS_TPM2B_DILITHIUM_MESSAGE_Marshalu(&source->message, written, buffer, size);
-    }
-    if (rc == 0) {
-        rc = TSS_TPM2B_DILITHIUM_SECRET_KEY_Marshalu(&source->secret_key, written, buffer, size);
-    }
-    return rc;
-}
-
-TPM_RC
-TSS_DILITHIUM_Verify_Out_Unmarshalu(DILITHIUM_Verify_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
-{
-    TPM_RC rc = TPM_RC_SUCCESS;
-    if (rc == 0) {
-        rc = TSS_TPM2B_DILITHIUM_MESSAGE_Unmarshalu(&target->message, buffer, size);
-    }
-    return rc;
-}
-
-TPM_RC
-TSS_DILITHIUM_Verify_In_Marshalu(DILITHIUM_Verify_In *source, uint16_t *written,
-        BYTE **buffer, uint32_t *size)
-{
-    TPM_RC rc = 0;
-    if (rc == 0) {
-        rc = TSS_UINT8_Marshalu(&source->mode, written, buffer, size);
-    }
-    if (rc == 0) {
-        rc = TSS_TPM2B_DILITHIUM_PUBLIC_KEY_Marshalu(&source->public_key, written, buffer, size);
-    }
-    if (rc == 0) {
-        rc = TSS_TPM2B_DILITHIUM_SIGNED_MESSAGE_Marshalu(&source->signed_message, written, buffer, size);
-    }
-    return rc;
-}
-/*****************************************************************************/
-/*                             Dilithium Mods                                */
 /*****************************************************************************/
 #endif /* TPM 2.0 */

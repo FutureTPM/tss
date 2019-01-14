@@ -156,7 +156,6 @@ ALL += 	activatecredential$(EXE)		\
 	kyber_test$(EXE)				\
 	kyber_test_dec$(EXE)				\
 	kyber_test_enc$(EXE)				\
-	dilithium_test$(EXE)				\
 	tpmpublic2eccpoint$(EXE)
 
 ALL	+= 					\
