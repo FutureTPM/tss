@@ -352,7 +352,6 @@
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
-#define CC_KYBER_KeyGen                   (CC_YES*ALG_KYBER)
 #define CC_KYBER_Enc                      (CC_YES*ALG_KYBER)
 #define CC_KYBER_Dec                      (CC_YES*ALG_KYBER)
 /*****************************************************************************/
@@ -529,6 +528,11 @@
 #if defined ALG_KYBER && ALG_KYBER == YES
 #define TPM_ALG_KYBER                   (TPM_ALG_ID)(ALG_KYBER_VALUE)
 #endif   // ALG_KYBER
+
+#define  TPM_KYBER_SECURITY_NONE (TPM_KYBER_SECURITY)(0x00)
+#define  TPM_KYBER_SECURITY_2    (TPM_KYBER_SECURITY)(0x02)
+#define  TPM_KYBER_SECURITY_3    (TPM_KYBER_SECURITY)(0x03)
+#define  TPM_KYBER_SECURITY_4    (TPM_KYBER_SECURITY)(0x04)
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
@@ -1293,12 +1297,6 @@ typedef  UINT32             TPM_CC;
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
-#ifndef CC_KYBER_KeyGen
-#   define CC_KYBER_KeyGen NO
-#endif
-#if CC_KYBER_KeyGen == YES
-#define TPM_CC_KYBER_KeyGen                   (TPM_CC)(0x00000197)
-#endif
 #ifndef CC_KYBER_Enc
 #   define CC_KYBER_Enc NO
 #endif

@@ -190,7 +190,7 @@ do
     checkSuccess $?
 
     #echo "Verify the signature using PEM - $HALG"
-    #${PREFIX}verifysignature -ipem signeccpub.pem -halg $HALG -if policies/aaa -is sig.bin > run.out
+    #${PREFIX}verifysignature -ipem signdilpub.pem -halg $HALG -if policies/aaa -is sig.bin > run.out
     #checkSuccess $?
 
     #echo "Read the public part"
@@ -202,7 +202,7 @@ do
     #checkSuccess $?
 
     #echo "Load the openssl key pair in the NULL hierarchy 80000002 - $HALG"
-    #${PREFIX}loadexternal -halg $HALG -ecc -ider tmpkeypairecc.der > run.out
+    #${PREFIX}loadexternal -halg $HALG -ecc -ider tmpkeypairdil.der > run.out
     #checkSuccess $?
 
     #echo "Use the TPM as a crypto coprocessor to sign - $HALG"

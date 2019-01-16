@@ -168,7 +168,6 @@
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
-#include "KYBER_KeyGen_fp.h"
 #include "KYBER_Enc_fp.h"
 #include "KYBER_Dec_fp.h"
 /*****************************************************************************/
@@ -407,10 +406,6 @@ extern "C" {
     TSS_TPM2B_KYBER_CIPHER_TEXT_Marshalu(const TPM2B_KYBER_CIPHER_TEXT *source, uint16_t *written, BYTE **buffer, uint32_t *size);
 
     TPM_RC
-    TSS_KYBER_KeyGen_Out_Unmarshalu(KYBER_KeyGen_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
-    TPM_RC
-    TSS_KYBER_KeyGen_In_Marshalu(KYBER_KeyGen_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
-    TPM_RC
     TSS_KYBER_Enc_Out_Unmarshalu(KYBER_Enc_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
     TPM_RC
     TSS_KYBER_Enc_In_Marshalu(KYBER_Enc_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
@@ -418,6 +413,15 @@ extern "C" {
     TSS_KYBER_Dec_Out_Unmarshalu(KYBER_Dec_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
     TPM_RC
     TSS_KYBER_Dec_In_Marshalu(KYBER_Dec_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+
+    TPM_RC
+    TSS_TPMS_KYBER_PARMS_Marshalu(const TPMS_KYBER_PARMS *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPMS_ENC_SCHEME_KYBER_Marshalu(const TPMS_ENC_SCHEME_KYBER *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPMI_ALG_KYBER_SCHEME_Marshalu(const TPMI_ALG_KYBER_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPMT_KYBER_SCHEME_Marshalu(const TPMT_KYBER_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size);
     /*****************************************************************************/
     /*                                Kyber Mods                                 */
     /*****************************************************************************/

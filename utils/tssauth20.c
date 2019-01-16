@@ -627,11 +627,6 @@ static const MARSHAL_TABLE marshalTable [] = {
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
-    {TPM_CC_KYBER_KeyGen, "TPM2_KYBER_KeyGen",
-     (MarshalInFunction_t)TSS_KYBER_KeyGen_In_Marshalu,
-     (UnmarshalOutFunction_t)TSS_KYBER_KeyGen_Out_Unmarshalu,
-     (UnmarshalInFunction_t)KYBER_KeyGen_In_Unmarshal},
-
     {TPM_CC_KYBER_Enc, "TPM2_KYBER_Enc",
      (MarshalInFunction_t)TSS_KYBER_Enc_In_Marshalu,
      (UnmarshalOutFunction_t)TSS_KYBER_Enc_Out_Unmarshalu,

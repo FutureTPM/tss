@@ -68,6 +68,10 @@ echo "Create an ECC storage key under the primary key"
 ${PREFIX}create -hp 80000000 -ecc nistp256 -st -kt f -kt p -opr storeeccpriv.bin -opu storeeccpub.bin -pwdp sto -pwdk sto > run.out
 checkSuccess $?
 
+echo "Create a Kyber storage key under the primary key"
+${PREFIX}create -hp 80000000 -kyber k=2 -st -kt f -kt p -opr storekyberpriv.bin -opu storekyberpub.bin -pwdp sto -pwdk sto > run.out
+checkSuccess $?
+
 echo "Create an unrestricted RSA signing key under the primary key"
 ${PREFIX}create -hp 80000000 -si -kt f -kt p -opr signpriv.bin -opu signpub.bin -opem signpub.pem -pwdp sto -pwdk sig > run.out
 checkSuccess $?
@@ -77,7 +81,7 @@ ${PREFIX}create -hp 80000000 -ecc nistp256 -si -kt f -kt p -opr signeccpriv.bin 
 checkSuccess $?
 
 echo "Create an unrestricted Dilithium signing key under the primary key"
-${PREFIX}create -hp 80000000 -dilithium mode=2 -dilu -kt f -kt p -opr signdilpriv.bin -opu signdilpub.bin -pwdp sto -pwdk sig > run.out
+${PREFIX}create -hp 80000000 -dilithium mode=2 -si -kt f -kt p -opr signdilpriv.bin -opu signdilpub.bin -pwdp sto -pwdk sig > run.out
 checkSuccess $?
 
 echo "Create a restricted RSA signing key under the primary key"
@@ -85,11 +89,15 @@ ${PREFIX}create -hp 80000000 -sir -kt f -kt p -opr signrpriv.bin -opu signrpub.b
 checkSuccess $?
 
 echo "Create a restricted Dilithium signing key under the primary key"
-${PREFIX}create -hp 80000000 -dilithium mode=2 -dilr -kt f -kt p -opr signdilrpriv.bin -opu signdilrpub.bin -pwdp sto -pwdk sig > run.out
+${PREFIX}create -hp 80000000 -dilithium mode=2 -sir -kt f -kt p -opr signdilrpriv.bin -opu signdilrpub.bin -pwdp sto -pwdk sig > run.out
 checkSuccess $?
 
 echo "Create an RSA decryption key under the primary key"
 ${PREFIX}create -hp 80000000 -den -kt f -kt p -opr derpriv.bin -opu derpub.bin -pwdp sto -pwdk dec > run.out
+checkSuccess $?
+
+echo "Create a Kyber decryption key under the primary key"
+${PREFIX}create -hp 80000000 -kyber k=2 -den -kt f -kt p -opr derkyberpriv.bin -opu derkyberpub.bin -pwdp sto -pwdk dec > run.out
 checkSuccess $?
 
 echo "Create a symmetric cipher key under the primary key"

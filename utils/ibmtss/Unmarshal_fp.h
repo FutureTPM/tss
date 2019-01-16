@@ -481,6 +481,16 @@ extern "C" {
     TSS_TPM2B_KYBER_SHARED_KEY_Unmarshalu(TPM2B_KYBER_SHARED_KEY *target, BYTE **buffer, uint32_t *size);
     LIB_EXPORT TPM_RC
     TSS_TPM2B_KYBER_CIPHER_TEXT_Unmarshalu(TPM2B_KYBER_CIPHER_TEXT *target, BYTE **buffer, uint32_t *size);
+
+
+    LIB_EXPORT TPM_RC
+    TSS_TPMI_ALG_KYBER_SCHEME_Unmarshalu(TPMI_ALG_KYBER_SCHEME *target, BYTE **buffer, uint32_t *size, BOOL allowNull);
+    LIB_EXPORT TPM_RC
+    TSS_TPMT_KYBER_SCHEME_Unmarshalu(TPMT_KYBER_SCHEME *target, BYTE **buffer, uint32_t *size, BOOL allowNull);
+    LIB_EXPORT TPM_RC
+    TSS_TPMS_KYBER_PARMS_Unmarshalu(TPMS_KYBER_PARMS *target, BYTE **buffer, uint32_t *size);
+    LIB_EXPORT TPM_RC
+    TSS_TPMS_ENC_SCHEME_KYBER_Unmarshalu(TPMS_ENC_SCHEME_KYBER *target, BYTE **buffer, uint32_t *size);
     /*****************************************************************************/
     /*                                Kyber Mods                                 */
     /*****************************************************************************/

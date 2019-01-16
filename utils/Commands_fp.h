@@ -180,7 +180,6 @@
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
-#include <KYBER_KeyGen_fp.h>
 #include <KYBER_Enc_fp.h>
 #include <KYBER_Dec_fp.h>
 /*****************************************************************************/
@@ -509,8 +508,6 @@ NV_Certify_Out_Marshal(NV_Certify_Out *source, TPMI_ST_COMMAND_TAG tag, BYTE **b
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
-TPM_RC
-KYBER_KeyGen_In_Unmarshal(KYBER_KeyGen_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 TPM_RC
 KYBER_Enc_In_Unmarshal(KYBER_Enc_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 TPM_RC

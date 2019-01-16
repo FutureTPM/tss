@@ -107,6 +107,7 @@ printUsage ()
     echo "-27 Duplication"
     echo "-28 ECC"
     echo "-29 Credential"
+    echo "-30 Kyber"
     echo "-35 Shutdown (only run for simulator)"
     echo "-40 Tests under development (not part of all)"
     echo ""
@@ -157,6 +158,8 @@ cleanup()
     rm -f storepub.bin
     rm -f storeeccpub.bin
     rm -f storeeccpriv.bin
+    rm -f storekyberpriv.bin
+    rm -f storekyberpub.bin
     rm -f signpriv.bin
     rm -f signpub.bin
     rm -f signpub.pem
@@ -174,6 +177,8 @@ cleanup()
     rm -f derpub.bin
     rm -f despriv.bin
     rm -f despub.bin
+    rm -f derkyberpriv.bin
+    rm -f derkyberpub.bin
     rm -f khprivsha1.bin
     rm -f khprivsha256.bin
     rm -f khprivsha384.bin
@@ -484,6 +489,14 @@ main ()
     fi
     if [ "$1" == "-a" ] || [ "$1" == "-29" ]; then
     	./regtests/testcredential.sh
+    	RC=$?
+	if [ $RC -ne 0 ]; then
+	    exit 255
+	fi
+	((I++))
+    fi
+    if [ "$1" == "-a" ] || [ "$1" == "-30" ]; then
+    	./regtests/testkyber.sh
     	RC=$?
 	if [ $RC -ne 0 ]; then
 	    exit 255

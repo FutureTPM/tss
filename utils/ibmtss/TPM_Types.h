@@ -158,6 +158,7 @@ typedef UINT16 TPM_ALG_ID;
 typedef UINT16 TPM_ECC_CURVE;
 
 typedef UINT8  TPM_DILITHIUM_MODE;
+typedef UINT8  TPM_KYBER_SECURITY;
 
 /* Table 16 - Definition of (UINT32) TPM_RC Constants (Actions) <OUT> */
 
@@ -1438,6 +1439,50 @@ typedef union {
 /*                             Dilithium Mods                                */
 /*****************************************************************************/
 
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
+#define MAX_KYBER_PUBLIC_KEY_SIZE 1440
+#define MAX_KYBER_SECRET_KEY_SIZE 3168
+#define MAX_KYBER_CIPHER_TEXT_SIZE 1504
+#define MAX_KYBER_SHARED_KEY_SIZE 32
+
+typedef union {
+    struct {
+	UINT16                  size;
+	BYTE                    buffer[MAX_KYBER_CIPHER_TEXT_SIZE];
+    }            t;
+    TPM2B        b;
+} TPM2B_KYBER_CIPHER_TEXT;
+
+typedef union {
+    struct {
+	UINT16                  size;
+	BYTE                    buffer[MAX_KYBER_PUBLIC_KEY_SIZE];
+    }            t;
+    TPM2B        b;
+} TPM2B_KYBER_PUBLIC_KEY;
+
+typedef union {
+    struct {
+	UINT16                  size;
+	BYTE                    buffer[MAX_KYBER_SECRET_KEY_SIZE];
+    }            t;
+    TPM2B        b;
+} TPM2B_KYBER_SECRET_KEY;
+
+typedef union {
+    struct {
+	UINT16                  size;
+	BYTE                    buffer[MAX_KYBER_SHARED_KEY_SIZE];
+    }            t;
+    TPM2B        b;
+} TPM2B_KYBER_SHARED_KEY;
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
+
+
 typedef struct {
     UINT16    size;
     BYTE      buffer[sizeof(TPMU_HA) +	/* TPM2B_AUTH authValue */
@@ -2074,6 +2119,8 @@ typedef TPMS_SCHEME_HASH	TPMS_ENC_SCHEME_OAEP; 	/* schemes that only need a hash
 
 typedef TPMS_EMPTY		TPMS_ENC_SCHEME_RSAES;	/* schemes that need nothing */
 
+typedef TPMS_SCHEME_HASH	TPMS_ENC_SCHEME_KYBER; 	/* schemes that only need a hash */
+
 /* Table 146 - Definition of Types for {ECC} ECC Key Exchange */
 
 typedef TPMS_SCHEME_HASH	TPMS_KEY_SCHEME_ECDH; 	/* schemes that only need a hash */
@@ -2149,6 +2196,9 @@ typedef union {
 #endif
 #ifdef TPM_ALG_OAEP
     TPMS_ENC_SCHEME_OAEP	oaep;		/* TPM_ALG_OAEP */
+#endif
+#ifdef TPM_ALG_KYBER
+    TPMS_ENC_SCHEME_KYBER	kyber;		/* TPM_ALG_KYBER */
 #endif
     TPMS_SCHEME_HASH		anySig;
 } TPMU_ASYM_SCHEME;
@@ -2245,6 +2295,8 @@ typedef TPM_ALG_ID TPMI_ALG_ECC_SCHEME;
 typedef TPM_ECC_CURVE TPMI_ECC_CURVE;
 
 typedef TPM_DILITHIUM_MODE TPMI_DILITHIUM_MODE;
+
+typedef TPM_KYBER_SECURITY TPMI_KYBER_SECURITY;
 
 /* Table 165 - Definition of (TPMT_SIG_SCHEME) {ECC} TPMT_ECC_SCHEME Structure */
 
@@ -2350,8 +2402,11 @@ typedef union {
 #ifdef TPM_ALG_DILITHIUM
     BYTE	dilithium[MAX_DILITHIUM_SECRET_KEY_SIZE];		/* TPM_ALG_DILITHIUM */
 #endif
+#ifdef TPM_ALG_KYBER
+    BYTE	kyber[MAX_KYBER_SHARED_KEY_SIZE];		/* TPM_ALG_KYBER */
+#endif
 #ifdef TPM_ALG_RSA
-    BYTE	rsa[MAX_RSA_KEY_BYTES];			/* TPM_ALG_RSA */
+    BYTE	rsa[MAX_RSA_KEY_BYTES];			    /* TPM_ALG_RSA */
 #endif
 #ifdef TPM_ALG_SYMCIPHER
     BYTE	symmetric[sizeof(TPM2B_DIGEST)];	/* TPM_ALG_SYMCIPHER */
@@ -2388,6 +2443,9 @@ typedef union {
 #endif
 #ifdef TPM_ALG_DILITHIUM
     TPM2B_DILITHIUM_PUBLIC_KEY dilithium;		/* TPM_ALG_DILITHIUM */
+#endif
+#ifdef TPM_ALG_KYBER
+    TPM2B_KYBER_PUBLIC_KEY kyber;		/* TPM_ALG_KYBER */
 #endif
 #ifdef TPM_ALG_RSA
     TPM2B_PUBLIC_KEY_RSA	rsa;		/* TPM_ALG_RSA */
@@ -2442,6 +2500,18 @@ typedef struct {
     BYTE                  mode;
 } TPMS_DILITHIUM_PARMS;
 
+typedef  TPM_ALG_ID         TPMI_ALG_KYBER_SCHEME;
+typedef struct {
+    TPMI_ALG_KYBER_SCHEME scheme;
+    TPMU_ASYM_SCHEME          details;
+} TPMT_KYBER_SCHEME;
+
+typedef struct {
+    TPMT_SYM_DEF_OBJECT	symmetric;	/* for a restricted decryption key, shall be set to a supported symmetric algorithm, key size. and mode. */
+    TPMT_KYBER_SCHEME   scheme;
+    BYTE                security;
+} TPMS_KYBER_PARMS;
+
 /* Table 181 - Definition of TPMU_PUBLIC_PARMS Union <IN/OUT, S> */
 
 typedef union {
@@ -2453,6 +2523,9 @@ typedef union {
 #endif
 #ifdef TPM_ALG_DILITHIUM
     TPMS_DILITHIUM_PARMS	dilithiumDetail;	/* TPM_ALG_DILITHIUM */
+#endif
+#ifdef TPM_ALG_KYBER
+    TPMS_KYBER_PARMS	kyberDetail;	/* TPM_ALG_KYBER */
 #endif
 #ifdef TPM_ALG_RSA
     TPMS_RSA_PARMS		rsaDetail;		/* TPM_ALG_RSA */
@@ -2503,6 +2576,9 @@ typedef union {
 typedef union {
 #ifdef TPM_ALG_DILITHIUM
     TPM2B_DILITHIUM_SECRET_KEY	dilithium;
+#endif
+#ifdef TPM_ALG_KYBER
+    TPM2B_KYBER_SECRET_KEY	    kyber;
 #endif
 #ifdef TPM_ALG_RSA
     TPM2B_PRIVATE_KEY_RSA		rsa;	/* TPM_ALG_RSA a prime factor of the public key */
@@ -2848,48 +2924,6 @@ typedef struct tdNTC2_CFG_STRUCT {
     uint8_t IsLocked;	/* Ignored on NTC2_PreConfig, NTC2_GetConfig returns AAh once configuration
 			   is locked. */
 } NTC2_CFG_STRUCT;
-
-/*****************************************************************************/
-/*                                Kyber Mods                                 */
-/*****************************************************************************/
-#define MAX_KYBER_PUBLIC_KEY_SIZE 1440
-#define MAX_KYBER_SECRET_KEY_SIZE 3168
-#define MAX_KYBER_CIPHER_TEXT_SIZE 1504
-
-typedef union {
-    struct {
-	UINT16                  size;
-	BYTE                    buffer[MAX_KYBER_CIPHER_TEXT_SIZE];
-    }            t;
-    TPM2B        b;
-} TPM2B_KYBER_CIPHER_TEXT;
-
-typedef union {
-    struct {
-	UINT16                  size;
-	BYTE                    buffer[MAX_KYBER_PUBLIC_KEY_SIZE];
-    }            t;
-    TPM2B        b;
-} TPM2B_KYBER_PUBLIC_KEY;
-
-typedef union {
-    struct {
-	UINT16                  size;
-	BYTE                    buffer[MAX_KYBER_SECRET_KEY_SIZE];
-    }            t;
-    TPM2B        b;
-} TPM2B_KYBER_SECRET_KEY;
-
-typedef union {
-    struct {
-	UINT16                  size;
-	BYTE                    buffer[32];
-    }            t;
-    TPM2B        b;
-} TPM2B_KYBER_SHARED_KEY;
-/*****************************************************************************/
-/*                                Kyber Mods                                 */
-/*****************************************************************************/
 
 #ifdef __cplusplus
 }
