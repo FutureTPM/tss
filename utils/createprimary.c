@@ -78,7 +78,8 @@ int main(int argc, char *argv[])
     TPMI_ALG_HASH		halg = TPM_ALG_SHA256;
     TPMI_ALG_HASH		nalg = TPM_ALG_SHA256;
     TPMI_ECC_CURVE		curveID = TPM_ECC_NONE;
-    TPMI_DILITHIUM_MODE		dilithium_mode = TPM_DILITHIUM_MODE_NONE;
+    TPMI_DILITHIUM_MODE	dilithium_mode = TPM_DILITHIUM_MODE_NONE;
+    TPMI_KYBER_SECURITY	kyber_k = TPM_KYBER_SECURITY_NONE;
     const char			*policyFilename = NULL;
     const char			*publicKeyFilename = NULL;
     const char			*pemFilename = NULL;
@@ -155,14 +156,6 @@ int main(int argc, char *argv[])
 	    keyType = TYPE_DAAR;
 	    keyTypeSpecified++;
 	}
-	else if (strcmp(argv[i], "-dilu") == 0) {
-	    keyType = TYPE_DILITHIUM_UNRESTRICTED;
-	    keyTypeSpecified++;
-	}
-	else if (strcmp(argv[i], "-dilr") == 0) {
-	    keyType = TYPE_DILITHIUM_RESTRICTED;
-	    keyTypeSpecified++;
-	}
 	else if (strcmp(argv[i], "-kh") == 0) {
 	    keyType = TYPE_KH;
 	    keyTypeSpecified++;
@@ -180,6 +173,25 @@ int main(int argc, char *argv[])
 	}
 	else if (strcmp(argv[i], "-rsa") == 0) {
 	    algPublic = TPM_ALG_RSA;
+	}
+	else if (strcmp(argv[i], "-kyber") == 0) {
+	    algPublic = TPM_ALG_KYBER;
+	    i++;
+	    if (i < argc) {
+            if (strcmp(argv[i],"k=2") == 0) {
+                kyber_k = TPM_KYBER_SECURITY_2;
+            } else if (strcmp(argv[i],"k=3") == 0) {
+                kyber_k = TPM_KYBER_SECURITY_3;
+            } else if (strcmp(argv[i],"k=4") == 0) {
+                kyber_k = TPM_KYBER_SECURITY_4;
+            } else {
+                printf("Bad parameter %s for -kyber\n", argv[i]);
+                printUsage();
+            }
+        } else {
+            printf("-kyber option needs a value\n");
+            printUsage();
+	    }
 	}
 	else if (strcmp(argv[i], "-dilithium") == 0) {
 	    algPublic = TPM_ALG_DILITHIUM;
@@ -618,13 +630,11 @@ int main(int argc, char *argv[])
 	  case TYPE_DEO:
 	  case TYPE_SI:
 	  case TYPE_SIR:
-      case TYPE_DILITHIUM_RESTRICTED:
-      case TYPE_DILITHIUM_UNRESTRICTED:
 	  case TYPE_GP:
 	    rc = asymPublicTemplate(&in.inPublic.publicArea,
 				    addObjectAttributes, deleteObjectAttributes,
 				    keyType, algPublic, curveID, nalg, halg,
-				    policyFilename, dilithium_mode);
+				    policyFilename, dilithium_mode, kyber_k);
 	    break;
 	  case TYPE_DES:
 	    rc = symmetricCipherTemplate(&in.inPublic.publicArea,
@@ -779,8 +789,8 @@ int main(int argc, char *argv[])
 	const char *num;
 	printf("createprimary: failed, rc %08x\n", rc);
 	TSS_ResponseCode_toString(&msg, &submsg, &num, rc);
-	printf("%s%s%s\n", msg, submsg, num);
-	rc = EXIT_FAILURE;
+    printf("%s%s%s\n", msg, submsg, num);
+    rc = EXIT_FAILURE;
     }
     free(parentPasswordBuffer);
     parentPasswordBuffer = NULL;

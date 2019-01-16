@@ -52,10 +52,8 @@
 #define TYPE_DES	8
 #define TYPE_KH		9
 #define TYPE_DP		10
-#define TYPE_DAA        11
-#define TYPE_DAAR       12
-#define TYPE_DILITHIUM_UNRESTRICTED        13
-#define TYPE_DILITHIUM_RESTRICTED       14
+#define TYPE_DAA    11
+#define TYPE_DAAR   12
 
 #ifdef __cplusplus
 extern "C" {
@@ -70,7 +68,8 @@ extern "C" {
 			      TPMI_ALG_HASH nalg,
 			      TPMI_ALG_HASH halg,
 			      const char *policyFilename,
-                  TPMI_DILITHIUM_MODE dilithium_mode);
+                  TPMI_DILITHIUM_MODE dilithium_mode,
+                  TPMI_KYBER_SECURITY kyber_k);
     TPM_RC symmetricCipherTemplate(TPMT_PUBLIC *publicArea,
 				   TPMA_OBJECT addObjectAttributes,
 				   TPMA_OBJECT deleteObjectAttributes,
