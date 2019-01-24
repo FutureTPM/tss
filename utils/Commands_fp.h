@@ -180,8 +180,8 @@
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
-#include <KYBER_Enc_fp.h>
-#include <KYBER_Dec_fp.h>
+#include <Kyber_Enc_fp.h>
+#include <Kyber_Dec_fp.h>
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
@@ -509,9 +509,9 @@ NV_Certify_Out_Marshal(NV_Certify_Out *source, TPMI_ST_COMMAND_TAG tag, BYTE **b
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
 TPM_RC
-KYBER_Enc_In_Unmarshal(KYBER_Enc_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
+Kyber_Encapsulate_In_Unmarshal(Kyber_Encapsulate_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 TPM_RC
-KYBER_Dec_In_Unmarshal(KYBER_Dec_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
+Kyber_Decapsulate_In_Unmarshal(Kyber_Decapsulate_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/

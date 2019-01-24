@@ -80,60 +80,60 @@ ${PREFIX}startauthsession -se h > run.out
 checkSuccess $?
 
 for KEYTYPE in "-dau" "-dar"
-do 
+do
 
     for SESS in "" "-se0 02000000 1"
     do
 
-	echo "Create a $KEYTYPE ECDAA signing key under the primary key"
-	${PREFIX}create -hp 80000000 -ecc bnp256 $KEYTYPE -nalg sha256 -halg sha256 -kt f -kt p -opr tmprpriv.bin -opu tmprpub.bin -pwdp sto -pwdk siga > run.out
-	checkSuccess $?
+        echo "Create a $KEYTYPE ECDAA signing key under the primary key"
+        ${PREFIX}create -hp 80000000 -ecc bnp256 $KEYTYPE -nalg sha256 -halg sha256 -kt f -kt p -opr tmprpriv.bin -opu tmprpub.bin -pwdp sto -pwdk siga > run.out
+        checkSuccess $?
 
-	echo "Load the signing key 80000001 under the primary key 80000000"
-	${PREFIX}load -hp 80000000 -ipr tmprpriv.bin -ipu tmprpub.bin -pwdp sto > run.out
-	checkSuccess $?
+        echo "Load the signing key 80000001 under the primary key 80000000"
+        ${PREFIX}load -hp 80000000 -ipr tmprpriv.bin -ipu tmprpub.bin -pwdp sto > run.out
+        checkSuccess $?
 
     	#${PREFIX}getcapability -cap 1 -pr 80000001
-    	
+
     	# The trick with commit is first use - empty ECC point and no s2 and y2 parameters
-    	# which means no P1, no s2 and no y2. 
+    	# which means no P1, no s2 and no y2.
     	# and output the result and get the efile.bin
     	# feed back the point in efile.bin as the new p1 because it is on the curve.
-	
+
     	# There is no test case for s2 and y2. To construct a y2 requires using Cipolla's algorithm.
-    	# example of normal command    
+    	# example of normal command
     	# ${PREFIX}commit -hk 80000001 -pt p1.bin -s2 s2.bin -y2 y2_a.bin -Kf kfile.bin -Lf lfile.bin -Ef efile.bin -cf counterfile.bin -pwdk siga > run.out
     	# checkSuccess $?
-	
-	echo "Create new point E, based on point-multiply of TPM's commit random scalar and Generator point ${SESS}"
-	${PREFIX}commit -hk 80000001 -Ef efile.bin -pwdk siga ${SESS} > run.out
-	checkSuccess $?
+
+        echo "Create new point E, based on point-multiply of TPM's commit random scalar and Generator point ${SESS}"
+        ${PREFIX}commit -hk 80000001 -Ef efile.bin -pwdk siga ${SESS} > run.out
+        checkSuccess $?
 
         # copy efile as new p1 - for hash operation
         cp efile.bin p1.bin
 
         # We have a point on the curve - in efile.bin.  Use E as P1 and feed it back in
-		
-	# All this does is simulate the commit that the FIDO alliance wants to
-	# use in its TPM Join operation.
-		
-	echo "Create new point E, based on point-multiply of TPM's commit random scalar and input point ${SESS}"
-	${PREFIX}commit -hk 80000001 -pt p1.bin -Ef efile.bin -cf counterfile.bin -pwdk siga ${SESS} > run.out
-	checkSuccess $?
+
+        # All this does is simulate the commit that the FIDO alliance wants to
+        # use in its TPM Join operation.
+
+        echo "Create new point E, based on point-multiply of TPM's commit random scalar and input point ${SESS}"
+        ${PREFIX}commit -hk 80000001 -pt p1.bin -Ef efile.bin -cf counterfile.bin -pwdk siga ${SESS} > run.out
+        checkSuccess $?
 
         cat efile.bin p1.bin tmprpub.bin > hashinput.bin
 
         echo "Hash the E, P1, and Q to create the ticket to use in signing"
         ${PREFIX}hash -hi p -halg sha256 -if hashinput.bin -oh outhash.bin -tk tfile.bin > run.out
         checkSuccess $?
-        
+
         echo "Sign the hash of the points made from commit"
         ${PREFIX}sign -hk 80000001 -pwdk siga -ecdaa -cf counterfile.bin -if hashinput.bin -os sig.bin -tk tfile.bin > run.out
         checkSuccess $?
-        
-	echo "Flush the signing key"
-	${PREFIX}flushcontext -ha 80000001 > run.out
-	checkSuccess $?
+
+        echo "Flush the signing key"
+        ${PREFIX}flushcontext -ha 80000001 > run.out
+        checkSuccess $?
 
     done
 done
@@ -142,7 +142,7 @@ done
 cp counterfile.bin counterfileold.bin
 
 for KEYTYPE in "-dau" "-dar"
-do 
+do
 
     for SESS in "" "-se0 02000000 1"
     do
@@ -150,35 +150,35 @@ do
         echo "Create a $KEYTYPE ECDAA signing primary key"
         ${PREFIX}createprimary -ecc bnp256 $KEYTYPE -nalg sha256 -halg sha256 -kt f -kt p -opu tmprpub.bin -pwdk siga > run.out
         checkSuccess $?
-        
+
         #${PREFIX}getcapability -cap 1 -pr 80000001
-        
+
         # The trick with commit is first use - empty ECC point and no s2 and y2 parameters
-        # which means no P1, no s2 and no y2. 
+        # which means no P1, no s2 and no y2.
         # and output the result and get the efile.bin
         # feed back the point in efile.bin as the new p1 because it is on the curve.
-        
+
         # There is no test case for s2 and y2. To construct a y2 requires using Cipolla's algorithm.
-        # example of normal command    
+        # example of normal command
         # ${PREFIX}commit -hk 80000001 -pt p1.bin -s2 s2.bin -y2 y2_a.bin -Kf kfile.bin -Lf lfile.bin -Ef efile.bin -cf counterfile.bin -pwdk siga > run.out
         # checkSuccess $?
-        
+
         echo "Create new point E, based on point-multiply of TPM's commit random scalar and Generator point ${SESS}"
         ${PREFIX}commit -hk 80000001 -Ef efile.bin -pwdk siga ${SESS} > run.out
         checkSuccess $?
-        
+
         # copy efile as new p1 - for hash operation
         cp efile.bin p1.bin
-       
+
         # We have a point on the curve - in efile.bin.  Use E as P1 and feed it back in
-        
+
         # All this does is simulate the commit that the FIDO alliance wants to
         # use in its TPM Join operation.
-        
+
         echo "Create new point E, based on point-multiply of TPM's commit random scalar and input point ${SESS}"
         ${PREFIX}commit -hk 80000001 -pt p1.bin -Ef efile.bin -cf counterfile.bin -pwdk siga ${SESS} > run.out
         checkSuccess $?
-        
+
         cat efile.bin p1.bin tmprpub.bin > hashinput.bin
 
         echo "Hash the E, P1, and Q to create the ticket to use in signing"

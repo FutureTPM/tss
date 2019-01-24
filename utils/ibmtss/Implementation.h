@@ -1473,7 +1473,6 @@ typedef  UINT32             TPM_CC;
 					  + (ADD_FILL || CC_CreateLoaded)               /* 0x00000191 */ \
 					  + (ADD_FILL || CC_PolicyAuthorizeNV)          /* 0x00000192 */ \
 					  + (ADD_FILL || CC_EncryptDecrypt2)            /* 0x00000193 */ \
-					  + (ADD_FILL || CC_KYBER_KeyGen)               /* 0x00000197 */ \
 					  + (ADD_FILL || CC_KYBER_Enc)                  /* 0x00000198 */ \
 					  + (ADD_FILL || CC_KYBER_Dec)                  /* 0x00000199 */ \
 					  )

@@ -496,10 +496,10 @@ ntc2preconfig:		ntc2preconfig.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) ntc2preconfig.o $(LNALIBS) -o ntc2preconfig
 ntc2lockconfig:		ntc2lockconfig.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) ntc2lockconfig.o $(LNALIBS) -o ntc2lockconfig
-kyber_test_dec:		ibmtss/tss.h kyber_test_dec.o objecttemplates.o $(LIBTSS) $(LIBTSSUTILS)
-			$(CC) $(LNFLAGS) $(LNAFLAGS) kyber_test_dec.o objecttemplates.o $(LNALIBS) -o kyber_test_dec
-kyber_test_enc:		ibmtss/tss.h kyber_test_enc.o objecttemplates.o $(LIBTSS) $(LIBTSSUTILS)
-			$(CC) $(LNFLAGS) $(LNAFLAGS) kyber_test_enc.o objecttemplates.o $(LNALIBS) -o kyber_test_enc
+kyber_dec:		ibmtss/tss.h kyber_dec.o $(LIBTSS) $(LIBTSSUTILS)
+			$(CC) $(LNFLAGS) $(LNAFLAGS) kyber_dec.o $(LNALIBS) -o kyber_dec
+kyber_enc:		ibmtss/tss.h kyber_enc.o $(LIBTSS) $(LIBTSSUTILS)
+			$(CC) $(LNFLAGS) $(LNAFLAGS) kyber_enc.o $(LNALIBS) -o kyber_enc
 
 # for applications, not for TSS library
 

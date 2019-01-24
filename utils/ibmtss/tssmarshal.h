@@ -168,8 +168,8 @@
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
-#include "KYBER_Enc_fp.h"
-#include "KYBER_Dec_fp.h"
+#include "Kyber_Enc_fp.h"
+#include "Kyber_Dec_fp.h"
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
@@ -404,15 +404,18 @@ extern "C" {
     TSS_TPM2B_KYBER_SECRET_KEY_Marshalu(const TPM2B_KYBER_SECRET_KEY *source, uint16_t *written, BYTE **buffer, uint32_t *size);
     TPM_RC
     TSS_TPM2B_KYBER_CIPHER_TEXT_Marshalu(const TPM2B_KYBER_CIPHER_TEXT *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_KYBER_SHARED_KEY_Marshalu(const TPM2B_KYBER_SHARED_KEY *source, uint16_t *written, BYTE **buffer, uint32_t *size);
 
     TPM_RC
-    TSS_KYBER_Enc_Out_Unmarshalu(KYBER_Enc_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+    TSS_Kyber_Encapsulate_In_Marshalu(Kyber_Encapsulate_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_KYBER_Enc_In_Marshalu(KYBER_Enc_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_Kyber_Encapsulate_Out_Unmarshalu(Kyber_Encapsulate_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+
     TPM_RC
-    TSS_KYBER_Dec_Out_Unmarshalu(KYBER_Dec_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+    TSS_Kyber_Decapsulate_Out_Unmarshalu(Kyber_Decapsulate_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_KYBER_Dec_In_Marshalu(KYBER_Dec_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_Kyber_Decapsulate_In_Marshalu(Kyber_Decapsulate_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
 
     TPM_RC
     TSS_TPMS_KYBER_PARMS_Marshalu(const TPMS_KYBER_PARMS *source, uint16_t *written, BYTE **buffer, uint32_t *size);

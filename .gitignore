@@ -8,8 +8,8 @@ utils/libibmtss.so
 utils/libibmtssutils.so
 
 utils/shutdown
-utils/kyber_test_enc
-utils/kyber_test_dec
+utils/kyber_enc
+utils/kyber_dec
 utils/activatecredential
 utils/certify
 utils/certifycreation

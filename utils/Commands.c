@@ -2264,27 +2264,27 @@ NV_Certify_In_Unmarshal(NV_Certify_In *target, BYTE **buffer, uint32_t *size, TP
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
 TPM_RC
-KYBER_Enc_In_Unmarshal(KYBER_Enc_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
+Kyber_Encapsulate_In_Unmarshal(Kyber_Encapsulate_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
 {
     TPM_RC rc = TPM_RC_SUCCESS;
     buffer = buffer;
     size = size;
 
     if (rc == TPM_RC_SUCCESS) {
-        target->sec_sel = handles[0];
+        target->key_handle = handles[0];
     }
     return rc;
 }
 
 TPM_RC
-KYBER_Dec_In_Unmarshal(KYBER_Dec_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
+Kyber_Decapsulate_In_Unmarshal(Kyber_Decapsulate_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
 {
     TPM_RC rc = TPM_RC_SUCCESS;
     buffer = buffer;
     size = size;
 
     if (rc == TPM_RC_SUCCESS) {
-        target->sec_sel = handles[0];
+        target->key_handle = handles[0];
     }
     return rc;
 }

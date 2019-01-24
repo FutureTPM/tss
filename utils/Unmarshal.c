@@ -5615,6 +5615,7 @@ TPM_RC TPM2B_CREATION_DATA_Unmarshal(TPM2B_CREATION_DATA *target, BYTE **buffer,
     return TSS_TPM2B_CREATION_DATA_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
+
 #ifdef __cplusplus
 }
 #endif
