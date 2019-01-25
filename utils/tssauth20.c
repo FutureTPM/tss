@@ -636,6 +636,21 @@ static const MARSHAL_TABLE marshalTable [] = {
      (MarshalInFunction_t)TSS_Kyber_Decapsulate_In_Marshalu,
      (UnmarshalOutFunction_t)TSS_Kyber_Decapsulate_Out_Unmarshalu,
      (UnmarshalInFunction_t)Kyber_Decapsulate_In_Unmarshal},
+
+    {TPM_CC_KYBER_Ephemeral, "TPM2_KYBER_Ephemeral",
+     (MarshalInFunction_t)TSS_Kyber_Ephemeral_In_Marshalu,
+     (UnmarshalOutFunction_t)TSS_Kyber_Ephemeral_Out_Unmarshalu,
+     (UnmarshalInFunction_t)Kyber_Ephemeral_In_Unmarshal},
+
+    {TPM_CC_KYBER_2Phase_KEX, "TPM2_KYBER_2Phase_KEX",
+     (MarshalInFunction_t)TSS_Kyber_2Phase_KEX_In_Marshalu,
+     (UnmarshalOutFunction_t)TSS_Kyber_2Phase_KEX_Out_Unmarshalu,
+     (UnmarshalInFunction_t)Kyber_2Phase_KEX_In_Unmarshal},
+
+    {TPM_CC_KYBER_3Phase_KEX, "TPM3_KYBER_3Phase_KEX",
+     (MarshalInFunction_t)TSS_Kyber_3Phase_KEX_In_Marshalu,
+     (UnmarshalOutFunction_t)TSS_Kyber_3Phase_KEX_Out_Unmarshalu,
+     (UnmarshalInFunction_t)Kyber_3Phase_KEX_In_Unmarshal},
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/

@@ -7,9 +7,13 @@ utils/libibmtssutils.so.1.1
 utils/libibmtss.so
 utils/libibmtssutils.so
 
-utils/shutdown
 utils/kyber_enc
 utils/kyber_dec
+utils/kyber_2phase_kex
+utils/kyber_3phase_kex
+utils/kyber_ephemeral
+
+utils/shutdown
 utils/activatecredential
 utils/certify
 utils/certifycreation

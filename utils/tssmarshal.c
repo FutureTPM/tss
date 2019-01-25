@@ -8026,6 +8026,114 @@ TSS_Kyber_Decapsulate_In_Marshalu(Kyber_Decapsulate_In *source, uint16_t *writte
     }
     return rc;
 }
+
+TPM_RC
+TSS_Kyber_Ephemeral_Out_Unmarshalu(Kyber_Ephemeral_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+    uint32_t parameterSize = 0;
+    if (rc == TPM_RC_SUCCESS) {
+        if (tag == TPM_ST_SESSIONS) {
+            rc = TSS_UINT32_Unmarshalu(&parameterSize, buffer, size);
+        }
+    }
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPM2B_KYBER_PUBLIC_KEY_Unmarshalu(&target->public_key, buffer, size);
+    }
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_UINT8_Unmarshalu(&target->k, buffer, size);
+    }
+    return rc;
+}
+
+TPM_RC
+TSS_Kyber_Ephemeral_In_Marshalu(Kyber_Ephemeral_In *source, uint16_t *written,
+        BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPMI_DH_OBJECT_Marshalu(&source->key_handle, written, buffer, size);
+    }
+    return rc;
+}
+
+TPM_RC
+TSS_Kyber_2Phase_KEX_Out_Unmarshalu(Kyber_2Phase_KEX_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+    uint32_t parameterSize = 0;
+    if (rc == TPM_RC_SUCCESS) {
+        if (tag == TPM_ST_SESSIONS) {
+            rc = TSS_UINT32_Unmarshalu(&parameterSize, buffer, size);
+        }
+    }
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPM2B_KYBER_SHARED_KEY_Unmarshalu(&target->shared_key, buffer, size);
+    }
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPM2B_KYBER_CIPHER_TEXT_Unmarshalu(&target->cipher_text_1, buffer, size);
+    }
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPM2B_KYBER_CIPHER_TEXT_Unmarshalu(&target->cipher_text_2, buffer, size);
+    }
+    return rc;
+}
+
+TPM_RC
+TSS_Kyber_2Phase_KEX_In_Marshalu(Kyber_2Phase_KEX_In *source, uint16_t *written,
+        BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPMI_DH_OBJECT_Marshalu(&source->static_key, written, buffer, size);
+    }
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPMI_DH_OBJECT_Marshalu(&source->ephemeral_key, written, buffer, size);
+    }
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPM2B_KYBER_CIPHER_TEXT_Marshalu(&source->cipher_text_static, written, buffer, size);
+    }
+    return rc;
+}
+
+TPM_RC
+TSS_Kyber_3Phase_KEX_Out_Unmarshalu(Kyber_3Phase_KEX_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+    uint32_t parameterSize = 0;
+    if (rc == TPM_RC_SUCCESS) {
+        if (tag == TPM_ST_SESSIONS) {
+            rc = TSS_UINT32_Unmarshalu(&parameterSize, buffer, size);
+        }
+    }
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPM2B_KYBER_SHARED_KEY_Unmarshalu(&target->shared_key, buffer, size);
+    }
+    return rc;
+}
+
+TPM_RC
+TSS_Kyber_3Phase_KEX_In_Marshalu(Kyber_3Phase_KEX_In *source, uint16_t *written,
+        BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPMI_DH_OBJECT_Marshalu(&source->static_key, written, buffer, size);
+    }
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPMI_DH_OBJECT_Marshalu(&source->ephemeral_key, written, buffer, size);
+    }
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPM2B_KYBER_CIPHER_TEXT_Marshalu(&source->cipher_text_1, written, buffer, size);
+    }
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPM2B_KYBER_CIPHER_TEXT_Marshalu(&source->cipher_text_2, written, buffer, size);
+    }
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPM2B_KYBER_SHARED_KEY_Marshalu(&source->shared_key_3, written, buffer, size);
+    }
+    return rc;
+}
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/

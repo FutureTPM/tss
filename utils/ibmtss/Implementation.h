@@ -354,6 +354,9 @@
 /*****************************************************************************/
 #define CC_KYBER_Enc                      (CC_YES*ALG_KYBER)
 #define CC_KYBER_Dec                      (CC_YES*ALG_KYBER)
+#define CC_KYBER_Ephemeral                (CC_YES && ALG_KYBER)
+#define CC_KYBER_2Phase_KEX               (CC_YES && ALG_KYBER)
+#define CC_KYBER_3Phase_KEX               (CC_YES && ALG_KYBER)
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
@@ -1309,6 +1312,24 @@ typedef  UINT32             TPM_CC;
 #if CC_KYBER_Dec == YES
 #define TPM_CC_KYBER_Dec                      (TPM_CC)(0x00000199)
 #endif
+#ifndef CC_KYBER_Ephemeral
+#   define CC_KYBER_Ephemeral NO
+#endif
+#if CC_KYBER_Ephemeral == YES
+#define TPM_CC_KYBER_Ephemeral                (TPM_CC)(0x0000019A)
+#endif
+#ifndef CC_KYBER_2Phase_KEX
+#   define CC_KYBER_2Phase_KEX NO
+#endif
+#if CC_KYBER_2Phase_KEX == YES
+#define TPM_CC_KYBER_2Phase_KEX               (TPM_CC)(0x0000019B)
+#endif
+#ifndef CC_KYBER_3Phase_KEX
+#   define CC_KYBER_3Phase_KEX NO
+#endif
+#if CC_KYBER_3Phase_KEX == YES
+#define TPM_CC_KYBER_3Phase_KEX               (TPM_CC)(0x0000019C)
+#endif
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
@@ -1318,7 +1339,7 @@ typedef  UINT32             TPM_CC;
 #define  TPM_CC_Policy_AC_SendSelect		(TPM_CC)(0x00000196)
 
 /* Compile variable. May increase based on implementation. */
-#define  TPM_CC_LAST				(TPM_CC)(0x00000199)
+#define  TPM_CC_LAST				(TPM_CC)(0x0000019C)
 
 #ifndef CC_Vendor_TCG_Test
 #   define CC_Vendor_TCG_Test NO
@@ -1475,6 +1496,9 @@ typedef  UINT32             TPM_CC;
 					  + (ADD_FILL || CC_EncryptDecrypt2)            /* 0x00000193 */ \
 					  + (ADD_FILL || CC_KYBER_Enc)                  /* 0x00000198 */ \
 					  + (ADD_FILL || CC_KYBER_Dec)                  /* 0x00000199 */ \
+					  + (ADD_FILL || CC_KYBER_Ephemeral)            /* 0x0000019A */ \
+					  + (ADD_FILL || CC_KYBER_2Phase_KEX)           /* 0x0000019B */ \
+					  + (ADD_FILL || CC_KYBER_3Phase_KEX)           /* 0x0000019C */ \
 					  )
 
 #define VENDOR_COMMAND_ARRAY_SIZE   ( 0				\

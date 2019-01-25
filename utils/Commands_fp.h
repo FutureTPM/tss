@@ -182,6 +182,9 @@
 /*****************************************************************************/
 #include <Kyber_Enc_fp.h>
 #include <Kyber_Dec_fp.h>
+#include <Kyber_Ephemeral_fp.h>
+#include <Kyber_2Phase_KEX_fp.h>
+#include <Kyber_3Phase_KEX_fp.h>
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
@@ -512,6 +515,12 @@ TPM_RC
 Kyber_Encapsulate_In_Unmarshal(Kyber_Encapsulate_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 TPM_RC
 Kyber_Decapsulate_In_Unmarshal(Kyber_Decapsulate_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
+TPM_RC
+Kyber_Ephemeral_In_Unmarshal(Kyber_Ephemeral_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
+TPM_RC
+Kyber_2Phase_KEX_In_Unmarshal(Kyber_2Phase_KEX_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
+TPM_RC
+Kyber_3Phase_KEX_In_Unmarshal(Kyber_3Phase_KEX_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/

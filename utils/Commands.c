@@ -2286,6 +2286,83 @@ Kyber_Decapsulate_In_Unmarshal(Kyber_Decapsulate_In *target, BYTE **buffer, uint
     if (rc == TPM_RC_SUCCESS) {
         target->key_handle = handles[0];
     }
+
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPM2B_KYBER_CIPHER_TEXT_Unmarshalu(&target->cipher_text, buffer, size);
+        if (rc != TPM_RC_SUCCESS) {
+            rc += RC_Kyber_Decapsulate_cipher_text;
+        }
+    }
+    return rc;
+}
+
+TPM_RC
+Kyber_Ephemeral_In_Unmarshal(Kyber_Ephemeral_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+    buffer = buffer;
+    size = size;
+
+    if (rc == TPM_RC_SUCCESS) {
+        target->key_handle = handles[0];
+    }
+
+    return rc;
+}
+
+TPM_RC
+Kyber_2Phase_KEX_In_Unmarshal(Kyber_2Phase_KEX_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+    buffer = buffer;
+    size = size;
+
+    if (rc == TPM_RC_SUCCESS) {
+        target->static_key = handles[0];
+        target->ephemeral_key = handles[1];
+    }
+
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPM2B_KYBER_CIPHER_TEXT_Unmarshalu(&target->cipher_text_static, buffer, size);
+        if (rc != TPM_RC_SUCCESS) {
+            rc += RC_Kyber_2Phase_KEX_cipher_text_static;
+        }
+    }
+    return rc;
+}
+
+TPM_RC
+Kyber_3Phase_KEX_In_Unmarshal(Kyber_3Phase_KEX_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+    buffer = buffer;
+    size = size;
+
+    if (rc == TPM_RC_SUCCESS) {
+        target->static_key = handles[0];
+        target->ephemeral_key = handles[1];
+    }
+
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPM2B_KYBER_CIPHER_TEXT_Unmarshalu(&target->cipher_text_1, buffer, size);
+        if (rc != TPM_RC_SUCCESS) {
+            rc += RC_Kyber_3Phase_KEX_cipher_text_1;
+        }
+    }
+
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPM2B_KYBER_CIPHER_TEXT_Unmarshalu(&target->cipher_text_2, buffer, size);
+        if (rc != TPM_RC_SUCCESS) {
+            rc += RC_Kyber_3Phase_KEX_cipher_text_2;
+        }
+    }
+
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPM2B_KYBER_SHARED_KEY_Unmarshalu(&target->shared_key_3, buffer, size);
+        if (rc != TPM_RC_SUCCESS) {
+            rc += RC_Kyber_3Phase_KEX_shared_key_3;
+        }
+    }
     return rc;
 }
 /*****************************************************************************/

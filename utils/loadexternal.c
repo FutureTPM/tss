@@ -41,7 +41,7 @@
   DER example:
 
   Create a key pair in PEM format
-  
+
   > openssl genrsa -out keypair.pem -aes256 -passout pass:rrrr 2048
   > openssl ecparam -name prime256v1 -genkey -noout -out tmpkeypairecc.pem
 
@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
 		printf("Missing parameter for -hi\n");
 		printUsage();
 	    }
-	    
+
 	}
 	else if (strcmp(argv[i],"-halg") == 0) {
 	    i++;
@@ -177,6 +177,9 @@ int main(int argc, char *argv[])
 	}
 	else if (strcmp(argv[i], "-ecc") == 0) {
 	    algPublic = TPM_ALG_ECC;
+	}
+	else if (strcmp(argv[i], "-kyber") == 0) {
+	    algPublic = TPM_ALG_KYBER;
 	}
 	else if (strcmp(argv[i],"-scheme") == 0) {
 	    if (keyType == TYPE_SI) {
@@ -460,7 +463,7 @@ int main(int argc, char *argv[])
     /* call TSS to execute the command */
     if (rc == 0) {
 	rc = TSS_Execute(tssContext,
-			 (RESPONSE_PARAMETERS *)&out, 
+			 (RESPONSE_PARAMETERS *)&out,
 			 (COMMAND_PARAMETERS *)&in,
 			 NULL,
 			 TPM_CC_LoadExternal,
@@ -513,6 +516,7 @@ static void printUsage(void)
     printf("\n");
     printf("\t[-rsa\t(default)]\n");
     printf("\t[-ecc\t]\n");
+    printf("\t[-kyber\t]\n");
     printf("\n");
     printf("\t-ipu\tTPM2B_PUBLIC public key file name\n");
     printf("\t-ipem\tPEM format public key file name\n");
@@ -524,7 +528,7 @@ static void printUsage(void)
     printf("\t\trsassa\n");
     printf("\t\trsapss\n");
     printf("\t[-st\tstorage (default NULL scheme)]\n");
-    printf("\t[-den\tdecryption, (unrestricted, RSA and EC NULL scheme)\n");
+    printf("\t[-den\tdecryption, (unrestricted, RSA, EC and Kyber NULL scheme)\n");
     printf("\t[-ns\tadditionally print Name in hex ascii on one line]\n");
     printf("\t\tUseful to paste into policy\n");
     printf("\n");
@@ -533,5 +537,5 @@ static void printUsage(void)
     printf("\t20\tcommand decrypt\n");
     printf("\t40\tresponse encrypt\n");
     printf("\t80\taudit\n");
-    exit(1);	
+    exit(1);
 }
