@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
 */
 
@@ -67,12 +67,12 @@ int main(int argc, char *argv[])
     TPMI_DH_OBJECT		signHandle = 0;
     TPMI_ALG_HASH		halg = TPM_ALG_SHA256;
     TPMI_ALG_HASH		palg = TPM_ALG_SHA256;
-    const char			*keyPassword = NULL; 
+    const char			*keyPassword = NULL;
     TPMI_DH_PCR 		pcrHandle = IMPLEMENTATION_PCR;
     const char			*signatureFilename = NULL;
     const char			*attestInfoFilename = NULL;
     const char			*qualifyingDataFilename = NULL;
-    int				useRsa = 1;
+    int                 salg_set = 0;
     TPMS_ATTEST 		tpmsAttest;
     TPMI_SH_AUTH_SESSION    	sessionHandle0 = TPM_RS_PW;
     unsigned int		sessionAttributes0 = 0;
@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
     unsigned int		sessionAttributes1 = 0;
     TPMI_SH_AUTH_SESSION    	sessionHandle2 = TPM_RH_NULL;
     unsigned int		sessionAttributes2 = 0;
-  
+
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
     TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "1");
 
@@ -182,10 +182,20 @@ int main(int argc, char *argv[])
 	    i++;
 	    if (i < argc) {
 		if (strcmp(argv[i],"rsa") == 0) {
-		    useRsa = 1;
+            /* Table 145 - Definition of TPMT_SIG_SCHEME Structure */
+            in.inScheme.scheme = TPM_ALG_RSASSA;
+            /* Table 144 - Definition of TPMU_SIG_SCHEME Union <IN/OUT, S> */
+            /* Table 142 - Definition of {RSA} Types for RSA Signature Schemes */
+            /* Table 135 - Definition of TPMS_SCHEME_HASH Structure */
+            in.inScheme.details.rsassa.hashAlg = halg;
 		}
 		else if (strcmp(argv[i],"ecc") == 0) {
-		    useRsa = 0;
+            in.inScheme.scheme = TPM_ALG_ECDSA;
+            in.inScheme.details.ecdsa.hashAlg = halg;
+		}
+		else if (strcmp(argv[i],"dilithium") == 0) {
+            in.inScheme.scheme = TPM_ALG_DILITHIUM;
+            in.inScheme.details.dilithium.hashAlg = halg;
 		}
 		else {
 		    printf("Bad parameter %s for -salg\n", argv[i]);
@@ -196,6 +206,7 @@ int main(int argc, char *argv[])
 		printf("-salg option needs a value\n");
 		printUsage();
 	    }
+        salg_set = 1;
 	}
 	else if (strcmp(argv[i],"-os") == 0) {
 	    i++;
@@ -316,19 +327,15 @@ int main(int argc, char *argv[])
     if (rc == 0) {
 	/* Handle of key that will perform quoting */
 	in.signHandle = signHandle;
-	/* data supplied by the caller */
-	if (useRsa) {
-	    /* Table 145 - Definition of TPMT_SIG_SCHEME Structure */
-	    in.inScheme.scheme = TPM_ALG_RSASSA;	
-	    /* Table 144 - Definition of TPMU_SIG_SCHEME Union <IN/OUT, S> */
-	    /* Table 142 - Definition of {RSA} Types for RSA Signature Schemes */
-	    /* Table 135 - Definition of TPMS_SCHEME_HASH Structure */
-	    in.inScheme.details.rsassa.hashAlg = halg;
-	}
-	else {	/* ecc */
-	    in.inScheme.scheme = TPM_ALG_ECDSA;	
-	    in.inScheme.details.ecdsa.hashAlg = halg;
-	}
+    /* Default to RSA if the user doesn't provide a signature algorithm */
+    if (!salg_set) {
+            /* Table 145 - Definition of TPMT_SIG_SCHEME Structure */
+            in.inScheme.scheme = TPM_ALG_RSASSA;
+            /* Table 144 - Definition of TPMU_SIG_SCHEME Union <IN/OUT, S> */
+            /* Table 142 - Definition of {RSA} Types for RSA Signature Schemes */
+            /* Table 135 - Definition of TPMS_SCHEME_HASH Structure */
+            in.inScheme.details.rsassa.hashAlg = halg;
+    }
 	/* Table 102 - Definition of TPML_PCR_SELECTION Structure */
 	in.PCRselect.count = 1;
 	/* Table 85 - Definition of TPMS_PCR_SELECTION Structure */
@@ -425,7 +432,7 @@ static void printUsage(void)
     printf("\t[-pwdk\tpassword for quoting key (default empty)]\n");
     printf("\t[-halg\tfor signing (sha1, sha256, sha384, sha512) (default sha256)]\n");
     printf("\t[-palg\tfor PCR bank selection (sha1, sha256, sha384, sha512) (default sha256)]\n");
-    printf("\t[-salg\tsignature algorithm (rsa, ecc) (default rsa)]\n");
+    printf("\t[-salg\tsignature algorithm (rsa, ecc, dilithium) (default rsa)]\n");
     printf("\t[-qd\tqualifying data file name]\n");
     printf("\t[-os\tquote signature file name (default do not save)]\n");
     printf("\t[-oa\tattestation output file name (default do not save)]\n");
@@ -434,5 +441,5 @@ static void printUsage(void)
     printf("\t01\tcontinue\n");
     printf("\t20\tcommand decrypt\n");
     printf("\t40\tresponse encrypt\n");
-    exit(1);	
+    exit(1);
 }
