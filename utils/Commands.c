@@ -2355,3 +2355,39 @@ Kyber_3Phase_KEX_In_Unmarshal(Kyber_3Phase_KEX_In *target, BYTE **buffer, uint32
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
 
+/*****************************************************************************/
+/*                               NewHope Mods                                */
+/*****************************************************************************/
+TPM_RC
+NEWHOPE_Dec_In_Unmarshal(NEWHOPE_Dec_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		target->keyHandle = handles[0];
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_NEWHOPE_CIPHER_Unmarshalu(&target->Cipher, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_NEWHOPE_Dec_Cipher;
+		}
+	}
+	return rc;
+}
+
+TPM_RC
+NEWHOPE_Enc_In_Unmarshal(NEWHOPE_Enc_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+    buffer = buffer;
+    size = size;
+
+	if (rc == TPM_RC_SUCCESS) {
+		target->keyHandle = handles[0];
+	}
+	return rc;
+}
+/*****************************************************************************/
+/*                               NewHope Mods                                */
+/*****************************************************************************/
+

@@ -125,8 +125,8 @@
 #endif
 
 // Increase Sizes due to Kyber key sizes
-#define MAX_COMMAND_SIZE		8192	/* maximum size of a command */
-#define MAX_RESPONSE_SIZE		8192	/* maximum size of a response */
+#define MAX_COMMAND_SIZE		16826	/* maximum size of a command */
+#define MAX_RESPONSE_SIZE		16826	/* maximum size of a response */
 
 #ifdef TPM_TSS_SO_0
 #define MAX_SYM_DATA			128		/* this is the maximum number of octets that
@@ -231,6 +231,23 @@
 /*****************************************************************************/
 /*                             Dilithium Mods                                */
 /*****************************************************************************/
+
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+#define ALG_NEWHOPE                     ALG_YES
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
+#define ALG_QTESLA                      ALG_YES
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
+
 
 // From Vendor-Specific: Table 6 - Defines for Implemented Commands
 
@@ -354,10 +371,19 @@
 /*****************************************************************************/
 #define CC_KYBER_Enc                      (CC_YES*ALG_KYBER)
 #define CC_KYBER_Dec                      (CC_YES*ALG_KYBER)
-#define CC_KYBER_2Phase_KEX               (CC_YES && ALG_KYBER)
-#define CC_KYBER_3Phase_KEX               (CC_YES && ALG_KYBER)
+#define CC_KYBER_2Phase_KEX               (CC_YES*ALG_KYBER)
+#define CC_KYBER_3Phase_KEX               (CC_YES*ALG_KYBER)
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+#define CC_NEWHOPE_Dec					  (CC_YES*ALG_NEWHOPE)
+#define CC_NEWHOPE_Enc					  (CC_YES*ALG_NEWHOPE)
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
 /*****************************************************************************/
 
 #define  CC_NTC2_PreConfig                CC_YES
@@ -554,6 +580,28 @@
 #define  TPM_DILITHIUM_MODE_3    (TPM_DILITHIUM_MODE)(0x03)
 /*****************************************************************************/
 /*                             Dilithium Mods                                */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
+#define     ALG_QTESLA_VALUE			 0x0045
+#if defined ALG_QTESLA && ALG_QTESLA == YES
+#define TPM_ALG_QTESLA                   (TPM_ALG_ID)(ALG_QTESLA_VALUE)
+#endif   // ALG_QTESLA
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+#define     ALG_NEWHOPE_VALUE			0x0046
+#if defined ALG_NEWHOPE && ALG_NEWHOPE == YES
+#define TPM_ALG_NEWHOPE                 (TPM_ALG_ID)(ALG_NEWHOPE_VALUE)
+#endif   // ALG_NEWHOPE
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
 /*****************************************************************************/
 
 //     From TCG Algorithm Registry: Table 3 - Definition of TPM_ECC_CURVE Constants
@@ -1327,9 +1375,28 @@ typedef  UINT32             TPM_CC;
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
 
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+#ifndef CC_NEWHOPE_Dec
+#   define CC_NEWHOPE_Dec NO
+#endif
+#if CC_NEWHOPE_Dec == YES
+#define TPM_CC_NEWHOPE_Dec						(TPM_CC)(0x0000019D)
+#endif
+#ifndef CC_NEWHOPE_Enc
+#   define CC_NEWHOPE_Enc NO
+#endif
+#if CC_NEWHOPE_Enc == YES
+#define TPM_CC_NEWHOPE_Enc						(TPM_CC)(0x0000019E)
+#endif
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+
 #define  TPM_CC_AC_GetCapability		(TPM_CC)(0x00000194)
-#define  TPM_CC_AC_Send				(TPM_CC)(0x00000195)
-#define  TPM_CC_Policy_AC_SendSelect		(TPM_CC)(0x00000196)
+#define  TPM_CC_AC_Send				    (TPM_CC)(0x00000195)
+#define  TPM_CC_Policy_AC_SendSelect	(TPM_CC)(0x00000196)
 
 /* Compile variable. May increase based on implementation. */
 #define  TPM_CC_LAST				(TPM_CC)(0x0000019C)
@@ -1491,6 +1558,8 @@ typedef  UINT32             TPM_CC;
 					  + (ADD_FILL || CC_KYBER_Dec)                  /* 0x00000199 */ \
 					  + (ADD_FILL || CC_KYBER_2Phase_KEX)           /* 0x0000019B */ \
 					  + (ADD_FILL || CC_KYBER_3Phase_KEX)           /* 0x0000019C */ \
+					  + (ADD_FILL || CC_NEWHOPE_Enc)                /* 0x0000019D */ \
+					  + (ADD_FILL || CC_NEWHOPE_Dec)                /* 0x0000019E */ \
 					  )
 
 #define VENDOR_COMMAND_ARRAY_SIZE   ( 0				\

@@ -181,6 +181,15 @@ int main(int argc, char *argv[])
 	else if (strcmp(argv[i], "-kyber") == 0) {
 	    algPublic = TPM_ALG_KYBER;
 	}
+	else if (strcmp(argv[i], "-dilithium") == 0) {
+	    algPublic = TPM_ALG_DILITHIUM;
+	}
+	else if (strcmp(argv[i], "-newhope") == 0) {
+	    algPublic = TPM_ALG_NEWHOPE;
+	}
+	else if (strcmp(argv[i], "-qtesla") == 0) {
+	    algPublic = TPM_ALG_QTESLA;
+	}
 	else if (strcmp(argv[i],"-scheme") == 0) {
 	    if (keyType == TYPE_SI) {
 		i++;
@@ -517,6 +526,9 @@ static void printUsage(void)
     printf("\t[-rsa\t(default)]\n");
     printf("\t[-ecc\t]\n");
     printf("\t[-kyber\t]\n");
+    printf("\t[-dilithium\t]\n");
+    printf("\t[-newhope\t]\n");
+    printf("\t[-dilithium\t]\n");
     printf("\n");
     printf("\t-ipu\tTPM2B_PUBLIC public key file name\n");
     printf("\t-ipem\tPEM format public key file name\n");

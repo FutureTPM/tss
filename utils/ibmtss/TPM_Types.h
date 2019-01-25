@@ -1482,6 +1482,84 @@ typedef union {
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
 
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+#define MAX_NEWHOPE_PRIVATE_KEY_BYTES  1888
+#define MAX_NEWHOPE_PUBLIC_KEY_BYTES   928
+#define MAX_NEWHOPE_CIPHER_BYTES       1120
+#define MAX_NEWHOPE_SHAREDSECRET_BYTES 32
+
+typedef union {
+	struct {
+		UINT16                  size;
+		BYTE                    buffer[MAX_NEWHOPE_PRIVATE_KEY_BYTES];
+	}            t;
+	TPM2B        b;
+} TPM2B_NEWHOPE_PRIVATE_KEY;
+
+typedef union {
+	struct {
+		UINT16                  size;
+		BYTE                    buffer[MAX_NEWHOPE_PUBLIC_KEY_BYTES];
+	}            t;
+	TPM2B        b;
+} TPM2B_NEWHOPE_PUBLIC_KEY;
+
+typedef union {
+	struct {
+		UINT16                  size;
+		BYTE                    buffer[MAX_NEWHOPE_CIPHER_BYTES];
+	}            t;
+	TPM2B        b;
+} TPM2B_NEWHOPE_CIPHER;
+
+
+typedef union {
+	struct {
+		UINT16                  size;
+		BYTE                    buffer[MAX_NEWHOPE_SHAREDSECRET_BYTES];
+	}            t;
+	TPM2B        b;
+} TPM2B_NEWHOPE_SHAREDSECRET;
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
+#define MAX_QTESLA_PRIVATE_KEY_BYTES 8256
+#define MAX_QTESLA_PUBLIC_KEY_BYTES  8224
+#define MAX_QTESLA_SIGNATURE_BYTES   6176
+
+typedef union {
+	struct {
+		UINT16                  size;
+		BYTE                    buffer[MAX_QTESLA_PRIVATE_KEY_BYTES];
+	}            t;
+	TPM2B        b;
+} TPM2B_QTESLA_PRIVATE_KEY;
+
+typedef union {
+	struct {
+		UINT16                  size;
+		BYTE                    buffer[MAX_QTESLA_PUBLIC_KEY_BYTES];
+	}            t;
+	TPM2B        b;
+} TPM2B_QTESLA_PUBLIC_KEY;
+
+typedef union {
+	struct {
+		UINT16                  size;
+		BYTE                    buffer[MAX_QTESLA_SIGNATURE_BYTES];
+	}            t;
+	TPM2B        b;
+} TPM2B_QTESLA_SIGNATURE;
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
+
 
 typedef struct {
     UINT16    size;
@@ -2074,11 +2152,28 @@ typedef TPMS_SCHEME_HASH 	TPMS_SIG_SCHEME_ECSCHNORR;
 
 typedef TPMS_SCHEME_ECDAA	TPMS_SIG_SCHEME_ECDAA;
 
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 typedef TPMS_SCHEME_HASH 	TPMS_SIG_SCHEME_DILITHIUM;
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
+typedef TPMS_SCHEME_HASH    TPMS_SIG_SCHEME_QTESLA;
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
 
 /* Table 143 - Definition of TPMU_SIG_SCHEME Union <IN/OUT, S> */
 
 typedef union {
+#ifdef TPM_ALG_QTESLA
+    TPMS_SIG_SCHEME_QTESLA	qtesla;
+#endif
 #ifdef TPM_ALG_DILITHIUM
     TPMS_SIG_SCHEME_DILITHIUM	dilithium;
 #endif
@@ -2330,11 +2425,28 @@ typedef struct {
     TPM2B_PUBLIC_KEY_RSA	sig;	/* The signature is the size of a public key. */
 } TPMS_SIGNATURE_RSA;
 
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 typedef struct {
     TPMI_ALG_HASH		            hash;	/* the hash algorithm used to digest the message TPM_ALG_NULL is not allowed. */
-    TPM2B_DILITHIUM_SIGNED_MESSAGE	sig;	/* The signature is the size of a public key. */
+    TPM2B_DILITHIUM_SIGNED_MESSAGE	sig;
     BYTE                            mode;
 } TPMS_SIGNATURE_DILITHIUM;
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
+typedef struct {
+    TPMI_ALG_HASH		    hash;	/* the hash algorithm used to digest the message TPM_ALG_NULL is not allowed. */
+    TPM2B_QTESLA_SIGNATURE	sig;
+} TPMS_SIGNATURE_QTESLA;
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
 
 /* Table 168 - Definition of Types for {RSA} Signature */
 
@@ -2361,6 +2473,9 @@ typedef TPMS_SIGNATURE_ECC	TPMS_SIGNATURE_ECSCHNORR;
 typedef union {
 #ifdef TPM_ALG_DILITHIUM
     TPMS_SIGNATURE_DILITHIUM dilithium;		/* TPM_ALG_DILITHIUM */
+#endif
+#ifdef TPM_ALG_QTESLA
+    TPMS_SIGNATURE_QTESLA    qtesla;		/* TPM_ALG_QTESLA */
 #endif
 #ifdef TPM_ALG_RSASSA
     TPMS_SIGNATURE_RSASSA	rsassa;			/* TPM_ALG_RSASSA */
@@ -2405,6 +2520,9 @@ typedef union {
 #ifdef TPM_ALG_KYBER
     BYTE	kyber[MAX_KYBER_SHARED_KEY_SIZE];		/* TPM_ALG_KYBER */
 #endif
+#ifdef TPM_ALG_NEWHOPE
+	BYTE	newhope[sizeof(TPM2B_NEWHOPE_CIPHER)];
+#endif // TPM_ALG_NEWHOPE
 #ifdef TPM_ALG_RSA
     BYTE	rsa[MAX_RSA_KEY_BYTES];			    /* TPM_ALG_RSA */
 #endif
@@ -2435,6 +2553,12 @@ typedef TPM_ALG_ID TPMI_ALG_PUBLIC;
 /* Table 176 - Definition of TPMU_PUBLIC_ID Union <IN/OUT, S> */
 
 typedef union {
+#ifdef TPM_ALG_NEWHOPE
+	TPM2B_NEWHOPE_PUBLIC_KEY newhope;
+#endif
+#ifdef TPM_ALG_QTESLA
+	TPM2B_QTESLA_PUBLIC_KEY qtesla;
+#endif
 #ifdef TPM_ALG_KEYEDHASH
     TPM2B_DIGEST		keyedHash;	/* TPM_ALG_KEYEDHASH */
 #endif
@@ -2488,6 +2612,9 @@ typedef struct {
     TPMT_KDF_SCHEME	kdf;		/* an optional key derivation scheme for generating a symmetric key from a Z value */
 } TPMS_ECC_PARMS;
 
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 typedef  TPM_ALG_ID         TPMI_ALG_DILITHIUM_SCHEME;
 typedef struct {
     TPMI_ALG_DILITHIUM_SCHEME scheme;
@@ -2495,11 +2622,17 @@ typedef struct {
 } TPMT_DILITHIUM_SCHEME;
 
 typedef struct {
-    TPMT_SYM_DEF_OBJECT	  symmetric;	/* for a restricted decryption key, shall be set to a supported symmetric algorithm, key size. and mode. */
+    TPMT_SYM_DEF_OBJECT	  symmetric;
     TPMT_DILITHIUM_SCHEME scheme;
     BYTE                  mode;
 } TPMS_DILITHIUM_PARMS;
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
 typedef  TPM_ALG_ID         TPMI_ALG_KYBER_SCHEME;
 typedef struct {
     TPMI_ALG_KYBER_SCHEME scheme;
@@ -2507,14 +2640,67 @@ typedef struct {
 } TPMT_KYBER_SCHEME;
 
 typedef struct {
-    TPMT_SYM_DEF_OBJECT	symmetric;	/* for a restricted decryption key, shall be set to a supported symmetric algorithm, key size. and mode. */
+    TPMT_SYM_DEF_OBJECT	symmetric;
     TPMT_KYBER_SCHEME   scheme;
     BYTE                security;
 } TPMS_KYBER_PARMS;
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+typedef TPM_ALG_ID          TPMI_ALG_NEWHOPE_SCHEME;
+typedef UINT32 TPMI_NEWHOPE_Q;
+typedef UINT16 TPMI_NEWHOPE_N;
+typedef struct {
+	TPMI_ALG_NEWHOPE_SCHEME 	scheme;		/* scheme selector */
+	TPMU_ASYM_SCHEME		details;	/* scheme parameters */
+} TPMT_NEWHOPE_SCHEME;
+
+typedef struct {
+	TPMT_SYM_DEF_OBJECT	symmetric;
+	TPMT_NEWHOPE_SCHEME scheme;
+	TPMI_NEWHOPE_Q q;
+	TPMI_NEWHOPE_N n;
+	TPMT_KDF_SCHEME kdf;
+} TPMS_NEWHOPE_PARMS;
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
+typedef TPM_ALG_ID          TPMI_ALG_QTESLA_SCHEME;
+typedef UINT32 TPMI_QTESLA_Q;
+typedef UINT16 TPMI_QTESLA_N;
+
+typedef struct {
+	TPMI_ALG_QTESLA_SCHEME 	scheme;		/* scheme selector */
+	TPMU_ASYM_SCHEME		details;	/* scheme parameters */
+} TPMT_QTESLA_SCHEME;
+
+typedef struct {
+	TPMT_SYM_DEF_OBJECT	symmetric;
+	TPMT_QTESLA_SCHEME scheme;
+	TPMI_QTESLA_Q q;
+	TPMI_QTESLA_N n;
+} TPMS_QTESLA_PARMS;
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
 
 /* Table 181 - Definition of TPMU_PUBLIC_PARMS Union <IN/OUT, S> */
 
 typedef union {
+#ifdef TPM_ALG_NEWHOPE
+	TPMS_NEWHOPE_PARMS      newhopeDetail;
+#endif
+#ifdef TPM_ALG_QTESLA
+	TPMS_QTESLA_PARMS       qteslaDetail;
+#endif
 #ifdef TPM_ALG_KEYEDHASH
     TPMS_KEYEDHASH_PARMS	keyedHashDetail;	/* TPM_ALG_KEYEDHASH */
 #endif
@@ -2525,15 +2711,15 @@ typedef union {
     TPMS_DILITHIUM_PARMS	dilithiumDetail;	/* TPM_ALG_DILITHIUM */
 #endif
 #ifdef TPM_ALG_KYBER
-    TPMS_KYBER_PARMS	kyberDetail;	/* TPM_ALG_KYBER */
+    TPMS_KYBER_PARMS	    kyberDetail;	/* TPM_ALG_KYBER */
 #endif
 #ifdef TPM_ALG_RSA
-    TPMS_RSA_PARMS		rsaDetail;		/* TPM_ALG_RSA */
+    TPMS_RSA_PARMS		    rsaDetail;		/* TPM_ALG_RSA */
 #endif
 #ifdef TPM_ALG_ECC
-    TPMS_ECC_PARMS		eccDetail;		/* TPM_ALG_ECC */
+    TPMS_ECC_PARMS		    eccDetail;		/* TPM_ALG_ECC */
 #endif
-    TPMS_ASYM_PARMS		asymDetail;		/* common scheme structure for RSA and ECC keys */
+    TPMS_ASYM_PARMS		    asymDetail;		/* common scheme structure for RSA and ECC keys */
 } TPMU_PUBLIC_PARMS;
 
 /* Table 182 - Definition of TPMT_PUBLIC_PARMS Structure */
@@ -2574,6 +2760,12 @@ typedef union {
 /* Table 186 - Definition of TPMU_SENSITIVE_COMPOSITE Union <IN/OUT, S> */
 
 typedef union {
+#ifdef TPM_ALG_NEWHOPE
+	TPM2B_NEWHOPE_PRIVATE_KEY	newhope;
+#endif
+#ifdef TPM_ALG_QTESLA
+	TPM2B_QTESLA_PRIVATE_KEY	qTesla;
+#endif
 #ifdef TPM_ALG_DILITHIUM
     TPM2B_DILITHIUM_SECRET_KEY	dilithium;
 #endif

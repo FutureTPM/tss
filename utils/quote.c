@@ -197,6 +197,10 @@ int main(int argc, char *argv[])
             in.inScheme.scheme = TPM_ALG_DILITHIUM;
             in.inScheme.details.dilithium.hashAlg = halg;
 		}
+		else if (strcmp(argv[i], "qtesla") == 0) {	/* qtesla */
+			in.inScheme.scheme = TPM_ALG_QTESLA;
+			in.inScheme.details.qtesla.hashAlg = halg;
+		}
 		else {
 		    printf("Bad parameter %s for -salg\n", argv[i]);
 		    printUsage();
@@ -432,7 +436,7 @@ static void printUsage(void)
     printf("\t[-pwdk\tpassword for quoting key (default empty)]\n");
     printf("\t[-halg\tfor signing (sha1, sha256, sha384, sha512) (default sha256)]\n");
     printf("\t[-palg\tfor PCR bank selection (sha1, sha256, sha384, sha512) (default sha256)]\n");
-    printf("\t[-salg\tsignature algorithm (rsa, ecc, dilithium) (default rsa)]\n");
+    printf("\t[-salg\tsignature algorithm (rsa, ecc, dilithium, qtesla) (default rsa)]\n");
     printf("\t[-qd\tqualifying data file name]\n");
     printf("\t[-os\tquote signature file name (default do not save)]\n");
     printf("\t[-oa\tattestation output file name (default do not save)]\n");

@@ -88,7 +88,7 @@ TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
         publicArea->objectAttributes.val &= ~deleteObjectAttributes.val;
         /* Table 185 - TPM2B_PUBLIC inPublic */
         /* Table 184 - TPMT_PUBLIC publicArea */
-        publicArea->type = algPublic;		/* RSA, ECC, Dilithium or Kyber */
+        publicArea->type = algPublic;		/* RSA, ECC, NewHope, qTesla, Dilithium or Kyber */
         publicArea->nameAlg = nalg;
 
         /* Table 32 - TPMA_OBJECT objectAttributes */
@@ -283,6 +283,23 @@ TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
                 publicArea->parameters.dilithiumDetail.mode = TPM_DILITHIUM_MODE_2;
             }
 
+        } else if (algPublic == TPM_ALG_NEWHOPE) {
+            publicArea->parameters.newhopeDetail.scheme.scheme = TPM_ALG_NULL;
+            publicArea->parameters.newhopeDetail.symmetric.algorithm = TPM_ALG_NULL;
+            if (keyType == TYPE_ST)
+            {
+                publicArea->parameters.newhopeDetail.symmetric.algorithm = TPM_ALG_AES;
+                publicArea->parameters.newhopeDetail.symmetric.keyBits.aes = 128;
+                publicArea->parameters.newhopeDetail.symmetric.mode.aes = TPM_ALG_CFB;
+            }
+            publicArea->unique.newhope.t.size = 0;
+            publicArea->parameters.newhopeDetail.kdf.scheme = TPM_ALG_NULL;
+        } else if (algPublic == TPM_ALG_QTESLA) {
+            publicArea->parameters.qteslaDetail.n = 2048;
+            publicArea->parameters.qteslaDetail.q = 27627521;
+            publicArea->parameters.qteslaDetail.scheme.scheme = TPM_ALG_NULL;
+            publicArea->parameters.qteslaDetail.symmetric.algorithm = TPM_ALG_NULL;
+            publicArea->unique.qtesla.t.size = 0;
         } else { /* algPublic == TPM_ALG_KYBER */
             switch (keyType) {
               case TYPE_DEN:
@@ -569,6 +586,8 @@ void printUsageTemplate(void)
     printf("\t\tk=[2-4]\n");
     printf("\t-dilithium\n");
     printf("\t\tmode=[0-3]\n");
+    printf("\t-newhope NewHopeKey\n");
+    printf("\t-qtesla qTeslaKey\n");
     printf("\t-ecc curve\n");
     printf("\t\tbnp256\n");
     printf("\t\tnistp256\n");

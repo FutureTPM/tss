@@ -176,6 +176,14 @@
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
 
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+#include "Newhope_fp.h"
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -458,7 +466,7 @@ extern "C" {
     TPM_RC
     TSS_TPMS_SIGNATURE_DILITHIUM_Marshalu(const TPMS_SIGNATURE_DILITHIUM *source, uint16_t *written, BYTE **buffer, uint32_t *size);
     UINT16
-    TPMT_DILITHIUM_SCHEME_Marshal(TPMT_DILITHIUM_SCHEME *source, BYTE **buffer, INT32 *size);
+    TPMT_DILITHIUM_SCHEME_Marshal(TPMT_DILITHIUM_SCHEME *source, BYTE **buffer, uint32_t *size);
     TPM_RC
     TSS_TPMI_ALG_DILITHIUM_SCHEME_Marshalu(const TPMI_ALG_DILITHIUM_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size);
     TPM_RC
@@ -466,6 +474,63 @@ extern "C" {
     /*****************************************************************************/
     /*                             Dilithium Mods                                */
     /*****************************************************************************/
+
+    /*****************************************************************************/
+    /*                               qTesla Mods                                 */
+    /*****************************************************************************/
+    TPM_RC
+    TSS_TPM2B_PUBLIC_KEY_QTESLA_Marshalu(const TPM2B_QTESLA_PUBLIC_KEY *source, UINT16 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_PRIVATE_KEY_QTESLA_Marshalu(const TPM2B_QTESLA_PRIVATE_KEY *source, UINT16 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_SIGNATURE_QTESLA_Marshalu(const TPM2B_QTESLA_SIGNATURE *source, UINT16 *written, BYTE **buffer, uint32_t *size);
+
+    TPM_RC
+    TSS_TPMS_SIGNATURE_QTESLA_Marshalu(const TPMS_SIGNATURE_QTESLA *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPMI_ALG_QTESLA_SCHEME_Marshalu(const TPMI_ALG_QTESLA_SCHEME *source, UINT16 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPMT_QTESLA_SCHEME_Marshalu(const TPMT_QTESLA_SCHEME *source, UINT16 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPMS_SCHEME_QTESLA_Marshalu(const TPMS_SIG_SCHEME_QTESLA *source, UINT16 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPMS_QTESLA_PARMS_Marshalu(const TPMS_QTESLA_PARMS *source, UINT16 *written, BYTE **buffer, uint32_t *size);
+    /*****************************************************************************/
+    /*                               qTesla Mods                                 */
+    /*****************************************************************************/
+
+    /*****************************************************************************/
+    /*                              NewHope Mods                                 */
+    /*****************************************************************************/
+    TPM_RC
+    TSS_NEWHOPE_Dec_In_Marshalu(const NEWHOPE_Dec_In *source, UINT16 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_NEWHOPE_Enc_In_Marshalu(const NEWHOPE_Enc_In *source, UINT16 *written, BYTE **buffer, uint32_t *size);
+
+    TPM_RC
+    TSS_NEWHOPE_Dec_Out_Unmarshalu(NEWHOPE_Dec_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_NEWHOPE_Enc_Out_Unmarshalu(NEWHOPE_Enc_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+
+    TPM_RC
+    TSS_TPM2B_CIPHER_NEWHOPE_Marshalu(const TPM2B_NEWHOPE_CIPHER *source, UINT16 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_SHAREDSECRET_NEWHOPE_Marshalu(const TPM2B_NEWHOPE_SHAREDSECRET *source, UINT16 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_PRIVATE_KEY_NEWHOPE_Marshalu(const TPM2B_NEWHOPE_PRIVATE_KEY *source, UINT16 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_PUBLIC_KEY_NEWHOPE_Marshalu(const TPM2B_NEWHOPE_PUBLIC_KEY *source, UINT16 *written, BYTE **buffer, uint32_t *size);
+
+    TPM_RC
+    TSS_TPMI_ALG_NEWHOPE_SCHEME_Marshalu(const TPMI_ALG_NEWHOPE_SCHEME *source, UINT16 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPMT_NEWHOPE_SCHEME_Marshalu(const TPMT_NEWHOPE_SCHEME *source, UINT16 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPMS_NEWHOPE_PARMS_Marshalu(const TPMS_NEWHOPE_PARMS *source, UINT16 *written, BYTE **buffer, uint32_t *size);
+    /*****************************************************************************/
+    /*                              NewHope Mods                                 */
+    /*****************************************************************************/
+
     /* Deprecated functions */
 
     TPM_RC

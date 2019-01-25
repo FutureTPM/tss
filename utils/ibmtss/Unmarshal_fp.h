@@ -518,6 +518,52 @@ extern "C" {
     /*                             Dilithium Mods                                */
     /*****************************************************************************/
 
+    /*****************************************************************************/
+    /*                              NewHope Mods                                 */
+    /*****************************************************************************/
+	LIB_EXPORT TPM_RC
+	TSS_TPM2B_NEWHOPE_CIPHER_Unmarshalu(TPM2B_NEWHOPE_CIPHER *target, BYTE **buffer, uint32_t *size);
+	LIB_EXPORT TPM_RC
+	TSS_TPM2B_NEWHOPE_SHAREDSECRET_Unmarshalu(TPM2B_NEWHOPE_SHAREDSECRET *target, BYTE **buffer, uint32_t *size);
+	LIB_EXPORT TPM_RC
+	TSS_TPM2B_NEWHOPE_PRIVATE_KEY_Unmarshalu(TPM2B_NEWHOPE_PRIVATE_KEY *target, BYTE **buffer, uint32_t *size);
+	LIB_EXPORT TPM_RC
+	TSS_TPM2B_NEWHOPE_PUBLIC_KEY_Unmarshalu(TPM2B_NEWHOPE_PUBLIC_KEY *target, BYTE **buffer, uint32_t *size);
+
+    LIB_EXPORT TPM_RC
+    TSS_TPMI_ALG_NEWHOPE_SCHEME_Unmarshalu(TPMI_ALG_NEWHOPE_SCHEME *target, BYTE **buffer, uint32_t *size, BOOL allowNull);
+    LIB_EXPORT TPM_RC
+    TSS_TPMT_NEWHOPE_SCHEME_Unmarshalu(TPMT_NEWHOPE_SCHEME *target, BYTE **buffer, uint32_t *size, BOOL allowNull);
+    TPM_RC
+    TSS_TPMS_NEWHOPE_PARMS_Unmarshalu(TPMS_NEWHOPE_PARMS *target, BYTE **buffer, uint32_t *size);
+    /*****************************************************************************/
+    /*                              NewHope Mods                                 */
+    /*****************************************************************************/
+
+    /*****************************************************************************/
+    /*                               qTesla Mods                                 */
+    /*****************************************************************************/
+    LIB_EXPORT TPM_RC
+    TPMS_SIG_SCHEME_QTESLA_Unmarshalu(TPMS_SIG_SCHEME_QTESLA *target, BYTE **buffer, uint32_t *size);
+    LIB_EXPORT TPM_RC
+    TSS_TPMI_ALG_QTESLA_SCHEME_Unmarshalu(TPMI_ALG_QTESLA_SCHEME *target, BYTE **buffer, uint32_t *size, BOOL allowNull);
+    LIB_EXPORT TPM_RC
+    TSS_TPMT_QTESLA_SCHEME_Unmarshalu(TPMT_QTESLA_SCHEME *target, BYTE **buffer, uint32_t *size, BOOL allowNull);
+    LIB_EXPORT TPM_RC
+    TSS_TPMS_QTESLA_PARMS_Unmarshalu(TPMS_QTESLA_PARMS *target, BYTE **buffer, uint32_t *size);
+    LIB_EXPORT TPM_RC
+    TSS_TPMS_SIGNATURE_QTESLA_Unmarshalu(TPMS_SIGNATURE_QTESLA *target, BYTE **buffer, uint32_t *size);
+
+	LIB_EXPORT TPM_RC
+	TSS_TPM2B_QTESLA_PUBLIC_KEY_Unmarshalu(TPM2B_QTESLA_PUBLIC_KEY *target, BYTE **buffer, uint32_t *size);
+	LIB_EXPORT TPM_RC
+	TSS_TPM2B_QTESLA_PRIVATE_KEY_Unmarshalu(TPM2B_QTESLA_PRIVATE_KEY *target, BYTE **buffer, uint32_t *size);
+	LIB_EXPORT TPM_RC
+	TSS_TPM2B_QTESLA_SIGNATURE_Unmarshalu(TPM2B_QTESLA_SIGNATURE *target, BYTE **buffer, uint32_t *size);
+    /*****************************************************************************/
+    /*                               qTesla Mods                                 */
+    /*****************************************************************************/
+
     /* These functions are deprecated.  They were adapted from the TPM side, but the signed size
        caused static analysis tool warnings. */
 

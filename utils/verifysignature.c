@@ -156,6 +156,9 @@ int main(int argc, char *argv[])
 	else if (strcmp(argv[i], "-ecc") == 0) {
 	    algPublic = TPM_ALG_ECC;
 	}
+	else if (strcmp(argv[i], "-qtesla") == 0) {
+		algPublic = TPM_ALG_QTESLA;
+	}
 	else if (strcmp(argv[i], "-dilithium") == 0) {
 	    algPublic = TPM_ALG_DILITHIUM;
 	}
@@ -466,6 +469,7 @@ static void printUsage(void)
     printf("\t[-rsa\t(default)]\n");
     printf("\t[-ecc\t]\n");
     printf("\t[-dilithium\t]\n");
+	printf("\t[-qtesla\t]\n");
     printf("\n");
     printf("\t-se[0-2] session handle / attributes (default NULL)\n");
     printf("\t01\tcontinue\n");

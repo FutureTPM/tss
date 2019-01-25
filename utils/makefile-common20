@@ -158,6 +158,8 @@ ALL += 	activatecredential$(EXE)		\
 	kyber_enc$(EXE)				\
 	kyber_2phase_kex$(EXE)				\
 	kyber_3phase_kex$(EXE)				\
+	newhope_dec$(EXE)				\
+	newhope_enc$(EXE)				\
 
 ALL	+= 					\
 	ntc2getconfig$(EXE)			\

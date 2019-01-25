@@ -5005,6 +5005,14 @@ TSS_TPMU_ASYM_SCHEME_Marshalu(const TPMU_ASYM_SCHEME  *source, uint16_t *written
         }
         break;
 #endif
+#ifdef TPM_ALG_NEWHOPE
+	  case TPM_ALG_NEWHOPE:
+        break;
+#endif
+#ifdef TPM_ALG_QTESLA
+	  case TPM_ALG_QTESLA:
+        break;
+#endif
       case TPM_ALG_NULL:
 	break;
       default:
@@ -5015,6 +5023,67 @@ TSS_TPMU_ASYM_SCHEME_Marshalu(const TPMU_ASYM_SCHEME  *source, uint16_t *written
 
 /* Table 154 - Definition of (TPM_ALG_ID) {RSA} TPMI_ALG_RSA_SCHEME Type */
 
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+TPM_RC
+TSS_TPMI_ALG_NEWHOPE_SCHEME_Marshalu(const TPMI_ALG_NEWHOPE_SCHEME *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0) {
+		rc = TSS_TPM_ALG_ID_Marshalu(source, written, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_TPMT_NEWHOPE_SCHEME_Marshalu(const TPMT_NEWHOPE_SCHEME *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0) {
+		rc = TSS_TPMI_ALG_NEWHOPE_SCHEME_Marshalu(&source->scheme, written, buffer, size);
+	}
+	if (rc == 0) {
+		rc = TSS_TPMU_ASYM_SCHEME_Marshalu(&source->details, written, buffer, size, source->scheme);
+	}
+	return rc;
+}
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
+TPM_RC
+TSS_TPMI_ALG_QTESLA_SCHEME_Marshalu(const TPMI_ALG_QTESLA_SCHEME *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0) {
+		rc = TSS_TPM_ALG_ID_Marshalu(source, written, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_TPMT_QTESLA_SCHEME_Marshalu(const TPMT_QTESLA_SCHEME *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0) {
+		rc = TSS_TPMI_ALG_QTESLA_SCHEME_Marshalu(&source->scheme, written, buffer, size);
+	}
+	if (rc == 0) {
+		rc = TSS_TPMU_ASYM_SCHEME_Marshalu(&source->details, written, buffer, size, source->scheme);
+	}
+	return rc;
+}
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 TPM_RC
 TSS_TPMI_ALG_DILITHIUM_SCHEME_Marshalu(const TPMI_ALG_DILITHIUM_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size)
 {
@@ -5024,7 +5093,13 @@ TSS_TPMI_ALG_DILITHIUM_SCHEME_Marshalu(const TPMI_ALG_DILITHIUM_SCHEME *source, 
     }
     return rc;
 }
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
 TPM_RC
 TSS_TPMI_ALG_KYBER_SCHEME_Marshalu(const TPMI_ALG_KYBER_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size)
 {
@@ -5034,6 +5109,9 @@ TSS_TPMI_ALG_KYBER_SCHEME_Marshalu(const TPMI_ALG_KYBER_SCHEME *source, uint16_t
     }
     return rc;
 }
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
 
 TPM_RC
 TSS_TPMI_ALG_RSA_SCHEME_Marshalu(const TPMI_ALG_RSA_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size)
@@ -5060,6 +5138,9 @@ TSS_TPMT_RSA_SCHEME_Marshalu(const TPMT_RSA_SCHEME *source, uint16_t *written, B
     return rc;
 }
 
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 TPM_RC
 TSS_TPMT_DILITHIUM_SCHEME_Marshalu(const TPMT_DILITHIUM_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size)
 {
@@ -5072,7 +5153,13 @@ TSS_TPMT_DILITHIUM_SCHEME_Marshalu(const TPMT_DILITHIUM_SCHEME *source, uint16_t
     }
     return rc;
 }
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
 TPM_RC
 TSS_TPMT_KYBER_SCHEME_Marshalu(const TPMT_KYBER_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size)
 {
@@ -5085,6 +5172,25 @@ TSS_TPMT_KYBER_SCHEME_Marshalu(const TPMT_KYBER_SCHEME *source, uint16_t *writte
     }
     return rc;
 }
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
+TPM_RC
+TSS_TPMS_SCHEME_QTESLA_Marshalu(const TPMS_SIG_SCHEME_QTESLA *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0) {
+		rc = TSS_TPMS_SCHEME_HASH_Marshalu(source, written, buffer, size);
+	}
+	return rc;
+}
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
 
 /* Table 156 - Definition of (TPM_ALG_ID) {RSA} TPMI_ALG_RSA_DECRYPT Type */
 
@@ -5341,6 +5447,9 @@ TSS_TPMS_SIGNATURE_ECC_Marshalu(const TPMS_SIGNATURE_ECC *source, uint16_t *writ
 
 /* Table 171 - Definition of Types for {ECC} TPMS_SIGNATURE_ECC */
 
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 TPM_RC
 TSS_TPMS_SIGNATURE_DILITHIUM_Marshalu(const TPMS_SIGNATURE_DILITHIUM *source, uint16_t *written, BYTE **buffer, uint32_t *size)
 {
@@ -5356,6 +5465,28 @@ TSS_TPMS_SIGNATURE_DILITHIUM_Marshalu(const TPMS_SIGNATURE_DILITHIUM *source, ui
     }
     return rc;
 }
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
+TPM_RC
+TSS_TPMS_SIGNATURE_QTESLA_Marshalu(const TPMS_SIGNATURE_QTESLA *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+	rc = TSS_TPMI_ALG_HASH_Marshalu(&source->hash, written, buffer, size);
+    }
+    if (rc == 0) {
+	rc = TSS_TPM2B_SIGNATURE_QTESLA_Marshalu(&source->sig, written, buffer, size);
+    }
+    return rc;
+}
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
 
 TPM_RC
 TSS_TPMS_SIGNATURE_ECDSA_Marshalu(const TPMS_SIGNATURE_ECDSA *source, uint16_t *written, BYTE **buffer, uint32_t *size)
@@ -5410,6 +5541,13 @@ TSS_TPMU_SIGNATURE_Marshalu(const TPMU_SIGNATURE *source, uint16_t *written, BYT
             rc = TSS_TPMS_SIGNATURE_RSASSA_Marshalu(&source->rsassa, written, buffer, size);
         }
         break;
+#endif
+#ifdef TPM_ALG_QTESLA
+	  case TPM_ALG_QTESLA:
+		if (rc == 0) {
+		    rc = TSS_TPMS_SIGNATURE_QTESLA_Marshalu(&source->qtesla, written, buffer, size);
+		}
+		break;
 #endif
 #ifdef TPM_ALG_DILITHIUM
       case TPM_ALG_DILITHIUM:
@@ -5542,6 +5680,20 @@ TSS_TPMU_PUBLIC_ID_Marshalu(const TPMU_PUBLIC_ID *source, uint16_t *written, BYT
         }
         break;
 #endif
+#ifdef TPM_ALG_NEWHOPE
+	  case TPM_ALG_NEWHOPE:
+		if (rc == 0) {
+		    rc = TSS_TPM2B_PUBLIC_KEY_NEWHOPE_Marshalu(&source->newhope, written, buffer, size);
+		}
+		break;
+#endif
+#ifdef TPM_ALG_QTESLA
+	  case TPM_ALG_QTESLA:
+		if (rc == 0) {
+		    rc = TSS_TPM2B_PUBLIC_KEY_QTESLA_Marshalu(&source->qtesla, written, buffer, size);
+		}
+        break;
+#endif
 #ifdef TPM_ALG_RSA
       case TPM_ALG_RSA:
         if (rc == 0) {
@@ -5595,6 +5747,65 @@ TSS_TPMS_RSA_PARMS_Marshalu(const TPMS_RSA_PARMS *source, uint16_t *written, BYT
     return rc;
 }
 
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+TPM_RC
+TSS_TPMS_NEWHOPE_PARMS_Marshalu(const TPMS_NEWHOPE_PARMS *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0) {
+		rc = TSS_TPMT_SYM_DEF_OBJECT_Marshalu(&source->symmetric, written, buffer, size);
+	}
+
+	if (rc == 0) {
+		rc = TSS_TPMT_NEWHOPE_SCHEME_Marshalu(&source->scheme, written, buffer, size);
+	}
+	if (rc == 0) {
+		rc = TSS_UINT32_Marshalu(&source->q, written, buffer, size);
+	}
+
+	if (rc == 0) {
+		rc = TSS_UINT16_Marshalu(&source->n, written, buffer, size);
+	}
+	if (rc == 0) {
+		rc = TSS_TPMT_KDF_SCHEME_Marshalu(&source->kdf, written, buffer, size);
+	}
+	return rc;
+}
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
+TPM_RC
+TSS_TPMS_QTESLA_PARMS_Marshalu(const TPMS_QTESLA_PARMS *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0) {
+		rc = TSS_TPMT_SYM_DEF_OBJECT_Marshalu(&source->symmetric, written, buffer, size);
+	}
+	if (rc == 0) {
+		rc = TSS_TPMT_QTESLA_SCHEME_Marshalu(&source->scheme, written, buffer, size);
+	}
+	if (rc == 0) {
+		rc = TSS_UINT32_Marshalu(&source->q, written, buffer, size);
+	}
+	if (rc == 0) {
+		rc = TSS_UINT16_Marshalu(&source->n, written, buffer, size);
+	}
+
+	return rc;
+}
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 TPM_RC
 TSS_TPMS_DILITHIUM_PARMS_Marshalu(const TPMS_DILITHIUM_PARMS *source, uint16_t *written, BYTE **buffer, uint32_t *size)
 {
@@ -5610,7 +5821,13 @@ TSS_TPMS_DILITHIUM_PARMS_Marshalu(const TPMS_DILITHIUM_PARMS *source, uint16_t *
     }
     return rc;
 }
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
 TPM_RC
 TSS_TPMS_KYBER_PARMS_Marshalu(const TPMS_KYBER_PARMS *source, uint16_t *written, BYTE **buffer, uint32_t *size)
 {
@@ -5626,6 +5843,9 @@ TSS_TPMS_KYBER_PARMS_Marshalu(const TPMS_KYBER_PARMS *source, uint16_t *written,
     }
     return rc;
 }
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
 /* Table 181 - Definition of {ECC} TPMS_ECC_PARMS Structure */
 
 TPM_RC
@@ -5679,6 +5899,20 @@ TSS_TPMU_PUBLIC_PARMS_Marshalu(const TPMU_PUBLIC_PARMS *source, uint16_t *writte
       case TPM_ALG_KYBER:
         if (rc == 0) {
             rc = TSS_TPMS_KYBER_PARMS_Marshalu(&source->kyberDetail, written, buffer, size);
+        }
+        break;
+#endif
+#ifdef TPM_ALG_NEWHOPE
+	case TPM_ALG_NEWHOPE:
+        if (rc == 0) {
+            rc = TSS_TPMS_NEWHOPE_PARMS_Marshalu(&source->newhopeDetail, written, buffer, size);
+        }
+        break;
+#endif
+#ifdef TPM_ALG_QTESLA
+	case TPM_ALG_QTESLA:
+        if (rc == 0) {
+            rc = TSS_TPMS_QTESLA_PARMS_Marshalu(&source->qteslaDetail, written, buffer, size);
         }
         break;
 #endif
@@ -6185,6 +6419,100 @@ TSS_TPM2B_DILITHIUM_SIGNED_MESSAGE_Marshalu(const TPM2B_DILITHIUM_SIGNED_MESSAGE
 }
 /*****************************************************************************/
 /*                             Dilithium Mods                                */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
+TPM_RC
+TSS_TPM2B_PUBLIC_KEY_QTESLA_Marshalu(const TPM2B_QTESLA_PUBLIC_KEY *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0)
+	{
+		rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_TPM2B_PRIVATE_KEY_QTESLA_Marshalu(const TPM2B_QTESLA_PRIVATE_KEY *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0)
+	{
+		rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+	}
+	return rc;
+}
+
+
+TPM_RC
+TSS_TPM2B_SIGNATURE_QTESLA_Marshalu(const TPM2B_QTESLA_SIGNATURE *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0)
+	{
+		rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+	}
+	return rc;
+}
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+TPM_RC
+TSS_TPM2B_CIPHER_NEWHOPE_Marshalu(const TPM2B_NEWHOPE_CIPHER *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0)
+	{
+		rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+	}
+	return rc;
+}
+
+
+
+TPM_RC
+TSS_TPM2B_SHAREDSECRET_NEWHOPE_Marshalu(const TPM2B_NEWHOPE_SHAREDSECRET *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0)
+	{
+		rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+	}
+	return rc;
+}
+
+
+TPM_RC
+TSS_TPM2B_PRIVATE_KEY_NEWHOPE_Marshalu(const TPM2B_NEWHOPE_PRIVATE_KEY *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0)
+	{
+		rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+	}
+	return rc;
+}
+
+
+TPM_RC
+TSS_TPM2B_PUBLIC_KEY_NEWHOPE_Marshalu(const TPM2B_NEWHOPE_PUBLIC_KEY *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0)
+	{
+		rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+	}
+	return rc;
+}
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
 /*****************************************************************************/
 
 /* Deprecated functions that use a sized value for the size parameter.  The recommended functions
@@ -8106,5 +8434,69 @@ TSS_Kyber_3Phase_KEX_In_Marshalu(Kyber_3Phase_KEX_In *source, uint16_t *written,
 }
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+TPM_RC
+TSS_NEWHOPE_Dec_In_Marshalu(const NEWHOPE_Dec_In *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0) {
+		rc = TSS_TPMI_DH_OBJECT_Marshalu(&source->keyHandle, written, buffer, size);
+	}
+	if (rc == 0) {
+		rc = TSS_TPM2B_CIPHER_NEWHOPE_Marshalu(&source->Cipher, written, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_NEWHOPE_Enc_In_Marshalu(const NEWHOPE_Enc_In *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0) {
+		rc = TSS_TPMI_DH_OBJECT_Marshalu(&source->keyHandle, written, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_NEWHOPE_Dec_Out_Unmarshalu(NEWHOPE_Dec_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+	UINT32 parameterSize = 0;
+	if (rc == TPM_RC_SUCCESS) {
+		if (tag == TPM_ST_SESSIONS) {
+			rc = TSS_UINT32_Unmarshalu(&parameterSize, buffer, size);
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_NEWHOPE_SHAREDSECRET_Unmarshalu(&target->SharedSecret, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_NEWHOPE_Enc_Out_Unmarshalu(NEWHOPE_Enc_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+	UINT32 parameterSize = 0;
+	if (rc == TPM_RC_SUCCESS) {
+		if (tag == TPM_ST_SESSIONS) {
+			rc = TSS_UINT32_Unmarshalu(&parameterSize, buffer, size);
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_NEWHOPE_CIPHER_Unmarshalu(&target->Cipher, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_NEWHOPE_SHAREDSECRET_Unmarshalu(&target->SharedSecret, buffer, size);
+	}
+	return rc;
+}
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
 /*****************************************************************************/
 #endif /* TPM 2.0 */

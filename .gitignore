@@ -13,6 +13,9 @@ utils/kyber_2phase_kex
 utils/kyber_3phase_kex
 utils/kyber_ephemeral
 
+utils/newhope_dec
+utils/newhope_enc
+
 utils/shutdown
 utils/activatecredential
 utils/certify

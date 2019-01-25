@@ -2871,6 +2871,9 @@ TSS_TPMS_SIG_SCHEME_ECDSA_Unmarshalu(TPMS_SIG_SCHEME_ECDSA *target, BYTE **buffe
     return rc;
 }
 
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 TPM_RC
 TSS_TPMS_SIG_SCHEME_DILITHIUM_Unmarshalu(TPMS_SIG_SCHEME_DILITHIUM *target, BYTE **buffer, uint32_t *size)
 {
@@ -2881,6 +2884,26 @@ TSS_TPMS_SIG_SCHEME_DILITHIUM_Unmarshalu(TPMS_SIG_SCHEME_DILITHIUM *target, BYTE
     }
     return rc;
 }
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
+TPM_RC
+TPMS_SIG_SCHEME_QTESLA_Unmarshalu(TPMS_SIG_SCHEME_QTESLA *target, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPMS_SCHEME_HASH_Unmarshalu(target, buffer, size);
+	}
+	return rc;
+}
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
 
 /* Table 143 - Definition of {ECC} Types for ECC Signature Schemes */
 
@@ -2916,6 +2939,11 @@ TSS_TPMU_SIG_SCHEME_Unmarshalu(TPMU_SIG_SCHEME *target, BYTE **buffer, uint32_t 
     TPM_RC rc = TPM_RC_SUCCESS;
 
     switch (selector) {
+#ifdef TPM_ALG_QTESLA
+	  case TPM_ALG_QTESLA:
+		rc = TPMS_SIG_SCHEME_QTESLA_Unmarshalu(&target->qtesla, buffer, size);
+		break;
+#endif
 #ifdef TPM_ALG_DILITHIUM
       case TPM_ALG_DILITHIUM:
         rc = TSS_TPMS_SIG_SCHEME_DILITHIUM_Unmarshalu(&target->dilithium, buffer, size);
@@ -3548,6 +3576,9 @@ TSS_TPMI_ALG_ECC_SCHEME_Unmarshalu(TPMI_ALG_ECC_SCHEME *target, BYTE **buffer, u
     return rc;
 }
 
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 TPM_RC
 TSS_TPMI_ALG_DILITHIUM_SCHEME_Unmarshalu(TPMI_ALG_DILITHIUM_SCHEME *target, BYTE **buffer, uint32_t *size, BOOL allowNull)
 {
@@ -3573,7 +3604,13 @@ TSS_TPMI_ALG_DILITHIUM_SCHEME_Unmarshalu(TPMI_ALG_DILITHIUM_SCHEME *target, BYTE
     }
     return rc;
 }
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
 TPM_RC
 TSS_TPMI_ALG_KYBER_SCHEME_Unmarshalu(TPMI_ALG_KYBER_SCHEME *target, BYTE **buffer, uint32_t *size, BOOL allowNull)
 {
@@ -3599,6 +3636,99 @@ TSS_TPMI_ALG_KYBER_SCHEME_Unmarshalu(TPMI_ALG_KYBER_SCHEME *target, BYTE **buffe
     }
     return rc;
 }
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
+TPM_RC
+TSS_TPMI_ALG_QTESLA_SCHEME_Unmarshalu(TPMI_ALG_QTESLA_SCHEME *target, BYTE **buffer, uint32_t *size, BOOL allowNull)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM_ALG_ID_Unmarshalu(target, buffer, size);
+	}
+    if (rc == TPM_RC_SUCCESS) {
+        switch (*target) {
+#ifdef TPM_ALG_QTESLA
+          case TPM_ALG_QTESLA:
+            break;
+#endif
+          case TPM_ALG_NULL:
+            if (!allowNull) {
+                rc = TPM_RC_SCHEME;
+            }
+            break;
+          default:
+            rc = TPM_RC_SCHEME;
+        }
+    }
+	return rc;
+}
+
+TPM_RC
+TSS_TPMT_QTESLA_SCHEME_Unmarshalu(TPMT_QTESLA_SCHEME *target, BYTE **buffer, uint32_t *size, BOOL allowNull)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPMI_ALG_QTESLA_SCHEME_Unmarshalu(&target->scheme, buffer, size, allowNull);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPMU_ASYM_SCHEME_Unmarshalu(&target->details, buffer, size, target->scheme);
+	}
+	return rc;
+}
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+TPM_RC
+TSS_TPMI_ALG_NEWHOPE_SCHEME_Unmarshalu(TPMI_ALG_NEWHOPE_SCHEME *target, BYTE **buffer, uint32_t *size, BOOL allowNull)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM_ALG_ID_Unmarshalu(target, buffer, size);
+	}
+    if (rc == TPM_RC_SUCCESS) {
+        switch (*target) {
+#ifdef TPM_ALG_NEWHOPE
+          case TPM_ALG_NEWHOPE:
+            break;
+#endif
+          case TPM_ALG_NULL:
+            if (!allowNull) {
+                rc = TPM_RC_SCHEME;
+            }
+            break;
+          default:
+            rc = TPM_RC_SCHEME;
+        }
+    }
+	return rc;
+}
+
+TPM_RC
+TSS_TPMT_NEWHOPE_SCHEME_Unmarshalu(TPMT_NEWHOPE_SCHEME *target, BYTE **buffer, uint32_t *size, BOOL allowNull)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPMI_ALG_NEWHOPE_SCHEME_Unmarshalu(&target->scheme, buffer, size, allowNull);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPMU_ASYM_SCHEME_Unmarshalu(&target->details, buffer, size, target->scheme);
+	}
+	return rc;
+}
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
 
 /* Table 165 - Definition of {ECC} (TPM_ECC_CURVE) TPMI_ECC_CURVE Type */
 
@@ -3726,6 +3856,9 @@ TSS_TPMS_SIGNATURE_RSA_Unmarshalu(TPMS_SIGNATURE_RSA *target, BYTE **buffer, uin
     return rc;
 }
 
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 TPM_RC
 TSS_TPMS_SIGNATURE_DILITHIUM_Unmarshalu(TPMS_SIGNATURE_DILITHIUM *target, BYTE **buffer, uint32_t *size)
 {
@@ -3742,7 +3875,29 @@ TSS_TPMS_SIGNATURE_DILITHIUM_Unmarshalu(TPMS_SIGNATURE_DILITHIUM *target, BYTE *
     }
     return rc;
 }
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
+TPM_RC
+TSS_TPMS_SIGNATURE_QTESLA_Unmarshalu(TPMS_SIGNATURE_QTESLA *target, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+
+    if (rc == TPM_RC_SUCCESS) {
+	rc = TSS_TPMI_ALG_HASH_Unmarshalu(&target->hash, buffer, size, NO);
+    }
+    if (rc == TPM_RC_SUCCESS) {
+	rc = TSS_TPM2B_QTESLA_SIGNATURE_Unmarshalu(&target->sig, buffer, size);
+    }
+    return rc;
+}
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
 /* Table 169 - Definition of Types for {RSA} Signature */
 
 TPM_RC
@@ -3857,6 +4012,11 @@ TSS_TPMU_SIGNATURE_Unmarshalu(TPMU_SIGNATURE *target, BYTE **buffer, uint32_t *s
         rc = TSS_TPMS_SIGNATURE_DILITHIUM_Unmarshalu(&target->dilithium, buffer, size);
         break;
 #endif
+#ifdef TPM_ALG_QTESLA
+	  case TPM_ALG_QTESLA:
+		rc = TSS_TPMS_SIGNATURE_QTESLA_Unmarshalu(&target->qtesla, buffer, size);
+        break;
+#endif
 #ifdef TPM_ALG_ECDSA
       case TPM_ALG_ECDSA:
         rc = TSS_TPMS_SIGNATURE_ECDSA_Unmarshalu(&target->ecdsa, buffer, size);
@@ -3940,6 +4100,12 @@ TSS_TPMI_ALG_PUBLIC_Unmarshalu(TPMI_ALG_PUBLIC *target, BYTE **buffer, uint32_t 
 #ifdef TPM_ALG_ECC
           case TPM_ALG_ECC:
 #endif
+#ifdef TPM_ALG_NEWHOPE
+          case TPM_ALG_NEWHOPE:
+#endif
+#ifdef TPM_ALG_QTESLA
+          case TPM_ALG_QTESLA:
+#endif
 #ifdef TPM_ALG_DILITHIUM
           case TPM_ALG_DILITHIUM:
 #endif
@@ -3989,6 +4155,16 @@ TSS_TPMU_PUBLIC_ID_Unmarshalu(TPMU_PUBLIC_ID *target, BYTE **buffer, uint32_t *s
       case TPM_ALG_KYBER:
         rc = TSS_TPM2B_KYBER_PUBLIC_KEY_Unmarshalu(&target->kyber, buffer, size);
         break;
+#endif
+#ifdef TPM_ALG_NEWHOPE
+	  case TPM_ALG_NEWHOPE:
+		rc = TSS_TPM2B_NEWHOPE_PUBLIC_KEY_Unmarshalu(&target->newhope, buffer, size);
+		break;
+#endif
+#ifdef TPM_ALG_QTESLA
+	  case TPM_ALG_QTESLA:
+		rc = TSS_TPM2B_QTESLA_PUBLIC_KEY_Unmarshalu(&target->qtesla, buffer, size);
+		break;
 #endif
 #ifdef TPM_ALG_ECC
       case TPM_ALG_ECC:
@@ -4076,6 +4252,9 @@ TSS_TPMS_ECC_PARMS_Unmarshalu(TPMS_ECC_PARMS *target, BYTE **buffer, uint32_t *s
     return rc;
 }
 
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 TPM_RC
 TSS_TPMS_DILITHIUM_PARMS_Unmarshalu(TPMS_DILITHIUM_PARMS *target, BYTE **buffer, uint32_t *size)
 {
@@ -4092,7 +4271,13 @@ TSS_TPMS_DILITHIUM_PARMS_Unmarshalu(TPMS_DILITHIUM_PARMS *target, BYTE **buffer,
     }
     return rc;
 }
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
 TPM_RC
 TSS_TPMS_KYBER_PARMS_Unmarshalu(TPMS_KYBER_PARMS *target, BYTE **buffer, uint32_t *size)
 {
@@ -4109,6 +4294,64 @@ TSS_TPMS_KYBER_PARMS_Unmarshalu(TPMS_KYBER_PARMS *target, BYTE **buffer, uint32_
     }
     return rc;
 }
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+TPM_RC
+TSS_TPMS_NEWHOPE_PARMS_Unmarshalu(TPMS_NEWHOPE_PARMS *target, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPMT_SYM_DEF_OBJECT_Unmarshalu(&target->symmetric, buffer, size, YES);
+	}
+
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPMT_NEWHOPE_SCHEME_Unmarshalu(&target->scheme, buffer, size, YES);
+	}
+
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT32_Unmarshalu(&target->q, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT16_Unmarshalu(&target->n, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPMT_KDF_SCHEME_Unmarshalu(&target->kdf, buffer, size, YES);
+	}
+	return rc;
+}
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
+TPM_RC
+TSS_TPMS_QTESLA_PARMS_Unmarshalu(TPMS_QTESLA_PARMS *target, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPMT_SYM_DEF_OBJECT_Unmarshalu(&target->symmetric, buffer, size, YES);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPMT_QTESLA_SCHEME_Unmarshalu(&target->scheme, buffer, size, YES);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT32_Unmarshalu(&target->q, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT16_Unmarshalu(&target->n, buffer, size);
+	}
+	return rc;
+}
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
 
 /* Table 182 - Definition of TPMU_PUBLIC_PARMS Union <IN/OUT, S> */
 
@@ -4147,6 +4390,16 @@ TSS_TPMU_PUBLIC_PARMS_Unmarshalu(TPMU_PUBLIC_PARMS *target, BYTE **buffer, uint3
       case TPM_ALG_KYBER:
         rc = TSS_TPMS_KYBER_PARMS_Unmarshalu(&target->kyberDetail, buffer, size);
         break;
+#endif
+#ifdef TPM_ALG_NEWHOPE
+	  case TPM_ALG_NEWHOPE:
+		rc = TSS_TPMS_NEWHOPE_PARMS_Unmarshalu(&target->newhopeDetail, buffer, size);
+		break;
+#endif
+#ifdef TPM_ALG_QTESLA
+	  case TPM_ALG_QTESLA:
+		rc = TSS_TPMS_QTESLA_PARMS_Unmarshalu(&target->qteslaDetail, buffer, size);
+		break;
 #endif
       default:
         rc = TPM_RC_SELECTOR;
@@ -4262,6 +4515,16 @@ TSS_TPMU_SENSITIVE_COMPOSITE_Unmarshalu(TPMU_SENSITIVE_COMPOSITE *target, BYTE *
 #ifdef TPM_ALG_KYBER
       case TPM_ALG_KYBER:
         rc = TSS_TPM2B_KYBER_SECRET_KEY_Unmarshalu(&target->kyber, buffer, size);
+        break;
+#endif
+#ifdef TPM_ALG_NEWHOPE
+      case TPM_ALG_NEWHOPE:
+        rc = TSS_TPM2B_NEWHOPE_PRIVATE_KEY_Unmarshalu(&target->newhope, buffer, size);
+        break;
+#endif
+#ifdef TPM_ALG_QTESLA
+      case TPM_ALG_QTESLA:
+        rc = TSS_TPM2B_QTESLA_PRIVATE_KEY_Unmarshalu(&target->qTesla, buffer, size);
         break;
 #endif
 #ifdef TPM_ALG_ECC
@@ -4646,6 +4909,98 @@ TSS_TPM2B_DILITHIUM_SIGNED_MESSAGE_Unmarshalu(TPM2B_DILITHIUM_SIGNED_MESSAGE *ta
 
 /*****************************************************************************/
 /*                             Dilithium Mods                                */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+TPM_RC
+TSS_TPM2B_NEWHOPE_CIPHER_Unmarshalu(TPM2B_NEWHOPE_CIPHER *target, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_Unmarshalu(&target->b, sizeof(target->t.buffer), buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_TPM2B_NEWHOPE_SHAREDSECRET_Unmarshalu(TPM2B_NEWHOPE_SHAREDSECRET *target, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_Unmarshalu(&target->b, sizeof(target->t.buffer), buffer, size);
+	}
+	return rc;
+}
+
+
+TPM_RC
+TSS_TPM2B_NEWHOPE_PRIVATE_KEY_Unmarshalu(TPM2B_NEWHOPE_PRIVATE_KEY *target, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_Unmarshalu(&target->b, sizeof(target->t.buffer), buffer, size);
+	}
+	return rc;
+}
+
+
+TPM_RC
+TSS_TPM2B_NEWHOPE_PUBLIC_KEY_Unmarshalu(TPM2B_NEWHOPE_PUBLIC_KEY *target, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_Unmarshalu(&target->b, sizeof(target->t.buffer), buffer, size);
+	}
+	return rc;
+}
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
+/*****************************************************************************/
+TPM_RC
+TSS_TPM2B_QTESLA_PUBLIC_KEY_Unmarshalu(TPM2B_QTESLA_PUBLIC_KEY *target, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_Unmarshalu(&target->b, sizeof(target->t.buffer), buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_TPM2B_QTESLA_PRIVATE_KEY_Unmarshalu(TPM2B_QTESLA_PRIVATE_KEY *target, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_Unmarshalu(&target->b, sizeof(target->t.buffer), buffer, size);
+	}
+	return rc;
+}
+
+
+TPM_RC
+TSS_TPM2B_QTESLA_SIGNATURE_Unmarshalu(TPM2B_QTESLA_SIGNATURE *target, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_Unmarshalu(&target->b, sizeof(target->t.buffer), buffer, size);
+	}
+	return rc;
+}
+/*****************************************************************************/
+/*                               qTesla Mods                                 */
 /*****************************************************************************/
 
 /* Deprecated functions that use a sized value for the size parameter.  The recommended functions

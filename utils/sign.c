@@ -146,6 +146,9 @@ int main(int argc, char *argv[])
 	else if (strcmp(argv[i], "-dilithium") == 0) {
 	    scheme = TPM_ALG_DILITHIUM;
 	}
+	else if (strcmp(argv[i], "-qtesla") == 0) {
+		scheme = TPM_ALG_QTESLA;
+	}
 	else if (strcmp(argv[i], "-ecc") == 0) {
 	    scheme = TPM_ALG_ECDSA;
 	}
@@ -340,6 +343,9 @@ int main(int argc, char *argv[])
 	else if (scheme == TPM_ALG_DILITHIUM) {
         in.inScheme.details.dilithium.hashAlg = halg;
     }
+	else if (scheme == TPM_ALG_QTESLA) {
+        in.inScheme.details.qtesla.hashAlg = halg;
+    }
 	else if (scheme == TPM_ALG_ECDAA) {
 	    in.inScheme.details.ecdaa.hashAlg = halg;
 	    rc = TSS_File_ReadStructure(&in.inScheme.details.ecdaa.count,
@@ -457,6 +463,7 @@ static void printUsage(void)
     printf("\t[-rsa\t(default)]\n");
     printf("\t[-scheme  RSA signing scheme (rsassa rsapss) (default rsassa)]\n");
     printf("\t[-dilithium\t Dilithium signing scheme]\n");
+	printf("\t[-qtesla QTESLA signing scheme]\n");
     printf("\t[-ecc\t ECDSA signing scheme]\n");
     printf("\t[-ecdaa\t ECDAA signing scheme]\n");
     printf("\t[-cf\tinput counter file (commit count required for ECDAA scheme]\n");

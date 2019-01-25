@@ -475,8 +475,6 @@ ntc2preconfig:		ntc2preconfig.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) ntc2preconfig.o $(LNALIBS) -o ntc2preconfig
 ntc2lockconfig:		ntc2lockconfig.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) ntc2lockconfig.o $(LNALIBS) -o ntc2lockconfig
-kyber_test:			ibmtss/tss.h kyber_test.o objecttemplates.o $(LIBTSS) $(LIBTSSUTILS)
-			$(CC) $(LNFLAGS) $(LNAFLAGS) kyber_test.o objecttemplates.o $(LNALIBS) -o kyber_test
 
 # for applications, not for TSS library
 
