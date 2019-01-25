@@ -1345,53 +1345,53 @@ typedef  UINT32             TPM_CC;
 #endif
 
 /*****************************************************************************/
-/*                                Kyber Mods                                 */
-/*****************************************************************************/
-#ifndef CC_KYBER_Enc
-#   define CC_KYBER_Enc NO
-#endif
-#if CC_KYBER_Enc == YES
-#define TPM_CC_KYBER_Enc                      (TPM_CC)(0x00000198)
-#endif
-#ifndef CC_KYBER_Dec
-#   define CC_KYBER_Dec NO
-#endif
-#if CC_KYBER_Dec == YES
-#define TPM_CC_KYBER_Dec                      (TPM_CC)(0x00000199)
-#endif
-#ifndef CC_KYBER_2Phase_KEX
-#   define CC_KYBER_2Phase_KEX NO
-#endif
-#if CC_KYBER_2Phase_KEX == YES
-#define TPM_CC_KYBER_2Phase_KEX               (TPM_CC)(0x0000019B)
-#endif
-#ifndef CC_KYBER_3Phase_KEX
-#   define CC_KYBER_3Phase_KEX NO
-#endif
-#if CC_KYBER_3Phase_KEX == YES
-#define TPM_CC_KYBER_3Phase_KEX               (TPM_CC)(0x0000019C)
-#endif
-/*****************************************************************************/
-/*                                Kyber Mods                                 */
-/*****************************************************************************/
-
-/*****************************************************************************/
 /*                              NewHope Mods                                 */
 /*****************************************************************************/
 #ifndef CC_NEWHOPE_Dec
 #   define CC_NEWHOPE_Dec NO
 #endif
 #if CC_NEWHOPE_Dec == YES
-#define TPM_CC_NEWHOPE_Dec						(TPM_CC)(0x0000019D)
+#define TPM_CC_NEWHOPE_Dec						(TPM_CC)(0x00000198)
 #endif
 #ifndef CC_NEWHOPE_Enc
 #   define CC_NEWHOPE_Enc NO
 #endif
 #if CC_NEWHOPE_Enc == YES
-#define TPM_CC_NEWHOPE_Enc						(TPM_CC)(0x0000019E)
+#define TPM_CC_NEWHOPE_Enc						(TPM_CC)(0x00000199)
 #endif
 /*****************************************************************************/
 /*                              NewHope Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
+#ifndef CC_KYBER_Enc
+#   define CC_KYBER_Enc NO
+#endif
+#if CC_KYBER_Enc == YES
+#define TPM_CC_KYBER_Enc                      (TPM_CC)(0x0000019A)
+#endif
+#ifndef CC_KYBER_Dec
+#   define CC_KYBER_Dec NO
+#endif
+#if CC_KYBER_Dec == YES
+#define TPM_CC_KYBER_Dec                      (TPM_CC)(0x0000019B)
+#endif
+#ifndef CC_KYBER_2Phase_KEX
+#   define CC_KYBER_2Phase_KEX NO
+#endif
+#if CC_KYBER_2Phase_KEX == YES
+#define TPM_CC_KYBER_2Phase_KEX               (TPM_CC)(0x0000019C)
+#endif
+#ifndef CC_KYBER_3Phase_KEX
+#   define CC_KYBER_3Phase_KEX NO
+#endif
+#if CC_KYBER_3Phase_KEX == YES
+#define TPM_CC_KYBER_3Phase_KEX               (TPM_CC)(0x0000019D)
+#endif
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
 /*****************************************************************************/
 
 #define  TPM_CC_AC_GetCapability		(TPM_CC)(0x00000194)
@@ -1399,7 +1399,7 @@ typedef  UINT32             TPM_CC;
 #define  TPM_CC_Policy_AC_SendSelect	(TPM_CC)(0x00000196)
 
 /* Compile variable. May increase based on implementation. */
-#define  TPM_CC_LAST				(TPM_CC)(0x0000019C)
+#define  TPM_CC_LAST				(TPM_CC)(0x0000019D)
 
 #ifndef CC_Vendor_TCG_Test
 #   define CC_Vendor_TCG_Test NO

@@ -463,22 +463,35 @@ const TPMA_CC_TSS    s_ccAttr [] = {
 #endif
 
 /*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+#if (PAD_LIST || CC_NEWHOPE_Dec)
+    {{0x0198, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_NEWHOPE_Dec
+#endif
+#if (PAD_LIST || CC_NEWHOPE_Enc)
+    {{0x0199, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_NEWHOPE_Enc
+#endif
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
 #if (PAD_LIST || CC_KYBER_Enc)
-    {{0x0198, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_KYBER_Enc
+    {{0x019A, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_KYBER_Enc
 #endif
 
 #if (PAD_LIST || CC_KYBER_Dec)
-    {{0x0199, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_KYBER_Dec
+    {{0x019B, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_KYBER_Dec
 #endif
 
 #if (PAD_LIST  || CC_KYBER_2Phase_KEX)
-    {{0x019B, 0, 0, 0, 0, 2, 0, 0, 0}},     // TPM_CC_KYBER_2Phase_KEX
+    {{0x019C, 0, 0, 0, 0, 2, 0, 0, 0}},     // TPM_CC_KYBER_2Phase_KEX
 #endif
 
 #if (PAD_LIST  || CC_KYBER_3Phase_KEX)
-    {{0x019C, 0, 0, 0, 0, 2, 0, 0, 0}},     // TPM_CC_KYBER_3Phase_KEX
+    {{0x019D, 0, 0, 0, 0, 2, 0, 0, 0}},     // TPM_CC_KYBER_3Phase_KEX
 #endif
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
@@ -953,23 +966,39 @@ const COMMAND_ATTRIBUTES    s_commandAttributes [] = {
     (COMMAND_ATTRIBUTES)(CC_EncryptDecrypt2            *  // 0x0193
 			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
 #endif
+
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+#if (PAD_LIST || CC_NEWHOPE_Dec)
+    (COMMAND_ATTRIBUTES)(CC_NEWHOPE_Dec                *  // 0x0198
+			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
+#endif
+#if (PAD_LIST || CC_NEWHOPE_Enc)
+    (COMMAND_ATTRIBUTES)(CC_NEWHOPE_Enc                *  // 0x0199
+			 (IS_IMPLEMENTED+DECRYPT_2+ENCRYPT_2)),
+#endif
+/*****************************************************************************/
+/*                              NewHope Mods                                 */
+/*****************************************************************************/
+
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
 #if (PAD_LIST || CC_KYBER_Enc)
-    (COMMAND_ATTRIBUTES)(CC_KYBER_Enc                  *  // 0x0198
+    (COMMAND_ATTRIBUTES)(CC_KYBER_Enc                  *  // 0x019A
 			 (IS_IMPLEMENTED+DECRYPT_2+ENCRYPT_2)),
 #endif
 #if (PAD_LIST || CC_KYBER_Dec)
-    (COMMAND_ATTRIBUTES)(CC_KYBER_Dec                  *  // 0x0199
+    (COMMAND_ATTRIBUTES)(CC_KYBER_Dec                  *  // 0x019B
 			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
 #endif
 #if (PAD_LIST  || CC_KYBER_2Phase_KEX)
-    (COMMAND_ATTRIBUTES)(CC_KYBER_2Phase_KEX           *  // 0x019B
+    (COMMAND_ATTRIBUTES)(CC_KYBER_2Phase_KEX           *  // 0x019C
 			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
 #endif
 #if (PAD_LIST  || CC_KYBER_3Phase_KEX)
-    (COMMAND_ATTRIBUTES)(CC_KYBER_3Phase_KEX           *  // 0x019C
+    (COMMAND_ATTRIBUTES)(CC_KYBER_3Phase_KEX           *  // 0x019D
 			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+HANDLE_2_USER+ENCRYPT_2)),
 #endif
 /*****************************************************************************/
