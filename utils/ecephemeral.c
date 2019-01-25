@@ -36,7 +36,7 @@
 /* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE	*/
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
-/* 
+/*
 
 
  */
@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
 	TPM_RC rc1 = TSS_Delete(tssContext);
 	if (rc == 0) {
 	    rc = rc1;
-	} 
+	}
     }
     if ((rc == 0) && (QFilename != NULL)) {
         rc = TSS_File_WriteStructure(&out.Q,
@@ -191,5 +191,5 @@ static void printUsage(void)
     printf("\t\tnistp384\n");
     printf("\t[-oq\toutput Q ephemeral public key file name (default do not save)]\n");
     printf("\t[-cf\toutput counter file name (default do not save)]\n");
-    exit(1); 
+    exit(1);
 }

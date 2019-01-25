@@ -170,7 +170,6 @@
 /*****************************************************************************/
 #include "Kyber_Enc_fp.h"
 #include "Kyber_Dec_fp.h"
-#include "Kyber_Ephemeral_fp.h"
 #include "Kyber_2Phase_KEX_fp.h"
 #include "Kyber_3Phase_KEX_fp.h"
 /*****************************************************************************/
@@ -419,11 +418,6 @@ extern "C" {
     TSS_Kyber_Decapsulate_Out_Unmarshalu(Kyber_Decapsulate_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
     TPM_RC
     TSS_Kyber_Decapsulate_In_Marshalu(Kyber_Decapsulate_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
-
-    TPM_RC
-    TSS_Kyber_Ephemeral_Out_Unmarshalu(Kyber_Ephemeral_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
-    TPM_RC
-    TSS_Kyber_Ephemeral_In_Marshalu(Kyber_Ephemeral_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
 
     TPM_RC
     TSS_Kyber_2Phase_KEX_Out_Unmarshalu(Kyber_2Phase_KEX_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);

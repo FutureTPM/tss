@@ -8028,36 +8028,6 @@ TSS_Kyber_Decapsulate_In_Marshalu(Kyber_Decapsulate_In *source, uint16_t *writte
 }
 
 TPM_RC
-TSS_Kyber_Ephemeral_Out_Unmarshalu(Kyber_Ephemeral_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
-{
-    TPM_RC rc = TPM_RC_SUCCESS;
-    uint32_t parameterSize = 0;
-    if (rc == TPM_RC_SUCCESS) {
-        if (tag == TPM_ST_SESSIONS) {
-            rc = TSS_UINT32_Unmarshalu(&parameterSize, buffer, size);
-        }
-    }
-    if (rc == TPM_RC_SUCCESS) {
-        rc = TSS_TPM2B_KYBER_PUBLIC_KEY_Unmarshalu(&target->public_key, buffer, size);
-    }
-    if (rc == TPM_RC_SUCCESS) {
-        rc = TSS_UINT8_Unmarshalu(&target->k, buffer, size);
-    }
-    return rc;
-}
-
-TPM_RC
-TSS_Kyber_Ephemeral_In_Marshalu(Kyber_Ephemeral_In *source, uint16_t *written,
-        BYTE **buffer, uint32_t *size)
-{
-    TPM_RC rc = TPM_RC_SUCCESS;
-    if (rc == TPM_RC_SUCCESS) {
-        rc = TSS_TPMI_DH_OBJECT_Marshalu(&source->key_handle, written, buffer, size);
-    }
-    return rc;
-}
-
-TPM_RC
 TSS_Kyber_2Phase_KEX_Out_Unmarshalu(Kyber_2Phase_KEX_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = TPM_RC_SUCCESS;

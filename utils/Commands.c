@@ -2297,20 +2297,6 @@ Kyber_Decapsulate_In_Unmarshal(Kyber_Decapsulate_In *target, BYTE **buffer, uint
 }
 
 TPM_RC
-Kyber_Ephemeral_In_Unmarshal(Kyber_Ephemeral_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
-{
-    TPM_RC rc = TPM_RC_SUCCESS;
-    buffer = buffer;
-    size = size;
-
-    if (rc == TPM_RC_SUCCESS) {
-        target->key_handle = handles[0];
-    }
-
-    return rc;
-}
-
-TPM_RC
 Kyber_2Phase_KEX_In_Unmarshal(Kyber_2Phase_KEX_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
 {
     TPM_RC rc = TPM_RC_SUCCESS;
