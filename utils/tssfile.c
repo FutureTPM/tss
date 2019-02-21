@@ -58,7 +58,7 @@ int TSS_File_Open(FILE **file,
 		  const char* mode)
 {
     int 	rc = 0;
-		    
+
     if (rc == 0) {
 	*file = fopen(filename, mode);
 	if (*file == NULL) {
@@ -72,12 +72,12 @@ int TSS_File_Open(FILE **file,
 
 /* TSS_File_ReadBinaryFile() reads 'filename'.  The results are put into 'data', which must be freed
    by the caller.  'length' indicates the number of bytes read.
-   
+
 */
 
 TPM_RC TSS_File_ReadBinaryFile(unsigned char **data,     /* must be freed by caller */
 			       size_t *length,
-			       const char *filename) 
+			       const char *filename)
 {
     int		rc = 0;
     long	lrc;
@@ -153,7 +153,7 @@ TPM_RC TSS_File_ReadBinaryFile(unsigned char **data,     /* must be freed by cal
 
 TPM_RC TSS_File_WriteBinaryFile(const unsigned char *data,
 				size_t length,
-				const char *filename) 
+				const char *filename)
 {
     long	rc = 0;
     size_t	src;
@@ -186,7 +186,7 @@ TPM_RC TSS_File_WriteBinaryFile(const unsigned char *data,
 }
 
 /* TSS_File_ReadStructure() is a general purpose "read a structure" function.
-   
+
    It reads the filename, and then unmarshals the structure using "unmarshalFunction".
 */
 
@@ -238,7 +238,7 @@ TPM_RC TSS_File_ReadStructureFlag(void 				*structure,
 }
 
 /* TSS_File_WriteStructure() is a general purpose "write a structure" function.
-   
+
    It marshals the structure using "marshalFunction", and then writes it to filename.
 */
 
@@ -247,7 +247,7 @@ TPM_RC TSS_File_WriteStructure(void 			*structure,
 			       const char 		*filename)
 {
     TPM_RC 	rc = 0;
-    uint16_t	written = 0;
+    uint32_t	written = 0;
     uint8_t	*buffer = NULL;		/* for the free */
 
     if (rc == 0) {
@@ -259,7 +259,7 @@ TPM_RC TSS_File_WriteStructure(void 			*structure,
     if (rc == 0) {
 	rc = TSS_File_WriteBinaryFile(buffer,
 				      written,
-				      filename); 
+				      filename);
     }
     free(buffer);	/* @1 */
     return rc;
@@ -270,28 +270,28 @@ TPM_RC TSS_File_WriteStructure(void 			*structure,
  */
 
 TPM_RC TSS_File_Read2B(TPM2B 		*tpm2b,
-		       uint16_t 	targetSize,
+		       uint32_t 	targetSize,
 		       const char 	*filename)
 {
     TPM_RC 	rc = 0;
     uint8_t	*buffer = NULL;
     size_t 	length = 0;
-    
+
     if (rc == 0) {
 	rc = TSS_File_ReadBinaryFile(&buffer,     /* must be freed by caller */
 				     &length,
 				     filename);
     }
     if (rc == 0) {
-	if (length > 0xffff) {	/* overflow TPM2B uint16_t */
+	if (length > 0xffffffff) {	/* overflow TPM2B uint32_t */
 	    if (tssVerbose) printf("TSS_File_Read2B: size %u greater than 0xffff\n",
-				   (unsigned int)length);	
+				   (unsigned int)length);
 	    rc = TSS_RC_INSUFFICIENT_BUFFER;
 	}
     }
     /* copy it into the TPM2B */
     if (rc == 0) {
-	rc = TSS_TPM2B_Create(tpm2b, buffer, (uint16_t)length, targetSize);
+	rc = TSS_TPM2B_Create(tpm2b, buffer, (uint32_t)length, targetSize);
     }
     free(buffer);
     return rc;
@@ -299,11 +299,11 @@ TPM_RC TSS_File_Read2B(TPM2B 		*tpm2b,
 
 /* FIXME need to add - ignore failure if does not exist */
 
-TPM_RC TSS_File_DeleteFile(const char *filename) 
+TPM_RC TSS_File_DeleteFile(const char *filename)
 {
     TPM_RC 	rc = 0;
     int		irc;
-    
+
     if (rc == 0) {
 	irc = remove(filename);
 	if (irc != 0) {

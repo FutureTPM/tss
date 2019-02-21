@@ -64,7 +64,7 @@ int main(int argc, char * argv[])
     Quote2_In			in;
     Quote2_Out			out;
     TPM_KEY_HANDLE		keyHandle = 0;
-    const char			*keyPassword = NULL; 
+    const char			*keyPassword = NULL;
     const char			*signatureFilename = NULL;
     const char			*externalDataFilename = NULL;
     unsigned char 		*externalData = NULL;
@@ -72,7 +72,7 @@ int main(int argc, char * argv[])
     const char 			*keyFilename = NULL;
     TPM_AUTHHANDLE 		sessionHandle0 = TPM_RH_NULL;
     unsigned int		sessionAttributes0 = 0;
-	
+
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
     TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "1");
 
@@ -221,9 +221,9 @@ int main(int argc, char * argv[])
     if (keyFilename != NULL) {
 	TPM_QUOTE_INFO2 q1;
 	uint8_t		*q1Buffer = NULL;		/* freed @1 */
-	uint16_t	q1Written;
+	uint32_t	q1Written;
 	uint8_t		*vBuffer = NULL;		/* freed @2 */
-	uint16_t	vWritten;
+	uint32_t	vWritten;
 	TPMT_HA		q1Digest;
 	TPM_KEY12 	quoteKey;
 	RSA         	*rsaPubKey = NULL;
@@ -249,7 +249,7 @@ int main(int argc, char * argv[])
 	/* recalculate the signed hash */
 	if (rc == 0) {
 	    q1Digest.hashAlg = TPM_ALG_SHA1;
-	    rc = TSS_Hash_Generate(&q1Digest,	
+	    rc = TSS_Hash_Generate(&q1Digest,
 				   q1Written, q1Buffer,	/* TPM_QUOTE_INFO2 */
 				   vWritten, vBuffer,	/* TPM_CAP_VERSION_INFO */
 				   0, NULL);

@@ -162,10 +162,10 @@ typedef struct TSS_TABLE {
    #0 of 1 seal, sealx, createwrapkey, cmk_create, changeauthowner, del_ckd, del_cod, nv_define, createctr
    #1 of 2 changeauth
 */
-   
+
 
 static const TSS_TABLE tssTable [] = {
-				 
+
     {TPM_ORD_Init, NULL, NULL, NULL},
     {TPM_ORD_ActivateIdentity, NULL, NULL, NULL},
     {TPM_ORD_CreateWrapKey, (TSS_PreProcessFunction_t)TSS_PR_CreateWrapKey, NULL, NULL},
@@ -216,7 +216,7 @@ static TPM_RC TSS_HmacSession12_LoadSession(TSS_CONTEXT *tssContext,
 					    TSS_HMAC12_CONTEXT *session,
 					    TPM_AUTHHANDLE authHandle);
 static TPM_RC TSS_HmacSession12_Marshal(TSS_HMAC12_CONTEXT *source,
-					uint16_t *written,
+					uint32_t *written,
 					uint8_t **buffer,
 					uint32_t *size);
 static TPM_RC TSS_HmacSession12_DeleteSession(TSS_CONTEXT *tssContext,
@@ -337,7 +337,7 @@ static TPM_RC TSS_Execute12_valist(TSS_CONTEXT *tssContext,
     /* structures filled in */
     TPMS_AUTH12_COMMAND authCommand[MAX_SESSION_NUM];
     TPMS_AUTH12_RESPONSE authResponse[MAX_SESSION_NUM];
-    
+
     /* pointer to the above structures as used */
     TPMS_AUTH12_COMMAND *authC[MAX_SESSION_NUM];
     TPMS_AUTH12_RESPONSE *authR[MAX_SESSION_NUM];
@@ -347,7 +347,7 @@ static TPM_RC TSS_Execute12_valist(TSS_CONTEXT *tssContext,
 
     in = in;
     ap = ap;
-    
+
     /* Step 1: initialization */
     if (tssVverbose) printf("TSS_Execute12_valist: Step 1: initialization\n");
     for (i = 0 ; (rc == 0) && (i < MAX_SESSION_NUM) ; i++) {
@@ -370,7 +370,7 @@ static TPM_RC TSS_Execute12_valist(TSS_CONTEXT *tssContext,
 								   sessionAttributes */
 	sessionAttributes[i] &= 0xff;				/* is uint8_t */
 
-	if (sessionHandle[i] != TPM_RH_NULL) {			/* varargs termination value */ 
+	if (sessionHandle[i] != TPM_RH_NULL) {			/* varargs termination value */
 
 	    if (tssVverbose) printf("TSS_Execute12_valist: Step 2: authorization %u\n",
 				    (unsigned int)i);
@@ -436,7 +436,7 @@ static TPM_RC TSS_Execute12_valist(TSS_CONTEXT *tssContext,
     if (rc == 0) {
 	if (tssVverbose) printf("TSS_Execute12_valist: Step 6: calculate HMACs\n");
 	rc = TSS_HmacSession12_SetHMAC(tssContext->tssAuthContext,	/* TSS auth context */
-				       numSessions, 
+				       numSessions,
 				       session,		/* TSS session contexts */
 				       authC,		/* output: command authorizations */
 				       sessionHandle,	/* list of session handles for the command */
@@ -447,7 +447,7 @@ static TPM_RC TSS_Execute12_valist(TSS_CONTEXT *tssContext,
     if (rc == 0) {
 	if (tssVverbose) printf("TSS_Execute12_valist: Step 7: set command authorizations\n");
 	rc = TSS_SetCmdAuths12(tssContext->tssAuthContext,
-			       numSessions, 
+			       numSessions,
 			       authC);
     }
     /* Step 8: process the command.  Normally returns the TPM response code. */
@@ -459,7 +459,7 @@ static TPM_RC TSS_Execute12_valist(TSS_CONTEXT *tssContext,
     if (rc == 0) {
 	if (tssVverbose) printf("TSS_Execute12_valist: Step 9: get response authorizations\n");
 	rc = TSS_GetRspAuths12(tssContext->tssAuthContext,
-			       numSessions, 
+			       numSessions,
 			       authR);
     }
     /* Step 10: process the response authorizations, validate the HMAC */
@@ -473,7 +473,7 @@ static TPM_RC TSS_Execute12_valist(TSS_CONTEXT *tssContext,
 	if (rc == 0) {
 	    rc = TSS_HmacSession12_Verify(tssContext->tssAuthContext, /* authorization
 									 context */
-					  numSessions, 
+					  numSessions,
 					  session,	/* TSS session context */
 					  authR);	/* input: response authorization */
 	}
@@ -538,18 +538,18 @@ static void TSS_HmacSession12_FreeContext(TSS_HMAC12_CONTEXT *session)
 }
 
 /* TSS_HmacSession12_SaveSession() marshals, optionally encrypts, and saves a TSS_HMAC12_CONTEXT
-   structure */ 
+   structure */
 
 static TPM_RC TSS_HmacSession12_SaveSession(TSS_CONTEXT *tssContext,
 					    TSS_HMAC12_CONTEXT *session)
 {
     TPM_RC	rc = 0;
     uint8_t 	*buffer = NULL;		/* marshaled TSS_HMAC12_CONTEXT */
-    uint16_t	written = 0;
+    uint32_t	written = 0;
     char	sessionFilename[TPM_DATA_DIR_PATH_LENGTH];
     uint8_t 	*outBuffer = NULL;
     uint32_t 	outLength;
-    
+
     if (tssVverbose) printf("TSS_HmacSession12_SaveSession: handle %08x\n", session->authHandle);
     if (rc == 0) {
 	rc = TSS_Structure_Marshal(&buffer,	/* freed @1 */
@@ -665,7 +665,7 @@ static TPM_RC TSS_HmacSession12_DeleteSession(TSS_CONTEXT *tssContext,
  */
 
 static TPM_RC TSS_HmacSession12_Marshal(TSS_HMAC12_CONTEXT *source,
-					uint16_t *written,
+					uint32_t *written,
 					uint8_t **buffer,
 					uint32_t *size)
 {
@@ -734,7 +734,7 @@ static TPM_RC TSS_HmacSession12_Unmarshal(TSS_HMAC12_CONTEXT *target,
 static TPM_RC TSS_HmacSession12_SetHMAC(TSS_AUTH_CONTEXT *tssAuthContext,	/* authorization context */
 					size_t		numSessions,
 					TSS_HMAC12_CONTEXT *session[],
-					
+
 					TPMS_AUTH12_COMMAND *authCommand[],	/* output: command
 										   authorization */
 					TPM_AUTHHANDLE sessionHandle[], 	/* session handles in
@@ -753,7 +753,7 @@ static TPM_RC TSS_HmacSession12_SetHMAC(TSS_AUTH_CONTEXT *tssAuthContext,	/* aut
 	uint8_t *cpBuffer;
 	TPM_CC commandCode = TSS_GetCommandCode(tssAuthContext);
 	TPM_CC commandCodeNbo = htonl(commandCode);
-	
+
 	rc = TSS_GetCpBuffer(tssAuthContext, &cpBufferSize, &cpBuffer);
 	if (tssVverbose) TSS_PrintAll("TSS_HmacSession12_SetHMAC: cpBuffer",
 				      cpBuffer, cpBufferSize);
@@ -772,7 +772,7 @@ static TPM_RC TSS_HmacSession12_SetHMAC(TSS_AUTH_CONTEXT *tssAuthContext,	/* aut
     for (i = 0 ; (rc == 0) && (i < numSessions) ; i++) {
 	uint8_t sessionAttr8;
 	TPM2B_KEY hmacKey;
-	
+
 	if (tssVverbose) printf("TSS_HmacSession12_SetHMAC: Step 6 session %08x\n",
 				sessionHandle[i]);
 	/* sessionHandle */
@@ -846,7 +846,7 @@ static TPM_RC TSS_HmacSession12_Verify(TSS_AUTH_CONTEXT *tssAuthContext,	/* auth
 	uint8_t *rpBuffer;
 	TPM_CC commandCode = TSS_GetCommandCode(tssAuthContext);
 	TPM_CC commandCodeNbo = htonl(commandCode);
-	
+
 	rc = TSS_GetRpBuffer12(tssAuthContext, &rpBufferSize, &rpBuffer, numSessions);
 	if (tssVverbose) TSS_PrintAll("TSS_HmacSession12_Verify: rpBuffer",
 				      rpBuffer, rpBufferSize);
@@ -966,7 +966,7 @@ static TPM_RC TSS_Command_Decrypt(TSS_AUTH_CONTEXT *tssAuthContext,
     TSS_HMAC12_CONTEXT		*decryptSession;
     int				done = FALSE;
     int 			isXor;			/* true for XOR, false for AES */
-    
+
     /* which session is the OSAP session used for the encryption */
     if (rc == 0) {
 	rc = TSS_GetSessionNumber(tssAuthContext,
@@ -993,7 +993,7 @@ static TPM_RC TSS_Command_Decrypt(TSS_AUTH_CONTEXT *tssAuthContext,
 	}
 
     }
-    /* get pointers to the parameters to be encrypted */ 
+    /* get pointers to the parameters to be encrypted */
     if ((rc == 0) && !done) {
 	rc = TSS_GetEncAuths(tssAuthContext,
 			     &encAuth0,
@@ -1061,7 +1061,7 @@ static TPM_RC TSS_Command_DecryptXor(TSS_AUTH_CONTEXT *tssAuthContext,
     if (rc == 0) {
 	if (tssVverbose) TSS_PrintAll("TSS_Command_DecryptXor: ciphertext",
 				      encAuth, SHA1_DIGEST_SIZE);
-    }    
+    }
     return rc;
 }
 
@@ -1178,7 +1178,7 @@ static TPM_RC TSS_PR_NV_DefineSpace(TSS_CONTEXT *tssContext,
     if (rc == 0) {
 	rc = TSS_SetEncAuthOffset0(tssContext->tssAuthContext,
 				   -SHA1_DIGEST_SIZE);		/* encauth */
-		
+
     }
     if (rc == 0) {
 	rc = TSS_SetSessionNumber(tssContext->tssAuthContext, 0);
@@ -1318,7 +1318,7 @@ static TPM_RC TSS_PO_FlushSpecific(TSS_CONTEXT *tssContext,
 	rc = TSS_HmacSession12_DeleteSession(tssContext, in->handle);
     }
     return rc;
-}  
+}
 
 static TPM_RC TSS_PO_OIAP(TSS_CONTEXT *tssContext,
 			  void *in,

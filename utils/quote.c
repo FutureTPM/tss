@@ -197,10 +197,12 @@ int main(int argc, char *argv[])
             in.inScheme.scheme = TPM_ALG_DILITHIUM;
             in.inScheme.details.dilithium.hashAlg = halg;
 		}
+#ifdef TPM_ALG_QTESLA
 		else if (strcmp(argv[i], "qtesla") == 0) {	/* qtesla */
 			in.inScheme.scheme = TPM_ALG_QTESLA;
 			in.inScheme.details.qtesla.hashAlg = halg;
 		}
+#endif
 		else {
 		    printf("Bad parameter %s for -salg\n", argv[i]);
 		    printUsage();

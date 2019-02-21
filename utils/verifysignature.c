@@ -156,9 +156,11 @@ int main(int argc, char *argv[])
 	else if (strcmp(argv[i], "-ecc") == 0) {
 	    algPublic = TPM_ALG_ECC;
 	}
+#ifdef TPM_ALG_QTESLA
 	else if (strcmp(argv[i], "-qtesla") == 0) {
 		algPublic = TPM_ALG_QTESLA;
 	}
+#endif
 	else if (strcmp(argv[i], "-dilithium") == 0) {
 	    algPublic = TPM_ALG_DILITHIUM;
 	}

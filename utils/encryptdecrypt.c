@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
 */
 
@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
     const char			*outFilename = NULL;
     TPMI_YES_NO			decrypt = NO;
     int				two = FALSE;
-    const char			*keyPassword = NULL; 
+    const char			*keyPassword = NULL;
     TPMI_SH_AUTH_SESSION    	sessionHandle0 = TPM_RS_PW;
     unsigned int		sessionAttributes0 = 0;
     TPMI_SH_AUTH_SESSION    	sessionHandle1 = TPM_RH_NULL;
@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
     TPMI_SH_AUTH_SESSION    	sessionHandle2 = TPM_RH_NULL;
     unsigned int		sessionAttributes2 = 0;
 
-    uint16_t			written;
+    UINT32			written;
     size_t			length;
     uint8_t			*buffer = NULL;		/* for the free */
     uint8_t			*buffer1 = NULL;	/* for marshaling */
@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
     TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "1");
 
     /* command line argument defaults */
-    
+
     for (i=1 ; (i<argc) && (rc == 0) ; i++) {
 	if (strcmp(argv[i],"-hk") == 0) {
 	    i++;
@@ -244,7 +244,7 @@ int main(int argc, char *argv[])
 	    in.ivIn.t.size = MAX_SYM_BLOCK_SIZE;
 	    memset(in.ivIn.t.buffer, 0, MAX_SYM_BLOCK_SIZE);
 	    /* the data to be encrypted/decrypted */
-	    in.inData.t.size = (uint16_t)length;
+	    in.inData.t.size = length;
 	    memcpy(in.inData.t.buffer, buffer, length);
 	}
 	else {
@@ -258,7 +258,7 @@ int main(int argc, char *argv[])
 	    in2.ivIn.t.size = MAX_SYM_BLOCK_SIZE;
 	    memset(in2.ivIn.t.buffer, 0, MAX_SYM_BLOCK_SIZE);
 	    /* the data to be encrypted/decrypted */
-	    in2.inData.t.size = (uint16_t)length;
+	    in2.inData.t.size = length;
 	    memcpy(in2.inData.t.buffer, buffer, length);
 	}
     }
@@ -309,12 +309,12 @@ int main(int argc, char *argv[])
 	buffer1 = buffer;
 	written = 0;
 	rc = TSS_TPM2B_MAX_BUFFER_Marshalu(&out.outData, &written, &buffer1, NULL);
-    }    
+    }
     if ((rc == 0) && (outFilename != NULL)) {
-	rc = TSS_File_WriteBinaryFile(buffer + sizeof(uint16_t),
-				      written - sizeof(uint16_t),
+	rc = TSS_File_WriteBinaryFile(buffer + sizeof(uint32_t),
+				      written - sizeof(uint32_t),
 				      outFilename);
-    }    
+    }
     free(buffer);
     if (rc == 0) {
 	if (verbose) printDecrypt(&out);
@@ -355,5 +355,5 @@ static void printUsage(void)
     printf("\t01\tcontinue\n");
     printf("\t20\tcommand decrypt\n");
     printf("\t40\tresponse encrypt\n");
-    exit(1);	
+    exit(1);
 }

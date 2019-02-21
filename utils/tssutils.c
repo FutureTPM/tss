@@ -54,7 +54,7 @@
 #include <ibmtss/tsserror.h>
 #include <ibmtss/tssprint.h>
 
-#define TSS_ALLOC_MAX  0x10000  /* 64k bytes */
+#define TSS_ALLOC_MAX  0x8000000  /* 128M bytes */
 
 extern int tssVerbose;
 extern int tssVverbose;
@@ -65,10 +65,10 @@ extern int tssVverbose;
 TPM_RC TSS_Malloc(unsigned char **buffer, uint32_t size)
 {
     TPM_RC          rc = 0;
-    
-    /* assertion test.  The coding style requires that all allocated pointers are initialized to
-       NULL.  A non-NULL value indicates either a missing initialization or a pointer reuse (a
-       memory leak). */
+
+    /* assertion test.  The coding style requires that all allocated pointers
+     * are initialized to NULL.  A non-NULL value indicates either a missing
+     * initialization or a pointer reuse (a memory leak). */
     if (rc == 0) {
         if (*buffer != NULL) {
             if (tssVerbose)
@@ -83,14 +83,15 @@ TPM_RC TSS_Malloc(unsigned char **buffer, uint32_t size)
             if (tssVerbose) printf("TSS_Malloc: Error, size %u greater than maximum allowed\n",
 				   size);
             rc = TSS_RC_MALLOC_SIZE;
-        }       
+        }
     }
-    /* verify that the size is not 0, this would be implementation defined and should never occur */
+    /* verify that the size is not 0, this would be implementation defined and
+     * should never occur */
     if (rc == 0) {
         if (size == 0) {
             if (tssVerbose) printf("TSS_Malloc: Error (fatal), size is zero\n");
             rc = TSS_RC_MALLOC_SIZE;
-        }       
+        }
     }
     if (rc == 0) {
         *buffer = malloc(size);
@@ -106,21 +107,21 @@ TPM_RC TSS_Realloc(unsigned char **buffer, uint32_t size)
 {
     TPM_RC          	rc = 0;
     unsigned char 	*tmpptr;
-    
+
     /* verify that the size is not "too large" */
     if (rc == 0) {
         if (size > TSS_ALLOC_MAX) {
             if (tssVerbose) printf("TSS_Realloc: Error, size %u greater than maximum allowed\n",
 				   size);
             rc = TSS_RC_MALLOC_SIZE;
-        }       
+        }
     }
     /* verify that the size is not 0, this should never occur */
     if (rc == 0) {
         if (size == 0) {
             if (tssVerbose) printf("TSS_Malloc: Error (fatal), size is zero\n");
             rc = TSS_RC_MALLOC_SIZE;
-        }       
+        }
     }
     if (rc == 0) {
 	tmpptr = realloc(*buffer, size);
@@ -137,13 +138,13 @@ TPM_RC TSS_Realloc(unsigned char **buffer, uint32_t size)
 
 
 /* TSS_Structure_Marshal() is a general purpose "marshal a structure" function.
-   
+
    It marshals the structure using "marshalFunction", and returns the malloc'ed stream.
 
 */
 
 TPM_RC TSS_Structure_Marshal(uint8_t		**buffer,	/* freed by caller */
-			     uint16_t		*written,
+			     uint32_t		*written,
 			     void 		*structure,
 			     MarshalFunction_t 	marshalFunction)
 {
@@ -168,14 +169,14 @@ TPM_RC TSS_Structure_Marshal(uint8_t		**buffer,	/* freed by caller */
 
 /* TSS_TPM2B_Copy() copies source to target if the source fits the target size */
 
-TPM_RC TSS_TPM2B_Copy(TPM2B *target, TPM2B *source, uint16_t targetSize)
+TPM_RC TSS_TPM2B_Copy(TPM2B *target, TPM2B *source, uint32_t targetSize)
 {
     TPM_RC rc = 0;
 
     if (rc == 0) {
 	if (source->size > targetSize) {
 	    if (tssVerbose) printf("TSS_TPM2B_Copy: size %u greater than target %u\n",
-				   source->size, targetSize);	
+				   source->size, targetSize);
 	    rc = TSS_RC_INSUFFICIENT_BUFFER;
 	}
     }
@@ -187,19 +188,19 @@ TPM_RC TSS_TPM2B_Copy(TPM2B *target, TPM2B *source, uint16_t targetSize)
 }
 
 /* TSS_TPM2B_Append() appends the source TPM2B to the target TPM2B.
-   
+
    It checks that the source fits the target size. The target size is the total size, not the size
    remaining.
 */
 
-TPM_RC TSS_TPM2B_Append(TPM2B *target, TPM2B *source, uint16_t targetSize)
+TPM_RC TSS_TPM2B_Append(TPM2B *target, TPM2B *source, uint32_t targetSize)
 {
     TPM_RC rc = 0;
 
     if (rc == 0) {
 	if (target->size + source->size > targetSize) {
 	    if (tssVerbose) printf("TSS_TPM2B_Append: size %u greater than target %u\n",
-				   target->size + source->size, targetSize);	
+				   target->size + source->size, targetSize);
 	    rc = TSS_RC_INSUFFICIENT_BUFFER;
 	}
     }
@@ -212,14 +213,14 @@ TPM_RC TSS_TPM2B_Append(TPM2B *target, TPM2B *source, uint16_t targetSize)
 
 /* TSS_TPM2B_Create() copies the buffer of 'size' into target, checking targetSize */
 
-TPM_RC TSS_TPM2B_Create(TPM2B *target, uint8_t *buffer, uint16_t size, uint16_t targetSize)
+TPM_RC TSS_TPM2B_Create(TPM2B *target, uint8_t *buffer, uint32_t size, uint32_t targetSize)
 {
     TPM_RC rc = 0;
-    
+
     if (rc == 0) {
 	if (size > targetSize) {
 	    if (tssVerbose) printf("TSS_TPM2B_Create: size %u greater than target %u\n",
-				   size, targetSize);	
+				   size, targetSize);
 	    rc = TSS_RC_INSUFFICIENT_BUFFER;
 	}
     }
@@ -232,14 +233,14 @@ TPM_RC TSS_TPM2B_Create(TPM2B *target, uint8_t *buffer, uint16_t size, uint16_t 
 
 /* TSS_TPM2B_CreateUint32() creates a TPM2B from a uint32_t, typically a permanent handle */
 
-TPM_RC TSS_TPM2B_CreateUint32(TPM2B *target, uint32_t source, uint16_t targetSize)
+TPM_RC TSS_TPM2B_CreateUint32(TPM2B *target, uint32_t source, uint32_t targetSize)
 {
     TPM_RC rc = 0;
-    
+
     if (rc == 0) {
 	if (sizeof(uint32_t) > targetSize) {
 	    if (tssVerbose) printf("TSS_TPM2B_CreateUint32: size %u greater than target %u\n",
-				   (unsigned int)sizeof(uint32_t), targetSize);	
+				   (unsigned int)sizeof(uint32_t), targetSize);
 	    rc = TSS_RC_INSUFFICIENT_BUFFER;
 	}
     }
@@ -252,32 +253,32 @@ TPM_RC TSS_TPM2B_CreateUint32(TPM2B *target, uint32_t source, uint16_t targetSiz
 }
 
 /* TSS_TPM2B_StringCopy() copies a NUL terminated string (omitting the NUL) from source to target.
-   
+
    It checks that the string will fit in targetSize.
 
    If source is NULL, creates a TPM2B of size 0.
 */
 
-TPM_RC TSS_TPM2B_StringCopy(TPM2B *target, const char *source, uint16_t targetSize)
+TPM_RC TSS_TPM2B_StringCopy(TPM2B *target, const char *source, uint32_t targetSize)
 {
     TPM_RC rc = 0;
     size_t length;
-    uint16_t length16;
+    uint32_t length16;
 
     if (source != NULL) {
 	if (rc == 0) {
 	    length = strlen(source);
-	    if (length > 0xffff) {	/* overflow TPM2B uint16_t */
-		if (tssVerbose) printf("TSS_TPM2B_StringCopy: size %u greater than 0xffff\n",
-				       (unsigned int)length);	
+	    if (length > 0xffffffff) {	/* overflow TPM2B uint32_t */
+		if (tssVerbose) printf("TSS_TPM2B_StringCopy: size %u greater than 0xffffffff\n",
+				       (unsigned int)length);
 		rc = TSS_RC_INSUFFICIENT_BUFFER;
 	    }
 	}
 	if (rc == 0) {
-	    length16 = (uint16_t )length;	/* cast safe after range test */
+	    length16 = (uint32_t )length;	/* cast safe after range test */
 	    if (length16 > targetSize) {
 		if (tssVerbose) printf("TSS_TPM2B_StringCopy: size %u greater than target %u\n",
-				       length16, targetSize);	
+				       length16, targetSize);
 		rc = TSS_RC_INSUFFICIENT_BUFFER;
 	    }
 	}

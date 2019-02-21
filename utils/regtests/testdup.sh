@@ -47,8 +47,8 @@
 # 03000000 policy session
 
 # policy
-# be f5 6b 8c 1c c8 4e 11 ed d7 17 52 8d 2c d9 93 
-# 56 bd 2b bf 8f 01 52 09 c3 f8 4a ee ab a8 e8 a2 
+# be f5 6b 8c 1c c8 4e 11 ed d7 17 52 8d 2c d9 93
+# 56 bd 2b bf 8f 01 52 09 c3 f8 4a ee ab a8 e8 a2
 
 # used for the name in rewrap
 
@@ -74,7 +74,7 @@ echo ""
 for ALG in "" "ecc"
 do
     for ENC in "" "-salg aes -ik tmprnd.bin"
-    do 
+    do
 	for HALG in ${ITERATE_ALGS}
 	do
 
@@ -107,11 +107,11 @@ do
 	    checkSuccess $?
 
 	    echo "Get policy digest"
-	    ${PREFIX}policygetdigest -ha 03000000 > run.out 
+	    ${PREFIX}policygetdigest -ha 03000000 > run.out
 	    checkSuccess $?
 
 	    echo "Get random AES encryption key"
-	    ${PREFIX}getrandom -by 16 -of tmprnd.bin > run.out 
+	    ${PREFIX}getrandom -by 16 -of tmprnd.bin > run.out
 	    checkSuccess $?
 
 	    echo "Duplicate K2 under ${ALG} K1, ${ENC}"
@@ -374,11 +374,11 @@ ${PREFIX}rewrap -ho 80000001 -hn 80000002 -pwdo sto -id tmpdup.bin -in tmpo1name
 checkSuccess $?
 
 echo "Flush old key K1 80000001"
-${PREFIX}flushcontext -ha 80000002 > run.out 
+${PREFIX}flushcontext -ha 80000002 > run.out
 checkSuccess $?
 
 echo "Flush new key K2 80000002 public key"
-${PREFIX}flushcontext -ha 80000001 > run.out 
+${PREFIX}flushcontext -ha 80000001 > run.out
 checkSuccess $?
 
 # at TPM 3
@@ -388,7 +388,7 @@ ${PREFIX}load -hp 80000000 -ipr tmpk2priv.bin -ipu tmpk2pub.bin -pwdp sto > run.
 checkSuccess $?
 
 echo "Import rewraped O1 to K2"
-${PREFIX}import -hp 80000001 -pwdp k2 -ipu tmpsignpub.bin -id tmpdup.bin -iss tmpss.bin -salg aes -ik tmprnd.bin -opr tmpsignpriv3.bin > run.out
+${PREFIX}import -hp 80000001 -pwdp k2 -ipu tmpsignpub.bin -id tmpdup.bin -iss tmpss.bin -salg aes -ik tmprnd.bin -opr tmpsignpriv3.bin #> run.out
 checkSuccess $?
 
 echo "Load the imported signing key O1 80000002 under K2 80000001"
@@ -408,7 +408,7 @@ ${PREFIX}flushcontext -ha 80000002 > run.out
 checkSuccess $?
 
 echo "Flush signing key O1 80000002"
-${PREFIX}flushcontext -ha 80000001 > run.out 
+${PREFIX}flushcontext -ha 80000001 > run.out
 checkSuccess $?
 
 echo ""
@@ -422,7 +422,7 @@ echo ""
 
 # Target
 
-for ALG in "rsa" "ecc" 
+for ALG in "rsa" "ecc"
 do
 
     echo "Target: Provision a target ${ALG} EK certificate"
@@ -447,7 +447,7 @@ do
 #
 # 1 - walk the EK X509 certificate chain.  I have to add that sample code to createEK or make a new utility.
 # 2 - use openssl to convert the X509 EK certificate the the PEM public key file
-# 
+#
 # for now, the source trusts the target EK PEM public key
 
 # Source
@@ -490,7 +490,7 @@ do
 
 # Transmit the sealed AEK key wrapped with the target EK back to the target
 # tmpsdbdup.bin private part wrapped in EK public key, via symmetric seed
-# tmpsdbpub.bin public part 
+# tmpsdbpub.bin public part
 # tmpss.bin symmetric seed, encrypted with EK public key
 
 # Target
@@ -560,7 +560,7 @@ do
 done
 
 REM cleanup
-    
+
 echo "Undefine the RSA EK certificate index"
 ${PREFIX}nvundefinespace -hi p -ha 01c00002
 checkSuccess $?
@@ -579,7 +579,7 @@ rm -f tmpsignpriv3.bin
 rm -f tmpsig.bin
 rm -f tmpk2priv.bin
 rm -f tmpk2pub.bin
-rm -f tmposs.bin 
+rm -f tmposs.bin
 rm -f tmpprivkey.pem
 rm -f tmpecprivkey.pem
 rm -f tmppub.bin

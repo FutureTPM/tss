@@ -161,29 +161,29 @@ checkSuccess $?
 # 0000017f00000001000403000001cbf1e9f771d215a017e17979cfd7184f4b674a4d
 # convert to binary policy
 # > policymaker -halg sha1   -if policies/policypcr.txt -of policies/policypcr16aaasha1.bin -pr -v
-# 12 b6 dd 16 43 82 ca e4 5d 0e d0 7f 9e 51 d1 63 
-# a4 24 f5 f2 
+# 12 b6 dd 16 43 82 ca e4 5d 0e d0 7f 9e 51 d1 63
+# a4 24 f5 f2
 
 # > policymakerpcr -halg sha256 -bm 10000 -if policies/policypcr16aaasha256.txt -v -pr -of policies/policypcr.txt
 # 0000017f00000001000b030000012c28901f71751debfba3f3b5bf3be9c54b8b2f8c1411f2c117a0e838ee4e6c13
 # > policymaker -halg sha256 -if policies/policypcr.txt -of policies/policypcr16aaasha256.bin -pr -v
-# 76 44 f6 11 ea 10 d7 60 da b9 36 c3 95 1e 1d 85 
-# ec db 84 ce 9a 79 03 dd e1 c7 e0 a2 d9 09 a0 13 
+# 76 44 f6 11 ea 10 d7 60 da b9 36 c3 95 1e 1d 85
+# ec db 84 ce 9a 79 03 dd e1 c7 e0 a2 d9 09 a0 13
 
 # > policymakerpcr -halg sha384 -bm 10000 -if policies/policypcr16aaasha384.txt -v -pr -of policies/policypcr.txt
 # 0000017f00000001000c0300000132edb1c501cb0af4f958c9d7f04a8f3122c1025067e3832a5137234ee0d875e9fa99d8d400ca4a37fe13a6f53aeb4932
 # > policymaker -halg sha384 -if policies/policypcr.txt -of policies/policypcr16aaasha384.bin -pr -v
-# ea aa 8b 90 d2 69 b6 31 c0 85 91 e4 bf 29 a3 12 
-# 87 04 f2 18 4c 02 ee 83 6a fb c4 c6 7f 28 c1 7f 
-# 86 ea 22 b7 00 3d 06 fc b4 57 a3 b5 c4 f7 3c 95 
+# ea aa 8b 90 d2 69 b6 31 c0 85 91 e4 bf 29 a3 12
+# 87 04 f2 18 4c 02 ee 83 6a fb c4 c6 7f 28 c1 7f
+# 86 ea 22 b7 00 3d 06 fc b4 57 a3 b5 c4 f7 3c 95
 
 # > policymakerpcr -halg sha512 -bm 10000 -if policies/policypcr16aaasha512.txt -v -pr -of policies/policypcr.txt
 # 0000017f00000001000d03000001ea5218788d9d3a79e6f58608e321880aeb33e2282a3a0a87fb5b8868e7c6b3eedb9b66019409d8ea52d77e0dbfee5822c10ad0de3fd5cc776813a60423a7531f
 # policymaker -halg sha512 -if policies/policypcr.txt -of policies/policypcr16aaasha512.bin -pr -v
-# 1a 57 25 8d 99 64 d8 74 f0 85 0f 2c 8d 70 41 cc 
-# be 21 c2 0f df 7e 07 e6 b1 99 ea 05 66 46 b7 fb 
-# 23 55 77 4b 96 7e ab e2 65 db 5a 52 82 08 9c af 
-# 3c c0 10 e4 99 36 5d ec 7f 0d 3e 6d 2a 62 6d 2e 
+# 1a 57 25 8d 99 64 d8 74 f0 85 0f 2c 8d 70 41 cc
+# be 21 c2 0f df 7e 07 e6 b1 99 ea 05 66 46 b7 fb
+# 23 55 77 4b 96 7e ab e2 65 db 5a 52 82 08 9c af
+# 3c c0 10 e4 99 36 5d ec 7f 0d 3e 6d 2a 62 6d 2e
 
 # sealed blob    80000001
 # policy session 03000000
@@ -228,7 +228,7 @@ do
     checkSuccess $?
 
     echo "Policy restart, set back to zero"
-    ${PREFIX}policyrestart -ha 03000000 > run.out 
+    ${PREFIX}policyrestart -ha 03000000 > run.out
     checkSuccess $?
 
     echo "Policy PCR, update with the correct PCR 16 value"
@@ -274,20 +274,20 @@ done
 # the policyauthorize command.
 #
 # > policymaker -halg sha[] -if policies/policyauthorizesha[].txt -of policies/policyauthorizesha[].bin -pr
-# 16 82 10 58 c0 32 8c c4 e5 2e c4 ec ce 61 6c 0a 
-# f4 8a 30 88 
+# 16 82 10 58 c0 32 8c c4 e5 2e c4 ec ce 61 6c 0a
+# f4 8a 30 88
 #
-# eb a3 f9 8c 5e af 1e a8 f9 4f 51 9b 4d 2a 31 83 
-# ee 79 87 66 72 39 8e 23 15 d9 33 c2 88 a8 e5 03 
+# eb a3 f9 8c 5e af 1e a8 f9 4f 51 9b 4d 2a 31 83
+# ee 79 87 66 72 39 8e 23 15 d9 33 c2 88 a8 e5 03
 #
-# 5c c6 34 89 fe f9 c8 42 7e fe 2c 5f 08 39 74 b6 
-# d9 a8 36 02 4a cd d9 70 7e f0 b9 fd 15 26 56 da 
-# a5 07 0a 9b bf d6 66 df 49 d2 5b 8d 50 8e 16 38 
+# 5c c6 34 89 fe f9 c8 42 7e fe 2c 5f 08 39 74 b6
+# d9 a8 36 02 4a cd d9 70 7e f0 b9 fd 15 26 56 da
+# a5 07 0a 9b bf d6 66 df 49 d2 5b 8d 50 8e 16 38
 #
-# c9 c8 29 fb bc 75 54 99 db 48 b7 26 88 24 d1 f8 
-# 29 72 01 60 6b d6 5f 41 8e 06 98 7e f7 3e 6a 7e 
-# 25 82 c7 6d 8f 1c 36 43 68 01 ee 56 51 d5 06 b4 
-# 68 4c fe d1 d0 6a d7 65 23 3f c2 92 94 fd 2c c5 
+# c9 c8 29 fb bc 75 54 99 db 48 b7 26 88 24 d1 f8
+# 29 72 01 60 6b d6 5f 41 8e 06 98 7e f7 3e 6a 7e
+# 25 82 c7 6d 8f 1c 36 43 68 01 ee 56 51 d5 06 b4
+# 68 4c fe d1 d0 6a d7 65 23 3f c2 92 94 fd 2c c5
 
 # setup and policy PCR calculations
 #
@@ -385,12 +385,12 @@ do
     ${PREFIX}verifysignature -hk 80000001 -halg ${HALG} -if policies/policypcr16aaa${HALG}.bin -is pssig.bin -raw -tk tkt.bin > run.out
     checkSuccess $?
 
-    echo "Policy authorize using the ticket"
+    echo "Policy authorize using the ticket (will change policy digest)"
     ${PREFIX}policyauthorize -ha 03000000 -appr policies/policypcr16aaa${HALG}.bin -skn ${TPM_DATA_DIR}/h80000001.bin -tk tkt.bin > run.out
     checkSuccess $?
 
     echo "Get policy digest, should be policies/policyauthorize${HALG}.bin"
-    ${PREFIX}policygetdigest -ha 03000000 > run.out
+    ${PREFIX}policygetdigest -ha 03000000 -v > run.out
     checkSuccess $?
 
     echo "Flush the verification public key 80000001"
@@ -404,7 +404,7 @@ do
     checkSuccess $?
 
     echo "Unseal the data blob using the policy session"
-    ${PREFIX}unseal -ha 80000001 -of tmp.bin -se0 03000000 1 > run.out
+    ${PREFIX}unseal -v -ha 80000001 -of tmp.bin -se0 03000000 1 > run.out
     checkSuccess $?
 
     echo "Verify the unsealed result"
@@ -430,7 +430,7 @@ echo ""
 # target storage key K1 80000002
 
 for ALG in "" "ecc"
-do 
+do
 
     echo "Create a sealed data object S1 under the primary key P1 80000000"
     ${PREFIX}create -hp 80000000 -bl -opr tmppriv.bin -opu tmppub.bin -pwdp sto -pwdk sea -if msg.bin -pol policies/policyccduplicate.bin > run.out
@@ -453,7 +453,7 @@ do
     checkSuccess $?
 
     echo "Get policy digest"
-    ${PREFIX}policygetdigest -ha 03000000 > run.out 
+    ${PREFIX}policygetdigest -ha 03000000 > run.out
     checkSuccess $?
 
     echo "Duplicate sealed data object S1 80000001 under ${ALG} K1 80000002"

@@ -184,12 +184,16 @@ int main(int argc, char *argv[])
 	else if (strcmp(argv[i], "-dilithium") == 0) {
 	    algPublic = TPM_ALG_DILITHIUM;
 	}
+#ifdef TPM_ALG_NEWHOPE
 	else if (strcmp(argv[i], "-newhope") == 0) {
 	    algPublic = TPM_ALG_NEWHOPE;
 	}
+#endif
+#ifdef TPM_ALG_QTESLA
 	else if (strcmp(argv[i], "-qtesla") == 0) {
 	    algPublic = TPM_ALG_QTESLA;
 	}
+#endif
 	else if (strcmp(argv[i],"-scheme") == 0) {
 	    if (keyType == TYPE_SI) {
 		i++;
@@ -492,7 +496,7 @@ int main(int argc, char *argv[])
 	if (noSpace) {
 	    unsigned int b;
 	    for (b = 0 ; b < out.name.t.size ; b++) {
-		printf("%02x", out.name.t.name[b]);
+            printf("%02x", out.name.t.name[b]);
 	    }
 	    printf("\n");
 	}

@@ -740,24 +740,23 @@ TPM_RC TSS_Marshal(TSS_AUTH_CONTEXT *tssAuthContext,
 	buffer = tssAuthContext->commandBuffer;
 	size = sizeof(tssAuthContext->commandBuffer);
 	/* marshal header, preliminary tag and command size */
-	rc = TSS_TPMI_ST_COMMAND_TAG_Marshalu(&tag, &tssAuthContext->commandSize, &buffer, &size);
+	rc = TSS_TPMI_ST_COMMAND_TAG_Marshalu(&tag, (UINT32 *)&tssAuthContext->commandSize, &buffer, &size);
     }
     if (rc == 0) {
 	uint32_t commandSize = tssAuthContext->commandSize;
-	rc = TSS_UINT32_Marshalu(&commandSize, &tssAuthContext->commandSize, &buffer, &size);
+	rc = TSS_UINT32_Marshalu(&commandSize, (UINT32 *)&tssAuthContext->commandSize, &buffer, &size);
     }
     if (rc == 0) {
-	rc = TSS_TPM_CC_Marshalu(&commandCode, &tssAuthContext->commandSize, &buffer, &size);
+	rc = TSS_TPM_CC_Marshalu(&commandCode, (UINT32 *)&tssAuthContext->commandSize, &buffer, &size);
     }
     if (rc == 0) {
 	/* save pointer to marshaled data for test unmarshal */
-	bufferu = buffer +
-		  tssAuthContext->commandHandleCount * sizeof(TPM_HANDLE);
+	bufferu = buffer + tssAuthContext->commandHandleCount * sizeof(TPM_HANDLE);
 	/* if there is a marshal function */
 	if (tssAuthContext->marshalInFunction != NULL) {
 	    /* if there is a structure to marshal */
 	    if (in != NULL) {
-		rc = tssAuthContext->marshalInFunction(in, &tssAuthContext->commandSize,
+		rc = tssAuthContext->marshalInFunction(in, (UINT32*)&tssAuthContext->commandSize,
 						       &buffer, &size);
 	    }
 	    /* caller error, no structure supplied to marshal */
@@ -793,7 +792,7 @@ TPM_RC TSS_Marshal(TSS_AUTH_CONTEXT *tssAuthContext,
     }
     /* back fill the correct commandSize */
     if (rc == 0) {
-	uint16_t written;		/* dummy */
+	UINT32 written;		/* dummy */
 	uint32_t commandSize = tssAuthContext->commandSize;
 	buffer = tssAuthContext->commandBuffer + sizeof(TPMI_ST_COMMAND_TAG);
 	TSS_UINT32_Marshalu(&commandSize, &written, &buffer, NULL);
@@ -879,7 +878,7 @@ TPM_RC TSS_SetCmdAuths(TSS_AUTH_CONTEXT *tssAuthContext, ...)
 {
     TPM_RC 		rc = 0;
     va_list		ap;
-    uint16_t 		authorizationSize;	/* does not include 4 bytes of size */
+    UINT32 		authorizationSize;	/* does not include 4 bytes of size */
     TPMS_AUTH_COMMAND 	*authCommand = NULL;
     int 		done;
     uint32_t 		cpBufferSize;
@@ -904,7 +903,7 @@ TPM_RC TSS_SetCmdAuths(TSS_AUTH_CONTEXT *tssAuthContext, ...)
     if (authorizationSize != 0) {
 	/* back fill the tag TPM_ST_SESSIONS */
 	if (rc == 0) {
-	    uint16_t written = 0;		/* dummy */
+	    UINT32 written = 0;		/* dummy */
 	    TPMI_ST_COMMAND_TAG tag = TPM_ST_SESSIONS;
 	    buffer = tssAuthContext->commandBuffer;
 	    TSS_TPMI_ST_COMMAND_TAG_Marshalu(&tag, &written, &buffer, NULL);
@@ -935,7 +934,7 @@ TPM_RC TSS_SetCmdAuths(TSS_AUTH_CONTEXT *tssAuthContext, ...)
 	/* marshal the authorizationSize area, where cpBuffer was before move */
 	if (rc == 0) {
 	    uint32_t authorizationSize32 = authorizationSize;
-	    uint16_t written;		/* dummy */
+	    UINT32 written;		/* dummy */
 	    TSS_UINT32_Marshalu(&authorizationSize32, &written, &cpBuffer, NULL);
 	}
 	/* marshal the command authorization areas */
@@ -955,7 +954,7 @@ TPM_RC TSS_SetCmdAuths(TSS_AUTH_CONTEXT *tssAuthContext, ...)
 	}
 	va_end(ap);
 	if (rc == 0) {
-	    uint16_t written;		/* dummy */
+	    UINT32 written;		/* dummy */
 	    uint32_t commandSize;
 	    /* mark cpBuffer new location, size doesn't change */
 	    tssAuthContext->cpBuffer += sizeof (uint32_t) + authorizationSize;

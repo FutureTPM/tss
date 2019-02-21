@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
     TPMI_SH_AUTH_SESSION    	sessionHandle2 = TPM_RH_NULL;
     unsigned int		sessionAttributes2 = 0;
 
-    uint16_t			written;
+    uint32_t			written;
     size_t			length;			/* input data */
     uint8_t			*buffer = NULL;		/* for the free */
 
@@ -265,7 +265,7 @@ int main(int argc, char *argv[])
 
 	/* Table 158 - Definition of {RSA} TPM2B_PUBLIC_KEY_RSA Structure */
 	{
-	    in.cipherText.t.size = (uint16_t)length;	/* cast safe, range tested above */
+	    in.cipherText.t.size = length;	/* cast safe, range tested above */
 	    memcpy(in.cipherText.t.buffer, buffer, length);
 	}
 	/* padding scheme */
@@ -311,8 +311,8 @@ int main(int argc, char *argv[])
 				   (MarshalFunction_t)TSS_TPM2B_PUBLIC_KEY_RSA_Marshal);
     }
     if ((rc == 0) && (decryptFilename != NULL)) {
-	rc = TSS_File_WriteBinaryFile(buffer + sizeof(uint16_t),
-				      written - sizeof(uint16_t),
+	rc = TSS_File_WriteBinaryFile(buffer + sizeof(uint32_t),
+				      written - sizeof(uint32_t),
 				      decryptFilename);
     }
     if (rc == 0) {

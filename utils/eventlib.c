@@ -156,7 +156,7 @@ int TSS_EVENT_Line_Read(TCG_PCR_EVENT *event,
 /* TSS_EVENT_Line_Marshal() marshals a TCG_PCR_EVENT structure */
 
 TPM_RC TSS_EVENT_Line_Marshal(TCG_PCR_EVENT *source,
-			      uint16_t *written, uint8_t **buffer, uint32_t *size)
+			      UINT32 *written, uint8_t **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
 
@@ -202,7 +202,7 @@ TPM_RC TSS_EVENT_Line_Unmarshal(TCG_PCR_EVENT *target, BYTE **buffer, uint32_t *
 	if (target->eventDataSize > sizeof(target->event)) {
 	    rc = TPM_RC_SIZE;
 	}
-    }    
+    }
     if (rc == 0) {
 	rc = TSS_Array_Unmarshalu((uint8_t *)target->event, target->eventDataSize, buffer, size);
     }
@@ -217,7 +217,7 @@ TPM_RC TSS_EVENT_PCR_Extend(TPMT_HA pcrs[IMPLEMENTATION_PCR],
 			    TCG_PCR_EVENT *event)
 {
     TPM_RC 		rc = 0;
-    
+
     /* validate PCR number */
     if (rc == 0) {
 	if (event->pcrIndex >= IMPLEMENTATION_PCR) {
@@ -291,7 +291,7 @@ TPM_RC TSS_SpecIdEvent_Unmarshal(TCG_EfiSpecIDEvent *specIdEvent,
     for (i = 0 ; (rc == 0) && (i < specIdEvent->numberOfAlgorithms) ; i++) {
 	rc = TSS_SpecIdEventAlgorithmSize_Unmarshal(&(specIdEvent->digestSizes[i]),
 						    &buffer, &size);
-    }	    
+    }
     if (rc == 0) {
 	rc = TSS_UINT8_Unmarshalu(&(specIdEvent->vendorInfoSize), &buffer, &size);
     }
@@ -300,7 +300,7 @@ TPM_RC TSS_SpecIdEvent_Unmarshal(TCG_EfiSpecIDEvent *specIdEvent,
 	if (specIdEvent->vendorInfoSize > sizeof(specIdEvent->vendorInfo)) {
 	    rc = TPM_RC_SIZE;
 	}
-    }    
+    }
 #endif
     if (rc == 0) {
 	rc = TSS_Array_Unmarshalu(specIdEvent->vendorInfo, specIdEvent->vendorInfoSize,
@@ -323,7 +323,7 @@ static TPM_RC TSS_SpecIdEventAlgorithmSize_Unmarshal(TCG_EfiSpecIdEventAlgorithm
     }
     if (rc == 0) {
 	rc = UINT16LE_Unmarshal(&(algSize->digestSize), buffer, size);
-    } 
+    }
     if (rc == 0) {
 	uint16_t mappedDigestSize = TSS_GetDigestSize(algSize->algorithmId);
 	if (mappedDigestSize != 0) {
@@ -427,7 +427,7 @@ int TSS_EVENT2_Line_Read(TCG_PCR_EVENT2 *event,
 	event->eventType = Uint32_Convert(event->eventType);
     }
     /* read the TPML_DIGEST_VALUES count */
-    uint32_t maxCount; 
+    uint32_t maxCount;
     if (!*endOfFile && (rc == 0)) {
 	maxCount = sizeof((TPML_DIGEST_VALUES *)NULL)->digests / sizeof(TPMT_HA);
 	readSize = fread(&(event->digests.count),
@@ -533,7 +533,7 @@ int TSS_EVENT2_Line_Read(TCG_PCR_EVENT2 *event,
 /* TSS_EVENT2_Line_Marshal() marshals a TCG_PCR_EVENT2 structure */
 
 TPM_RC TSS_EVENT2_Line_Marshal(TCG_PCR_EVENT2 *source,
-			       uint16_t *written, uint8_t **buffer, uint32_t *size)
+			       UINT32 *written, uint8_t **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
 
@@ -578,7 +578,7 @@ TPM_RC TSS_EVENT2_Line_Unmarshal(TCG_PCR_EVENT2 *target, BYTE **buffer, uint32_t
 	if (target->eventSize > sizeof(target->event)) {
 	    rc = TPM_RC_SIZE;
 	}
-    }    
+    }
     if (rc == 0) {
 	rc = TSS_Array_Unmarshalu((uint8_t *)target->event, target->eventSize, buffer, size);
     }
@@ -595,7 +595,7 @@ TPM_RC TSS_EVENT2_PCR_Extend(TPMT_HA pcrs[HASH_COUNT][IMPLEMENTATION_PCR],
     TPM_RC 		rc = 0;
     uint32_t 		i;		/* iterator though hash algorithms */
     uint32_t 		bankNum = 0;	/* iterator though PCR hash banks */
-    
+
     /* validate PCR number */
     if (rc == 0) {
 	if (event2->pcrIndex >= IMPLEMENTATION_PCR) {
@@ -610,7 +610,7 @@ TPM_RC TSS_EVENT2_PCR_Extend(TPMT_HA pcrs[HASH_COUNT][IMPLEMENTATION_PCR],
 	    printf("ERROR: TSS_EVENT2_PCR_Extend: PCR count %u out of range, max %u\n",
 		   event2->digests.count, maxCount);
 	    rc = 1;
-	}	    
+	}
     }
     /* process each event hash algorithm */
     for (i = 0; (rc == 0) && (i < event2->digests.count) ; i++) {
@@ -652,7 +652,7 @@ static uint16_t Uint16_Convert(uint16_t in)
 {
     uint16_t out = 0;
     unsigned char *inb = (unsigned char *)&in;
-    
+
     /* little endian input */
     out = (inb[0] <<  0) |
 	  (inb[1] <<  8);
@@ -668,7 +668,7 @@ static uint32_t Uint32_Convert(uint32_t in)
 {
     uint32_t out = 0;
     unsigned char *inb = (unsigned char *)&in;
-    
+
     /* little endian input */
     out = (inb[0] <<  0) |
 	  (inb[1] <<  8) |

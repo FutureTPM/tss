@@ -119,7 +119,7 @@ TSS_UINT64_Unmarshalu(UINT64 *target, BYTE **buffer, uint32_t *size)
 }
 
 TPM_RC
-TSS_Array_Unmarshalu(BYTE *targetBuffer, uint16_t targetSize, BYTE **buffer, uint32_t *size)
+TSS_Array_Unmarshalu(BYTE *targetBuffer, uint32_t targetSize, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = TPM_RC_SUCCESS;
 
@@ -134,37 +134,37 @@ TSS_Array_Unmarshalu(BYTE *targetBuffer, uint16_t targetSize, BYTE **buffer, uin
     return rc;
 }
 
-TPM_RC UINT8_Unmarshal(UINT8 *target, BYTE **buffer, INT32 *size)
+TPM_RC UINT8_Unmarshal(UINT8 *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_UINT8_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC INT8_Unmarshal(INT8 *target, BYTE **buffer, INT32 *size)
+TPM_RC INT8_Unmarshal(INT8 *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_INT8_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC UINT16_Unmarshal(UINT16 *target, BYTE **buffer, INT32 *size)
+TPM_RC UINT16_Unmarshal(UINT16 *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_UINT16_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC UINT32_Unmarshal(UINT32 *target, BYTE **buffer, INT32 *size)
+TPM_RC UINT32_Unmarshal(UINT32 *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_UINT32_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC INT32_Unmarshal(INT32 *target, BYTE **buffer, INT32 *size)
+TPM_RC INT32_Unmarshal(INT32 *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_INT32_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC UINT64_Unmarshal(UINT64 *target, BYTE **buffer, INT32 *size)
+TPM_RC UINT64_Unmarshal(UINT64 *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_UINT64_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC Array_Unmarshal(BYTE *targetBuffer, UINT16 targetSize, BYTE **buffer, INT32 *size)
+TPM_RC Array_Unmarshal(BYTE *targetBuffer, UINT32 targetSize, BYTE **buffer, UINT32 *size)
 {
     return TSS_Array_Unmarshalu(targetBuffer, targetSize, buffer, (uint32_t *)size);
 }
@@ -172,12 +172,12 @@ TPM_RC Array_Unmarshal(BYTE *targetBuffer, UINT16 targetSize, BYTE **buffer, INT
 #ifdef TPM_TPM20
 
 TPM_RC
-TSS_TPM2B_Unmarshalu(TPM2B *target, uint16_t targetSize, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_Unmarshalu(TPM2B *target, uint32_t targetSize, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = TPM_RC_SUCCESS;
 
     if (rc == TPM_RC_SUCCESS) {
-	rc = TSS_UINT16_Unmarshalu(&target->size, buffer, size);
+	rc = TSS_UINT32_Unmarshalu(&target->size, buffer, size);
     }
     if (rc == TPM_RC_SUCCESS) {
 	if (target->size > targetSize) {
@@ -2667,7 +2667,7 @@ TSS_TPM2B_SENSITIVE_CREATE_Unmarshalu(TPM2B_SENSITIVE_CREATE *target, BYTE **buf
 
     INT32 startSize;
     if (rc == TPM_RC_SUCCESS) {
-	rc = TSS_UINT16_Unmarshalu(&target->size, buffer, size);
+	rc = TSS_UINT32_Unmarshalu(&target->size, buffer, size);
     }
     if (rc == TPM_RC_SUCCESS) {
 	if (target->size == 0) {
@@ -3512,7 +3512,7 @@ TSS_TPM2B_ECC_POINT_Unmarshalu(TPM2B_ECC_POINT *target, BYTE **buffer, uint32_t 
 
     INT32 startSize;
     if (rc == TPM_RC_SUCCESS) {
-	rc = TSS_UINT16_Unmarshalu(&target->size, buffer, size);
+	rc = TSS_UINT32_Unmarshalu(&target->size, buffer, size);
     }
     if (rc == TPM_RC_SUCCESS) {
 	if (target->size == 0) {
@@ -4458,9 +4458,9 @@ TSS_TPM2B_PUBLIC_Unmarshalu(TPM2B_PUBLIC *target, BYTE **buffer, uint32_t *size,
 {
     TPM_RC rc = TPM_RC_SUCCESS;
 
-    INT32 startSize;
+    UINT32 startSize;
     if (rc == TPM_RC_SUCCESS) {
-	rc = TSS_UINT16_Unmarshalu(&target->size, buffer, size);
+	rc = TSS_UINT32_Unmarshalu(&target->size, buffer, size);
     }
     if (rc == TPM_RC_SUCCESS) {
 	if (target->size == 0) {
@@ -4579,7 +4579,7 @@ TSS_TPM2B_SENSITIVE_Unmarshalu(TPM2B_SENSITIVE *target, BYTE **buffer, uint32_t 
 
     INT32 startSize;
     if (rc == TPM_RC_SUCCESS) {
-	rc = TSS_UINT16_Unmarshalu(&target->t.size, buffer, size);
+	rc = TSS_UINT32_Unmarshalu(&target->t.size, buffer, size);
     }
     if (target->t.size != 0) {
 	if (rc == TPM_RC_SUCCESS) {
@@ -4661,7 +4661,7 @@ TSS_TPMS_NV_PUBLIC_Unmarshalu(TPMS_NV_PUBLIC *target, BYTE **buffer, uint32_t *s
 	rc = TSS_TPM2B_DIGEST_Unmarshalu(&target->authPolicy, buffer, size);
     }
     if (rc == TPM_RC_SUCCESS) {
-	rc = TSS_UINT16_Unmarshalu(&target->dataSize, buffer, size);
+	rc = TSS_UINT32_Unmarshalu(&target->dataSize, buffer, size);
     }
     return rc;
 }
@@ -4675,7 +4675,7 @@ TSS_TPM2B_NV_PUBLIC_Unmarshalu(TPM2B_NV_PUBLIC *target, BYTE **buffer, uint32_t 
 
     uint32_t startSize;
     if (rc == TPM_RC_SUCCESS) {
-	rc = TSS_UINT16_Unmarshalu(&target->size, buffer, size);
+	rc = TSS_UINT32_Unmarshalu(&target->size, buffer, size);
     }
     if (rc == TPM_RC_SUCCESS) {
 	if (target->size == 0) {
@@ -4800,7 +4800,7 @@ TSS_TPM2B_CREATION_DATA_Unmarshalu(TPM2B_CREATION_DATA *target, BYTE **buffer, u
 
     uint32_t startSize;
     if (rc == TPM_RC_SUCCESS) {
-	rc = TSS_UINT16_Unmarshalu(&target->size, buffer, size);
+	rc = TSS_UINT32_Unmarshalu(&target->size, buffer, size);
     }
     if (rc == TPM_RC_SUCCESS) {
 	if (target->size == 0) {
@@ -5008,964 +5008,964 @@ TSS_TPM2B_QTESLA_SIGNATURE_Unmarshalu(TPM2B_QTESLA_SIGNATURE *target, BYTE **buf
 
 */
 
-TPM_RC TPM2B_Unmarshal(TPM2B *target, UINT16 targetSize, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_Unmarshal(TPM2B *target, UINT16 targetSize, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_Unmarshalu(target, targetSize, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM_KEY_BITS_Unmarshal(TPM_KEY_BITS *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM_KEY_BITS_Unmarshal(TPM_KEY_BITS *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_KEY_BITS_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM_GENERATED_Unmarshal(TPM_GENERATED *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM_GENERATED_Unmarshal(TPM_GENERATED *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_GENERATED_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM_ALG_ID_Unmarshal(TPM_ALG_ID *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM_ALG_ID_Unmarshal(TPM_ALG_ID *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_ALG_ID_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM_ECC_CURVE_Unmarshal(TPM_ECC_CURVE *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM_ECC_CURVE_Unmarshal(TPM_ECC_CURVE *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_ECC_CURVE_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM_CC_Unmarshal(TPM_RC *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM_CC_Unmarshal(TPM_RC *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_CC_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM_RC_Unmarshal(TPM_RC *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM_RC_Unmarshal(TPM_RC *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_RC_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM_CLOCK_ADJUST_Unmarshal(TPM_CLOCK_ADJUST *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM_CLOCK_ADJUST_Unmarshal(TPM_CLOCK_ADJUST *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_CLOCK_ADJUST_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM_EO_Unmarshal(TPM_EO *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM_EO_Unmarshal(TPM_EO *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_EO_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM_ST_Unmarshal(TPM_ST *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM_ST_Unmarshal(TPM_ST *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_ST_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM_SU_Unmarshal(TPM_SU *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM_SU_Unmarshal(TPM_SU *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_SU_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM_SE_Unmarshal(TPM_SE *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM_SE_Unmarshal(TPM_SE *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_SE_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM_CAP_Unmarshal(TPM_CAP *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM_CAP_Unmarshal(TPM_CAP *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_CAP_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM_PT_Unmarshal(TPM_HANDLE *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM_PT_Unmarshal(TPM_HANDLE *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_PT_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM_PT_PCR_Unmarshal(TPM_PT_PCR *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM_PT_PCR_Unmarshal(TPM_PT_PCR *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_PT_PCR_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM_HANDLE_Unmarshal(TPM_HANDLE *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM_HANDLE_Unmarshal(TPM_HANDLE *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_HANDLE_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMA_ALGORITHM_Unmarshal(TPMA_ALGORITHM *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMA_ALGORITHM_Unmarshal(TPMA_ALGORITHM *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMA_ALGORITHM_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMA_OBJECT_Unmarshal(TPMA_OBJECT *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMA_OBJECT_Unmarshal(TPMA_OBJECT *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMA_OBJECT_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMA_SESSION_Unmarshal(TPMA_SESSION *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMA_SESSION_Unmarshal(TPMA_SESSION *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMA_SESSION_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMA_LOCALITY_Unmarshal(TPMA_LOCALITY *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMA_LOCALITY_Unmarshal(TPMA_LOCALITY *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMA_LOCALITY_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMA_CC_Unmarshal(TPMA_CC *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMA_CC_Unmarshal(TPMA_CC *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMA_CC_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMI_YES_NO_Unmarshal(TPMI_YES_NO *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMI_YES_NO_Unmarshal(TPMI_YES_NO *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_YES_NO_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMI_DH_OBJECT_Unmarshal(TPMI_DH_OBJECT *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_DH_OBJECT_Unmarshal(TPMI_DH_OBJECT *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_DH_OBJECT_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
 #if 0
-TPM_RC TPMI_DH_PARENT_Unmarshal(TPMI_DH_PARENT *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_DH_PARENT_Unmarshal(TPMI_DH_PARENT *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_DH_PARENT_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 #endif
 
-TPM_RC TPMI_DH_PERSISTENT_Unmarshal(TPMI_DH_PERSISTENT *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMI_DH_PERSISTENT_Unmarshal(TPMI_DH_PERSISTENT *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_DH_PERSISTENT_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMI_DH_ENTITY_Unmarshal(TPMI_DH_ENTITY *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_DH_ENTITY_Unmarshal(TPMI_DH_ENTITY *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_DH_ENTITY_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMI_DH_PCR_Unmarshal(TPMI_DH_PCR *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_DH_PCR_Unmarshal(TPMI_DH_PCR *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_DH_PCR_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMI_SH_AUTH_SESSION_Unmarshal(TPMI_SH_AUTH_SESSION *target, BYTE **buffer, INT32 *size, BOOL allowPwd)
+TPM_RC TPMI_SH_AUTH_SESSION_Unmarshal(TPMI_SH_AUTH_SESSION *target, BYTE **buffer, UINT32 *size, BOOL allowPwd)
 {
     return TSS_TPMI_SH_AUTH_SESSION_Unmarshalu(target, buffer, (uint32_t *)size, allowPwd);
 }
 
-TPM_RC TPMI_SH_HMAC_Unmarshal(TPMI_SH_HMAC *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_SH_HMAC_Unmarshal(TPMI_SH_HMAC *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_SH_HMAC_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMI_SH_POLICY_Unmarshal(TPMI_SH_POLICY *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_SH_POLICY_Unmarshal(TPMI_SH_POLICY *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_SH_POLICY_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMI_DH_CONTEXT_Unmarshal(TPMI_DH_CONTEXT *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_DH_CONTEXT_Unmarshal(TPMI_DH_CONTEXT *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_DH_CONTEXT_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMI_RH_HIERARCHY_Unmarshal(TPMI_RH_HIERARCHY *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_RH_HIERARCHY_Unmarshal(TPMI_RH_HIERARCHY *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_RH_HIERARCHY_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMI_RH_ENABLES_Unmarshal(TPMI_RH_ENABLES *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_RH_ENABLES_Unmarshal(TPMI_RH_ENABLES *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_RH_ENABLES_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMI_RH_HIERARCHY_AUTH_Unmarshal(TPMI_RH_HIERARCHY_AUTH *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_RH_HIERARCHY_AUTH_Unmarshal(TPMI_RH_HIERARCHY_AUTH *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_RH_HIERARCHY_AUTH_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMI_RH_PLATFORM_Unmarshal(TPMI_RH_PLATFORM *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_RH_PLATFORM_Unmarshal(TPMI_RH_PLATFORM *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_RH_PLATFORM_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMI_RH_ENDORSEMENT_Unmarshal(TPMI_RH_ENDORSEMENT *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_RH_ENDORSEMENT_Unmarshal(TPMI_RH_ENDORSEMENT *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_RH_ENDORSEMENT_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMI_RH_PROVISION_Unmarshal(TPMI_RH_PROVISION *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_RH_PROVISION_Unmarshal(TPMI_RH_PROVISION *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_RH_PROVISION_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMI_RH_CLEAR_Unmarshal(TPMI_RH_CLEAR *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_RH_CLEAR_Unmarshal(TPMI_RH_CLEAR *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_RH_CLEAR_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMI_RH_NV_AUTH_Unmarshal(TPMI_RH_NV_AUTH *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_RH_NV_AUTH_Unmarshal(TPMI_RH_NV_AUTH *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_RH_NV_AUTH_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMI_RH_LOCKOUT_Unmarshal(TPMI_RH_LOCKOUT *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_RH_LOCKOUT_Unmarshal(TPMI_RH_LOCKOUT *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_RH_LOCKOUT_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMI_RH_NV_INDEX_Unmarshal(TPMI_RH_NV_INDEX *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_RH_NV_INDEX_Unmarshal(TPMI_RH_NV_INDEX *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_RH_NV_INDEX_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMI_ALG_HASH_Unmarshal(TPMI_ALG_HASH *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_ALG_HASH_Unmarshal(TPMI_ALG_HASH *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_ALG_HASH_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMI_ALG_SYM_Unmarshal(TPMI_ALG_SYM *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_ALG_SYM_Unmarshal(TPMI_ALG_SYM *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_ALG_SYM_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMI_ALG_SYM_OBJECT_Unmarshal(TPMI_ALG_SYM_OBJECT *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_ALG_SYM_OBJECT_Unmarshal(TPMI_ALG_SYM_OBJECT *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_ALG_SYM_OBJECT_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMI_ALG_SYM_MODE_Unmarshal(TPMI_ALG_SYM_MODE *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_ALG_SYM_MODE_Unmarshal(TPMI_ALG_SYM_MODE *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_ALG_SYM_MODE_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMI_ALG_KDF_Unmarshal(TPMI_ALG_KDF *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_ALG_KDF_Unmarshal(TPMI_ALG_KDF *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_ALG_KDF_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMI_ALG_SIG_SCHEME_Unmarshal(TPMI_ALG_SIG_SCHEME *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_ALG_SIG_SCHEME_Unmarshal(TPMI_ALG_SIG_SCHEME *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_ALG_SIG_SCHEME_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMI_ECC_KEY_EXCHANGE_Unmarshal(TPMI_ECC_KEY_EXCHANGE *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_ECC_KEY_EXCHANGE_Unmarshal(TPMI_ECC_KEY_EXCHANGE *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_ECC_KEY_EXCHANGE_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMI_ST_COMMAND_TAG_Unmarshal(TPMI_ST_COMMAND_TAG *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMI_ST_COMMAND_TAG_Unmarshal(TPMI_ST_COMMAND_TAG *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_ST_COMMAND_TAG_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMI_ALG_MAC_SCHEME_Unmarshal(TPMI_ALG_MAC_SCHEME *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_ALG_MAC_SCHEME_Unmarshal(TPMI_ALG_MAC_SCHEME *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_ALG_MAC_SCHEME_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMI_ALG_CIPHER_MODE_Unmarshal(TPMI_ALG_CIPHER_MODE *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_ALG_CIPHER_MODE_Unmarshal(TPMI_ALG_CIPHER_MODE *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_ALG_CIPHER_MODE_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMS_EMPTY_Unmarshal(TPMS_EMPTY *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_EMPTY_Unmarshal(TPMS_EMPTY *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_EMPTY_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMU_HA_Unmarshal(TPMU_HA *target, BYTE **buffer, INT32 *size, UINT32 selector)
+TPM_RC TPMU_HA_Unmarshal(TPMU_HA *target, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_HA_Unmarshalu(target, buffer, (uint32_t *)size, selector);
 }
 
-TPM_RC TPMT_HA_Unmarshal(TPMT_HA *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMT_HA_Unmarshal(TPMT_HA *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMT_HA_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPM2B_DIGEST_Unmarshal(TPM2B_DIGEST *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_DIGEST_Unmarshal(TPM2B_DIGEST *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_DIGEST_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM2B_DATA_Unmarshal(TPM2B_DATA *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_DATA_Unmarshal(TPM2B_DATA *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_DATA_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM2B_NONCE_Unmarshal(TPM2B_NONCE *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_NONCE_Unmarshal(TPM2B_NONCE *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_NONCE_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM2B_AUTH_Unmarshal(TPM2B_AUTH *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_AUTH_Unmarshal(TPM2B_AUTH *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_AUTH_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM2B_OPERAND_Unmarshal(TPM2B_OPERAND *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_OPERAND_Unmarshal(TPM2B_OPERAND *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_OPERAND_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM2B_EVENT_Unmarshal(TPM2B_EVENT *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_EVENT_Unmarshal(TPM2B_EVENT *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_EVENT_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM2B_MAX_BUFFER_Unmarshal(TPM2B_MAX_BUFFER *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_MAX_BUFFER_Unmarshal(TPM2B_MAX_BUFFER *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_MAX_BUFFER_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM2B_MAX_NV_BUFFER_Unmarshal(TPM2B_MAX_NV_BUFFER *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_MAX_NV_BUFFER_Unmarshal(TPM2B_MAX_NV_BUFFER *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_MAX_NV_BUFFER_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM2B_TIMEOUT_Unmarshal(TPM2B_TIMEOUT *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_TIMEOUT_Unmarshal(TPM2B_TIMEOUT *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_TIMEOUT_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM2B_IV_Unmarshal(TPM2B_IV *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_IV_Unmarshal(TPM2B_IV *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_IV_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM2B_NAME_Unmarshal(TPM2B_NAME *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_NAME_Unmarshal(TPM2B_NAME *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_NAME_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_PCR_SELECTION_Unmarshal(TPMS_PCR_SELECTION *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_PCR_SELECTION_Unmarshal(TPMS_PCR_SELECTION *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_PCR_SELECTION_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMT_TK_CREATION_Unmarshal(TPMT_TK_CREATION *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMT_TK_CREATION_Unmarshal(TPMT_TK_CREATION *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMT_TK_CREATION_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMT_TK_VERIFIED_Unmarshal(TPMT_TK_VERIFIED *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMT_TK_VERIFIED_Unmarshal(TPMT_TK_VERIFIED *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMT_TK_VERIFIED_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMT_TK_AUTH_Unmarshal(TPMT_TK_AUTH *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMT_TK_AUTH_Unmarshal(TPMT_TK_AUTH *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMT_TK_AUTH_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMT_TK_HASHCHECK_Unmarshal(TPMT_TK_HASHCHECK *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMT_TK_HASHCHECK_Unmarshal(TPMT_TK_HASHCHECK *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMT_TK_HASHCHECK_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_ALG_PROPERTY_Unmarshal(TPMS_ALG_PROPERTY *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_ALG_PROPERTY_Unmarshal(TPMS_ALG_PROPERTY *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_ALG_PROPERTY_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_TAGGED_PROPERTY_Unmarshal(TPMS_TAGGED_PROPERTY *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_TAGGED_PROPERTY_Unmarshal(TPMS_TAGGED_PROPERTY *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_TAGGED_PROPERTY_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_TAGGED_PCR_SELECT_Unmarshal(TPMS_TAGGED_PCR_SELECT *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_TAGGED_PCR_SELECT_Unmarshal(TPMS_TAGGED_PCR_SELECT *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_TAGGED_PCR_SELECT_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPML_CC_Unmarshal(TPML_CC *target, BYTE **buffer, INT32 *size)
+TPM_RC TPML_CC_Unmarshal(TPML_CC *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPML_CC_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPML_CCA_Unmarshal(TPML_CCA *target, BYTE **buffer, INT32 *size)
+TPM_RC TPML_CCA_Unmarshal(TPML_CCA *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPML_CCA_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPML_ALG_Unmarshal(TPML_ALG *target, BYTE **buffer, INT32 *size)
+TPM_RC TPML_ALG_Unmarshal(TPML_ALG *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPML_ALG_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPML_HANDLE_Unmarshal(TPML_HANDLE *target, BYTE **buffer, INT32 *size)
+TPM_RC TPML_HANDLE_Unmarshal(TPML_HANDLE *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPML_HANDLE_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPML_DIGEST_Unmarshal(TPML_DIGEST *target, BYTE **buffer, INT32 *size,uint32_t minCount)
+TPM_RC TPML_DIGEST_Unmarshal(TPML_DIGEST *target, BYTE **buffer, UINT32 *size,uint32_t minCount)
 {
     return TSS_TPML_DIGEST_Unmarshalu(target, buffer, (uint32_t *)size, minCount);
 }
 
-TPM_RC TPML_DIGEST_VALUES_Unmarshal(TPML_DIGEST_VALUES *target, BYTE **buffer, INT32 *size)
+TPM_RC TPML_DIGEST_VALUES_Unmarshal(TPML_DIGEST_VALUES *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPML_DIGEST_VALUES_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPML_PCR_SELECTION_Unmarshal(TPML_PCR_SELECTION *target, BYTE **buffer, INT32 *size)
+TPM_RC TPML_PCR_SELECTION_Unmarshal(TPML_PCR_SELECTION *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPML_PCR_SELECTION_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPML_ALG_PROPERTY_Unmarshal(TPML_ALG_PROPERTY *target, BYTE **buffer, INT32 *size)
+TPM_RC TPML_ALG_PROPERTY_Unmarshal(TPML_ALG_PROPERTY *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPML_ALG_PROPERTY_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPML_TAGGED_TPM_PROPERTY_Unmarshal(TPML_TAGGED_TPM_PROPERTY  *target, BYTE **buffer, INT32 *size)
+TPM_RC TPML_TAGGED_TPM_PROPERTY_Unmarshal(TPML_TAGGED_TPM_PROPERTY  *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPML_TAGGED_TPM_PROPERTY_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPML_TAGGED_PCR_PROPERTY_Unmarshal(TPML_TAGGED_PCR_PROPERTY  *target, BYTE **buffer, INT32 *size)
+TPM_RC TPML_TAGGED_PCR_PROPERTY_Unmarshal(TPML_TAGGED_PCR_PROPERTY  *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPML_TAGGED_PCR_PROPERTY_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPML_ECC_CURVE_Unmarshal(TPML_ECC_CURVE *target, BYTE **buffer, INT32 *size)
+TPM_RC TPML_ECC_CURVE_Unmarshal(TPML_ECC_CURVE *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPML_ECC_CURVE_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
 #if 0
-TPM_RC TPML_TAGGED_POLICY_Unmarshal(TPML_TAGGED_POLICY *target, BYTE **buffer, INT32 *size)
+TPM_RC TPML_TAGGED_POLICY_Unmarshal(TPML_TAGGED_POLICY *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPML_TAGGED_POLICY_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 #endif
 
-TPM_RC TPMU_CAPABILITIES_Unmarshal(TPMU_CAPABILITIES *target, BYTE **buffer, INT32 *size, UINT32 selector)
+TPM_RC TPMU_CAPABILITIES_Unmarshal(TPMU_CAPABILITIES *target, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_CAPABILITIES_Unmarshalu(target, buffer, (uint32_t *)size, selector);
 }
 
-TPM_RC TPMS_CLOCK_INFO_Unmarshal(TPMS_CLOCK_INFO *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_CLOCK_INFO_Unmarshal(TPMS_CLOCK_INFO *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_CLOCK_INFO_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_TIME_INFO_Unmarshal(TPMS_TIME_INFO *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_TIME_INFO_Unmarshal(TPMS_TIME_INFO *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_TIME_INFO_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_TIME_ATTEST_INFO_Unmarshal(TPMS_TIME_ATTEST_INFO *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_TIME_ATTEST_INFO_Unmarshal(TPMS_TIME_ATTEST_INFO *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_TIME_ATTEST_INFO_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_CERTIFY_INFO_Unmarshal(TPMS_CERTIFY_INFO *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_CERTIFY_INFO_Unmarshal(TPMS_CERTIFY_INFO *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_CERTIFY_INFO_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_QUOTE_INFO_Unmarshal(TPMS_QUOTE_INFO *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_QUOTE_INFO_Unmarshal(TPMS_QUOTE_INFO *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_QUOTE_INFO_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_COMMAND_AUDIT_INFO_Unmarshal(TPMS_COMMAND_AUDIT_INFO *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_COMMAND_AUDIT_INFO_Unmarshal(TPMS_COMMAND_AUDIT_INFO *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_COMMAND_AUDIT_INFO_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_SESSION_AUDIT_INFO_Unmarshal(TPMS_SESSION_AUDIT_INFO *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_SESSION_AUDIT_INFO_Unmarshal(TPMS_SESSION_AUDIT_INFO *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SESSION_AUDIT_INFO_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_CREATION_INFO_Unmarshal(TPMS_CREATION_INFO *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_CREATION_INFO_Unmarshal(TPMS_CREATION_INFO *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_CREATION_INFO_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_NV_CERTIFY_INFO_Unmarshal(TPMS_NV_CERTIFY_INFO *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_NV_CERTIFY_INFO_Unmarshal(TPMS_NV_CERTIFY_INFO *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_NV_CERTIFY_INFO_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMI_ST_ATTEST_Unmarshal(TPMI_ST_ATTEST *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMI_ST_ATTEST_Unmarshal(TPMI_ST_ATTEST *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_ST_ATTEST_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMU_ATTEST_Unmarshal(TPMU_ATTEST *target, BYTE **buffer, INT32 *size, UINT32 selector)
+TPM_RC TPMU_ATTEST_Unmarshal(TPMU_ATTEST *target, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_ATTEST_Unmarshalu(target, buffer, (uint32_t *)size, selector);
 }
 
-TPM_RC TPMS_ATTEST_Unmarshal(TPMS_ATTEST *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_ATTEST_Unmarshal(TPMS_ATTEST *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_ATTEST_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM2B_ATTEST_Unmarshal(TPM2B_ATTEST *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_ATTEST_Unmarshal(TPM2B_ATTEST *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_ATTEST_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_CAPABILITY_DATA_Unmarshal(TPMS_CAPABILITY_DATA *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_CAPABILITY_DATA_Unmarshal(TPMS_CAPABILITY_DATA *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_CAPABILITY_DATA_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_AUTH_RESPONSE_Unmarshal(TPMS_AUTH_RESPONSE *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_AUTH_RESPONSE_Unmarshal(TPMS_AUTH_RESPONSE *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_AUTH_RESPONSE_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMI_AES_KEY_BITS_Unmarshal(TPMI_AES_KEY_BITS *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMI_AES_KEY_BITS_Unmarshal(TPMI_AES_KEY_BITS *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_AES_KEY_BITS_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMU_SYM_KEY_BITS_Unmarshal(TPMU_SYM_KEY_BITS *target, BYTE **buffer, INT32 *size, UINT32 selector)
+TPM_RC TPMU_SYM_KEY_BITS_Unmarshal(TPMU_SYM_KEY_BITS *target, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_SYM_KEY_BITS_Unmarshalu(target, buffer, (uint32_t *)size, selector);
 }
 
-TPM_RC TPMU_SYM_MODE_Unmarshal(TPMU_SYM_MODE *target, BYTE **buffer, INT32 *size, UINT32 selector)
+TPM_RC TPMU_SYM_MODE_Unmarshal(TPMU_SYM_MODE *target, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_SYM_MODE_Unmarshalu(target, buffer, (uint32_t *)size, selector);
 }
 
-TPM_RC TPMT_SYM_DEF_Unmarshal(TPMT_SYM_DEF *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMT_SYM_DEF_Unmarshal(TPMT_SYM_DEF *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMT_SYM_DEF_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMT_SYM_DEF_OBJECT_Unmarshal(TPMT_SYM_DEF_OBJECT *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMT_SYM_DEF_OBJECT_Unmarshal(TPMT_SYM_DEF_OBJECT *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMT_SYM_DEF_OBJECT_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPM2B_SYM_KEY_Unmarshal(TPM2B_SYM_KEY *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_SYM_KEY_Unmarshal(TPM2B_SYM_KEY *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_SYM_KEY_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_SYMCIPHER_PARMS_Unmarshal(TPMS_SYMCIPHER_PARMS *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_SYMCIPHER_PARMS_Unmarshal(TPMS_SYMCIPHER_PARMS *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SYMCIPHER_PARMS_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
 #if 0
-TPM_RC TPM2B_LABEL_Unmarshal(TPM2B_LABEL *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_LABEL_Unmarshal(TPM2B_LABEL *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_LABEL_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 #endif
 
-TPM_RC TPM2B_SENSITIVE_DATA_Unmarshal(TPM2B_SENSITIVE_DATA *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_SENSITIVE_DATA_Unmarshal(TPM2B_SENSITIVE_DATA *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_SENSITIVE_DATA_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_SENSITIVE_CREATE_Unmarshal(TPMS_SENSITIVE_CREATE *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_SENSITIVE_CREATE_Unmarshal(TPMS_SENSITIVE_CREATE *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SENSITIVE_CREATE_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM2B_SENSITIVE_CREATE_Unmarshal(TPM2B_SENSITIVE_CREATE *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_SENSITIVE_CREATE_Unmarshal(TPM2B_SENSITIVE_CREATE *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_SENSITIVE_CREATE_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_SCHEME_HASH_Unmarshal(TPMS_SCHEME_HASH *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_SCHEME_HASH_Unmarshal(TPMS_SCHEME_HASH *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SCHEME_HASH_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_SCHEME_ECDAA_Unmarshal(TPMS_SCHEME_ECDAA *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_SCHEME_ECDAA_Unmarshal(TPMS_SCHEME_ECDAA *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SCHEME_ECDAA_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMI_ALG_KEYEDHASH_SCHEME_Unmarshal(TPMI_ALG_KEYEDHASH_SCHEME *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_ALG_KEYEDHASH_SCHEME_Unmarshal(TPMI_ALG_KEYEDHASH_SCHEME *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_ALG_KEYEDHASH_SCHEME_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMS_SCHEME_HMAC_Unmarshal(TPMS_SCHEME_HMAC *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_SCHEME_HMAC_Unmarshal(TPMS_SCHEME_HMAC *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SCHEME_HMAC_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_SCHEME_XOR_Unmarshal(TPMS_SCHEME_XOR *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_SCHEME_XOR_Unmarshal(TPMS_SCHEME_XOR *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SCHEME_XOR_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMU_SCHEME_KEYEDHASH_Unmarshal(TPMU_SCHEME_KEYEDHASH *target, BYTE **buffer, INT32 *size, UINT32 selector)
+TPM_RC TPMU_SCHEME_KEYEDHASH_Unmarshal(TPMU_SCHEME_KEYEDHASH *target, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_SCHEME_KEYEDHASH_Unmarshalu(target, buffer, (uint32_t *)size, selector);
 }
 
-TPM_RC TPMT_KEYEDHASH_SCHEME_Unmarshal(TPMT_KEYEDHASH_SCHEME *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMT_KEYEDHASH_SCHEME_Unmarshal(TPMT_KEYEDHASH_SCHEME *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMT_KEYEDHASH_SCHEME_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMS_SIG_SCHEME_ECDAA_Unmarshal(TPMS_SIG_SCHEME_ECDAA *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_SIG_SCHEME_ECDAA_Unmarshal(TPMS_SIG_SCHEME_ECDAA *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIG_SCHEME_ECDAA_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_SIG_SCHEME_ECDSA_Unmarshal(TPMS_SIG_SCHEME_ECDSA *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_SIG_SCHEME_ECDSA_Unmarshal(TPMS_SIG_SCHEME_ECDSA *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIG_SCHEME_ECDSA_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_SIG_SCHEME_ECSCHNORR_Unmarshal(TPMS_SIG_SCHEME_ECSCHNORR *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_SIG_SCHEME_ECSCHNORR_Unmarshal(TPMS_SIG_SCHEME_ECSCHNORR *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIG_SCHEME_ECSCHNORR_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_SIG_SCHEME_RSAPSS_Unmarshal(TPMS_SIG_SCHEME_RSAPSS *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_SIG_SCHEME_RSAPSS_Unmarshal(TPMS_SIG_SCHEME_RSAPSS *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIG_SCHEME_RSAPSS_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_SIG_SCHEME_RSASSA_Unmarshal(TPMS_SIG_SCHEME_RSASSA *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_SIG_SCHEME_RSASSA_Unmarshal(TPMS_SIG_SCHEME_RSASSA *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIG_SCHEME_RSASSA_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_SIG_SCHEME_SM2_Unmarshal(TPMS_SIG_SCHEME_SM2 *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_SIG_SCHEME_SM2_Unmarshal(TPMS_SIG_SCHEME_SM2 *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIG_SCHEME_SM2_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMU_SIG_SCHEME_Unmarshal(TPMU_SIG_SCHEME *target, BYTE **buffer, INT32 *size, UINT32 selector)
+TPM_RC TPMU_SIG_SCHEME_Unmarshal(TPMU_SIG_SCHEME *target, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_SIG_SCHEME_Unmarshalu(target, buffer, (uint32_t *)size, selector);
 }
 
-TPM_RC TPMT_SIG_SCHEME_Unmarshal(TPMT_SIG_SCHEME *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMT_SIG_SCHEME_Unmarshal(TPMT_SIG_SCHEME *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMT_SIG_SCHEME_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMS_ENC_SCHEME_OAEP_Unmarshal(TPMS_ENC_SCHEME_OAEP *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_ENC_SCHEME_OAEP_Unmarshal(TPMS_ENC_SCHEME_OAEP *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_ENC_SCHEME_OAEP_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_ENC_SCHEME_RSAES_Unmarshal(TPMS_ENC_SCHEME_RSAES *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_ENC_SCHEME_RSAES_Unmarshal(TPMS_ENC_SCHEME_RSAES *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_ENC_SCHEME_RSAES_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_KEY_SCHEME_ECDH_Unmarshal(TPMS_KEY_SCHEME_ECDH *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_KEY_SCHEME_ECDH_Unmarshal(TPMS_KEY_SCHEME_ECDH *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_KEY_SCHEME_ECDH_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_KEY_SCHEME_ECMQV_Unmarshal(TPMS_KEY_SCHEME_ECMQV *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_KEY_SCHEME_ECMQV_Unmarshal(TPMS_KEY_SCHEME_ECMQV *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_KEY_SCHEME_ECMQV_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_SCHEME_KDF1_SP800_108_Unmarshal(TPMS_SCHEME_KDF1_SP800_108 *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_SCHEME_KDF1_SP800_108_Unmarshal(TPMS_SCHEME_KDF1_SP800_108 *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SCHEME_KDF1_SP800_108_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_SCHEME_KDF1_SP800_56A_Unmarshal(TPMS_SCHEME_KDF1_SP800_56A *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_SCHEME_KDF1_SP800_56A_Unmarshal(TPMS_SCHEME_KDF1_SP800_56A *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SCHEME_KDF1_SP800_56A_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_SCHEME_KDF2_Unmarshal(TPMS_SCHEME_KDF2 *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_SCHEME_KDF2_Unmarshal(TPMS_SCHEME_KDF2 *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SCHEME_KDF2_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_SCHEME_MGF1_Unmarshal(TPMS_SCHEME_MGF1 *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_SCHEME_MGF1_Unmarshal(TPMS_SCHEME_MGF1 *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SCHEME_MGF1_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMU_KDF_SCHEME_Unmarshal(TPMU_KDF_SCHEME *target, BYTE **buffer, INT32 *size, UINT32 selector)
+TPM_RC TPMU_KDF_SCHEME_Unmarshal(TPMU_KDF_SCHEME *target, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_KDF_SCHEME_Unmarshalu(target, buffer, (uint32_t *)size, selector);
 }
 
-TPM_RC TPMT_KDF_SCHEME_Unmarshal(TPMT_KDF_SCHEME *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMT_KDF_SCHEME_Unmarshal(TPMT_KDF_SCHEME *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMT_KDF_SCHEME_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
 #if 0
-TPM_RC TPMI_ALG_ASYM_SCHEME_Unmarshal(TPMI_ALG_ASYM_SCHEME *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_ALG_ASYM_SCHEME_Unmarshal(TPMI_ALG_ASYM_SCHEME *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_ALG_ASYM_SCHEME_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 #endif
 
-TPM_RC TPMU_ASYM_SCHEME_Unmarshal(TPMU_ASYM_SCHEME *target, BYTE **buffer, INT32 *size, UINT32 selector)
+TPM_RC TPMU_ASYM_SCHEME_Unmarshal(TPMU_ASYM_SCHEME *target, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_ASYM_SCHEME_Unmarshalu(target, buffer, (uint32_t *)size, selector);
 }
 
 #if 0
-TPM_RC TPMT_ASYM_SCHEME_Unmarshal(TPMT_ASYM_SCHEME *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMT_ASYM_SCHEME_Unmarshal(TPMT_ASYM_SCHEME *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMT_ASYM_SCHEME_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 #endif
 
-TPM_RC TPMI_ALG_RSA_SCHEME_Unmarshal(TPMI_ALG_RSA_SCHEME *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_ALG_RSA_SCHEME_Unmarshal(TPMI_ALG_RSA_SCHEME *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_ALG_RSA_SCHEME_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMT_RSA_SCHEME_Unmarshal(TPMT_RSA_SCHEME *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMT_RSA_SCHEME_Unmarshal(TPMT_RSA_SCHEME *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMT_RSA_SCHEME_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMI_ALG_RSA_DECRYPT_Unmarshal(TPMI_ALG_RSA_DECRYPT *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_ALG_RSA_DECRYPT_Unmarshal(TPMI_ALG_RSA_DECRYPT *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_ALG_RSA_DECRYPT_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMT_RSA_DECRYPT_Unmarshal(TPMT_RSA_DECRYPT *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMT_RSA_DECRYPT_Unmarshal(TPMT_RSA_DECRYPT *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMT_RSA_DECRYPT_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPM2B_PUBLIC_KEY_RSA_Unmarshal(TPM2B_PUBLIC_KEY_RSA *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_PUBLIC_KEY_RSA_Unmarshal(TPM2B_PUBLIC_KEY_RSA *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_PUBLIC_KEY_RSA_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMI_RSA_KEY_BITS_Unmarshal(TPMI_RSA_KEY_BITS *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMI_RSA_KEY_BITS_Unmarshal(TPMI_RSA_KEY_BITS *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_RSA_KEY_BITS_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM2B_PRIVATE_KEY_RSA_Unmarshal(TPM2B_PRIVATE_KEY_RSA *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_PRIVATE_KEY_RSA_Unmarshal(TPM2B_PRIVATE_KEY_RSA *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_PRIVATE_KEY_RSA_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM2B_ECC_PARAMETER_Unmarshal(TPM2B_ECC_PARAMETER *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_ECC_PARAMETER_Unmarshal(TPM2B_ECC_PARAMETER *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_ECC_PARAMETER_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_ECC_POINT_Unmarshal(TPMS_ECC_POINT *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_ECC_POINT_Unmarshal(TPMS_ECC_POINT *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_ECC_POINT_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM2B_ECC_POINT_Unmarshal(TPM2B_ECC_POINT *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_ECC_POINT_Unmarshal(TPM2B_ECC_POINT *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_ECC_POINT_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMI_ALG_ECC_SCHEME_Unmarshal(TPMI_ALG_ECC_SCHEME *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMI_ALG_ECC_SCHEME_Unmarshal(TPMI_ALG_ECC_SCHEME *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMI_ALG_ECC_SCHEME_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMI_ECC_CURVE_Unmarshal(TPMI_ECC_CURVE *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMI_ECC_CURVE_Unmarshal(TPMI_ECC_CURVE *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_ECC_CURVE_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMT_ECC_SCHEME_Unmarshal(TPMT_ECC_SCHEME *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMT_ECC_SCHEME_Unmarshal(TPMT_ECC_SCHEME *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMT_ECC_SCHEME_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPMS_ALGORITHM_DETAIL_ECC_Unmarshal(TPMS_ALGORITHM_DETAIL_ECC *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_ALGORITHM_DETAIL_ECC_Unmarshal(TPMS_ALGORITHM_DETAIL_ECC *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_ALGORITHM_DETAIL_ECC_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_SIGNATURE_RSA_Unmarshal(TPMS_SIGNATURE_RSA *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_SIGNATURE_RSA_Unmarshal(TPMS_SIGNATURE_RSA *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIGNATURE_RSA_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_SIGNATURE_RSASSA_Unmarshal(TPMS_SIGNATURE_RSASSA *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_SIGNATURE_RSASSA_Unmarshal(TPMS_SIGNATURE_RSASSA *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIGNATURE_RSASSA_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_SIGNATURE_RSAPSS_Unmarshal(TPMS_SIGNATURE_RSAPSS *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_SIGNATURE_RSAPSS_Unmarshal(TPMS_SIGNATURE_RSAPSS *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIGNATURE_RSAPSS_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_SIGNATURE_ECC_Unmarshal(TPMS_SIGNATURE_ECC *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_SIGNATURE_ECC_Unmarshal(TPMS_SIGNATURE_ECC *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIGNATURE_ECC_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_SIGNATURE_ECDSA_Unmarshal(TPMS_SIGNATURE_ECDSA *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_SIGNATURE_ECDSA_Unmarshal(TPMS_SIGNATURE_ECDSA *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIGNATURE_ECDSA_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_SIGNATURE_ECDAA_Unmarshal(TPMS_SIGNATURE_ECDAA *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_SIGNATURE_ECDAA_Unmarshal(TPMS_SIGNATURE_ECDAA *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIGNATURE_ECDAA_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_SIGNATURE_SM2_Unmarshal(TPMS_SIGNATURE_SM2 *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_SIGNATURE_SM2_Unmarshal(TPMS_SIGNATURE_SM2 *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIGNATURE_SM2_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_SIGNATURE_ECSCHNORR_Unmarshal(TPMS_SIGNATURE_ECSCHNORR *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_SIGNATURE_ECSCHNORR_Unmarshal(TPMS_SIGNATURE_ECSCHNORR *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIGNATURE_ECSCHNORR_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMU_SIGNATURE_Unmarshal(TPMU_SIGNATURE *target, BYTE **buffer, INT32 *size, UINT32 selector)
+TPM_RC TPMU_SIGNATURE_Unmarshal(TPMU_SIGNATURE *target, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_SIGNATURE_Unmarshalu(target, buffer, (uint32_t *)size, selector);
 }
 
-TPM_RC TPMT_SIGNATURE_Unmarshal(TPMT_SIGNATURE *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMT_SIGNATURE_Unmarshal(TPMT_SIGNATURE *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMT_SIGNATURE_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPM2B_ENCRYPTED_SECRET_Unmarshal(TPM2B_ENCRYPTED_SECRET *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_ENCRYPTED_SECRET_Unmarshal(TPM2B_ENCRYPTED_SECRET *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_ENCRYPTED_SECRET_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMI_ALG_PUBLIC_Unmarshal(TPMI_ALG_PUBLIC *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMI_ALG_PUBLIC_Unmarshal(TPMI_ALG_PUBLIC *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_ALG_PUBLIC_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMU_PUBLIC_ID_Unmarshal(TPMU_PUBLIC_ID *target, BYTE **buffer, INT32 *size, UINT32 selector)
+TPM_RC TPMU_PUBLIC_ID_Unmarshal(TPMU_PUBLIC_ID *target, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_PUBLIC_ID_Unmarshalu(target, buffer, (uint32_t *)size, selector);
 }
 
-TPM_RC TPMS_KEYEDHASH_PARMS_Unmarshal(TPMS_KEYEDHASH_PARMS *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_KEYEDHASH_PARMS_Unmarshal(TPMS_KEYEDHASH_PARMS *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_KEYEDHASH_PARMS_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
 #if 0
-TPM_RC TPMS_ASYM_PARMS_Unmarshal(TPMS_ASYM_PARMS *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_ASYM_PARMS_Unmarshal(TPMS_ASYM_PARMS *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_ASYM_PARMS_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 #endif
 
-TPM_RC TPMS_RSA_PARMS_Unmarshal(TPMS_RSA_PARMS *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_RSA_PARMS_Unmarshal(TPMS_RSA_PARMS *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_RSA_PARMS_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_ECC_PARMS_Unmarshal(TPMS_ECC_PARMS *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_ECC_PARMS_Unmarshal(TPMS_ECC_PARMS *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_ECC_PARMS_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMU_PUBLIC_PARMS_Unmarshal(TPMU_PUBLIC_PARMS *target, BYTE **buffer, INT32 *size, UINT32 selector)
+TPM_RC TPMU_PUBLIC_PARMS_Unmarshal(TPMU_PUBLIC_PARMS *target, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_PUBLIC_PARMS_Unmarshalu(target, buffer, (uint32_t *)size, selector);
 }
 
-TPM_RC TPMT_PUBLIC_PARMS_Unmarshal(TPMT_PUBLIC_PARMS *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMT_PUBLIC_PARMS_Unmarshal(TPMT_PUBLIC_PARMS *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMT_PUBLIC_PARMS_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMT_PUBLIC_Unmarshal(TPMT_PUBLIC *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPMT_PUBLIC_Unmarshal(TPMT_PUBLIC *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPMT_PUBLIC_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPM2B_PUBLIC_Unmarshal(TPM2B_PUBLIC *target, BYTE **buffer, INT32 *size, BOOL allowNull)
+TPM_RC TPM2B_PUBLIC_Unmarshal(TPM2B_PUBLIC *target, BYTE **buffer, UINT32 *size, BOOL allowNull)
 {
     return TSS_TPM2B_PUBLIC_Unmarshalu(target, buffer, (uint32_t *)size, allowNull);
 }
 
-TPM_RC TPM2B_TEMPLATE_Unmarshal(TPM2B_TEMPLATE *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_TEMPLATE_Unmarshal(TPM2B_TEMPLATE *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_TEMPLATE_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMU_SENSITIVE_COMPOSITE_Unmarshal(TPMU_SENSITIVE_COMPOSITE *target, BYTE **buffer, INT32 *size, UINT32 selector)
+TPM_RC TPMU_SENSITIVE_COMPOSITE_Unmarshal(TPMU_SENSITIVE_COMPOSITE *target, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_SENSITIVE_COMPOSITE_Unmarshalu(target, buffer, (uint32_t *)size, selector);
 }
 
-TPM_RC TPMT_SENSITIVE_Unmarshal(TPMT_SENSITIVE *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMT_SENSITIVE_Unmarshal(TPMT_SENSITIVE *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMT_SENSITIVE_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM2B_SENSITIVE_Unmarshal(TPM2B_SENSITIVE *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_SENSITIVE_Unmarshal(TPM2B_SENSITIVE *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_SENSITIVE_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM2B_PRIVATE_Unmarshal(TPM2B_PRIVATE *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_PRIVATE_Unmarshal(TPM2B_PRIVATE *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_PRIVATE_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM2B_ID_OBJECT_Unmarshal(TPM2B_ID_OBJECT *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_ID_OBJECT_Unmarshal(TPM2B_ID_OBJECT *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_ID_OBJECT_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMA_NV_Unmarshal(TPMA_NV *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMA_NV_Unmarshal(TPMA_NV *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMA_NV_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_NV_PUBLIC_Unmarshal(TPMS_NV_PUBLIC *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_NV_PUBLIC_Unmarshal(TPMS_NV_PUBLIC *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_NV_PUBLIC_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM2B_NV_PUBLIC_Unmarshal(TPM2B_NV_PUBLIC *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_NV_PUBLIC_Unmarshal(TPM2B_NV_PUBLIC *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_NV_PUBLIC_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM2B_CONTEXT_SENSITIVE_Unmarshal(TPM2B_CONTEXT_SENSITIVE *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_CONTEXT_SENSITIVE_Unmarshal(TPM2B_CONTEXT_SENSITIVE *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_CONTEXT_SENSITIVE_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_CONTEXT_DATA_Unmarshal(TPMS_CONTEXT_DATA *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_CONTEXT_DATA_Unmarshal(TPMS_CONTEXT_DATA *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_CONTEXT_DATA_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM2B_CONTEXT_DATA_Unmarshal(TPM2B_CONTEXT_DATA *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_CONTEXT_DATA_Unmarshal(TPM2B_CONTEXT_DATA *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_CONTEXT_DATA_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_CONTEXT_Unmarshal(TPMS_CONTEXT *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_CONTEXT_Unmarshal(TPMS_CONTEXT *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_CONTEXT_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPMS_CREATION_DATA_Unmarshal(TPMS_CREATION_DATA *target, BYTE **buffer, INT32 *size)
+TPM_RC TPMS_CREATION_DATA_Unmarshal(TPMS_CREATION_DATA *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_CREATION_DATA_Unmarshalu(target, buffer, (uint32_t *)size);
 }
 
-TPM_RC TPM2B_CREATION_DATA_Unmarshal(TPM2B_CREATION_DATA *target, BYTE **buffer, INT32 *size)
+TPM_RC TPM2B_CREATION_DATA_Unmarshal(TPM2B_CREATION_DATA *target, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_CREATION_DATA_Unmarshalu(target, buffer, (uint32_t *)size);
 }

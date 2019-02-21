@@ -74,7 +74,7 @@
 */
 
 TPM_RC
-TSS_ActivateIdentity_In_Marshalu(const ActivateIdentity_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_ActivateIdentity_In_Marshalu(const ActivateIdentity_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
 
@@ -82,30 +82,30 @@ TSS_ActivateIdentity_In_Marshalu(const ActivateIdentity_In *source, uint16_t *wr
 	rc = TSS_UINT32_Marshalu(&source->idKeyHandle, written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_UINT32_Marshalu(&source->blobSize, written, buffer, size);	
+	rc = TSS_UINT32_Marshalu(&source->blobSize, written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_Array_Marshalu(source->blob, source->blobSize, written, buffer, size);	
+	rc = TSS_Array_Marshalu(source->blob, source->blobSize, written, buffer, size);
     }
     return rc;
 }
 
 TPM_RC
-TSS_CreateEndorsementKeyPair_In_Marshalu(const CreateEndorsementKeyPair_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_CreateEndorsementKeyPair_In_Marshalu(const CreateEndorsementKeyPair_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
 
     if (rc == 0) {
-	rc = TSS_Array_Marshalu(source->antiReplay, TPM_NONCE_SIZE, written, buffer, size);	
+	rc = TSS_Array_Marshalu(source->antiReplay, TPM_NONCE_SIZE, written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_TPM_KEY_PARMS_Marshalu(&source->keyInfo, written, buffer, size);	
+	rc = TSS_TPM_KEY_PARMS_Marshalu(&source->keyInfo, written, buffer, size);
     }
     return rc;
 }
 
 TPM_RC
-TSS_CreateWrapKey_In_Marshalu(const CreateWrapKey_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_CreateWrapKey_In_Marshalu(const CreateWrapKey_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
 
@@ -113,10 +113,10 @@ TSS_CreateWrapKey_In_Marshalu(const CreateWrapKey_In *source, uint16_t *written,
 	rc = TSS_UINT32_Marshalu(&source->parentHandle, written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_Array_Marshalu(source->dataUsageAuth, SHA1_DIGEST_SIZE, written, buffer, size);	
+	rc = TSS_Array_Marshalu(source->dataUsageAuth, SHA1_DIGEST_SIZE, written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_Array_Marshalu(source->dataMigrationAuth, SHA1_DIGEST_SIZE, written, buffer, size);	
+	rc = TSS_Array_Marshalu(source->dataMigrationAuth, SHA1_DIGEST_SIZE, written, buffer, size);
     }
     if (rc == 0) {
     	rc = TSS_TPM_KEY12_Marshalu(&source->keyInfo, written, buffer, size);
@@ -125,7 +125,7 @@ TSS_CreateWrapKey_In_Marshalu(const CreateWrapKey_In *source, uint16_t *written,
 }
 
 TPM_RC
-TSS_Extend_In_Marshalu(const Extend_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_Extend_In_Marshalu(const Extend_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -138,7 +138,7 @@ TSS_Extend_In_Marshalu(const Extend_In *source, uint16_t *written, BYTE **buffer
 }
 
 TPM_RC
-TSS_FlushSpecific_In_Marshalu(const FlushSpecific_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_FlushSpecific_In_Marshalu(const FlushSpecific_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -148,10 +148,10 @@ TSS_FlushSpecific_In_Marshalu(const FlushSpecific_In *source, uint16_t *written,
 	rc = TSS_UINT32_Marshalu(&source->resourceType, written, buffer, size);
     }
     return rc;
-}						  
+}
 
 TPM_RC
-TSS_GetCapability12_In_Marshalu(const GetCapability12_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_GetCapability12_In_Marshalu(const GetCapability12_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -161,13 +161,13 @@ TSS_GetCapability12_In_Marshalu(const GetCapability12_In *source, uint16_t *writ
 	rc = TSS_UINT32_Marshalu(&source->subCapSize, written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_Array_Marshalu(source->subCap, source->subCapSize, written, buffer, size);	
+	rc = TSS_Array_Marshalu(source->subCap, source->subCapSize, written, buffer, size);
     }
     return rc;
-}						  
+}
 
 TPM_RC
-TSS_LoadKey2_In_Marshalu(const LoadKey2_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_LoadKey2_In_Marshalu(const LoadKey2_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -180,7 +180,7 @@ TSS_LoadKey2_In_Marshalu(const LoadKey2_In *source, uint16_t *written, BYTE **bu
 }
 
 TPM_RC
-TSS_MakeIdentity_In_Marshalu(const MakeIdentity_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_MakeIdentity_In_Marshalu(const MakeIdentity_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -196,72 +196,52 @@ TSS_MakeIdentity_In_Marshalu(const MakeIdentity_In *source, uint16_t *written, B
 }
 
 TPM_RC
-TSS_NV_DefineSpace12_In_Marshalu(const NV_DefineSpace12_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_NV_DefineSpace12_In_Marshalu(const NV_DefineSpace12_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
-	rc = TSS_TPM_NV_DATA_PUBLIC_Marshalu(&source->pubInfo, written, buffer, size);	
+	rc = TSS_TPM_NV_DATA_PUBLIC_Marshalu(&source->pubInfo, written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_Array_Marshalu(source->encAuth, SHA1_DIGEST_SIZE, written, buffer, size);	
+	rc = TSS_Array_Marshalu(source->encAuth, SHA1_DIGEST_SIZE, written, buffer, size);
     }
     return rc;
 }
 
 TPM_RC
-TSS_NV_ReadValueAuth_In_Marshalu(const NV_ReadValueAuth_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
-{
-    TPM_RC rc = 0;
-    if (rc == 0) {
-	rc = TSS_UINT32_Marshalu(&source->nvIndex , written, buffer, size);
-    }
-    if (rc == 0) {
-	rc = TSS_UINT32_Marshalu(&source->offset, written, buffer, size);	
-    }
-    if (rc == 0) {
-	rc = TSS_UINT32_Marshalu(&source->dataSize, written, buffer, size);	
-    }
-    return rc;
-}
-
-TPM_RC
-TSS_NV_ReadValue_In_Marshalu(const NV_ReadValue_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_NV_ReadValueAuth_In_Marshalu(const NV_ReadValueAuth_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
 	rc = TSS_UINT32_Marshalu(&source->nvIndex , written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_UINT32_Marshalu(&source->offset, written, buffer, size);	
+	rc = TSS_UINT32_Marshalu(&source->offset, written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_UINT32_Marshalu(&source->dataSize, written, buffer, size);	
+	rc = TSS_UINT32_Marshalu(&source->dataSize, written, buffer, size);
     }
     return rc;
 }
 
 TPM_RC
-TSS_NV_WriteValue_In_Marshalu(const NV_WriteValue_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_NV_ReadValue_In_Marshalu(const NV_ReadValue_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
-
     if (rc == 0) {
 	rc = TSS_UINT32_Marshalu(&source->nvIndex , written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_UINT32_Marshalu(&source->offset, written, buffer, size);	
+	rc = TSS_UINT32_Marshalu(&source->offset, written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_UINT32_Marshalu(&source->dataSize, written, buffer, size);	
-    }
-    if (rc == 0) {
-	rc = TSS_Array_Marshalu(source->data, source->dataSize, written, buffer, size);	
+	rc = TSS_UINT32_Marshalu(&source->dataSize, written, buffer, size);
     }
     return rc;
 }
 
 TPM_RC
-TSS_NV_WriteValueAuth_In_Marshalu(const NV_WriteValueAuth_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_NV_WriteValue_In_Marshalu(const NV_WriteValue_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
 
@@ -269,29 +249,49 @@ TSS_NV_WriteValueAuth_In_Marshalu(const NV_WriteValueAuth_In *source, uint16_t *
 	rc = TSS_UINT32_Marshalu(&source->nvIndex , written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_UINT32_Marshalu(&source->offset, written, buffer, size);	
+	rc = TSS_UINT32_Marshalu(&source->offset, written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_UINT32_Marshalu(&source->dataSize, written, buffer, size);	
+	rc = TSS_UINT32_Marshalu(&source->dataSize, written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_Array_Marshalu(source->data, source->dataSize, written, buffer, size);	
+	rc = TSS_Array_Marshalu(source->data, source->dataSize, written, buffer, size);
     }
     return rc;
 }
 
 TPM_RC
-TSS_OwnerReadInternalPub_In_Marshalu(const OwnerReadInternalPub_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_NV_WriteValueAuth_In_Marshalu(const NV_WriteValueAuth_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+
+    if (rc == 0) {
+	rc = TSS_UINT32_Marshalu(&source->nvIndex , written, buffer, size);
+    }
+    if (rc == 0) {
+	rc = TSS_UINT32_Marshalu(&source->offset, written, buffer, size);
+    }
+    if (rc == 0) {
+	rc = TSS_UINT32_Marshalu(&source->dataSize, written, buffer, size);
+    }
+    if (rc == 0) {
+	rc = TSS_Array_Marshalu(source->data, source->dataSize, written, buffer, size);
+    }
+    return rc;
+}
+
+TPM_RC
+TSS_OwnerReadInternalPub_In_Marshalu(const OwnerReadInternalPub_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
 	rc = TSS_UINT32_Marshalu(&source->keyHandle, written, buffer, size);
     }
     return rc;
-}						  
- 
+}
+
 TPM_RC
-TSS_OwnerSetDisable_In_Marshalu(const OwnerSetDisable_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_OwnerSetDisable_In_Marshalu(const OwnerSetDisable_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -301,7 +301,7 @@ TSS_OwnerSetDisable_In_Marshalu(const OwnerSetDisable_In *source, uint16_t *writ
 }
 
 TPM_RC
-TSS_OSAP_In_Marshalu(const OSAP_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_OSAP_In_Marshalu(const OSAP_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -314,10 +314,10 @@ TSS_OSAP_In_Marshalu(const OSAP_In *source, uint16_t *written, BYTE **buffer, ui
 	rc = TSS_Array_Marshalu(source->nonceOddOSAP, SHA1_DIGEST_SIZE, written, buffer, size);
     }
     return rc;
-}						  
- 
+}
+
 TPM_RC
-TSS_PcrRead12_In_Marshalu(const PcrRead12_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PcrRead12_In_Marshalu(const PcrRead12_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
 
@@ -328,7 +328,7 @@ TSS_PcrRead12_In_Marshalu(const PcrRead12_In *source, uint16_t *written, BYTE **
 }
 
 TPM_RC
-TSS_PCR_Reset12_In_Marshalu(const PCR_Reset12_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PCR_Reset12_In_Marshalu(const PCR_Reset12_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
 
@@ -339,7 +339,7 @@ TSS_PCR_Reset12_In_Marshalu(const PCR_Reset12_In *source, uint16_t *written, BYT
 }
 
 TPM_RC
-TSS_Quote2_In_Marshalu(const Quote2_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_Quote2_In_Marshalu(const Quote2_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -358,7 +358,7 @@ TSS_Quote2_In_Marshalu(const Quote2_In *source, uint16_t *written, BYTE **buffer
 }
 
 TPM_RC
-TSS_ReadPubek_In_Marshalu(const ReadPubek_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_ReadPubek_In_Marshalu(const ReadPubek_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -368,23 +368,23 @@ TSS_ReadPubek_In_Marshalu(const ReadPubek_In *source, uint16_t *written, BYTE **
 }
 
 TPM_RC
-TSS_Sign12_In_Marshalu(const Sign12_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_Sign12_In_Marshalu(const Sign12_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
 	rc = TSS_UINT32_Marshalu(&source->keyHandle, written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_UINT32_Marshalu(&source->areaToSignSize, written, buffer, size);	
+	rc = TSS_UINT32_Marshalu(&source->areaToSignSize, written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_Array_Marshalu(source->areaToSign, source->areaToSignSize, written, buffer, size);	
+	rc = TSS_Array_Marshalu(source->areaToSign, source->areaToSignSize, written, buffer, size);
     }
     return rc;
 }
 
 TPM_RC
-TSS_Startup12_In_Marshalu(const Startup12_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_Startup12_In_Marshalu(const Startup12_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -394,23 +394,23 @@ TSS_Startup12_In_Marshalu(const Startup12_In *source, uint16_t *written, BYTE **
 }
 
 TPM_RC
-TSS_TakeOwnership_In_Marshalu(const TakeOwnership_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TakeOwnership_In_Marshalu(const TakeOwnership_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
 	rc = TSS_UINT16_Marshalu(&source->protocolID, written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_UINT32_Marshalu(&source->encOwnerAuthSize, written, buffer, size);	
+	rc = TSS_UINT32_Marshalu(&source->encOwnerAuthSize, written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_Array_Marshalu(source->encOwnerAuth, source->encOwnerAuthSize, written, buffer, size);	
+	rc = TSS_Array_Marshalu(source->encOwnerAuth, source->encOwnerAuthSize, written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_UINT32_Marshalu(&source->encSrkAuthSize, written, buffer, size);	
+	rc = TSS_UINT32_Marshalu(&source->encSrkAuthSize, written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_Array_Marshalu(source->encSrkAuth, source->encSrkAuthSize, written, buffer, size);	
+	rc = TSS_Array_Marshalu(source->encSrkAuth, source->encSrkAuthSize, written, buffer, size);
     }
     if (rc == 0) {
     	rc = TSS_TPM_KEY12_Marshalu(&source->srkParams, written, buffer, size);
@@ -429,7 +429,7 @@ TSS_ActivateIdentity_Out_Unmarshalu(ActivateIdentity_Out *target, TPM_ST tag, BY
     tag = tag;
     if (rc == 0) {
 	rc = TSS_TPM_SYMMETRIC_KEY_Unmarshalu(&target->symmetricKey, buffer, size);
-    } 
+    }
     return rc;
 }
 
@@ -440,7 +440,7 @@ TSS_CreateEndorsementKeyPair_Out_Unmarshalu(CreateEndorsementKeyPair_Out *target
     tag = tag;
     if (rc == 0) {
 	rc = TSS_TPM_PUBKEY_Unmarshalu(&target->pubEndorsementKey, buffer, size);
-    } 
+    }
     if (rc == 0) {
 	rc = TSS_Array_Unmarshalu(target->checksum, SHA1_DIGEST_SIZE, buffer, size);
     }
@@ -481,7 +481,7 @@ TSS_GetCapability12_Out_Unmarshalu(GetCapability12_Out *target, TPM_ST tag, BYTE
 	if (target->respSize > sizeof(target->resp)) {
 	    rc = TPM_RC_SIZE;
 	}
-    }    
+    }
     if (rc == 0) {
 	rc = TSS_Array_Unmarshalu(target->resp, target->respSize, buffer, size);
     }
@@ -514,7 +514,7 @@ TSS_MakeIdentity_Out_Unmarshalu(MakeIdentity_Out *target, TPM_ST tag, BYTE **buf
 	if (target->identityBindingSize > sizeof(target->identityBinding)) {
 	    rc = TPM_RC_SIZE;
 	}
-    }    
+    }
     if (rc == 0) {
 	rc = TSS_Array_Unmarshalu(target->identityBinding, target->identityBindingSize, buffer, size);
     }
@@ -533,7 +533,7 @@ TSS_NV_ReadValueAuth_Out_Unmarshalu(NV_ReadValueAuth_Out *target, TPM_ST tag, BY
 	if (target->dataSize > sizeof(target->data)) {
 	    rc = TPM_RC_SIZE;
 	}
-    }    
+    }
     if (rc == 0) {
 	rc = TSS_Array_Unmarshalu(target->data, target->dataSize, buffer, size);
     }
@@ -552,7 +552,7 @@ TSS_NV_ReadValue_Out_Unmarshalu(NV_ReadValue_Out *target, TPM_ST tag, BYTE **buf
 	if (target->dataSize > sizeof(target->data)) {
 	    rc = TPM_RC_SIZE;
 	}
-    }    
+    }
     if (rc == 0) {
 	rc = TSS_Array_Unmarshalu(target->data, target->dataSize, buffer, size);
     }
@@ -633,7 +633,7 @@ TSS_Quote2_Out_Unmarshalu(Quote2_Out *target, TPM_ST tag, BYTE **buffer, uint32_
 	if (target->sigSize > sizeof(target->sig)) {
 	    rc = TPM_RC_SIZE;
 	}
-    }    
+    }
     if (rc == 0) {
 	rc = TSS_Array_Unmarshalu(target->sig, target->sigSize, buffer, size);
     }
@@ -652,7 +652,7 @@ TSS_Sign12_Out_Unmarshalu(Sign12_Out *target, TPM_ST tag, BYTE **buffer, uint32_
 	if (target->sigSize > sizeof(target->sig)) {
 	    rc = TPM_RC_SIZE;
 	}
-    }    
+    }
     if (rc == 0) {
 	rc = TSS_Array_Unmarshalu(target->sig, target->sigSize, buffer, size);
     }
@@ -689,7 +689,7 @@ TSS_TakeOwnership_Out_Unmarshalu(TakeOwnership_Out *target, TPM_ST tag, BYTE **b
 */
 
 TPM_RC
-TSS_TPM_STARTUP_TYPE_Marshalu(const TPM_STARTUP_TYPE *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_STARTUP_TYPE_Marshalu(const TPM_STARTUP_TYPE *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -702,7 +702,7 @@ TSS_TPM_STARTUP_TYPE_Marshalu(const TPM_STARTUP_TYPE *source, uint16_t *written,
 
 
 TPM_RC
-TSS_TPM_VERSION_Marshalu(const TPM_VERSION *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_VERSION_Marshalu(const TPM_VERSION *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -723,11 +723,11 @@ TSS_TPM_VERSION_Marshalu(const TPM_VERSION *source, uint16_t *written, BYTE **bu
 /* 8.0 */
 
 TPM_RC
-TSS_TPM_PCR_SELECTION_Marshalu(const TPM_PCR_SELECTION *source, uint16_t *written, BYTE **buffer, uint32_t *size)
-{ 
+TSS_TPM_PCR_SELECTION_Marshalu(const TPM_PCR_SELECTION *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
     TPM_RC rc = 0;
     if (rc == 0) {
-	rc = TSS_UINT16_Marshalu(&source->sizeOfSelect, written, buffer, size);   
+	rc = TSS_UINT16_Marshalu(&source->sizeOfSelect, written, buffer, size);
     }
     if (rc == 0) {
 	rc = TSS_Array_Marshalu(source->pcrSelect, source->sizeOfSelect, written, buffer, size);
@@ -736,55 +736,55 @@ TSS_TPM_PCR_SELECTION_Marshalu(const TPM_PCR_SELECTION *source, uint16_t *writte
 }
 
 TPM_RC
-TSS_TPM_PCR_INFO_LONG_Marshalu(const TPM_PCR_INFO_LONG *source, uint16_t *written, BYTE **buffer, uint32_t *size)
-{ 
+TSS_TPM_PCR_INFO_LONG_Marshalu(const TPM_PCR_INFO_LONG *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
     TPM_RC rc = 0;
     if (rc == 0) {
 	uint16_t tag = TPM_TAG_PCR_INFO_LONG;
-	rc = TSS_UINT16_Marshalu(&tag, written, buffer, size);                      
+	rc = TSS_UINT16_Marshalu(&tag, written, buffer, size);
     }
     if (rc == 0) {
 	rc = TSS_UINT8_Marshalu(&source->localityAtCreation, written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_UINT8_Marshalu(&source->localityAtRelease, written, buffer, size);   
+	rc = TSS_UINT8_Marshalu(&source->localityAtRelease, written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_TPM_PCR_SELECTION_Marshalu(&source->creationPCRSelection, written, buffer, size); 
+	rc = TSS_TPM_PCR_SELECTION_Marshalu(&source->creationPCRSelection, written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_TPM_PCR_SELECTION_Marshalu(&source->releasePCRSelection, written, buffer, size); 
+	rc = TSS_TPM_PCR_SELECTION_Marshalu(&source->releasePCRSelection, written, buffer, size);
     }
     if (rc == 0) {
 	rc = TSS_Array_Marshalu(source->digestAtCreation, SHA1_DIGEST_SIZE, written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_Array_Marshalu(source->digestAtRelease, SHA1_DIGEST_SIZE, written, buffer, size); 
+	rc = TSS_Array_Marshalu(source->digestAtRelease, SHA1_DIGEST_SIZE, written, buffer, size);
     }
     return rc;
 }
 
 TPM_RC
-TSS_TPM_PCR_INFO_SHORT_Marshalu(const TPM_PCR_INFO_SHORT *source, uint16_t *written, BYTE **buffer, uint32_t *size)
-{ 
-    TPM_RC rc = 0;
-    if (rc == 0) {
-	rc = TSS_TPM_PCR_SELECTION_Marshalu(&source->pcrSelection, written, buffer, size); 
-    }
-    if (rc == 0) {
-	rc = TSS_UINT8_Marshalu(&source->localityAtRelease, written, buffer, size);   
-    }
-    if (rc == 0) {
-	rc = TSS_Array_Marshalu(source->digestAtRelease, SHA1_DIGEST_SIZE, written, buffer, size); 
-    }
-    return rc;
-}
-
-TPM_RC
-TSS_TPM4B_TPM_PCR_INFO_LONG_Marshalu(const TPM_PCR_INFO_LONG *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_PCR_INFO_SHORT_Marshalu(const TPM_PCR_INFO_SHORT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
-    uint16_t sizeWritten = 0;	/* of structure */
+    if (rc == 0) {
+	rc = TSS_TPM_PCR_SELECTION_Marshalu(&source->pcrSelection, written, buffer, size);
+    }
+    if (rc == 0) {
+	rc = TSS_UINT8_Marshalu(&source->localityAtRelease, written, buffer, size);
+    }
+    if (rc == 0) {
+	rc = TSS_Array_Marshalu(source->digestAtRelease, SHA1_DIGEST_SIZE, written, buffer, size);
+    }
+    return rc;
+}
+
+TPM_RC
+TSS_TPM4B_TPM_PCR_INFO_LONG_Marshalu(const TPM_PCR_INFO_LONG *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    UINT32 sizeWritten = 0;	/* of structure */
     BYTE *sizePtr;
 
     if (buffer != NULL) {
@@ -810,7 +810,7 @@ TSS_TPM4B_TPM_PCR_INFO_LONG_Marshalu(const TPM_PCR_INFO_LONG *source, uint16_t *
 /* 9.0 */
 
 TPM_RC
-TSS_TPM_SYMMETRIC_KEY_Marshalu(const TPM_SYMMETRIC_KEY *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_SYMMETRIC_KEY_Marshalu(const TPM_SYMMETRIC_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -831,7 +831,7 @@ TSS_TPM_SYMMETRIC_KEY_Marshalu(const TPM_SYMMETRIC_KEY *source, uint16_t *writte
 /* 10.0 */
 
 TPM_RC
-TSS_TPM_RSA_KEY_PARMS_Marshalu(const TPM_RSA_KEY_PARMS *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_RSA_KEY_PARMS_Marshalu(const TPM_RSA_KEY_PARMS *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -850,7 +850,7 @@ TSS_TPM_RSA_KEY_PARMS_Marshalu(const TPM_RSA_KEY_PARMS *source, uint16_t *writte
 }
 
 TPM_RC
-TSS_TPMU_PARMS_Marshalu(const TPMU_PARMS *source, uint16_t *written, BYTE **buffer, uint32_t *size, uint32_t selector)
+TSS_TPMU_PARMS_Marshalu(const TPMU_PARMS *source, UINT32 *written, BYTE **buffer, uint32_t *size, uint32_t selector)
 {
     TPM_RC rc = 0;
     switch (selector) {
@@ -866,10 +866,10 @@ TSS_TPMU_PARMS_Marshalu(const TPMU_PARMS *source, uint16_t *written, BYTE **buff
 }
 
 TPM_RC
-TSS_TPM4B_TPMU_PARMS_Marshalu(const TPMU_PARMS *source, uint16_t *written, BYTE **buffer, uint32_t *size, uint32_t selector)
+TSS_TPM4B_TPMU_PARMS_Marshalu(const TPMU_PARMS *source, UINT32 *written, BYTE **buffer, uint32_t *size, uint32_t selector)
 {
     TPM_RC rc = 0;
-    uint16_t sizeWritten = 0;	/* of structure */
+    UINT32 sizeWritten = 0;	/* of structure */
     BYTE *sizePtr;
 
     if (buffer != NULL) {
@@ -893,7 +893,7 @@ TSS_TPM4B_TPMU_PARMS_Marshalu(const TPMU_PARMS *source, uint16_t *written, BYTE 
 }
 
 TPM_RC
-TSS_TPM_KEY_PARMS_Marshalu(const TPM_KEY_PARMS *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_KEY_PARMS_Marshalu(const TPM_KEY_PARMS *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -903,16 +903,16 @@ TSS_TPM_KEY_PARMS_Marshalu(const TPM_KEY_PARMS *source, uint16_t *written, BYTE 
 	rc = TSS_UINT16_Marshalu(&source->encScheme, written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_UINT16_Marshalu(&source->sigScheme, written, buffer, size); 
+	rc = TSS_UINT16_Marshalu(&source->sigScheme, written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_TPM4B_TPMU_PARMS_Marshalu(&source->parms, written, buffer, size, source->algorithmID);	
+	rc = TSS_TPM4B_TPMU_PARMS_Marshalu(&source->parms, written, buffer, size, source->algorithmID);
     }
     return rc;
 }
 
 TPM_RC
-TSS_TPM_STORE_PUBKEY_Marshalu(const TPM_STORE_PUBKEY *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_STORE_PUBKEY_Marshalu(const TPM_STORE_PUBKEY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -922,10 +922,10 @@ TSS_TPM_STORE_PUBKEY_Marshalu(const TPM_STORE_PUBKEY *source, uint16_t *written,
 	rc = TSS_Array_Marshalu(source->key, source->keyLength, written, buffer, size);
     }
     return rc;
-}						  
+}
 
 TPM_RC
-TSS_TPM_KEY12_PUBKEY_Marshalu(const TPM_KEY12 *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_KEY12_PUBKEY_Marshalu(const TPM_KEY12 *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -935,10 +935,10 @@ TSS_TPM_KEY12_PUBKEY_Marshalu(const TPM_KEY12 *source, uint16_t *written, BYTE *
 	rc = TSS_TPM_STORE_PUBKEY_Marshalu(&source->pubKey, written, buffer, size);
     }
     return rc;
-}						  
+}
 
 TPM_RC
-TSS_TPM_PUBKEY_Marshalu(const TPM_PUBKEY *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_PUBKEY_Marshalu(const TPM_PUBKEY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -948,10 +948,10 @@ TSS_TPM_PUBKEY_Marshalu(const TPM_PUBKEY *source, uint16_t *written, BYTE **buff
 	rc = TSS_TPM_STORE_PUBKEY_Marshalu(&source->pubKey, written, buffer, size);
     }
     return rc;
-}						  
+}
 
 TPM_RC
-TSS_TPM_KEY12_Marshalu(const TPM_KEY12 *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_KEY12_Marshalu(const TPM_KEY12 *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -989,7 +989,7 @@ TSS_TPM_KEY12_Marshalu(const TPM_KEY12 *source, uint16_t *written, BYTE **buffer
 /* 11.0 */
 
 TPM_RC
-TSS_TPM_QUOTE_INFO2_Marshalu(const TPM_QUOTE_INFO2 *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_QUOTE_INFO2_Marshalu(const TPM_QUOTE_INFO2 *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1011,7 +1011,7 @@ TSS_TPM_QUOTE_INFO2_Marshalu(const TPM_QUOTE_INFO2 *source, uint16_t *written, B
 /* 12.0 */
 
 TPM_RC
-TSS_TPM_EK_BLOB_Marshalu(const TPM_EK_BLOB *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_EK_BLOB_Marshalu(const TPM_EK_BLOB *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1031,7 +1031,7 @@ TSS_TPM_EK_BLOB_Marshalu(const TPM_EK_BLOB *source, uint16_t *written, BYTE **bu
 }
 
 TPM_RC
-TSS_TPM_EK_BLOB_ACTIVATE_Marshalu(const TPM_EK_BLOB_ACTIVATE *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_EK_BLOB_ACTIVATE_Marshalu(const TPM_EK_BLOB_ACTIVATE *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1053,9 +1053,9 @@ TSS_TPM_EK_BLOB_ACTIVATE_Marshalu(const TPM_EK_BLOB_ACTIVATE *source, uint16_t *
 /* 19.0 */
 
 TPM_RC
-TSS_TPM_NV_ATTRIBUTES_Marshalu(const TPM_NV_ATTRIBUTES *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_NV_ATTRIBUTES_Marshalu(const TPM_NV_ATTRIBUTES *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
-    TPM_RC rc = 0; 
+    TPM_RC rc = 0;
     if (rc == 0) {
 	uint16_t tag = TPM_TAG_NV_ATTRIBUTES;
 	rc = TSS_UINT16_Marshalu(&tag, written, buffer, size);
@@ -1067,7 +1067,7 @@ TSS_TPM_NV_ATTRIBUTES_Marshalu(const TPM_NV_ATTRIBUTES *source, uint16_t *writte
 }
 
 TPM_RC
-TSS_TPM_NV_DATA_PUBLIC_Marshalu(const TPM_NV_DATA_PUBLIC *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_NV_DATA_PUBLIC_Marshalu(const TPM_NV_DATA_PUBLIC *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1104,7 +1104,7 @@ TSS_TPM_NV_DATA_PUBLIC_Marshalu(const TPM_NV_DATA_PUBLIC *source, uint16_t *writ
 /* 21.0 */
 
 TPM_RC
-TSS_TPM_CAP_VERSION_INFO_Marshalu(const TPM_CAP_VERSION_INFO *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_CAP_VERSION_INFO_Marshalu(const TPM_CAP_VERSION_INFO *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1123,7 +1123,7 @@ TSS_TPM_CAP_VERSION_INFO_Marshalu(const TPM_CAP_VERSION_INFO *source, uint16_t *
 	rc = TSS_Array_Marshalu(source->tpmVendorID, 4, written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_UINT16_Marshalu(&source->vendorSpecificSize, written, buffer, size);
+	rc = TSS_UINT32_Marshalu(&source->vendorSpecificSize, written, buffer, size);
     }
     if (rc == 0) {
 	rc = TSS_Array_Marshalu(source->vendorSpecific, source->vendorSpecificSize, written, buffer, size);

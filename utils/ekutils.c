@@ -96,7 +96,7 @@ TPM_RC readNvBufferMax(TSS_CONTEXT *tssContext,
     in.propertyCount = 1;	/* ask for one property */
     if (rc == 0) {
 	rc = TSS_Execute(tssContext,
-			 (RESPONSE_PARAMETERS *)&out, 
+			 (RESPONSE_PARAMETERS *)&out,
 			 (COMMAND_PARAMETERS *)&in,
 			 NULL,
 			 TPM_CC_GetCapability,
@@ -145,7 +145,7 @@ TPM_RC getIndexSize(TSS_CONTEXT *tssContext,
     TPM_RC			rc = 0;
     NV_ReadPublic_In 		in;
     NV_ReadPublic_Out		out;
-    
+
     if (rc == 0) {
 	/* if (verbose) printf("getIndexSize: index %08x\n", nvIndex); */
 	in.nvIndex = nvIndex;
@@ -191,12 +191,12 @@ TPM_RC getIndexData(TSS_CONTEXT *tssContext,
     uint16_t 			bytesRead;			/* bytes read so far */
     NV_Read_In 			in;
     NV_Read_Out			out;
-    
+
     /* data may have to be read in chunks.  Read the TPM_PT_NV_BUFFER_MAX, the chunk size */
     if (rc == 0) {
 	rc = readNvBufferMax(tssContext,
 			     &nvBufferMax);
-    }    
+    }
     if (rc == 0) {
 	if (verbose) printf("getIndexData: index %08x\n", nvIndex);
 	in.authHandle = nvIndex;	/* index authorization */
@@ -329,10 +329,10 @@ void getEccTemplate(TPMT_PUBLIC *tpmtPublic)
     tpmtPublic->parameters.eccDetail.curveID = TPM_ECC_NIST_P256;
     tpmtPublic->parameters.eccDetail.kdf.scheme = TPM_ALG_NULL;
     tpmtPublic->parameters.eccDetail.kdf.details.mgf1.hashAlg = 0;
-    tpmtPublic->unique.ecc.x.t.size = 32;	
-    memset(&tpmtPublic->unique.ecc.x.t.buffer, 0, 32);	
-    tpmtPublic->unique.ecc.y.t.size = 32;	
-    memset(&tpmtPublic->unique.ecc.y.t.buffer, 0, 32);	
+    tpmtPublic->unique.ecc.x.t.size = 32;
+    memset(&tpmtPublic->unique.ecc.x.t.buffer, 0, 32);
+    tpmtPublic->unique.ecc.y.t.size = 32;
+    memset(&tpmtPublic->unique.ecc.y.t.buffer, 0, 32);
     return;
 }
 
@@ -358,7 +358,7 @@ TPM_RC getIndexX509Certificate(TSS_CONTEXT *tssContext,
     }
     /* unmarshal the DER stream to an OpenSSL X509 structure */
     if (rc == 0) {
-	unsigned char 		*tmpData = NULL; 
+	unsigned char 		*tmpData = NULL;
 	tmpData = certData;			/* tmp pointer because d2i moves the pointer */
 	*certificate = d2i_X509(NULL,			/* freed by caller */
 				 (const unsigned char **)&tmpData, certSize);
@@ -430,14 +430,14 @@ uint32_t getPubKeyFromX509Cert(RSA  **rsaPkey,
     if (rc == 0) {
 	evpPkey = X509_get_pubkey(x509);	/* freed @1 */
 	if (evpPkey == NULL) {
-	    printf("getPubKeyFromX509Cert: X509_get_pubkey failed\n");  
+	    printf("getPubKeyFromX509Cert: X509_get_pubkey failed\n");
 	    rc = 1;
 	}
     }
     if (rc == 0) {
 	*rsaPkey = EVP_PKEY_get1_RSA(evpPkey);
 	if (*rsaPkey == NULL) {
-	    printf("getPubKeyFromX509Cert: EVP_PKEY_get1_RSA failed\n");  
+	    printf("getPubKeyFromX509Cert: EVP_PKEY_get1_RSA failed\n");
 	    rc = 1;
 	}
     }
@@ -471,7 +471,7 @@ TPM_RC getRootCertificateFilenames(char *rootFilename[],
 	listFile = fopen(listFilename, "rb");		/* closed @1 */
 	if (listFile == NULL) {
 	    printf("getRootCertificateFilenames: Error opening list file %s\n",
-		   listFilename);  
+		   listFilename);
 	    rc = TSS_RC_FILE_OPEN;
 	}
     }
@@ -525,7 +525,7 @@ TPM_RC getRootCertificateFilenames(char *rootFilename[],
    The caCert array is returned because it must be freed after the caStore is freed
 
    NOTE:  There is no TPM interaction.
-*/ 
+*/
 
 TPM_RC getCaStore(X509_STORE **caStore,		/* freed by caller */
 		  X509 	*caCert[],		/* freed by caller */
@@ -539,7 +539,7 @@ TPM_RC getCaStore(X509_STORE **caStore,		/* freed by caller */
     if (rc == 0) {
 	*caStore  = X509_STORE_new();
 	if (*caStore == NULL) {
-	    printf("getCaStore: X509_store_new failed\n");  
+	    printf("getCaStore: X509_store_new failed\n");
 	    rc = TSS_RC_OUT_OF_MEMORY;
 	}
     }
@@ -548,7 +548,7 @@ TPM_RC getCaStore(X509_STORE **caStore,		/* freed by caller */
 	caCertFile = fopen(rootFilename[i], "rb");	/* closed @1 */
 	if (caCertFile == NULL) {
 	    printf("getCaStore: Error opening CA root certificate file %s\n",
-		   rootFilename[i]);  
+		   rootFilename[i]);
 	    rc = TSS_RC_FILE_OPEN;
 	}
 	/* convert the root certificate from PEM to X509 */
@@ -556,9 +556,9 @@ TPM_RC getCaStore(X509_STORE **caStore,		/* freed by caller */
 	    caCert[i] = PEM_read_X509(caCertFile, NULL, NULL, NULL);	/* freed by caller */
 	    if (caCert[i] == NULL) {
 		printf("getCaStore: Error reading CA root certificate file %s\n",
-		       rootFilename[i]);  
+		       rootFilename[i]);
 		rc = TSS_RC_FILE_READ;
-	    } 
+	    }
 	}
 	if ((rc == 0) && verbose) {
 	    X509_NAME *x509Name;
@@ -571,7 +571,7 @@ TPM_RC getCaStore(X509_STORE **caStore,		/* freed by caller */
 
 	/* add the CA X509 certificate to the certificate store */
 	if (rc == 0) {
-	    X509_STORE_add_cert(*caStore, caCert[i]);    
+	    X509_STORE_add_cert(*caStore, caCert[i]);
 	}
 	if (caCertFile != NULL) {
 	    fclose(caCertFile);		/* @1 */
@@ -618,7 +618,7 @@ TPM_RC verifyCertificate(X509 *x509Certificate,
     if (rc == 0) {
 	verifyCtx = X509_STORE_CTX_new();		/* freed @3 */
 	if (verifyCtx == NULL) {
-	    printf("verifyCertificate: X509_STORE_CTX_new failed\n");  
+	    printf("verifyCertificate: X509_STORE_CTX_new failed\n");
 	    rc = TSS_RC_OUT_OF_MEMORY;
 	}
     }
@@ -630,15 +630,15 @@ TPM_RC verifyCertificate(X509 *x509Certificate,
 				      NULL);		/* untrusted (intermediate) certificates */
 	if (irc != 1) {
 	    printf("verifyCertificate: "
-		   "Error in X509_STORE_CTX_init initializing verify context\n");  
+		   "Error in X509_STORE_CTX_init initializing verify context\n");
 	    rc = TSS_RC_RSA_SIGNATURE;
-	}	    
+	}
     }
     /* walk the certificate chain */
     if (rc == 0) {
 	int irc = X509_verify_cert(verifyCtx);
 	if (irc != 1) {
-	    printf("verifyCertificate: Error in X509_verify_cert verifying certificate\n");  
+	    printf("verifyCertificate: Error in X509_verify_cert verifying certificate\n");
 	    rc = TSS_RC_RSA_SIGNATURE;
 	}
 	else {
@@ -672,7 +672,7 @@ TPM_RC verifyKeyUsage(X509 *ekX509Certificate,		/* X509 certificate */
     uint8_t 		bitmap;
     int 		keyAgreement;		/* boolean flags */
     int 		keyEncipherment;
-    
+
     if (rc == 0) {
 	keyUsage = X509_get_ext_d2i(ekX509Certificate, NID_key_usage,	/* freed @1 */
 				    NULL, NULL);
@@ -727,7 +727,7 @@ TPM_RC verifyKeyUsage(X509 *ekX509Certificate,		/* X509 certificate */
 #endif
 
 /* processEKNonce()reads the EK nonce from NV and returns the contents and size */
-   
+
 TPM_RC processEKNonce(TSS_CONTEXT *tssContext,
 		      unsigned char **nonce, 	/* freed by caller */
 		      uint16_t *nonceSize,
@@ -736,7 +736,7 @@ TPM_RC processEKNonce(TSS_CONTEXT *tssContext,
 {
     TPM_RC			rc = 0;
 
-    if (rc == 0) { 
+    if (rc == 0) {
 	rc = getIndexContents(tssContext,
 			      nonce,
 			      nonceSize,
@@ -762,7 +762,7 @@ TPM_RC processEKTemplate(TSS_CONTEXT *tssContext,
     uint16_t 			dataSize;
     unsigned char 		*data = NULL; 		/* freed @1 */
     uint32_t 			tmpDataSize;
-    unsigned char 		*tmpData = NULL; 
+    unsigned char 		*tmpData = NULL;
 
     if (rc == 0) {
 	rc = getIndexContents(tssContext,
@@ -790,7 +790,7 @@ TPM_RC processEKTemplate(TSS_CONTEXT *tssContext,
    structure.  It also extracts and returns the public modulus.
 
 */
-    
+
 TPM_RC processEKCertificate(TSS_CONTEXT *tssContext,
 			    X509 **ekCertificate,	/* freed by caller */
 			    uint8_t **modulusBin,	/* freed by caller */
@@ -836,7 +836,7 @@ TPM_RC convertX509ToDer(uint32_t *certLength,
 	if (*certificate != NULL) {
 	    printf("ERROR: convertX509ToDer: Error, certificate not NULL at entry\n");
 	    rc = TSS_RC_X509_ERROR;
-	}	
+	}
     }
     if (rc == 0) {
 	irc = i2d_X509(x509Certificate, NULL);
@@ -845,7 +845,7 @@ TPM_RC convertX509ToDer(uint32_t *certLength,
 	    rc = TSS_RC_X509_ERROR;
 	}
 	else {
-	    *certLength = irc; 
+	    *certLength = irc;
 	}
     }
     if (rc == 0) {
@@ -880,14 +880,14 @@ TPM_RC convertX509ToEc(EC_KEY **ecKey,	/* freed by caller */
     if (rc == 0) {
 	evpPkey = X509_get_pubkey(x509);	/* freed @1 */
 	if (evpPkey == NULL) {
-	    printf("ERROR: convertX509ToEc: X509_get_pubkey failed\n");  
+	    printf("ERROR: convertX509ToEc: X509_get_pubkey failed\n");
 	    rc = TSS_RC_EC_KEY_CONVERT;
 	}
     }
     if (rc == 0) {
 	*ecKey = EVP_PKEY_get1_EC_KEY(evpPkey);
 	if (*ecKey == NULL) {
-	    printf("ERROR: convertX509ToEc: EVP_PKEY_get1_EC_KEY failed\n");  
+	    printf("ERROR: convertX509ToEc: EVP_PKEY_get1_EC_KEY failed\n");
 	    rc = TSS_RC_EC_KEY_CONVERT;
 	}
     }
@@ -915,7 +915,7 @@ TPM_RC convertCertificatePubKey(uint8_t **modulusBin,	/* freed by caller */
     TPM_RC			rc = 0;
     EVP_PKEY 			*pkey = NULL;
     int 			pkeyType;	/* RSA or EC */
-    
+
     /* use openssl to print the X509 certificate */
 #ifndef TPM_TSS_NOFILE		/* stdout is a file descriptor */
     if (rc == 0) {
@@ -968,7 +968,7 @@ TPM_RC convertCertificatePubKey(uint8_t **modulusBin,	/* freed by caller */
 		      if (rc == 0) {
 			  if (print) TSS_PrintAll("Certificate public key:",
 						  *modulusBin, *modulusBytes);
-		      }    
+		      }
 		      RSA_free(rsaKey);   		/* @3 */
 		  }
 		  break;
@@ -1154,12 +1154,12 @@ uint32_t convertPemMemToX509(X509 **x509,		/* freed by caller */
     uint32_t rc = 0;
     BIO *bio = NULL;
 
-    if (verbose) printf("convertPemMemToX509: pemCertificate\n%s\n", pemCertificate);  
+    if (verbose) printf("convertPemMemToX509: pemCertificate\n%s\n", pemCertificate);
     /* create a BIO that uses an in-memory buffer */
     if (rc == 0) {
 	bio = BIO_new(BIO_s_mem());		/* freed @1 */
 	if (bio == NULL) {
-	    printf("convertPemMemToX509: BIO_new failed\n");  
+	    printf("convertPemMemToX509: BIO_new failed\n");
 	    rc = TSS_RC_OUT_OF_MEMORY;
 	}
     }
@@ -1170,7 +1170,7 @@ uint32_t convertPemMemToX509(X509 **x509,		/* freed by caller */
 	pemLength = strlen(pemCertificate);
 	writeLen = BIO_write(bio, pemCertificate, pemLength);
 	if (writeLen != pemLength) {
-	    printf("convertPemMemToX509: BIO_write failed\n");  
+	    printf("convertPemMemToX509: BIO_write failed\n");
 	    rc = TPM_RC_INTEGRITY;
 	}
     }
@@ -1238,13 +1238,13 @@ TPM_RC convertX509ToPemMem(char **pemString,	/* freed by caller */
 {
     TPM_RC 		rc = 0;		/* general return code */
     int			irc;
-    
+
     /* create a BIO that uses an in-memory buffer */
     BIO *bio = NULL;
     if (rc == 0) {
 	bio = BIO_new(BIO_s_mem());		/* freed @1 */
 	if (bio == NULL) {
-	    printf("convertX509ToPemMem: BIO_new failed\n");  
+	    printf("convertX509ToPemMem: BIO_new failed\n");
 	    rc = TSS_RC_OUT_OF_MEMORY;
 	}
     }
@@ -1262,7 +1262,7 @@ TPM_RC convertX509ToPemMem(char **pemString,	/* freed by caller */
 	length = BIO_get_mem_data(bio, &data);
 	*pemString = malloc(length+1);
 	if (*pemString == NULL) {
-	    printf("ERROR: convertX509ToPemMem: Cannot malloc %lu\n", length);  
+	    printf("ERROR: convertX509ToPemMem: Cannot malloc %lu\n", length);
 	    rc = TSS_RC_OUT_OF_MEMORY;
 	}
 	else {
@@ -1295,7 +1295,7 @@ TPM_RC convertX509ToString(char **x509String,	/* freed by caller */
     if (rc == 0) {
 	bio = BIO_new(BIO_s_mem());		/* freed @1 */
 	if (bio == NULL) {
-	    printf("convertX509ToString: BIO_new failed\n");  
+	    printf("convertX509ToString: BIO_new failed\n");
 	    rc = TSS_RC_OUT_OF_MEMORY;
 	}
     }
@@ -1313,7 +1313,7 @@ TPM_RC convertX509ToString(char **x509String,	/* freed by caller */
 	length = BIO_get_mem_data(bio, &data);
 	*x509String = malloc(length+1);
 	if (*x509String == NULL) {
-	    printf("convertX509ToString: Cannot malloc %lu\n", length);  
+	    printf("convertX509ToString: Cannot malloc %lu\n", length);
 	    rc = TSS_RC_OUT_OF_MEMORY;
 	}
 	else {
@@ -1339,7 +1339,7 @@ TPM_RC convertX509ToString(char **x509String,	/* freed by caller */
 
 /* These are the names inserted into the certificates.  If changed, the entries also change.  At run
    time, the mapping from key to nid is done once and used repeatedly.  */
-    
+
 CertificateName certificateName[] = {
     { "countryName",			NID_undef},	/* 0 */
     { "stateOrProvinceName",		NID_undef},	/* 1 */
@@ -1381,7 +1381,7 @@ TPM_RC createCertificate(char **x509CertString,		/* freed by caller */
 			 char **pemCertString,		/* freed by caller */
 			 uint32_t *certLength,		/* output, certificate length */
 			 unsigned char **certificate,	/* output, freed by caller */
-			 TPMT_PUBLIC *tpmtPublic,	/* key to be certified */	
+			 TPMT_PUBLIC *tpmtPublic,	/* key to be certified */
 			 const char *caKeyFileName,
 			 size_t issuerEntriesSize,
 			 char **issuerEntries,
@@ -1393,7 +1393,7 @@ TPM_RC createCertificate(char **x509CertString,		/* freed by caller */
     X509 		*x509Certificate = NULL;
     uint16_t 		publicKeyLength;
     const unsigned char *publicKey;
-    
+
     /* allocate memory for the X509 structure */
     if (rc == 0) {
 	x509Certificate = X509_new();		/* freed @2 */
@@ -1417,7 +1417,7 @@ TPM_RC createCertificate(char **x509CertString,		/* freed by caller */
 		   tpmtPublic->type);
 	    rc = TSS_RC_BAD_SIGNATURE_ALGORITHM;
 	}
-    }    
+    }
     /* fill in basic X509 information - version, serial, validity, issuer, subject */
     if (rc == 0) {
 	rc = startCertificate(x509Certificate,
@@ -1503,7 +1503,7 @@ TPM_RC startCertificate(X509 *x509Certificate,	/* X509 certificate to be generat
 
     x509IssuerName = NULL;	/* freed @1 */
     x509SubjectName = NULL;	/* freed @2 */
-    x509SerialBN = NULL;	/* freed @3 */ 
+    x509SerialBN = NULL;	/* freed @3 */
 
     /* add certificate version X509 v3 */
     if (rc == 0) {
@@ -1635,7 +1635,7 @@ TPM_RC createX509Name(X509_NAME **x509Name,
 	if ((rc == 0) && (entries[i] != NULL)) {
 	    irc = X509_NAME_add_entry(*x509Name,	/* add to issuer */
 				      nameEntry,	/* add the entry */
-				      -1,		/* location - append */	
+				      -1,		/* location - append */
 				      0);		/* set - not multivalued */
 	    if (irc != 1) {
 		printf("createX509Name: Error adding entry for %s\n",
@@ -1651,7 +1651,7 @@ TPM_RC createX509Name(X509_NAME **x509Name,
 
 /* addCertExtension() adds the extension type 'nid' to the X509 certificate
 
- */ 
+ */
 
 TPM_RC addCertExtension(X509 *x509Certificate, int nid, char *value)
 {
@@ -1681,7 +1681,7 @@ TPM_RC addCertExtension(X509 *x509Certificate, int nid, char *value)
     }
     return rc;
 }
- 
+
 /* addCertKeyRsa() adds the TPM RSA public key (the key to be certified) to the openssl X509
    certificate
 
@@ -1780,7 +1780,7 @@ TPM_RC addCertSignatureRoot(X509 *x509Certificate,	/* certificate to be signed *
     }
     /* convert the CA signing key from PEM to EVP_PKEY format */
     if (rc == 0) {
-	evpSignkey = PEM_read_PrivateKey(fp, NULL, NULL, (void *)caKeyPassword);	
+	evpSignkey = PEM_read_PrivateKey(fp, NULL, NULL, (void *)caKeyPassword);
 	if (evpSignkey == NULL) {
 	    printf("addCertSignatureRoot: Error calling PEM_read_PrivateKey() from %s\n",
 		   caKeyFileName);
@@ -1788,7 +1788,7 @@ TPM_RC addCertSignatureRoot(X509 *x509Certificate,	/* certificate to be signed *
 	}
     }
     /* close the CA signing key file */
-    if (fp != NULL) { 
+    if (fp != NULL) {
 	fclose(fp);
     }
     /* set the certificate signature digest algorithm */
@@ -1841,7 +1841,7 @@ TPM_RC processRoot(TSS_CONTEXT *tssContext,
 				     &ekCertificate,	/* freed @1 */
 				     ekCertIndex);
 	if (rc != 0) {
-	    printf("processRoot: No EK certificate\n");  
+	    printf("processRoot: No EK certificate\n");
 	}
     }
     if (rc == 0) {
@@ -1865,7 +1865,7 @@ TPM_RC processRoot(TSS_CONTEXT *tssContext,
    createprimary input.  It creates the primary key.
 
    ekCertIndex determines whether an RSA or ECC key is created.
-   
+
    If nonce is NULL, the default IWG templates are used.  If nonce is non-NULL, the nonce and
    tpmtPublicIn are used.
 
@@ -1901,7 +1901,7 @@ TPM_RC processCreatePrimary(TSS_CONTEXT *tssContext,
 		rc = TSS_RC_INSUFFICIENT_BUFFER;
 	    }
 	}
-    }    
+    }
     /* set up the createprimary in parameters */
     if (rc == 0) {
 	inCreatePrimary.primaryHandle = TPM_RH_ENDORSEMENT;
@@ -1969,11 +1969,11 @@ TPM_RC processCreatePrimary(TSS_CONTEXT *tssContext,
     /* flush the primary key */
     if (rc == 0) {
 	if (!noFlush) {		/* flush the primary key */
-	    *keyHandle = TPM_RH_NULL;	    
+	    *keyHandle = TPM_RH_NULL;
 	    FlushContext_In 		inFlushContext;
 	    inFlushContext.flushHandle = outCreatePrimary.objectHandle;
 	    rc = TSS_Execute(tssContext,
-			     NULL, 
+			     NULL,
 			     (COMMAND_PARAMETERS *)&inFlushContext,
 			     NULL,
 			     TPM_CC_FlushContext,
@@ -1990,7 +1990,7 @@ TPM_RC processCreatePrimary(TSS_CONTEXT *tssContext,
 	else {	/* not flushed, return the handle */
 	    *keyHandle = outCreatePrimary.objectHandle;
 	}
-    }	    
+    }
     /* trace the public key */
     if (rc == 0) {
 	if (ekCertIndex == EK_CERT_RSA_INDEX) {
@@ -2027,7 +2027,7 @@ TPM_RC processValidatePrimary(uint8_t *publicKeyBin,		/* from certificate */
 	int irc;
 	/* RSA just has a public modulus */
 	if (rc == 0) {
-	    if (tpmtPublic->unique.rsa.t.size != publicKeyBytes) {
+	    if (tpmtPublic->unique.rsa.t.size != (UINT32)publicKeyBytes) {
 		printf("processValidatePrimary: "
 		       "X509 certificate key length %u does not match output of createprimary %u\n",
 		       publicKeyBytes,
@@ -2053,7 +2053,7 @@ TPM_RC processValidatePrimary(uint8_t *publicKeyBin,		/* from certificate */
 	if (rc == 0) {
 	    if (tpmtPublic->unique.ecc.x.t.size +
 		tpmtPublic->unique.ecc.x.t.size + 1
-		!= publicKeyBytes) {
+		!= (UINT32)publicKeyBytes) {
 		printf("processValidatePrimary: "
 		       "X509 certificate key length %u does not match "
 		       "output of createprimary x %u +y %u\n",
@@ -2086,12 +2086,12 @@ TPM_RC processValidatePrimary(uint8_t *publicKeyBin,		/* from certificate */
 		       "output of createprimary\n");
 		rc = TPM_RC_INTEGRITY;
 	    }
-	}	
+	}
     }
     if (rc == 0) {
 	if (print) printf("processValidatePrimary: "
 			    "Public key from X509 certificate matches output of createprimary\n");
-    } 
+    }
     return rc;
 
 }
@@ -2109,7 +2109,7 @@ TPM_RC processValidatePrimary(uint8_t *publicKeyBin,		/* from certificate */
 TPM_RC processPrimary(TSS_CONTEXT *tssContext,
 		      TPM_HANDLE *keyHandle,		/* primary key handle */
 		      TPMI_RH_NV_INDEX ekCertIndex,
-		      TPMI_RH_NV_INDEX ekNonceIndex, 
+		      TPMI_RH_NV_INDEX ekNonceIndex,
 		      TPMI_RH_NV_INDEX ekTemplateIndex,
 		      unsigned int noFlush,		/* TRUE - don't flush the primary key */
 		      int print)
@@ -2166,7 +2166,7 @@ TPM_RC processPrimary(TSS_CONTEXT *tssContext,
     }
     if (rc == 0) {
 	if (print) printf("Public key from X509 certificate matches output of createprimary\n");
-    } 
+    }
     free(nonce);			/* @1 */
     if (ekCertificate != NULL) {
 	X509_free(ekCertificate);   	/* @2 */

@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
    policymaker calculates a TPM2 policy hash
 
    Inputs are:
@@ -105,155 +105,163 @@ int main(int argc, char *argv[])
     OpenSSL_add_all_algorithms ();
 
     for (i=1 ; (i<argc) && (rc == 0) ; i++) {
-	if (strcmp(argv[i],"-halg") == 0) {
-	    i++;
-	    if (i < argc) {
-		if (strcmp(argv[i],"sha1") == 0) {
-		    digest.hashAlg = TPM_ALG_SHA1;
-		}
-		else if (strcmp(argv[i],"sha256") == 0) {
-		    digest.hashAlg = TPM_ALG_SHA256;
-		}
-		else if (strcmp(argv[i],"sha384") == 0) {
-		    digest.hashAlg = TPM_ALG_SHA384;
-		}
-		else if (strcmp(argv[i],"sha512") == 0) {
-		    digest.hashAlg = TPM_ALG_SHA512;
-		}
-		else {
-		    printf("Bad parameter %s for -halg\n", argv[i]);
-		    printUsage();
-		}
-	    }
-	    else {
-		printf("Missing parameter for -hi\n");
-		printUsage();
-	    }
-	    
-	}
-	else if (strcmp(argv[i],"-if") == 0) {
-	    i++;
-	    if (i < argc) {
-		inFilename = argv[i];
-	    }
-	    else {
-		printf("-if option needs a value\n");
-		printUsage();
-	    }
-	}
-	else if (strcmp(argv[i],"-of") == 0) {
-	    i++;
-	    if (i < argc) {
-		outFilename = argv[i];
-	    }
-	    else {
-		printf("-of option needs a value\n");
-		printUsage();
-	    }
-	}
-	else if (strcmp(argv[i],"-pr") == 0) {
-	    pr = TRUE;
-	}
-	else if (strcmp(argv[i],"-nz") == 0) {
-	    nz = TRUE;
-	}
-	else if (strcmp(argv[i],"-ns") == 0) {
-	    noSpace = TRUE;
-	}
-	else if (strcmp(argv[i],"-h") == 0) {
-	    printUsage();
-	}
-	else if (strcmp(argv[i],"-v") == 0) {
-	    verbose = TRUE;
-	    TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "2");
-	}
-	else {
-	    printf("\n%s is not a valid option\n", argv[i]);
-	    printUsage();
-	}
+        if (strcmp(argv[i],"-halg") == 0) {
+            i++;
+            if (i < argc) {
+                if (strcmp(argv[i],"sha1") == 0) {
+                    digest.hashAlg = TPM_ALG_SHA1;
+                }
+                else if (strcmp(argv[i],"sha256") == 0) {
+                    digest.hashAlg = TPM_ALG_SHA256;
+                }
+                else if (strcmp(argv[i],"sha384") == 0) {
+                    digest.hashAlg = TPM_ALG_SHA384;
+                }
+                else if (strcmp(argv[i],"sha512") == 0) {
+                    digest.hashAlg = TPM_ALG_SHA512;
+                }
+                else {
+                    printf("Bad parameter %s for -halg\n", argv[i]);
+                    printUsage();
+                }
+            }
+            else {
+                printf("Missing parameter for -hi\n");
+                printUsage();
+            }
+
+        }
+        else if (strcmp(argv[i],"-if") == 0) {
+            i++;
+            if (i < argc) {
+                inFilename = argv[i];
+            }
+            else {
+                printf("-if option needs a value\n");
+                printUsage();
+            }
+        }
+        else if (strcmp(argv[i],"-of") == 0) {
+            i++;
+            if (i < argc) {
+                outFilename = argv[i];
+            }
+            else {
+                printf("-of option needs a value\n");
+                printUsage();
+            }
+        }
+        else if (strcmp(argv[i],"-pr") == 0) {
+            pr = TRUE;
+        }
+        else if (strcmp(argv[i],"-nz") == 0) {
+            nz = TRUE;
+        }
+        else if (strcmp(argv[i],"-ns") == 0) {
+            noSpace = TRUE;
+        }
+        else if (strcmp(argv[i],"-h") == 0) {
+            printUsage();
+        }
+        else if (strcmp(argv[i],"-v") == 0) {
+            verbose = TRUE;
+            TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "2");
+        }
+        else {
+            printf("\n%s is not a valid option\n", argv[i]);
+            printUsage();
+        }
     }
+
     if (inFilename == NULL) {
-	printf("Missing input file parameter -if\n");
-	printUsage();
+        printf("Missing input file parameter -if\n");
+        printUsage();
     }
+
     /* open the input file */
     if (rc == 0) {
-	inFile = fopen(inFilename, "r");
-	if (inFile == NULL) {
-	    printf("Error opening %s for %s, %s\n", inFilename, "r", strerror(errno));
-	    rc = EXIT_FAILURE;
-	}
+        inFile = fopen(inFilename, "r");
+        if (inFile == NULL) {
+            printf("Error opening %s for %s, %s\n", inFilename, "r", strerror(errno));
+            rc = EXIT_FAILURE;
+        }
     }
+
     if (rc == 0) {
-	sizeInBytes = TSS_GetDigestSize(digest.hashAlg);
-	/* startauthsession sets session digest to zero */
-	if (!nz) {
-	    startSizeInBytes = sizeInBytes;
-	    memset((uint8_t *)&digest.digest, 0, sizeInBytes);
-	}
-	else {	/* nz TRUE, start with empty buffer */
-	    startSizeInBytes = 0;
-	}
+        sizeInBytes = TSS_GetDigestSize(digest.hashAlg);
+        /* startauthsession sets session digest to zero */
+        if (!nz) {
+            startSizeInBytes = sizeInBytes;
+            memset((uint8_t *)&digest.digest, 0, sizeInBytes);
+        } else {	/* nz TRUE, start with empty buffer */
+            startSizeInBytes = 0;
+        }
     }
+
     /* iterate through each line */
     do {
-	char 		lineString[10240];		/* returned line in hex ascii */
-	unsigned char 	lineBinary[5120];		/* returned line in binary */
-	size_t		lineLength;			
+        char 		lineString[10240];		/* returned line in hex ascii */
+        unsigned char 	lineBinary[5120];		/* returned line in binary */
+        size_t		lineLength;
 
-	if (rc == 0) {
-	    prc = fgets(lineString, sizeof(lineString), inFile);
-	}
-	/* convert hex ascii to binary */ 
-	if ((rc == 0) && (prc != NULL)) {
-	    lineLength = strlen(lineString);
-	    rc = Format_FromHexascii(lineBinary,
-				     lineString, lineLength/2);
-	}
-	/* hash extend */
-	if ((rc == 0) && (prc != NULL)) {
-	    TSS_Hash_Generate(&digest,
-			      startSizeInBytes, (uint8_t *)&digest.digest,	/* extend */
-			      lineLength /2, lineBinary,
-			      0, NULL);
-	}
-	if ((rc == 0) && (prc != NULL)) {
-	    if (verbose) TSS_PrintAll("intermediate policy digest",
-				      (uint8_t *)&digest.digest, sizeInBytes);
-	}
-    }
-    while ((rc == 0) && (prc != NULL));
+        if (rc == 0) {
+            prc = fgets(lineString, sizeof(lineString), inFile);
+        }
+        /* convert hex ascii to binary */
+        if ((rc == 0) && (prc != NULL)) {
+            lineLength = strlen(lineString);
+            rc = Format_FromHexascii(lineBinary,
+                         lineString, lineLength/2);
+        }
+        /* hash extend */
+        if ((rc == 0) && (prc != NULL)) {
+            TSS_Hash_Generate(&digest,
+                      startSizeInBytes, (uint8_t *)&digest.digest,	/* extend */
+                      lineLength /2, lineBinary,
+                      0, NULL);
+        }
+        if ((rc == 0) && (prc != NULL)) {
+            if (verbose) TSS_PrintAll("intermediate policy digest",
+                          (uint8_t *)&digest.digest, sizeInBytes);
+        }
+    } while ((rc == 0) && (prc != NULL));
 
     if ((rc == 0) && pr) {
-	TSS_PrintAll("policy digest", (uint8_t *)&digest.digest, sizeInBytes);
+        TSS_PrintAll("policy digest", (uint8_t *)&digest.digest, sizeInBytes);
     }
+
     if ((rc == 0) && noSpace) {
-	printf("policy digest:\n");
-	unsigned int b;
-	for (b = 0 ; b < sizeInBytes ; b++) {
-	    printf("%02x", *(((uint8_t *)&digest.digest) + b));
-	}
-	printf("\n");
+        printf("policy digest:\n");
+        unsigned int b;
+        for (b = 0; b < sizeInBytes; b++) {
+            printf("%02x", *(((uint8_t *)&digest.digest) + b));
+        }
+        printf("\n");
     }
+
     /* open the output file */
     if ((rc == 0) && (outFilename != NULL)) {
-	outFile = fopen(outFilename, "wb");
-	if (outFile == NULL) {
-	    printf("Error opening %s for %s, %s\n", outFilename , "W", strerror(errno));
-	    rc = EXIT_FAILURE;
-	}
+        outFile = fopen(outFilename, "wb");
+        if (outFile == NULL) {
+            printf("Error opening %s for %s, %s\n", outFilename , "W", strerror(errno));
+            rc = EXIT_FAILURE;
+        }
     }
+
     if ((rc == 0) && (outFilename != NULL)) {
-	fwrite((uint8_t *)&digest.digest, 1, sizeInBytes, outFile);
+        fwrite((uint8_t *)&digest.digest, 1, sizeInBytes, outFile);
     }
+
     if (inFile != NULL) {
-	fclose(inFile);
+        fclose(inFile);
     }
+
     if (outFile != NULL) {
-	fclose(outFile);
+        fclose(outFile);
     }
+
     if (rc != 0) {
-	rc = EXIT_FAILURE;
+        rc = EXIT_FAILURE;
     }
     return rc;
 }
@@ -273,7 +281,7 @@ static int Format_FromHexascii(unsigned char *binary,
     for (i = 0 ; (rc == 0) && (i < length) ; i++) {
 	rc = Format_ByteFromHexascii(binary + i,
 				     string + (i * 2));
-	
+
     }
     return rc;
 }
@@ -288,7 +296,7 @@ static int Format_ByteFromHexascii(unsigned char *byte,
     size_t	i;
     char	c;
     *byte 	= 0;
-    
+
     for (i = 0 ; (rc == 0) && (i < 2) ; i++) {
 	(*byte) <<= 4;		/* big endian, shift up the nibble */
 	c = *(string + i);	/* extract the next character from the string */
@@ -325,5 +333,5 @@ static void printUsage(void)
     printf("\t[-ns\tadditionally print policy hash in hex ascii on one line]\n");
     printf("\t\tUseful to paste into policy OR\n");
     printf("\n");
-    exit(1);	
+    exit(1);
 }

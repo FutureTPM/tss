@@ -82,7 +82,7 @@ typedef struct MARSHAL_TABLE {
 } MARSHAL_TABLE;
 
 static const MARSHAL_TABLE marshalTable12 [] = {
-				 
+
     {TPM_ORD_ActivateIdentity,"TPM_ORD_ActivateIdentity",
      (MarshalInFunction_t)TSS_ActivateIdentity_In_Marshalu,
      (UnmarshalOutFunction_t)TSS_ActivateIdentity_Out_Unmarshalu,
@@ -250,7 +250,7 @@ static TPM_RC TSS_MarshalTable12_Process(TSS_AUTH_CONTEXT *tssAuthContext,
 
 /* TSS_Marshal12() marshals the input parameters into the TSS Authorization context.
 
-   It also sets other member of the context in preparation for the rest of the sequence.  
+   It also sets other member of the context in preparation for the rest of the sequence.
 */
 
 TPM_RC TSS_Marshal12(TSS_AUTH_CONTEXT *tssAuthContext,
@@ -262,7 +262,7 @@ TPM_RC TSS_Marshal12(TSS_AUTH_CONTEXT *tssAuthContext,
     uint8_t 		*buffer;			/* for marshaling */
     uint8_t 		*bufferu;			/* for test unmarshaling */
     uint32_t 		size;
-    
+
     /* index from command code to table and save marshal and unmarshal functions for this command */
     if (rc == 0) {
 	rc = TSS_MarshalTable12_Process(tssAuthContext, commandCode);
@@ -288,15 +288,15 @@ TPM_RC TSS_Marshal12(TSS_AUTH_CONTEXT *tssAuthContext,
 	buffer = tssAuthContext->commandBuffer;
 	size = MAX_COMMAND_SIZE;
 	/* marshal header, preliminary tag and command size */
-	rc = TSS_UINT16_Marshalu(&tag, &tssAuthContext->commandSize, &buffer, &size);
+	rc = TSS_UINT16_Marshalu(&tag, (UINT32 *)&tssAuthContext->commandSize, &buffer, &size);
     }
     if (rc == 0) {
 	uint32_t commandSize = tssAuthContext->commandSize;
-	rc = TSS_UINT32_Marshalu(&commandSize, &tssAuthContext->commandSize, &buffer, &size);
+	rc = TSS_UINT32_Marshalu(&commandSize, (UINT32 *)&tssAuthContext->commandSize, &buffer, &size);
     }
     if (rc == 0) {
-	rc = TSS_UINT32_Marshalu(&commandCode, &tssAuthContext->commandSize, &buffer, &size);
-    }    
+	rc = TSS_UINT32_Marshalu(&commandCode, (UINT32 *)&tssAuthContext->commandSize, &buffer, &size);
+    }
     if (rc == 0) {
 	/* save pointer to marshaled data for test unmarshal */
 	bufferu = buffer +
@@ -305,7 +305,7 @@ TPM_RC TSS_Marshal12(TSS_AUTH_CONTEXT *tssAuthContext,
 	if (tssAuthContext->marshalInFunction != NULL) {
 	    /* if there is a structure to marshal */
 	    if (in != NULL) {
-		rc = tssAuthContext->marshalInFunction(in, &tssAuthContext->commandSize,
+		rc = tssAuthContext->marshalInFunction(in, (UINT32*)&tssAuthContext->commandSize,
 						       &buffer, &size);
 	    }
 	    /* caller error, no structure supplied to marshal */
@@ -313,7 +313,7 @@ TPM_RC TSS_Marshal12(TSS_AUTH_CONTEXT *tssAuthContext,
 		if (tssVerbose)
 		    printf("TSS_Marshal12: Command %08x requires command parameter structure\n",
 			   commandCode);
-		rc = TSS_RC_IN_PARAMETER;	
+		rc = TSS_RC_IN_PARAMETER;
 	    }
 	}
 	/* if there is no marshal function */
@@ -323,7 +323,7 @@ TPM_RC TSS_Marshal12(TSS_AUTH_CONTEXT *tssAuthContext,
 		if (tssVerbose)
 		    printf("TSS_Marshal12: Command %08x does not take command parameter structure\n",
 			   commandCode);
-		rc = TSS_RC_IN_PARAMETER;	
+		rc = TSS_RC_IN_PARAMETER;
 	    }
 	    /* no marshal function and no command parameter structure is OK */
 	}
@@ -340,7 +340,7 @@ TPM_RC TSS_Marshal12(TSS_AUTH_CONTEXT *tssAuthContext,
     }
     /* back fill the correct commandSize */
     if (rc == 0) {
-	uint16_t written;		/* dummy */
+	UINT32 written;		/* dummy */
 	uint32_t commandSize = tssAuthContext->commandSize;
 	buffer = tssAuthContext->commandBuffer + sizeof(TPMI_ST_COMMAND_TAG);
 	TSS_UINT32_Marshalu(&commandSize, &written, &buffer, NULL);
@@ -348,7 +348,7 @@ TPM_RC TSS_Marshal12(TSS_AUTH_CONTEXT *tssAuthContext,
     /* record the interim cpBuffer and cpBufferSize before adding authorizations */
     if (rc == 0) {
 	uint32_t notCpBufferSize;
-	
+
 	/* cpBuffer does not include the header and handles */
 	notCpBufferSize = sizeof(TPMI_ST_COMMAND_TAG) + sizeof (uint32_t) + sizeof(TPM_CC) +
 			  (sizeof(TPM_HANDLE) * tssAuthContext->commandHandleCount);
@@ -372,7 +372,7 @@ TPM_RC TSS_Unmarshal12(TSS_AUTH_CONTEXT *tssAuthContext,
 {
     TPM_RC 	rc = 0;
     TPM_TAG 	tag;
-    uint8_t 	*buffer;    
+    uint8_t 	*buffer;
     uint32_t 	size;
 
     /* if there is an unmarshal function */
@@ -456,7 +456,7 @@ TPM_RC TSS_SetCmdAuths12(TSS_AUTH_CONTEXT 	*tssAuthContext,
     }
     /* back fill the tag */
     if (rc == 0) {
-	uint16_t written = 0;		/* dummy */
+	UINT32 written = 0;		/* dummy */
 	buffer = tssAuthContext->commandBuffer;
 	TSS_UINT16_Marshalu(&tag, &written, &buffer, NULL);
     }
@@ -469,16 +469,16 @@ TPM_RC TSS_SetCmdAuths12(TSS_AUTH_CONTEXT 	*tssAuthContext,
 	cpBuffer += cpBufferSize;
     }
     for (i = 0 ; (rc == 0) && (i < numSessions) ; i++) {
-	uint16_t written = 0;
+	UINT32 written = 0;
 	uint32_t size = MAX_COMMAND_SIZE - cpBufferSize;
 	/* marshal authHandle */
 	if (rc == 0) {
-	    rc = TSS_UINT32_Marshalu(&authC[i]->sessionHandle, &written, &cpBuffer, &size); 
+	    rc = TSS_UINT32_Marshalu(&authC[i]->sessionHandle, &written, &cpBuffer, &size);
 	}
 	/* marshal nonceOdd */
 	if (rc == 0) {
 	    rc = TSS_Array_Marshalu(authC[i]->nonce, SHA1_DIGEST_SIZE,
-				   &written, &cpBuffer, &size); 
+				   &written, &cpBuffer, &size);
 	}
 	/* marshal attributes */
 	if (rc == 0) {
@@ -487,11 +487,11 @@ TPM_RC TSS_SetCmdAuths12(TSS_AUTH_CONTEXT 	*tssAuthContext,
 	/* marshal HMAC */
 	if (rc == 0) {
 	    rc = TSS_Array_Marshalu(authC[i]->hmac, SHA1_DIGEST_SIZE,
-				   &written, &cpBuffer, &size); 
+				   &written, &cpBuffer, &size);
 	}
-    }	
+    }
     if (rc == 0) {
-	uint16_t written;		/* dummy */
+	UINT32 written;		/* dummy */
 	uint32_t commandSize;
 	/* record command stream used size */
 	tssAuthContext->commandSize = cpBuffer - tssAuthContext->commandBuffer;
@@ -528,7 +528,7 @@ TPM_RC TSS_GetRspAuths12(TSS_AUTH_CONTEXT 	*tssAuthContext,
 	if ((sizeof(TPM_TAG) + sizeof(uint32_t) + sizeof(TPM_RC) +
 	     (numSessions * oneAuthAreaSize)) <= tssAuthContext->responseSize) {
 	    authBufferSize = tssAuthContext->responseSize -
-			     (sizeof(TPM_TAG) + sizeof(uint32_t) + sizeof(TPM_RC));  
+			     (sizeof(TPM_TAG) + sizeof(uint32_t) + sizeof(TPM_RC));
 	}
 	else {
 	    if (tssVerbose) printf("TSS_GetRspAuths12: Invalid response size %u\n",
@@ -584,15 +584,15 @@ TPM_RC TSS_GetRspAuths12(TSS_AUTH_CONTEXT 	*tssAuthContext,
 	if (rc == 0) {
 	    rc = TSS_Array_Unmarshalu(authR[i]->nonce,
 				     SHA1_DIGEST_SIZE, &authBuffer, &authBufferSize);
-	}	
+	}
 	if (rc == 0) {
 	    rc = TSS_UINT8_Unmarshalu(&authR[i]->sessionAttributes.val, &authBuffer, &authBufferSize);
-	}	
+	}
 	if (rc == 0) {
 	    rc = TSS_Array_Unmarshalu(authR[i]->hmac,
 				     SHA1_DIGEST_SIZE, &authBuffer, &authBufferSize);
-	}	
-    }	
+	}
+    }
     return rc;
 }
 
@@ -610,7 +610,7 @@ TPM_RC TSS_GetRpBuffer12(TSS_AUTH_CONTEXT *tssAuthContext,
     uint32_t	headerSize = sizeof(TPM_TAG) + sizeof (uint32_t) + sizeof(TPM_RC) +
 			     (sizeof(TPM_HANDLE) * tssAuthContext->responseHandleCount);
     uint32_t 	oneAuthAreaSize = SHA1_DIGEST_SIZE + 1 + SHA1_DIGEST_SIZE;
-    
+
     if (rc == 0) {
 	*rpBuffer = tssAuthContext->responseBuffer + headerSize;
 
@@ -632,7 +632,7 @@ TPM_RC TSS_GetRpBuffer12(TSS_AUTH_CONTEXT *tssAuthContext,
    the encrypted authorizations.
 
    Cannot range check here, because command parameters have not been marshaled yet.
-   
+
    NOTE: This is a bit of a hack, depending on the location being a fixed distance from the
    beginning or end of the command buffer.  It could break if there is both a variable size argument
    before and a variable number of authorizations or variable size argument after the location.
@@ -659,7 +659,7 @@ TPM_RC TSS_GetEncAuths(TSS_AUTH_CONTEXT *tssAuthContext,
 		       uint8_t		**encAuth1)
 {
     TPM_RC rc = 0;
-    
+
     if (tssAuthContext->encAuthOffset0 > 0) {
 	if ((uint16_t)tssAuthContext->encAuthOffset0 < tssAuthContext->cpBufferSize) {
 	    *encAuth0 = tssAuthContext->commandBuffer + tssAuthContext->encAuthOffset0;
@@ -719,7 +719,7 @@ TPM_RC TSS_SetSessionNumber(TSS_AUTH_CONTEXT *tssAuthContext,
 			   uint16_t sessionNumber)
 {
     TPM_RC	rc = 0;
-    
+
     tssAuthContext->sessionNumber = sessionNumber;
     if (sessionNumber > 1) {
 	if (tssVerbose) printf("TSS_SetSessionNumber: %u out of range\n",

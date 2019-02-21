@@ -129,11 +129,11 @@ void IMA_Event_Trace(ImaEvent *imaEvent, int traceTemplate)
    nameInt maps to the template name.
 
 */
-  
+
 void IMA_TemplateData_Trace(ImaTemplateData *imaTemplateData,
 			    unsigned int nameInt)
 {
-    printf("IMA_TemplateData_Trace: hashLength %u\n", imaTemplateData->hashLength); 
+    printf("IMA_TemplateData_Trace: hashLength %u\n", imaTemplateData->hashLength);
     printf("IMA_TemplateData_Trace: hashAlg %s\n", imaTemplateData->hashAlg);
     TSS_PrintAll("IMA_Template_Trace: file data hash",
 		 imaTemplateData->fileDataHash, imaTemplateData->fileDataHashLength);
@@ -149,7 +149,7 @@ void IMA_TemplateData_Trace(ImaTemplateData *imaTemplateData,
 			 imaTemplateData->signature, imaTemplateData->signatureSize);
 	}
     }
-    return;    
+    return;
 }
 
 /* IMA_Event_ReadFile() reads one IMA event from a file.
@@ -167,7 +167,7 @@ uint32_t IMA_Event_ReadFile(ImaEvent *imaEvent,	/* freed by caller */
     int rc = 0;
     size_t readSize;
     *endOfFile = FALSE;
-    
+
     imaEvent->template_data = NULL;		/* for free */
 
     /* read the IMA pcr index */
@@ -196,7 +196,7 @@ uint32_t IMA_Event_ReadFile(ImaEvent *imaEvent,	/* freed by caller */
 		   imaEvent->pcrIndex, IMA_PCR);
 	    rc = TSS_RC_BAD_PROPERTY_VALUE;
 	}
-    }	
+    }
 #endif
     /* read the IMA digest, this is hard coded to SHA-1 */
     if (rc == 0) {
@@ -342,7 +342,7 @@ uint32_t IMA_Event_ReadBuffer(ImaEvent *imaEvent,	/* freed by caller */
 			      int getTemplate)
 {
     int rc = 0;
-    
+
     imaEvent->template_data = NULL;		/* for free */
     if (*length == 0) {
 	*endOfBuffer = 1;
@@ -368,7 +368,7 @@ uint32_t IMA_Event_ReadBuffer(ImaEvent *imaEvent,	/* freed by caller */
 		       IMA_PCR, imaEvent->pcrIndex);
 		rc = TSS_RC_BAD_PROPERTY_VALUE;
 	    }
-	}	
+	}
 	/* read the IMA digest, this is hard coded to SHA-1 */
 	if (rc == 0) {
 	    /* bounds check the length */
@@ -501,7 +501,7 @@ uint32_t IMA_TemplateData_ReadBuffer(ImaTemplateData *imaTemplateData,
 		   imaEvent->name);
 	    rc = TSS_RC_INSUFFICIENT_BUFFER;
 	}
-    }    
+    }
     /* read the hash length, algorithm + hash */
     if (rc == 0) {
 	/* bounds check the length */
@@ -572,13 +572,13 @@ uint32_t IMA_TemplateData_ReadBuffer(ImaTemplateData *imaTemplateData,
 	    printf("ERROR: IMA_TemplateData_ReadBuffer: "
 		   "file data hash length exceeds maximum size\n");
 	    rc = TSS_RC_INSUFFICIENT_BUFFER;
-	} 
+	}
 	else {
 	    memcpy(&(imaTemplateData->fileDataHash), buffer, imaTemplateData->fileDataHashLength);
 	    buffer += imaTemplateData->fileDataHashLength;
 	    length -= imaTemplateData->fileDataHashLength;
 	}
-    }    
+    }
     /* fileNameLength (length includes the nul terminator)*/
     if (rc == 0) {
 	/* bounds check the length */
@@ -706,7 +706,7 @@ uint32_t IMA_TemplateData_ReadBuffer(ImaTemplateData *imaTemplateData,
 		   "buffer too large (bytes remaining after unmarshaling)\n");
 	    rc = TSS_RC_INSUFFICIENT_BUFFER;
 	}
-    }    
+    }
     return rc;
 }
 
@@ -810,7 +810,7 @@ uint32_t IMA_Extend(TPMT_HA *imapcr,
     unsigned char oneDigest[SHA256_DIGEST_SIZE];
 
     /* FIXME sanity check TPM_IMA_PCR imaEvent->pcrIndex */
-    
+
     /* extend based on the previous IMA PCR value */
     if (rc == 0) {
 	memset(zeroDigest, 0, SHA256_DIGEST_SIZE);
@@ -873,7 +873,7 @@ uint32_t IMA_VerifyImaDigest(uint32_t *badEvent, /* TRUE if hash does not match 
 {
     uint32_t 	rc = 0;
     int		irc;
-    
+
     /* calculate the hash of the template data */
     TPMT_HA calculatedImaDigest;
     if (rc == 0) {
@@ -941,7 +941,7 @@ static uint32_t IMA_Strn2cpy(char *dest, const uint8_t *src,
 {
     uint32_t rc = 0;
     int done = 0;
-    
+
     while ((destLength > 0) && (srcLength > 0)) {
 	*dest = *src;
 	if (*dest == '\0') {
@@ -964,7 +964,7 @@ static uint32_t IMA_Strn2cpy(char *dest, const uint8_t *src,
 /* IMA_Event_Marshal() marshals an ImaEvent structure */
 
 TPM_RC IMA_Event_Marshal(ImaEvent *source,
-			 uint16_t *written, uint8_t **buffer, uint32_t *size)
+			 UINT32 *written, uint8_t **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
 
@@ -1004,7 +1004,7 @@ uint32_t IMA_Event_PcrExtend(TPMT_HA pcrs[IMA_PCR_BANKS][IMPLEMENTATION_PCR],
 {
     TPM_RC 		rc = 0;
     uint8_t		eventData[SHA256_DIGEST_SIZE];
-    
+
     /* validate PCR number */
     if (rc == 0) {
 	if (imaEvent->pcrIndex > IMPLEMENTATION_PCR) {
@@ -1019,7 +1019,7 @@ uint32_t IMA_Event_PcrExtend(TPMT_HA pcrs[IMA_PCR_BANKS][IMPLEMENTATION_PCR],
 	int notAllZero = memcmp(imaEvent->digest, zeroDigest, SHA1_DIGEST_SIZE);
 	/* for the SHA-256 zero extend */
 	memset(eventData, 0, SHA256_DIGEST_SIZE);
-	
+
 	/* IMA has a quirk where some measurements store a zero digest in the event log, but
 	   extend ones into PCR 10 */
 	if (notAllZero) {
@@ -1058,7 +1058,7 @@ uint32_t IMA_Event_ToString(char **eventString,	/* freed by caller */
 {
     int 	rc = 0;
     size_t	length;
-    
+
     /* calculate size of string, from ImaEvent structure */
     if (rc == 0) {
 	length = ((sizeof(uint32_t) + SHA1_DIGEST_SIZE + sizeof(uint32_t) +

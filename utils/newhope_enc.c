@@ -34,7 +34,8 @@ int verbose = TRUE;
 int main(int argc, char *argv[])
 {
 	TPM_RC 			rc = 0;
-	int 			i;    /* argc iterator */
+#ifdef TPM_ALG_NEWHOPE
+	UINT32 			i;    /* argc iterator */
 	TSS_CONTEXT 		*tssContext = NULL;
 	NEWHOPE_Enc_In   		in;
 	NEWHOPE_Enc_Out   		out;
@@ -54,10 +55,10 @@ int main(int argc, char *argv[])
 
 	/* command line argument defaults */
 
-	for (i = 1; (i < argc) && (rc == 0); i++) {
+	for (i = 1; (i < (UINT32)argc) && (rc == 0); i++) {
 		if (strcmp(argv[i], "-hk") == 0) {
 			i++;
-			if (i < argc) {
+			if (i < (UINT32)argc) {
 				sscanf(argv[i], "%x", &keyHandle);
 			}
 			else {
@@ -67,7 +68,7 @@ int main(int argc, char *argv[])
 		}
 		else if (strcmp(argv[i], "-c") == 0) {
 			i++;
-			if (i < argc) {
+			if (i < (UINT32)argc) {
 				cFilename = argv[i];
 			}
 			else {
@@ -77,7 +78,7 @@ int main(int argc, char *argv[])
 		}
 		else if (strcmp(argv[i], "-ss") == 0) {
 			i++;
-			if (i < argc) {
+			if (i < (UINT32)argc) {
 				ssFilename = argv[i];
 			}
 			else {
@@ -87,7 +88,7 @@ int main(int argc, char *argv[])
 		}
 		else if (strcmp(argv[i], "-pwdk") == 0) {
 			i++;
-			if (i < argc) {
+			if (i < (UINT32)argc) {
 				keyPassword = argv[i];
 			}
 			else {
@@ -97,7 +98,7 @@ int main(int argc, char *argv[])
 		}
 		else if (strcmp(argv[i], "-se0") == 0) {
 			i++;
-			if (i < argc) {
+			if (i < (UINT32)argc) {
 				sscanf(argv[i], "%x", &sessionHandle0);
 			}
 			else {
@@ -105,7 +106,7 @@ int main(int argc, char *argv[])
 				printUsage();
 			}
 			i++;
-			if (i < argc) {
+			if (i < (UINT32)argc) {
 				sscanf(argv[i], "%x", &sessionAttributes0);
 				if (sessionAttributes0 > 0xff) {
 					printf("Out of range session attributes for -se0\n");
@@ -119,7 +120,7 @@ int main(int argc, char *argv[])
 		}
 		else if (strcmp(argv[i], "-se1") == 0) {
 			i++;
-			if (i < argc) {
+			if (i < (UINT32)argc) {
 				sscanf(argv[i], "%x", &sessionHandle1);
 			}
 			else {
@@ -127,7 +128,7 @@ int main(int argc, char *argv[])
 				printUsage();
 			}
 			i++;
-			if (i < argc) {
+			if (i < (UINT32)argc) {
 				sscanf(argv[i], "%x", &sessionAttributes1);
 				if (sessionAttributes1 > 0xff) {
 					printf("Out of range session attributes for -se1\n");
@@ -141,7 +142,7 @@ int main(int argc, char *argv[])
 		}
 		else if (strcmp(argv[i], "-se2") == 0) {
 			i++;
-			if (i < argc) {
+			if (i < (UINT32)argc) {
 				sscanf(argv[i], "%x", &sessionHandle2);
 			}
 			else {
@@ -149,7 +150,7 @@ int main(int argc, char *argv[])
 				printUsage();
 			}
 			i++;
-			if (i < argc) {
+			if (i < (UINT32)argc) {
 				sscanf(argv[i], "%x", &sessionAttributes2);
 				if (sessionAttributes2 > 0xff) {
 					printf("Out of range session attributes for -se2\n");
@@ -242,6 +243,7 @@ int main(int argc, char *argv[])
 		printf("%s%s%s\n", msg, submsg, num);
 		rc = EXIT_FAILURE;
 	}
+#endif
 	return rc;
 }
 

@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
  */
 
@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
     int				i;    /* argc iterator */
     TSS_CONTEXT			*tssContext = NULL;
     NV_Write_In 		in;
-    uint16_t 			offset = 0;			/* default 0 */
+    uint32_t 			offset = 0;			/* default 0 */
     uint32_t 			pinPass = 0;	/* these two initialized to suppress falose gcc -O3
 						   warnings */
     uint32_t 			pinLimit = 0;
@@ -88,9 +88,9 @@ int main(int argc, char *argv[])
     uint32_t 			nvBufferMax;
     size_t 			writeLength;		/* file bytes to write */
     unsigned char 		*writeBuffer = NULL; 	/* file buffer to write */
-    uint16_t 			bytesWritten;		/* bytes written so far */
+    uint32_t 			bytesWritten;		/* bytes written so far */
     int				done = FALSE;
- 
+
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
     TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "1");
 
@@ -266,10 +266,10 @@ int main(int argc, char *argv[])
     /* Authorization handle */
     if (rc == 0) {
 	if (hierarchyAuthChar == 'o') {
-	    in.authHandle = TPM_RH_OWNER;  
+	    in.authHandle = TPM_RH_OWNER;
 	}
 	else if (hierarchyAuthChar == 'p') {
-	    in.authHandle = TPM_RH_PLATFORM;  
+	    in.authHandle = TPM_RH_PLATFORM;
 	}
 	else if (hierarchyAuthChar == 0) {
 	    in.authHandle = nvIndex;
@@ -299,8 +299,8 @@ int main(int argc, char *argv[])
 				     datafilename);
     }
     if ((rc == 0) && (datafilename != NULL)) {
-	if (writeLength > 0xffff) {	/* overflow TPM2B uint16_t */
-	    printf("nvwrite: size %u greater than 0xffff\n", (unsigned int)writeLength);	
+	if (writeLength > 0xffffffff) {	/* overflow TPM2B uint32_t */
+	    printf("nvwrite: size %u greater than 0xffffffff\n", (unsigned int)writeLength);
 	    rc = TSS_RC_INSUFFICIENT_BUFFER;
 	}
     }
@@ -323,14 +323,14 @@ int main(int argc, char *argv[])
 	bytesWritten = 0;
     }
     while ((rc == 0) && !done) {
-	uint16_t writeBytes = 0;		/* bytes to write in this pass, initialized to
+	uint32_t writeBytes = 0;		/* bytes to write in this pass, initialized to
 						   suppress false gcc -O3 warning */
 	if (rc == 0) {
 	    /* for data from file, write a chunk */
 	    if (datafilename != NULL) {
 		in.offset = offset + bytesWritten;
 		if ((uint32_t)(writeLength - bytesWritten) < nvBufferMax) {
-		    writeBytes = (uint16_t)writeLength - bytesWritten;	/* last chunk */
+		    writeBytes = (uint32_t)writeLength - bytesWritten;	/* last chunk */
 		}
 		else {
 		    writeBytes = nvBufferMax;	/* next chunk */
@@ -411,5 +411,5 @@ static void printUsage(void)
     printf("\t-se[0-2] session handle / attributes (default PWAP)\n");
     printf("\t20\tcommand decrypt\n");
     printf("\t01\tcontinue\n");
-    exit(1);	
+    exit(1);
 }

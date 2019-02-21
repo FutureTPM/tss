@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
 */
 
@@ -65,13 +65,13 @@ int main(int argc, char *argv[])
     NV_Certify_In 		in;
     NV_Certify_Out 		out;
     TPMI_DH_OBJECT		signHandle = 0;
-    const char			*keyPassword = NULL; 
+    const char			*keyPassword = NULL;
     char 			hierarchyAuthChar = 0;
     const char			*nvPassword = NULL; 		/* default no password */
     TPMI_ALG_HASH		halg = TPM_ALG_SHA256;
     TPMI_RH_NV_INDEX		nvIndex = 0;
-    uint16_t 			size = 0;
-    uint16_t 			offset = 0;			/* default 0 */
+    uint32_t 			size = 0;
+    uint32_t 			offset = 0;			/* default 0 */
     const char			*signatureFilename = NULL;
     const char			*attestInfoFilename = NULL;
     int				useRsa = 1;
@@ -297,10 +297,10 @@ int main(int argc, char *argv[])
     /* Authorization handle */
     if (rc == 0) {
 	if (hierarchyAuthChar == 'o') {
-	    in.authHandle = TPM_RH_OWNER;  
+	    in.authHandle = TPM_RH_OWNER;
 	}
 	else if (hierarchyAuthChar == 'p') {
-	    in.authHandle = TPM_RH_PLATFORM;  
+	    in.authHandle = TPM_RH_PLATFORM;
 	}
 	else if (hierarchyAuthChar == 0) {
 	    in.authHandle = nvIndex;
@@ -324,14 +324,14 @@ int main(int argc, char *argv[])
 	in.qualifyingData.t.size = 0;
 	if (useRsa) {
 	    /* Table 145 - Definition of TPMT_SIG_SCHEME Structure */
-	    in.inScheme.scheme = TPM_ALG_RSASSA;	
+	    in.inScheme.scheme = TPM_ALG_RSASSA;
 	    /* Table 144 - Definition of TPMU_SIG_SCHEME Union <IN/OUT, S> */
 	    /* Table 142 - Definition of {RSA} Types for RSA Signature Schemes */
 	    /* Table 135 - Definition of TPMS_SCHEME_HASH Structure */
 	    in.inScheme.details.rsassa.hashAlg = halg;
 	}
 	else {	/* ecc */
-	    in.inScheme.scheme = TPM_ALG_ECDSA;	
+	    in.inScheme.scheme = TPM_ALG_ECDSA;
 	    in.inScheme.details.ecdsa.hashAlg = halg;
 	}
 	in.size = size;
@@ -421,5 +421,5 @@ static void printUsage(void)
     printf("\t01\tcontinue\n");
     printf("\t20\tcommand decrypt\n");
     printf("\t40\tresponse encrypt\n");
-    exit(1);	
+    exit(1);
 }

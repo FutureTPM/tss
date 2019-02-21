@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
  */
 
@@ -70,20 +70,20 @@ int main(int argc, char *argv[])
     char 			typeChar = 'o';
     unsigned int		typeCount = 0;
     TPMI_RH_NV_INDEX		nvIndex = 0;
-    uint16_t 			dataSize = 0;
+    uint32_t 			dataSize = 0;
     TPMA_NV			nvAttributes;	  	/* final attributes to command */
     TPMA_NV			setAttributes;		/* attributes to add to defaults*/
     TPMA_NV			clearAttributes;	/* attributes to subtract from defaults */
     const char			*policyFilename = NULL;
-    const char			*nvPassword = NULL; 
-    const char			*parentPassword = NULL; 
+    const char			*nvPassword = NULL;
+    const char			*parentPassword = NULL;
     TPMI_SH_AUTH_SESSION    	sessionHandle0 = TPM_RS_PW;
     unsigned int		sessionAttributes0 = 0;
     TPMI_SH_AUTH_SESSION    	sessionHandle1 = TPM_RH_NULL;
     unsigned int		sessionAttributes1 = 0;
     TPMI_SH_AUTH_SESSION    	sessionHandle2 = TPM_RH_NULL;
     unsigned int		sessionAttributes2 = 0;
-    
+
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
     TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "1");
 
@@ -447,7 +447,7 @@ int main(int argc, char *argv[])
 	    printf("Illegal -ty\n");
 	    printUsage();
 	}
-    }	
+    }
     /* Table 75 - Definition of Types for TPM2B_AUTH */
     if (rc == 0) {
 	if (nvPassword == NULL) {
@@ -587,5 +587,5 @@ static void printUsage(void)
     printf("\t-se[0-2] session handle / attributes (default PWAP)\n");
     printf("\t01\tcontinue\n");
     printf("\t20\tcommand decrypt\n");
-    exit(1);	
+    exit(1);
 }

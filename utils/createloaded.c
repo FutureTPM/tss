@@ -518,7 +518,8 @@ int main(int argc, char *argv[])
 	    rc = asymPublicTemplate(&publicArea,
 				    addObjectAttributes, deleteObjectAttributes,
 				    keyType, algPublic, curveID, nalg, halg,
-				    policyFilename, dilithium_mode, kyber_k);
+				    policyFilename, dilithium_mode, kyber_k,
+                    NULL);
 	    break;
 	  case TYPE_DES:
 	    rc = symmetricCipherTemplate(&publicArea,
@@ -541,7 +542,7 @@ int main(int argc, char *argv[])
     }
     /* marshal the TPMT_PUBLIC into the TPM2B_TEMPLATE */
     if (rc == 0) {
-	uint16_t written = 0;
+	UINT32 written = 0;
 	uint32_t size = sizeof(in.inPublic.t.buffer);
 	uint8_t *buffer = in.inPublic.t.buffer;
 	if (!derived) {		/* not derivation parent */

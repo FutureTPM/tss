@@ -43,25 +43,25 @@
 
 # PIN Pass index name is
 
-# 00 0b da 1c bd 54 bb 81 54 6c 1c 76 30 dd d4 09 
-# 50 3a 0d 6d 03 05 16 1b 15 88 d6 6b c8 fa 17 da 
-# ad 81 
+# 00 0b da 1c bd 54 bb 81 54 6c 1c 76 30 dd d4 09
+# 50 3a 0d 6d 03 05 16 1b 15 88 d6 6b c8 fa 17 da
+# ad 81
 
 # Policy Secret using PIN Pass index is
 
-# 56 e4 c7 26 d7 d7 dd 3c bd 4c ae 11 c0 1b 2e 83 
-# 3c 37 33 3c fb c3 b9 c3 5f 05 ab 53 23 0c df 7d 
+# 56 e4 c7 26 d7 d7 dd 3c bd 4c ae 11 c0 1b 2e 83
+# 3c 37 33 3c fb c3 b9 c3 5f 05 ab 53 23 0c df 7d
 
 # PIN Fail index name is
 
-# 00 0b 86 11 40 4a e8 0c 0a 84 e5 b8 97 05 98 f0 
-# b5 60 2d 14 21 19 bf 44 9d e5 f9 61 84 bc 4c 01 
-# c4 be 
+# 00 0b 86 11 40 4a e8 0c 0a 84 e5 b8 97 05 98 f0
+# b5 60 2d 14 21 19 bf 44 9d e5 f9 61 84 bc 4c 01
+# c4 be
 
 # Policy Secret using PIN Fail index is
- 
-# 9d 56 8f da 52 27 30 dc be a8 ad 59 bc a5 0c 1c 
-# 16 02 95 03 a0 0b d3 d8 20 a8 b2 d8 5b c5 12 df 
+
+# 9d 56 8f da 52 27 30 dc be a8 ad 59 bc a5 0c 1c
+# 16 02 95 03 a0 0b d3 d8 20 a8 b2 d8 5b c5 12 df
 
 # 01000000 is PIN pass or PIN fail index
 # 01000001 is ordinary index with PIN pass policy
@@ -225,7 +225,7 @@ ${PREFIX}nvwrite -ha 01000000 -hia p -id 0 1 > run.out
 checkSuccess $?
 
 echo "Write lock, 01000000"
-${PREFIX}nvwritelock -ha 01000000 -hia p > run.out 
+${PREFIX}nvwritelock -ha 01000000 -hia p > run.out
 checkSuccess $?
 
 echo "Policy Secret with PWAP session"
@@ -437,7 +437,7 @@ ${PREFIX}nvwrite -ha 01000000 -hia p -id 0 1 > run.out
 checkSuccess $?
 
 echo "Write lock, 01000000"
-${PREFIX}nvwritelock -ha 01000000 -hia p > run.out 
+${PREFIX}nvwritelock -ha 01000000 -hia p > run.out
 checkSuccess $?
 
 echo "Policy Secret with PWAP session"
@@ -473,7 +473,7 @@ ${PREFIX}nvwrite -ha 01000000 -hia p -id 0 1 > run.out
 checkSuccess $?
 
 echo "Read lock 01000000"
-${PREFIX}nvreadlock -ha 01000000 -hia p > run.out 
+${PREFIX}nvreadlock -ha 01000000 -hia p > run.out
 checkSuccess $?
 
 echo "Platform read, locked - should fail"
@@ -509,7 +509,7 @@ echo "Cleanup"
 echo ""
 
 echo "NV Undefine Space 01000000"
-${PREFIX}nvundefinespace -hi p -ha 01000000 > run.out 
+${PREFIX}nvundefinespace -hi p -ha 01000000 > run.out
 checkSuccess $?
 
 echo "NV Undefine Space 01000001"

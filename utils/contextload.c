@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
 */
 
@@ -105,12 +105,12 @@ int main(int argc, char *argv[])
     }
     /* call TSS to execute the command */
     if (rc == 0) {
-	rc = TSS_Execute(tssContext,
-			 (RESPONSE_PARAMETERS *)&out,
-			 (COMMAND_PARAMETERS *)&in,
-			 NULL,
-			 TPM_CC_ContextLoad,
-			 TPM_RH_NULL, NULL, 0);
+        rc = TSS_Execute(tssContext,
+                 (RESPONSE_PARAMETERS *)&out,
+                 (COMMAND_PARAMETERS *)&in,
+                 NULL,
+                 TPM_CC_ContextLoad,
+                 TPM_RH_NULL, NULL, 0);
     }
     {
 	TPM_RC rc1 = TSS_Delete(tssContext);
@@ -142,5 +142,5 @@ static void printUsage(void)
     printf("Runs TPM2_ContextLoad\n");
     printf("\n");
     printf("\t-if\tcontext file name\n");
-    exit(1);	
+    exit(1);
 }

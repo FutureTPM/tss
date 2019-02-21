@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
  */
 
@@ -55,6 +55,9 @@
 
 static void printPcrRead(PCR_Read_Out *out);
 static void printUsage(void);
+
+static uint8_t 	cpBuffer [MAX_COMMAND_SIZE];
+static uint8_t 	rpBuffer [MAX_RESPONSE_SIZE];
 
 int verbose = FALSE;
 
@@ -74,10 +77,10 @@ int main(int argc, char *argv[])
     int				noSpace = FALSE;
     TPMI_SH_AUTH_SESSION    	sessionHandle0 = TPM_RH_NULL;
     unsigned int		sessionAttributes0 = 0;
-   
+
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
     TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "1");
-    
+
     in.pcrSelectionIn.count = 0xffffffff;
 
     /* command line argument defaults */
@@ -270,11 +273,9 @@ int main(int argc, char *argv[])
     /* option to output cpHash and rpHash to test session audit of PCR Read */
     if (sadfilename != NULL) {
 	TPMT_HA 	cpHash;
-	uint8_t 	cpBuffer [MAX_COMMAND_SIZE];
-	uint16_t 	cpBufferSize = 0;
+	UINT32 	cpBufferSize = 0;
 	TPMT_HA 	rpHash;
-	uint8_t 	rpBuffer [MAX_RESPONSE_SIZE];
-	uint16_t 	rpBufferSize = 0;
+	UINT32 	rpBufferSize = 0;
 	uint8_t 	*tmpptr;
 	uint32_t 	tmpsize;
 	TPMT_HA 	sessionDigest;
@@ -351,7 +352,7 @@ int main(int argc, char *argv[])
 	if (rc == 0) {
 	    sessionDigest.hashAlg = ahalg;
 	    rc = TSS_Hash_Generate(&sessionDigest,
-				   sizeInBytes, sessionDigestData, 
+				   sizeInBytes, sessionDigestData,
 				   sizeInBytes, (uint8_t *)&cpHash.digest,
 				   sizeInBytes, (uint8_t *)&rpHash.digest,
 				   0, NULL);
@@ -398,7 +399,7 @@ int main(int argc, char *argv[])
 static void printPcrRead(PCR_Read_Out *out)
 {
     uint32_t	i;
-    
+
     /* Table 99 - Definition of TPML_DIGEST Structure */
     printf("count %u pcrUpdateCounter %u \n", out->pcrValues.count, out->pcrUpdateCounter);
     for (i = 0 ; i < out->pcrValues.count ; i++) {
@@ -426,5 +427,5 @@ static void printUsage(void)
     printf("\t-se0 session handle / attributes (default NULL)\n");
     printf("\t01\tcontinue\n");
     printf("\t80\taudit\n");
-    exit(1);	
+    exit(1);
 }

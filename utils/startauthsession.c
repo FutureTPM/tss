@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
  */
 
@@ -69,9 +69,9 @@ int main(int argc, char *argv[])
     TPMI_ALG_HASH		halg = TPM_ALG_SHA256;		/* default */
     TPMI_ALG_SYM		algorithm = TPM_ALG_XOR;	/* default symmetric algorithm */
     const char			*nonceTPMFilename = NULL;
-    
+
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
-    TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "1");
+    TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "3");
 
     /* command line argument defaults */
     for (i=1 ; (i<argc) && (rc == 0) ; i++) {
@@ -244,7 +244,7 @@ int main(int argc, char *argv[])
     /* call TSS to execute the command */
     if (rc == 0) {
 	rc = TSS_Execute(tssContext,
-			 (RESPONSE_PARAMETERS *)&out, 
+			 (RESPONSE_PARAMETERS *)&out,
 			 (COMMAND_PARAMETERS *)&in,
 			 (EXTRA_PARAMETERS *)&extra,
 			 TPM_CC_StartAuthSession,
@@ -260,7 +260,7 @@ int main(int argc, char *argv[])
     if ((rc == 0) && (nonceTPMFilename != NULL)) {
 	rc = TSS_File_WriteBinaryFile((uint8_t *)&out.nonceTPM.t.buffer,
 				      out.nonceTPM.t.size,
-				      nonceTPMFilename); 
+				      nonceTPMFilename);
     }
     if (rc == 0) {
 	printf("Handle %08x\n", out.sessionHandle);
@@ -297,5 +297,5 @@ static void printUsage(void)
     printf("\t[-pwdb\tbind password for bind handle (default empty)]\n");
     printf("\t[-sym\t(xor, aes) symmetric parameter encryption algorithm (default xor)]\n");
     printf("\t[-on\tnonceTPM file for policy session (default do not save)]\n");
-    exit(1);	
+    exit(1);
 }

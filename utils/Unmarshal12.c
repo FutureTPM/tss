@@ -49,7 +49,7 @@ TSS_TPM_STARTUP_TYPE_Unmarshalu(TPM_STARTUP_TYPE *target, BYTE **buffer, uint32_
     TPM_RC rc = TPM_RC_SUCCESS;
 
     if (rc == TPM_RC_SUCCESS) {
-	rc = TSS_UINT16_Unmarshalu(target, buffer, size);  
+	rc = TSS_UINT16_Unmarshalu(target, buffer, size);
     }
     if (rc == TPM_RC_SUCCESS) {
 	switch (*target) {
@@ -94,7 +94,7 @@ TSS_TPM_TAG_Unmarshalu(TPM_TAG *target, BYTE **buffer, uint32_t *size)
     TPM_RC rc = TPM_RC_SUCCESS;
 
     if (rc == TPM_RC_SUCCESS) {
-	rc = TSS_UINT16_Unmarshalu(target, buffer, size);  
+	rc = TSS_UINT16_Unmarshalu(target, buffer, size);
     }
     if (rc == TPM_RC_SUCCESS) {
 	switch (*target) {
@@ -108,21 +108,21 @@ TSS_TPM_TAG_Unmarshalu(TPM_TAG *target, BYTE **buffer, uint32_t *size)
     }
     return rc;
 }
- 
+
 /* 8.0 */
 
 TPM_RC
 TSS_TPM_PCR_SELECTION_Unmarshalu(TPM_PCR_SELECTION *target, BYTE **buffer, uint32_t *size)
-{ 
+{
     TPM_RC rc = 0;
     if (rc == 0) {
-	rc = TSS_UINT16_Unmarshalu(&target->sizeOfSelect, buffer, size);   
+	rc = TSS_UINT16_Unmarshalu(&target->sizeOfSelect, buffer, size);
     }
     if (rc == 0) {
 	if (target->sizeOfSelect > sizeof(target->pcrSelect)) {
 	    rc = TPM_RC_SIZE;
 	}
-    }    
+    }
     if (rc == 0) {
 	rc = TSS_Array_Unmarshalu(target->pcrSelect, target->sizeOfSelect, buffer, size);
     }
@@ -159,44 +159,44 @@ TSS_TPM4B_TPM_PCR_INFO_LONG_Unmarshalu(TPM_PCR_INFO_LONG *target, BYTE **buffer,
 
 TPM_RC
 TSS_TPM_PCR_INFO_LONG_Unmarshalu(TPM_PCR_INFO_LONG *target, BYTE **buffer, uint32_t *size)
-{ 
+{
     TPM_RC rc = 0;
     if (rc == 0) {
-	rc = TSS_UINT16_Unmarshalu(&target->tag, buffer, size);                      
+	rc = TSS_UINT16_Unmarshalu(&target->tag, buffer, size);
     }
     if (rc == 0) {
 	rc = TSS_UINT8_Unmarshalu(&target->localityAtCreation, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_UINT8_Unmarshalu(&target->localityAtRelease, buffer, size);   
+	rc = TSS_UINT8_Unmarshalu(&target->localityAtRelease, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_TPM_PCR_SELECTION_Unmarshalu(&target->creationPCRSelection, buffer, size); 
+	rc = TSS_TPM_PCR_SELECTION_Unmarshalu(&target->creationPCRSelection, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_TPM_PCR_SELECTION_Unmarshalu(&target->releasePCRSelection, buffer, size); 
+	rc = TSS_TPM_PCR_SELECTION_Unmarshalu(&target->releasePCRSelection, buffer, size);
     }
     if (rc == 0) {
 	rc = TSS_Array_Unmarshalu(target->digestAtCreation, SHA1_DIGEST_SIZE, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_Array_Unmarshalu(target->digestAtRelease, SHA1_DIGEST_SIZE, buffer, size); 
+	rc = TSS_Array_Unmarshalu(target->digestAtRelease, SHA1_DIGEST_SIZE, buffer, size);
     }
     return rc;
 }
 
 TPM_RC
 TSS_TPM_PCR_INFO_SHORT_Unmarshalu(TPM_PCR_INFO_SHORT *target, BYTE **buffer, uint32_t *size)
-{ 
+{
     TPM_RC rc = 0;
     if (rc == 0) {
-	rc = TSS_TPM_PCR_SELECTION_Unmarshalu(&target->pcrSelection, buffer, size); 
+	rc = TSS_TPM_PCR_SELECTION_Unmarshalu(&target->pcrSelection, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_UINT8_Unmarshalu(&target->localityAtRelease, buffer, size);   
+	rc = TSS_UINT8_Unmarshalu(&target->localityAtRelease, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_Array_Unmarshalu(target->digestAtRelease, SHA1_DIGEST_SIZE, buffer, size); 
+	rc = TSS_Array_Unmarshalu(target->digestAtRelease, SHA1_DIGEST_SIZE, buffer, size);
     }
     return rc;
 }
@@ -205,7 +205,7 @@ TSS_TPM_PCR_INFO_SHORT_Unmarshalu(TPM_PCR_INFO_SHORT *target, BYTE **buffer, uin
 
 TPM_RC
 TSS_TPM_SYMMETRIC_KEY_Unmarshalu(TPM_SYMMETRIC_KEY *target, BYTE **buffer, uint32_t *size)
-{ 
+{
     TPM_RC rc = 0;
     if (rc == 0) {
 	rc = TSS_UINT32_Unmarshalu(&target->algId, buffer, size);
@@ -220,9 +220,9 @@ TSS_TPM_SYMMETRIC_KEY_Unmarshalu(TPM_SYMMETRIC_KEY *target, BYTE **buffer, uint3
 	if (target->size > sizeof(target->data)) {
 	    rc = TPM_RC_SIZE;
 	}
-    }    
+    }
     if (rc == 0) {
-	rc = TSS_Array_Unmarshalu(target->data, target->size, buffer, size); 
+	rc = TSS_Array_Unmarshalu(target->data, target->size, buffer, size);
     }
     return rc;
 }
@@ -246,7 +246,7 @@ TSS_TPM_RSA_KEY_PARMS_Unmarshalu(TPM_RSA_KEY_PARMS *target, BYTE **buffer, uint3
 	if (target->exponentSize > sizeof(target->exponent)) {
 	    rc = TPM_RC_SIZE;
 	}
-    }    
+    }
     if (rc == 0) {
 	rc = TSS_Array_Unmarshalu(target->exponent, target->exponentSize, buffer, size);
     }
@@ -308,10 +308,10 @@ TSS_TPM_KEY_PARMS_Unmarshalu(TPM_KEY_PARMS *target, BYTE **buffer, uint32_t *siz
 	rc = TSS_UINT16_Unmarshalu(&target->encScheme, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_UINT16_Unmarshalu(&target->sigScheme, buffer, size); 
+	rc = TSS_UINT16_Unmarshalu(&target->sigScheme, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_TPM4B_TPMU_PARMS_Unmarshalu(&target->parms, buffer, size, target->algorithmID);	
+	rc = TSS_TPM4B_TPMU_PARMS_Unmarshalu(&target->parms, buffer, size, target->algorithmID);
     }
     return rc;
 }
@@ -361,19 +361,19 @@ TSS_TPM_STORE_PUBKEY_Unmarshalu(TPM_STORE_PUBKEY *target, BYTE **buffer, uint32_
 	if (target->keyLength > sizeof(target->key)) {
 	    rc = TPM_RC_SIZE;
 	}
-    }    
+    }
     if (rc == 0) {
 	rc = TSS_Array_Unmarshalu(target->key, target->keyLength, buffer, size);
     }
     return rc;
-}						  
+}
 
 TPM_RC
 TSS_TPM_PUBKEY_Unmarshalu(TPM_PUBKEY *target, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
-	rc = TSS_TPM_KEY_PARMS_Unmarshalu(&target->algorithmParms, buffer, size); 
+	rc = TSS_TPM_KEY_PARMS_Unmarshalu(&target->algorithmParms, buffer, size);
     }
     if (rc == 0) {
 	rc = TSS_TPM_STORE_PUBKEY_Unmarshalu(&target->pubKey, buffer, size);
@@ -388,10 +388,10 @@ TSS_TPM_NV_ATTRIBUTES_Unmarshalu(TPM_NV_ATTRIBUTES *target, BYTE **buffer, uint3
 {
     TPM_RC rc = 0;
     if (rc == 0) {
-	rc = TSS_UINT16_Unmarshalu(&target->tag, buffer, size);                      
+	rc = TSS_UINT16_Unmarshalu(&target->tag, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_UINT32_Unmarshalu(&target->attributes, buffer, size);                      
+	rc = TSS_UINT32_Unmarshalu(&target->attributes, buffer, size);
     }
     return rc;
 }
@@ -401,13 +401,13 @@ TSS_TPM_NV_DATA_PUBLIC_Unmarshalu(TPM_NV_DATA_PUBLIC *target, BYTE **buffer, uin
 {
     TPM_RC rc = 0;
     if (rc == 0) {
-	rc = TSS_UINT16_Unmarshalu(&target->tag, buffer, size);                      
+	rc = TSS_UINT16_Unmarshalu(&target->tag, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_UINT32_Unmarshalu(&target->nvIndex, buffer, size);                      
+	rc = TSS_UINT32_Unmarshalu(&target->nvIndex, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_TPM_PCR_INFO_SHORT_Unmarshalu(&target->pcrInfoRead, buffer, size); 
+	rc = TSS_TPM_PCR_INFO_SHORT_Unmarshalu(&target->pcrInfoRead, buffer, size);
     }
     if (rc == 0) {
 	rc = TSS_TPM_PCR_INFO_SHORT_Unmarshalu(&target->pcrInfoWrite, buffer, size);
@@ -425,10 +425,10 @@ TSS_TPM_NV_DATA_PUBLIC_Unmarshalu(TPM_NV_DATA_PUBLIC *target, BYTE **buffer, uin
 	rc = TSS_UINT8_Unmarshalu(&target->bWriteDefine, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_UINT32_Unmarshalu(&target->dataSize, buffer, size);                      
+	rc = TSS_UINT32_Unmarshalu(&target->dataSize, buffer, size);
     }
     return rc;
-}						  
+}
 
 /* 21 */
 
@@ -452,18 +452,18 @@ TSS_TPM_CAP_VERSION_INFO_Unmarshalu(TPM_CAP_VERSION_INFO *target, BYTE **buffer,
 	rc = TSS_Array_Unmarshalu(target->tpmVendorID, sizeof(target->tpmVendorID), buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_UINT16_Unmarshalu(&target->vendorSpecificSize, buffer, size);
+	rc = TSS_UINT32_Unmarshalu(&target->vendorSpecificSize, buffer, size);
     }
     if (rc == 0) {
 	if (target->vendorSpecificSize > sizeof(target->vendorSpecific)) {
 	    rc = TPM_RC_SIZE;
 	}
-    }    
+    }
     if (rc == 0) {
 	rc = TSS_Array_Unmarshalu(target->vendorSpecific, target->vendorSpecificSize, buffer, size);
     }
     return rc;
-}						  
+}
 
 TPM_RC
 TSS_TPM_DA_INFO_Unmarshalu(TPM_DA_INFO *target, BYTE **buffer, uint32_t *size)
@@ -494,12 +494,12 @@ TSS_TPM_DA_INFO_Unmarshalu(TPM_DA_INFO *target, BYTE **buffer, uint32_t *size)
 	if (target->vendorDataSize > sizeof(target->vendorData)) {
 	    rc = TPM_RC_SIZE;
 	}
-    }    
+    }
     if (rc == 0) {
 	rc = TSS_Array_Unmarshalu(target->vendorData, target->vendorDataSize , buffer, size);
     }
     return rc;
-}						  
+}
 
 TPM_RC
 TSS_TPM_DA_INFO_LIMITED_Unmarshalu(TPM_DA_INFO_LIMITED *target, BYTE **buffer, uint32_t *size)
@@ -521,12 +521,12 @@ TSS_TPM_DA_INFO_LIMITED_Unmarshalu(TPM_DA_INFO_LIMITED *target, BYTE **buffer, u
 	if (target->vendorDataSize > sizeof(target->vendorData)) {
 	    rc = TPM_RC_SIZE;
 	}
-    }    
+    }
     if (rc == 0) {
 	rc = TSS_Array_Unmarshalu(target->vendorData, target->vendorDataSize , buffer, size);
     }
     return rc;
-}						  
+}
 
 TPM_RC
 TSS_TPM_DA_ACTION_TYPE_Unmarshalu(TPM_DA_ACTION_TYPE *target, BYTE **buffer, uint32_t *size)

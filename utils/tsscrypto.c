@@ -121,7 +121,7 @@ static TPM_RC TSS_Hash_GetMd(const EVP_MD **md,
 	    *md = EVP_get_digestbyname("sha1");
 	    break;
 #endif
-#ifdef TPM_ALG_SHA256	
+#ifdef TPM_ALG_SHA256
 	  case TPM_ALG_SHA256:
 	    *md = EVP_get_digestbyname("sha256");
 	    break;
@@ -163,7 +163,7 @@ TPM_RC TSS_HMAC_Generate_valist(TPMT_HA *digest,		/* largest size of a digest */
 #endif
     int			length;
     uint8_t 		*buffer;
-    
+
 #if OPENSSL_VERSION_NUMBER < 0x10100000
     HMAC_CTX_init(&ctx);
 #else
@@ -184,7 +184,7 @@ TPM_RC TSS_HMAC_Generate_valist(TPMT_HA *digest,		/* largest size of a digest */
 			   md,					/* message digest method */
 			   NULL);
 #endif
-	
+
 	if (irc == 0) {
 	    rc = TSS_RC_HMAC;
 	}
@@ -234,7 +234,7 @@ TPM_RC TSS_HMAC_Generate_valist(TPMT_HA *digest,		/* largest size of a digest */
 
 /*
   valist is int length, unsigned char *buffer pairs
-  
+
   length 0 is ignored, buffer NULL terminates list.
 */
 
@@ -382,7 +382,7 @@ TPM_RC TSS_RSAPublicEncrypt(unsigned char *encrypt_data,    /* encrypted data */
     int         irc;
     RSA         *rsa_pub_key = NULL;
     unsigned char *padded_data = NULL;
-    
+
     if (tssVverbose) printf(" TSS_RSAPublicEncrypt: Input data size %lu\n",
 			    (unsigned long)decrypt_data_size);
     /* intermediate buffer for the decrypted but still padded data */
@@ -575,7 +575,7 @@ static TPM_RC TSS_ECC_GeneratePlatformEphemeralKey(CURVE_DATA *eCurveData, EC_KE
     if (a != NULL)	BN_clear_free(a);	/* @2 */
     if (b != NULL) 	BN_clear_free(b);	/* @3 */
     if (rc != 0) {
-	EC_GROUP_free(eCurveData->G);	/* @4 */	
+	EC_GROUP_free(eCurveData->G);	/* @4 */
 	EC_POINT_free(G);		/* @5  */
     }
     if (x != NULL)	BN_clear_free(x);	/* @6 */
@@ -589,7 +589,8 @@ static TPM_RC TSS_ECC_GeneratePlatformEphemeralKey(CURVE_DATA *eCurveData, EC_KE
     return rc;
 }
 
-/* TSS_ECC_Salt() returns both the plaintext and excrypted salt, based on the salt key bPublic.
+/* TSS_ECC_Salt() returns both the plaintext and excrypted salt, based on the
+ * salt key bPublic.
 
    This is currently hard coded to the TPM_ECC_NIST_P256 curve.
 */
@@ -615,7 +616,7 @@ TPM_RC TSS_ECC_Salt(TPM2B_DIGEST 		*salt,
     uint8_t             *sharedXBin = NULL;
     unsigned int	lengthSharedXBin;
     BIGNUM		*p_caller_Xbn = NULL;
-    BIGNUM		*p_caller_Ybn = NULL; 
+    BIGNUM		*p_caller_Ybn = NULL;
     uint8_t		*p_caller_Xbin = NULL;
     uint8_t		*p_caller_Ybin = NULL;
     uint8_t		*p_tpmXbin = NULL;
@@ -628,9 +629,10 @@ TPM_RC TSS_ECC_Salt(TPM2B_DIGEST 		*salt,
     CURVE_DATA 		eCurveData;
 
     eCurveData.ctx = NULL;	/* for free */
-    eCurveData.G = NULL;	/* this is initialized in TSS_ECC_GeneratePlatformEphemeralKey() at
-				   EC_GROUP_new() but gcc -O3 emits a warning that it's
-				   uninitialized. */
+    eCurveData.G = NULL;	/* this is initialized in
+                               TSS_ECC_GeneratePlatformEphemeralKey() at
+                               EC_GROUP_new() but gcc -O3 emits a warning that it's
+                               uninitialized. */
     /* only NIST P256 is currently supported */
     if (rc == 0) {
 	if ((publicArea->parameters.eccDetail.curveID != TPM_ECC_NIST_P256)) {
@@ -658,22 +660,22 @@ TPM_RC TSS_ECC_Salt(TPM2B_DIGEST 		*salt,
        key is actually the 'encrypted' salt. */
     if (rc == 0) {
 	if (tssVverbose) printf("TSS_ECC_Salt: "
-				"Calling TSS_ECC_GeneratePlatformEphemeralKey\n"); 
+				"Calling TSS_ECC_GeneratePlatformEphemeralKey\n");
 	rc = TSS_ECC_GeneratePlatformEphemeralKey(&eCurveData, myecc);
     }
     if (rc == 0) {
 	d_caller = EC_KEY_get0_private_key(myecc);		/* ephemeral private key */
 	callerPointPub = EC_KEY_get0_public_key(myecc); 	/* ephemeral public key */
-    } 
+    }
     /* validate that the public point is on the NIST P-256 curve */
     if (rc == 0) 		{
 	if (EC_POINT_is_on_curve(eCurveData.G, callerPointPub, eCurveData.ctx) == 0) {
 	    if (tssVerbose) printf("TSS_ECC_Salt: "
-				   "Generated point not on curve\n"); 
+				   "Generated point not on curve\n");
 	    rc = TSS_RC_EC_EPHEMERAL_FAILURE;
 	}
     }
-    if (rc == 0) { 
+    if (rc == 0) {
 	/* let d_caller be private scalar and P_caller be public point */
 	/* p_tpm is public point. p_tpmX is to be X-coordinate and p_tpmY the
 	   Y-coordinate */
@@ -725,26 +727,26 @@ TPM_RC TSS_ECC_Salt(TPM2B_DIGEST 		*salt,
     if (rc == 0) {
 	rc = TSS_BN_hex2bn(&zBn,			/* freed @4 */
 			   "FFFFFFFF00000000FFFFFFFFFFFFFFFFBCE6FAADA7179E84F3B9CAC2FC632551");
-    }    
+    }
     /* add the generator z to the group we are constructing */
     if (rc == 0) {
-	if (EC_GROUP_set_generator(eCurveData.G, tpmPointPub, zBn, BN_value_one()) == 0) { 
+	if (EC_GROUP_set_generator(eCurveData.G, tpmPointPub, zBn, BN_value_one()) == 0) {
 	    if(tssVerbose) printf ("TSS_ECC_Salt: "
 				   "Error EC_GROUP_set_generator()\n");
-	    rc = TSS_RC_EC_EPHEMERAL_FAILURE; 
+	    rc = TSS_RC_EC_EPHEMERAL_FAILURE;
 	}
-    } 
+    }
     /* Check for validity of our group  */
-    if (rc == 0) { 
-	if (EC_GROUP_check(eCurveData.G, eCurveData.ctx) == 0) { 
+    if (rc == 0) {
+	if (EC_GROUP_check(eCurveData.G, eCurveData.ctx) == 0) {
 	    if (tssVerbose) printf("TSS_ECC_Salt: "
-				   "ec_group_check() failed\n"); 
+				   "ec_group_check() failed\n");
 	    rc = TSS_RC_EC_EPHEMERAL_FAILURE;
 	}
     }
     /* Check to see if what we think is the TPM point is on the curve */
     if (rc == 0) {
-	if (EC_POINT_is_on_curve(eCurveData.G, tpmPointPub, eCurveData.ctx) == 0) { 
+	if (EC_POINT_is_on_curve(eCurveData.G, tpmPointPub, eCurveData.ctx) == 0) {
 	    if (tssVerbose) printf("TSS_ECC_Salt: Error, "
 				   "Point not on curve\n");
 	    rc = TSS_RC_EC_EPHEMERAL_FAILURE;
@@ -762,15 +764,15 @@ TPM_RC TSS_ECC_Salt(TPM2B_DIGEST 		*salt,
 	    rc = TSS_RC_EC_EPHEMERAL_FAILURE;
 	}
     }
-    /* Point multiply the TPM public point by the ephemeral scalar. This will produce the
-       point from which we get the shared X coordinate, which we keep for use in KDFE. The
-       TPM will calculate the same X. */
+    /* Point multiply the TPM public point by the ephemeral scalar. This will
+     * produce the point from which we get the shared X coordinate, which we
+     * keep for use in KDFE. The TPM will calculate the same X. */
     if (rc == 0) {
 	if (EC_POINT_mul(eCurveData.G, rPoint, NULL, tpmPointPub,
-			 d_caller, eCurveData.ctx) == 0) { 
+			 d_caller, eCurveData.ctx) == 0) {
 	    if (tssVerbose) printf("TSS_ECC_Salt: "
 				   "EC_POINT_mul failed\n") ;
-	    rc = TSS_RC_EC_EPHEMERAL_FAILURE; 
+	    rc = TSS_RC_EC_EPHEMERAL_FAILURE;
 	}
 	else {
 	    if (tssVverbose) printf("TSS_ECC_Salt: "
@@ -778,8 +780,8 @@ TPM_RC TSS_ECC_Salt(TPM2B_DIGEST 		*salt,
 	}
     }
     /* Check to see if calculated point is on the curve, just for extra sanity */
-    if (rc == 0) {  
-	if (EC_POINT_is_on_curve(eCurveData.G, rPoint, eCurveData.ctx) == 0) { 
+    if (rc == 0) {
+	if (EC_POINT_is_on_curve(eCurveData.G, rPoint, eCurveData.ctx) == 0) {
 	    if (tssVerbose) printf("TSS_ECC_Salt: Error,"
 				   "Point r is not on curve\n");
 	    rc = TSS_RC_EC_EPHEMERAL_FAILURE;
@@ -844,7 +846,7 @@ TPM_RC TSS_ECC_Salt(TPM2B_DIGEST 		*salt,
     if (rc == 0) {
 	if (EC_POINT_get_affine_coordinates_GFp(eCurveData.G, callerPointPub,
 						p_caller_Xbn, p_caller_Ybn,
-						eCurveData.ctx) == 0) { 
+						eCurveData.ctx) == 0) {
 	    if (tssVerbose) printf("TSS_ECC_Salt: "
 				   "EC_POINT_get_affine_coordinates_GFp() failed\n");
 	    rc = TSS_RC_EC_EPHEMERAL_FAILURE;
@@ -854,7 +856,7 @@ TPM_RC TSS_ECC_Salt(TPM2B_DIGEST 		*salt,
 				    "Retrieved X and Y coordinates from ephemeral public\n");
 	}
     }
-    if (rc == 0) {    
+    if (rc == 0) {
 	p_caller_Xbin = malloc(BN_num_bytes(p_caller_Xbn));	/* freed @12 */
 	if (p_caller_Xbin == NULL) {
 	    if (tssVerbose) printf("TSS_ECC_Salt: "
@@ -862,7 +864,7 @@ TPM_RC TSS_ECC_Salt(TPM2B_DIGEST 		*salt,
 	    rc = TSS_RC_OUT_OF_MEMORY;
 	}
     }
-    if (rc == 0) {    
+    if (rc == 0) {
 	p_caller_Ybin = malloc(BN_num_bytes(p_caller_Ybn));	/* freed @13 */
 	if (p_caller_Ybin == NULL) {
 	    if (tssVerbose) printf("TSS_ECC_Salt: "
@@ -870,7 +872,7 @@ TPM_RC TSS_ECC_Salt(TPM2B_DIGEST 		*salt,
 	    rc = TSS_RC_OUT_OF_MEMORY;
 	}
     }
-    if (rc == 0) {    
+    if (rc == 0) {
 	if (tssVverbose) printf("TSS_ECC_Salt: "
 				"Allocated space for ephemeral binary X and y\n");
     }
@@ -896,8 +898,8 @@ TPM_RC TSS_ECC_Salt(TPM2B_DIGEST 		*salt,
 				      p_caller_Ybin,
 				      length_p_caller_Ybin);
     }
-    /* in->encryptedSalt TPM2B_ENCRYPTED_SECRET is a size and TPMU_ENCRYPTED_SECRET secret.
-       TPMU_ENCRYPTED_SECRET is a TPMS_ECC_POINT
+    /* in->encryptedSalt TPM2B_ENCRYPTED_SECRET is a size and
+     * TPMU_ENCRYPTED_SECRET secret. TPMU_ENCRYPTED_SECRET is a TPMS_ECC_POINT
        TPMS_ECC_POINT has two TPMB_ECC_PARAMETER, x and y
     */
     if (rc == 0) {
@@ -906,19 +908,21 @@ TPM_RC TSS_ECC_Salt(TPM2B_DIGEST 		*salt,
 	uint8_t *secret = encryptedSalt->t.secret;	/* TPMU_ENCRYPTED_SECRET pointer for
 							   clarity */
 	/* TPM2B_ENCRYPTED_SECRET size */
-	encryptedSalt->t.size = sizeof(uint16_t) + (256/8) + sizeof(uint16_t) + (256/8);
+	encryptedSalt->t.size = sizeof(uint32_t) + (256/8) + sizeof(uint32_t) + (256/8);
 	/* leading zeros, because some points may be less than 32 bytes */
 	memset(secret, 0, sizeof(TPMU_ENCRYPTED_SECRET));
-	/* TPMB_ECC_PARAMETER X point */
-	*(uint16_t *)(secret) = htons(256/8);
+	/* TPMB_ECC_PARAMETER X point: Setting size */
+	*(uint32_t *)(secret) = htonl(256/8);
+    /* Setting Data */
 	memcpy(secret +
-	       sizeof(uint16_t) + (256/8) - length_p_caller_Xbin,
+	       sizeof(uint32_t) + (256/8) - length_p_caller_Xbin,
 	       p_caller_Xbin, length_p_caller_Xbin);
-	/* TPMB_ECC_PARAMETER Y point */
-	*(uint16_t *)(secret + sizeof(uint16_t) + (256/8)) = htons(256/8);
+	/* TPMB_ECC_PARAMETER Y point: Setting size */
+	*(uint32_t *)(secret + sizeof(uint32_t) + (256/8)) = htonl(256/8);
+    /* Setting Data */
 	memcpy(secret +
-	       sizeof(uint16_t) + (256/8) +
-	       sizeof(uint16_t) + (256/8) - length_p_caller_Ybin,
+	       sizeof(uint32_t) + (256/8) +
+	       sizeof(uint32_t) + (256/8) - length_p_caller_Ybin,
 	       p_caller_Ybin, length_p_caller_Ybin);
     }
     if (rc == 0) {
@@ -997,7 +1001,7 @@ TPM_RC TSS_ECC_Salt(TPM2B_DIGEST 		*salt,
 		      &p_tpmX_For_KDFE.b,		/* context V */
 		      sizeInBits);			/* required size of key in bits */
     }
-    if (rc == 0) { 
+    if (rc == 0) {
 	if (tssVverbose) TSS_PrintAll("TSS_ECC_Salt: salt",
 				      (uint8_t *)&salt->t.buffer,
 				      salt->t.size);
@@ -1034,7 +1038,7 @@ static TPM_RC TSS_BN_new(BIGNUM **bn)		/* freed by caller */
 	    if (tssVerbose)
 		printf("TSS_BN_new: Error (fatal), *bn %p should be NULL before BN_new()\n", *bn);
 	    rc = TSS_RC_ALLOC_INPUT;
-	}	    
+	}
     }
     if (rc == 0) {
 	*bn = BN_new();
@@ -1058,16 +1062,16 @@ static TPM_RC TSS_BN_hex2bn(BIGNUM **bn, const char *str)	/* freed by caller */
 	    if (tssVerbose)
 		printf("TSS_BN_hex2bn: Error (fatal), *bn %p should be NULL before BN_new()\n", *bn);
 	    rc = TSS_RC_ALLOC_INPUT;
-	}	    
+	}
     }
     if (rc == 0) {
 	int irc;
 	irc = BN_hex2bn(bn, str);
 	if (irc == 0) {
-	    if (tssVerbose) printf("TSS_BN_hex2bn: BN_hex2bn() failed\n"); 
+	    if (tssVerbose) printf("TSS_BN_hex2bn: BN_hex2bn() failed\n");
 	    rc = TSS_RC_EC_EPHEMERAL_FAILURE;
 	}
-    }    
+    }
     return rc;
 }
 
@@ -1085,7 +1089,7 @@ static TPM_RC TSS_bin2bn(BIGNUM **bn, const unsigned char *bin, unsigned int byt
     TPM_RC	rc = 0;
 
     /* BIGNUM *BN_bin2bn(const unsigned char *s, int len, BIGNUM *ret);
-    
+
        BN_bin2bn() converts the positive integer in big-endian form of length len at s into a BIGNUM
        and places it in ret. If ret is NULL, a new BIGNUM is created.
 
@@ -1127,7 +1131,7 @@ TPM_RC TSS_AES_KeyGenerate(void *tssSessionEncKey,
     const char 		*envKeyString = NULL;
     unsigned char 	*envKeyBin = NULL;
     size_t 		envKeyBinLen;
-    
+
     if (rc == 0) {
 	envKeyString = getenv("TPM_SESSION_ENCKEY");
     }
@@ -1158,7 +1162,7 @@ TPM_RC TSS_AES_KeyGenerate(void *tssSessionEncKey,
 	}
 	/* copy the binary to the common userKey for use below */
 	if (rc == 0) {
-	    memcpy(userKey, envKeyBin, envKeyBinLen);  
+	    memcpy(userKey, envKeyBin, envKeyBinLen);
 	}
     }
     /* translate to an openssl key token */
@@ -1170,7 +1174,7 @@ TPM_RC TSS_AES_KeyGenerate(void *tssSessionEncKey,
 	if (irc != 0) {
             if (tssVerbose)
 		printf("TSS_AES_KeyGenerate: Error setting openssl AES encryption key\n");
-	    rc = TSS_RC_AES_KEYGEN_FAILURE; 
+	    rc = TSS_RC_AES_KEYGEN_FAILURE;
 	}
     }
     if (rc == 0) {
@@ -1181,7 +1185,7 @@ TPM_RC TSS_AES_KeyGenerate(void *tssSessionEncKey,
 	if (irc != 0) {
             if (tssVerbose)
 		printf("TSS_AES_KeyGenerate: Error setting openssl AES decryption key\n");
-	    rc = TSS_RC_AES_KEYGEN_FAILURE; 
+	    rc = TSS_RC_AES_KEYGEN_FAILURE;
 	}
     }
     free(envKeyBin);	/* @1 */
@@ -1195,7 +1199,7 @@ TPM_RC TSS_AES_KeyGenerate(void *tssSessionEncKey,
 
    'encrypt_data' must be free by the caller
 */
-   
+
 TPM_RC TSS_AES_Encrypt(void *tssSessionEncKey,
 		       unsigned char **encrypt_data,   		/* output, caller frees */
 		       uint32_t *encrypt_length,		/* output */
@@ -1258,7 +1262,7 @@ TPM_RC TSS_AES_Decrypt(void *tssSessionDecKey,
     uint32_t		i;
     unsigned char       *pad_data;
     unsigned char       ivec[AES_128_BLOCK_SIZE_BYTES];       /* initial chaining vector */
-    
+
     /* sanity check encrypted length */
     if (rc == 0) {
         if (encrypt_length < AES_128_BLOCK_SIZE_BYTES) {
@@ -1324,7 +1328,7 @@ TPM_RC TSS_AES_EncryptCFB(uint8_t	*dOut,		/* OUT: the encrypted */
     int		blockSize;
     AES_KEY	aeskey;
     int32_t	dSize;         /* signed version of dInSize */
-    
+
     /* Create AES encryption key token */
     if (rc == 0) {
 	irc = AES_set_encrypt_key(key, keySizeInBits, &aeskey);
@@ -1339,7 +1343,7 @@ TPM_RC TSS_AES_EncryptCFB(uint8_t	*dOut,		/* OUT: the encrypted */
 	    /* Encrypt the current value of the IV to the intermediate value.  Store in old iv,
 	       since it's not needed anymore. */
 	    AES_encrypt(iv, iv, &aeskey);
-	    blockSize = (dSize < 16) ? dSize : 16;	/* last block can be < 16 */	
+	    blockSize = (dSize < 16) ? dSize : 16;	/* last block can be < 16 */
 	    TSS_XOR(dOut, dIn, iv, blockSize);
 	    memcpy(iv, dOut, blockSize);
 	}
@@ -1361,7 +1365,7 @@ TPM_RC TSS_AES_DecryptCFB(uint8_t *dOut,          	/* OUT: the decrypted data */
     int		blockSize;
     AES_KEY	aesKey;
     int32_t	dSize;
-    
+
     /* Create AES encryption key token */
     if (rc == 0) {
 	irc = AES_set_encrypt_key(key, keySizeInBits, &aesKey);
@@ -1374,7 +1378,7 @@ TPM_RC TSS_AES_DecryptCFB(uint8_t *dOut,          	/* OUT: the decrypted data */
 	for (dSize = (int32_t)dInSize ; dSize > 0; dSize -= 16, dOut += 16, dIn += 16) {
 	    /* Encrypt the IV into the temp buffer */
 	    AES_encrypt(iv, tmp, &aesKey);
-	    blockSize = (dSize < 16) ? dSize : 16;	/* last block can be < 16 */	
+	    blockSize = (dSize < 16) ? dSize : 16;	/* last block can be < 16 */
 	    TSS_XOR(dOut, dIn, tmp, blockSize);
 	    memcpy(iv, dIn, blockSize);
 	}

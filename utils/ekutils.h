@@ -49,7 +49,7 @@
 /* legacy TCG IWG NV indexes */
 
 #define EK_CERT_RSA_INDEX 	0x01c00002
-#define EK_NONCE_RSA_INDEX 	0x01c00003 
+#define EK_NONCE_RSA_INDEX 	0x01c00003
 #define EK_TEMPLATE_RSA_INDEX 	0x01c00004
 
 #define EK_CERT_EC_INDEX 	0x01c0000a
@@ -158,7 +158,7 @@ extern "C" {
 			     char **pemCertString,
 			     uint32_t *certLength,
 			     unsigned char **certificate,
-			     TPMT_PUBLIC *tpmtPublic,	
+			     TPMT_PUBLIC *tpmtPublic,
 			     const char *caKeyFileName,
 			     size_t issuerEntriesSize,
 			     char **issuerEntries,
@@ -209,7 +209,7 @@ extern "C" {
     TPM_RC processPrimary(TSS_CONTEXT *tssContext,
 			  TPM_HANDLE *keyHandle,
 			  TPMI_RH_NV_INDEX ekCertIndex,
-			  TPMI_RH_NV_INDEX ekNonceIndex, 
+			  TPMI_RH_NV_INDEX ekNonceIndex,
 			  TPMI_RH_NV_INDEX ekTemplateIndex,
 			  unsigned int noFlush,
 			  int print);

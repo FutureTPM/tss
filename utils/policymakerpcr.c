@@ -37,32 +37,32 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
    policymakerpcr calculates a policyPCR term suitable for input to policymaker
 
    Inputs are:
 
    a hash algorithm
 
-   a byte mask, totally big endian, e.g. 010000 is PCR 16 
+   a byte mask, totally big endian, e.g. 010000 is PCR 16
 
    a file with lines in hexascii representing PCRs, e.g., the output of pcrread -ns
    removed
 
    This assumes that the byte mask and PCR value file are consistent.
-   
+
    Outputs are:
 
    if specified, a file with a hex ascii policyPCR line suitable for input to policymaker
 
    if specified, a print of the hash
 
-   Example: 
+   Example:
 
    policymakerpcr -halg sha1 -bm 010000 -if policies/policypcr16aaasha1.txt -v -pr -of policies/policypcr.txt
 
    Where policypcr16aaasha1.txt is represents the SHA-1 value of PCR 16
-   
+
    e.g., 1d47f68aced515f7797371b554e32d47981aa0a0
 */
 
@@ -90,7 +90,7 @@
 
 static void printUsage(void);
 static void printPolicyPCR(FILE *out,
-			   uint32_t           	sizeInBytes,         		
+			   uint32_t           	sizeInBytes,
 			   TPML_PCR_SELECTION	*pcrs,
 			   TPMT_HA 		*digest);
 static int Format_FromHexascii(unsigned char *binary,
@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
     int			pr = FALSE;
     TPMT_HA 		digest;
     uint8_t		pcrBytes[IMPLEMENTATION_PCR * sizeof(TPMU_HA)];
-    uint16_t		pcrLength;
+    UINT32		pcrLength;
 
     /* command line defaults */
     digest.hashAlg = TPM_ALG_SHA256;
@@ -238,9 +238,9 @@ int main(int argc, char *argv[])
     for (pcrCount = 0 ;
 	 (rc == 0) && (pcrCount < IMPLEMENTATION_PCR) && (inFile != NULL) ;
 	 pcrCount++) {
-	
+
 	char 		lineString[256];		/* returned line in hex ascii */
-	uint32_t	lineLength;			
+	uint32_t	lineLength;
 
 	if (rc == 0) {
 	    prc = fgets(lineString, sizeof(lineString), inFile);
@@ -266,8 +266,8 @@ int main(int argc, char *argv[])
 		printf("Line length %u is not twice digest size %u\n", lineLength, sizeInBytes);
 		rc = -1;
 	    }
-	}	
-	/* convert hex ascii to binary */ 
+	}
+	/* convert hex ascii to binary */
 	if ((rc == 0) && (prc != NULL)) {
 	    rc = Format_FromHexascii((uint8_t *)&pcr[pcrCount],
 				     lineString, lineLength/2);
@@ -330,7 +330,7 @@ int main(int argc, char *argv[])
 }
 
 static void printPolicyPCR(FILE 		*out,
-			   uint32_t           	sizeInBytes,         		
+			   uint32_t           	sizeInBytes,
 			   TPML_PCR_SELECTION	*pcrs,
 			   TPMT_HA 		*digest)
 {
@@ -348,7 +348,7 @@ static void printPolicyPCR(FILE 		*out,
     fprintf(out, "%02x", 0xff & (pcrs->pcrSelections[0].hash >> 0));
 
     fprintf(out, "%02x", pcrs->pcrSelections[0].sizeofSelect);
-    
+
     fprintf(out, "%02x", pcrs->pcrSelections[0].pcrSelect[0]);
     fprintf(out, "%02x", pcrs->pcrSelections[0].pcrSelect[1]);
     fprintf(out, "%02x", pcrs->pcrSelections[0].pcrSelect[2]);
@@ -375,7 +375,7 @@ static int Format_FromHexascii(unsigned char *binary,
     for (i = 0 ; (rc == 0) && (i < length) ; i++) {
 	rc = Format_ByteFromHexascii(binary + i,
 				     string + (i * 2));
-	
+
     }
     return rc;
 }
@@ -390,7 +390,7 @@ static int Format_ByteFromHexascii(unsigned char *byte,
     size_t	i;
     char	c;
     *byte 	= 0;
-    
+
     for (i = 0 ; (rc == 0) && (i < 2) ; i++) {
 	(*byte) <<= 4;		/* big endian, shift up the nibble */
 	c = *(string + i);	/* extract the next character from the string */
@@ -435,5 +435,5 @@ static void printUsage(void)
     printf("\t[-of\toutput file - policy hash in binary]\n");
     printf("\t[-pr\tstdout - policy hash in hex ascii]\n");
     printf("\n");
-    exit(1);	
+    exit(1);
 }

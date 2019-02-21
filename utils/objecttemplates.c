@@ -64,8 +64,8 @@
    TYPE_SI:   signing key (unrestricted, RSA NULL schemem EC NULL scheme, Dilithium NULL scheme, Kyber NULL scheme)
    TYPE_SIR:  signing key (restricted, RSA RSASSA scheme, EC ECDSA scheme, Dilithium mode=2 scheme, Kyber k=3 scheme)
    TYPE_GP:   general purpose key
-   TYPE_DAA:  signing key (unrestricted, ECDAA)
-   TYPE_DAAR: signing key (restricted, ECDAA)
+   TYPE_DAA:  signing key (unrestricted, ECDAA, LDAA)
+   TYPE_DAAR: signing key (restricted, ECDAA, LDAA)
 */
 
 TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
@@ -79,7 +79,8 @@ TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
 			  TPMI_ALG_HASH halg,		/* hash algorithm */
 			  const char *policyFilename,	/* binary policy, NULL means empty */
               TPMI_DILITHIUM_MODE dilithium_mode, // Dilithium mode to be used
-              TPMI_KYBER_SECURITY kyber_k) // Kyber security profile
+              TPMI_KYBER_SECURITY kyber_k, // Kyber security profile
+              TPM2B_LDAA_ISSUER_AT *ldaa_issuer_at) // LDAA Polynomial matrix given by the issuer to the TPM
 {
     TPM_RC			rc = 0;
 
@@ -88,7 +89,7 @@ TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
         publicArea->objectAttributes.val &= ~deleteObjectAttributes.val;
         /* Table 185 - TPM2B_PUBLIC inPublic */
         /* Table 184 - TPMT_PUBLIC publicArea */
-        publicArea->type = algPublic;		/* RSA, ECC, NewHope, qTesla, Dilithium or Kyber */
+        publicArea->type = algPublic;		/* RSA, ECC, NewHope, qTesla, Dilithium, LDAA or Kyber */
         publicArea->nameAlg = nalg;
 
         /* Table 32 - TPMA_OBJECT objectAttributes */
@@ -282,7 +283,7 @@ TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
                 publicArea->parameters.dilithiumDetail.scheme.details.anySig.hashAlg = 0;
                 publicArea->parameters.dilithiumDetail.mode = TPM_DILITHIUM_MODE_2;
             }
-
+#ifdef TPM_ALG_NEW_HOPE
         } else if (algPublic == TPM_ALG_NEWHOPE) {
             publicArea->parameters.newhopeDetail.scheme.scheme = TPM_ALG_NULL;
             publicArea->parameters.newhopeDetail.symmetric.algorithm = TPM_ALG_NULL;
@@ -294,12 +295,35 @@ TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
             }
             publicArea->unique.newhope.t.size = 0;
             publicArea->parameters.newhopeDetail.kdf.scheme = TPM_ALG_NULL;
+#endif
+#ifdef TPM_ALG_QTESLA
         } else if (algPublic == TPM_ALG_QTESLA) {
             publicArea->parameters.qteslaDetail.n = 2048;
             publicArea->parameters.qteslaDetail.q = 27627521;
             publicArea->parameters.qteslaDetail.scheme.scheme = TPM_ALG_NULL;
             publicArea->parameters.qteslaDetail.symmetric.algorithm = TPM_ALG_NULL;
             publicArea->unique.qtesla.t.size = 0;
+#endif
+        } else if (algPublic == TPM_ALG_LDAA) {
+            switch (keyType) {
+              case TYPE_DAA:
+              case TYPE_DAAR:
+                /* Non-storage keys must have TPM_ALG_NULL for the symmetric algorithm */
+                publicArea->parameters.ldaaDetail.symmetric.algorithm = TPM_ALG_NULL;
+                break;
+            }
+
+            switch (keyType) {
+              case TYPE_DAA:
+              case TYPE_DAAR:
+                publicArea->parameters.ldaaDetail.scheme.scheme = TPM_ALG_LDAA;
+                // Copy polynomial matrix to the parameter struct
+                memcpy(publicArea->parameters.ldaaDetail.issuer_at.t.buffer,
+                        ldaa_issuer_at->t.buffer, ldaa_issuer_at->t.size);
+                publicArea->parameters.ldaaDetail.issuer_at.t.size =
+                    ldaa_issuer_at->t.size;
+                break;
+            }
         } else { /* algPublic == TPM_ALG_KYBER */
             switch (keyType) {
               case TYPE_DEN:
@@ -588,6 +612,7 @@ void printUsageTemplate(void)
     printf("\t\tmode=[0-3]\n");
     printf("\t-newhope NewHopeKey\n");
     printf("\t-qtesla qTeslaKey\n");
+    printf("\t-ldaa [IssuerAtFile]\n");
     printf("\t-ecc curve\n");
     printf("\t\tbnp256\n");
     printf("\t\tnistp256\n");
@@ -605,8 +630,8 @@ void printUsageTemplate(void)
     printf("\t\t\t[default for primary keys]\n");
     printf("\t\t-si\tunrestricted signing (RSA, ECC NULL and Dilithium scheme)\n");
     printf("\t\t-sir\trestricted signing (RSA RSASSA, ECC ECDSA and Dilithium scheme)\n");
-    printf("\t\t-dau\tunrestricted ECDAA signing key pair\n");
-    printf("\t\t-dar\trestricted ECDAA signing key pair\n");
+    printf("\t\t-dau\tunrestricted ECDAA/LDAA signing key pair\n");
+    printf("\t\t-dar\trestricted ECDAA/LDAA signing key pair\n");
     printf("\t\t-kh\tkeyed hash (hmac)\n");
     printf("\t\t-dp\tderivation parent\n");
     printf("\t\t-gp\tgeneral purpose, not storage\n");

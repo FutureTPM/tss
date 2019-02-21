@@ -94,7 +94,7 @@
 /* This is the PC Client minimum value, and should be used for applications. */
 #define IMPLEMENTATION_PCR		24
 
-#define MAX_HANDLE_NUM			3	/* the maximum number of handles in the handle
+#define MAX_HANDLE_NUM			5	/* the maximum number of handles in the handle
 						   area */
 #define MAX_ACTIVE_SESSIONS		64	/* the number of simultaneously active sessions that
 						   are supported by the TPM implementation */
@@ -111,7 +111,7 @@
 #define MAX_CONTEXT_SIZE		2048
 #else
 //#define MAX_CONTEXT_SIZE		5120
-#define MAX_CONTEXT_SIZE		8192
+#define MAX_CONTEXT_SIZE        65536
 #endif
 
 #define MAX_DIGEST_BUFFER		2048
@@ -125,8 +125,8 @@
 #endif
 
 // Increase Sizes due to Kyber key sizes
-#define MAX_COMMAND_SIZE		16826	/* maximum size of a command */
-#define MAX_RESPONSE_SIZE		16826	/* maximum size of a response */
+#define MAX_COMMAND_SIZE		65536	/* maximum size of a command */
+#define MAX_RESPONSE_SIZE		67108863	/* maximum size of a response */
 
 #ifdef TPM_TSS_SO_0
 #define MAX_SYM_DATA			128		/* this is the maximum number of octets that
@@ -248,6 +248,13 @@
 /*                               qTesla Mods                                 */
 /*****************************************************************************/
 
+/*****************************************************************************/
+/*                                LDAA Mods                                  */
+/*****************************************************************************/
+#define ALG_LDAA                        ALG_YES
+/*****************************************************************************/
+/*                                LDAA Mods                                  */
+/*****************************************************************************/
 
 // From Vendor-Specific: Table 6 - Defines for Implemented Commands
 
@@ -602,6 +609,17 @@
 #endif   // ALG_NEWHOPE
 /*****************************************************************************/
 /*                              NewHope Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                               LDAA Mods                                   */
+/*****************************************************************************/
+#define     ALG_LDAA_VALUE			    0x0047
+#if defined ALG_LDAA && ALG_LDAA == YES
+#define TPM_ALG_LDAA                    (TPM_ALG_ID)(ALG_LDAA_VALUE)
+#endif   // ALG_LDAA
+/*****************************************************************************/
+/*                               LDAA Mods                                   */
 /*****************************************************************************/
 
 //     From TCG Algorithm Registry: Table 3 - Definition of TPM_ECC_CURVE Constants
@@ -1344,6 +1362,10 @@ typedef  UINT32             TPM_CC;
 #define  TPM_CC_EncryptDecrypt2               (TPM_CC)(0x00000193)
 #endif
 
+#define  TPM_CC_AC_GetCapability		(TPM_CC)(0x00000194)
+#define  TPM_CC_AC_Send				    (TPM_CC)(0x00000195)
+#define  TPM_CC_Policy_AC_SendSelect	(TPM_CC)(0x00000196)
+
 /*****************************************************************************/
 /*                              NewHope Mods                                 */
 /*****************************************************************************/
@@ -1393,10 +1415,6 @@ typedef  UINT32             TPM_CC;
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
-
-#define  TPM_CC_AC_GetCapability		(TPM_CC)(0x00000194)
-#define  TPM_CC_AC_Send				    (TPM_CC)(0x00000195)
-#define  TPM_CC_Policy_AC_SendSelect	(TPM_CC)(0x00000196)
 
 /* Compile variable. May increase based on implementation. */
 #define  TPM_CC_LAST				(TPM_CC)(0x0000019D)

@@ -146,9 +146,11 @@ int main(int argc, char *argv[])
 	else if (strcmp(argv[i], "-dilithium") == 0) {
 	    scheme = TPM_ALG_DILITHIUM;
 	}
+#ifdef TPM_ALG_QTESLA
 	else if (strcmp(argv[i], "-qtesla") == 0) {
 		scheme = TPM_ALG_QTESLA;
 	}
+#endif
 	else if (strcmp(argv[i], "-ecc") == 0) {
 	    scheme = TPM_ALG_ECDSA;
 	}
@@ -332,6 +334,7 @@ int main(int argc, char *argv[])
 	memcpy(&in.digest.t.buffer, (uint8_t *)&digest.digest, sizeInBytes);
 	/* Table 145 - Definition of TPMT_SIG_SCHEME inScheme */
 	in.inScheme.scheme = scheme;
+    printf("in.inScheme.scheme = %d\n", in.inScheme.scheme);
 	/* Table 144 - Definition of TPMU_SIG_SCHEME details > */
 	/* Table 142 - Definition of {RSA} Types for RSA Signature Schemes */
 	/* Table 135 - Definition of TPMS_SCHEME_HASH Structure */
@@ -343,9 +346,11 @@ int main(int argc, char *argv[])
 	else if (scheme == TPM_ALG_DILITHIUM) {
         in.inScheme.details.dilithium.hashAlg = halg;
     }
+#ifdef TPM_ALG_QTESLA
 	else if (scheme == TPM_ALG_QTESLA) {
         in.inScheme.details.qtesla.hashAlg = halg;
     }
+#endif
 	else if (scheme == TPM_ALG_ECDAA) {
 	    in.inScheme.details.ecdaa.hashAlg = halg;
 	    rc = TSS_File_ReadStructure(&in.inScheme.details.ecdaa.count,

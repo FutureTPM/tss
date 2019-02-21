@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
 */
 
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     const char			*decryptFilename = NULL;
     const char			*encryptFilename = NULL;
 
-    uint16_t			written = 0;
+    uint32_t			written = 0;
     size_t 			length = 0;
     uint8_t			*buffer = NULL;	/* for the free */
 
@@ -185,10 +185,10 @@ int main(int argc, char *argv[])
 				   (MarshalFunction_t)TSS_TPM2B_PUBLIC_KEY_RSA_Marshal);
     }
     if ((rc == 0) && (encryptFilename != NULL)) {
-	rc = TSS_File_WriteBinaryFile(buffer + sizeof(uint16_t),
-				      written - sizeof(uint16_t),
-				      encryptFilename); 
-    }    
+	rc = TSS_File_WriteBinaryFile(buffer + sizeof(uint32_t),
+				      written - sizeof(uint32_t),
+				      encryptFilename);
+    }
     if (rc == 0) {
 	if (verbose) printRsaEncrypt(&out);
 	if (verbose) printf("rsaencrypt: success\n");
@@ -221,5 +221,5 @@ static void printUsage(void)
     printf("\t-hk\tkey handle\n");
     printf("\t-id\tdecrypt file name\n");
     printf("\t[-oe\tencrypt file name (default do not save)]\n");
-    exit(1);	
+    exit(1);
 }

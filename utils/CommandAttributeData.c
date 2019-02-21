@@ -487,7 +487,7 @@ const TPMA_CC_TSS    s_ccAttr [] = {
 #endif
 
 #if (PAD_LIST  || CC_KYBER_2Phase_KEX)
-    {{0x019C, 0, 0, 0, 0, 2, 0, 0, 0}},     // TPM_CC_KYBER_2Phase_KEX
+    {{0x019C, 0, 0, 0, 0, 3, 0, 0, 0}},     // TPM_CC_KYBER_2Phase_KEX
 #endif
 
 #if (PAD_LIST  || CC_KYBER_3Phase_KEX)

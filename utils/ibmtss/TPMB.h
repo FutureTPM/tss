@@ -68,7 +68,7 @@
 #define _TPMB_H
 /* TPM2B Types */
 typedef struct {
-    UINT16          size;
+    UINT32          size;
     BYTE            buffer[1];
 } TPM2B, *P2B;
 typedef const TPM2B     *PC2B;
@@ -77,7 +77,7 @@ typedef const TPM2B     *PC2B;
 #define TPM2B_TYPE(name, bytes)			    \
     typedef union {				    \
 	struct  {					    \
-	    UINT16  size;				    \
+	    UINT32  size;				    \
 	    BYTE    buffer[(bytes)];			    \
 	} t;						    \
 	TPM2B   b;					    \
@@ -89,7 +89,7 @@ typedef const TPM2B     *PC2B;
 #define TPM2B_STRING(name, value)		    \
     static const union {				    \
 	struct  {					    \
-	    UINT16  size;				    \
+	    UINT32  size;				    \
 	    BYTE    buffer[sizeof(value)];		    \
 	} t;						    \
 	TPM2B   b;					    \

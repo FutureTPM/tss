@@ -56,7 +56,7 @@ extern "C" {
 
     typedef TPM_RC (*UnmarshalFunction_t)(void *target, uint8_t **buffer, uint32_t *size);
     typedef TPM_RC (*UnmarshalFunctionFlag_t)(void *target, uint8_t **buffer, uint32_t *size, BOOL allowNull);
-    typedef TPM_RC (*MarshalFunction_t)(void *source, uint16_t *written, uint8_t **buffer, uint32_t *size);
+    typedef TPM_RC (*MarshalFunction_t)(void *source, uint32_t *written, uint8_t **buffer, uint32_t *size);
 
     LIB_EXPORT
     TPM_RC TSS_Malloc(unsigned char **buffer, uint32_t size);
@@ -65,28 +65,28 @@ extern "C" {
 
     LIB_EXPORT
     TPM_RC TSS_Structure_Marshal(uint8_t		**buffer,
-				 uint16_t		*written,
+				 uint32_t		*written,
 				 void 		*structure,
 				 MarshalFunction_t 	marshalFunction);
 
-    LIB_EXPORT 
-    TPM_RC TSS_TPM2B_Copy(TPM2B *target, TPM2B *source, uint16_t targetSize);
-    
-    LIB_EXPORT 
-    TPM_RC TSS_TPM2B_Append(TPM2B *target, TPM2B *source, uint16_t targetSize);
-    
-    LIB_EXPORT 
-    TPM_RC TSS_TPM2B_Create(TPM2B *target, uint8_t *buffer, uint16_t size, uint16_t targetSize);
-    
-    LIB_EXPORT 
-    TPM_RC TSS_TPM2B_CreateUint32(TPM2B *target, uint32_t source, uint16_t targetSize);
-    
-    LIB_EXPORT 
-    TPM_RC TSS_TPM2B_StringCopy(TPM2B *target, const char *source, uint16_t targetSize);
-    
-    LIB_EXPORT 
+    LIB_EXPORT
+    TPM_RC TSS_TPM2B_Copy(TPM2B *target, TPM2B *source, uint32_t targetSize);
+
+    LIB_EXPORT
+    TPM_RC TSS_TPM2B_Append(TPM2B *target, TPM2B *source, uint32_t targetSize);
+
+    LIB_EXPORT
+    TPM_RC TSS_TPM2B_Create(TPM2B *target, uint8_t *buffer, uint32_t size, uint32_t targetSize);
+
+    LIB_EXPORT
+    TPM_RC TSS_TPM2B_CreateUint32(TPM2B *target, uint32_t source, uint32_t targetSize);
+
+    LIB_EXPORT
+    TPM_RC TSS_TPM2B_StringCopy(TPM2B *target, const char *source, uint32_t targetSize);
+
+    LIB_EXPORT
     BOOL TSS_TPM2B_Compare(TPM2B *expect, TPM2B *actual);
-    
+
 #ifdef __cplusplus
 }
 #endif

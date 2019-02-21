@@ -48,7 +48,7 @@
 /* Generic functions to marshal and unmarshal Part 3 ordinal command and response parameters */
 
 typedef TPM_RC (*MarshalInFunction_t)(COMMAND_PARAMETERS *source,
-				      uint16_t *written, BYTE **buffer, uint32_t *size);
+				      uint32_t *written, BYTE **buffer, uint32_t *size);
 typedef TPM_RC (*UnmarshalOutFunction_t)(RESPONSE_PARAMETERS *target,
 					 TPM_ST tag, BYTE **buffer, uint32_t *size);
 typedef TPM_RC (*UnmarshalInFunction_t)(COMMAND_PARAMETERS *target,
@@ -67,7 +67,7 @@ typedef struct TSS_AUTH_CONTEXT {
     size_t		commandHandleCount;
     uint32_t 		responseHandleCount;
     uint16_t		authCount;		/* authorizations in command */
-    uint16_t 		commandSize;
+    uint32_t 		commandSize;
     uint32_t 		cpBufferSize;
     uint8_t 		*cpBuffer;
     uint32_t 		responseSize;

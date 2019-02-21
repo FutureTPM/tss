@@ -57,51 +57,51 @@ extern "C" {
 #endif
 
     TPM_RC
-    TSS_ActivateIdentity_In_Marshalu(const ActivateIdentity_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_ActivateIdentity_In_Marshalu(const ActivateIdentity_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_CreateEndorsementKeyPair_In_Marshalu(const CreateEndorsementKeyPair_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_CreateEndorsementKeyPair_In_Marshalu(const CreateEndorsementKeyPair_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_CreateWrapKey_In_Marshalu(const CreateWrapKey_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_CreateWrapKey_In_Marshalu(const CreateWrapKey_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_Extend_In_Marshalu(const Extend_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_Extend_In_Marshalu(const Extend_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_FlushSpecific_In_Marshalu(const FlushSpecific_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_FlushSpecific_In_Marshalu(const FlushSpecific_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_GetCapability12_In_Marshalu(const GetCapability12_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_GetCapability12_In_Marshalu(const GetCapability12_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_LoadKey2_In_Marshalu(const LoadKey2_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_LoadKey2_In_Marshalu(const LoadKey2_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_MakeIdentity_In_Marshalu(const MakeIdentity_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_MakeIdentity_In_Marshalu(const MakeIdentity_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_NV_DefineSpace12_In_Marshalu(const NV_DefineSpace12_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_NV_DefineSpace12_In_Marshalu(const NV_DefineSpace12_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_NV_ReadValueAuth_In_Marshalu(const NV_ReadValueAuth_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_NV_ReadValueAuth_In_Marshalu(const NV_ReadValueAuth_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_NV_ReadValue_In_Marshalu(const NV_ReadValue_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_NV_ReadValue_In_Marshalu(const NV_ReadValue_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_NV_WriteValue_In_Marshalu(const NV_WriteValue_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_NV_WriteValue_In_Marshalu(const NV_WriteValue_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_NV_WriteValueAuth_In_Marshalu(const NV_WriteValueAuth_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_NV_WriteValueAuth_In_Marshalu(const NV_WriteValueAuth_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_OwnerReadInternalPub_In_Marshalu(const OwnerReadInternalPub_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_OwnerReadInternalPub_In_Marshalu(const OwnerReadInternalPub_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_OwnerSetDisable_In_Marshalu(const OwnerSetDisable_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_OwnerSetDisable_In_Marshalu(const OwnerSetDisable_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_OSAP_In_Marshalu(const OSAP_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_OSAP_In_Marshalu(const OSAP_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_PcrRead12_In_Marshalu(const PcrRead12_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_PcrRead12_In_Marshalu(const PcrRead12_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_PCR_Reset12_In_Marshalu(const PCR_Reset12_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_PCR_Reset12_In_Marshalu(const PCR_Reset12_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_Quote2_In_Marshalu(const Quote2_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_Quote2_In_Marshalu(const Quote2_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_ReadPubek_In_Marshalu(const ReadPubek_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_ReadPubek_In_Marshalu(const ReadPubek_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_Sign12_In_Marshalu(const Sign12_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_Sign12_In_Marshalu(const Sign12_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_Startup12_In_Marshalu(const Startup12_In *source, UINT16 *written, BYTE **buffer, uint32_t *size);
+    TSS_Startup12_In_Marshalu(const Startup12_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_TakeOwnership_In_Marshalu(const TakeOwnership_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_TakeOwnership_In_Marshalu(const TakeOwnership_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
 
     TPM_RC
     TSS_ActivateIdentity_Out_Unmarshalu(ActivateIdentity_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
@@ -139,51 +139,51 @@ extern "C" {
     TSS_TakeOwnership_Out_Unmarshalu(TakeOwnership_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
 
     TPM_RC
-    TSS_TPM_STARTUP_TYPE_Marshalu(const TPM_STARTUP_TYPE *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_TPM_STARTUP_TYPE_Marshalu(const TPM_STARTUP_TYPE *source, UINT32 *written, BYTE **buffer, uint32_t *size);
 
     TPM_RC
-    TSS_TPM_VERSION_Marshalu(const TPM_VERSION*source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_TPM_VERSION_Marshalu(const TPM_VERSION*source, UINT32 *written, BYTE **buffer, uint32_t *size);
 
     TPM_RC
-    TSS_TPM_PCR_SELECTION_Marshalu(const TPM_PCR_SELECTION *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_TPM_PCR_SELECTION_Marshalu(const TPM_PCR_SELECTION *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_TPM_PCR_INFO_SHORT_Marshalu(const TPM_PCR_INFO_SHORT *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_TPM_PCR_INFO_SHORT_Marshalu(const TPM_PCR_INFO_SHORT *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_TPM4B_TPM_PCR_INFO_LONG_Marshalu(const TPM_PCR_INFO_LONG *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_TPM4B_TPM_PCR_INFO_LONG_Marshalu(const TPM_PCR_INFO_LONG *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_TPM_PCR_INFO_LONG_Marshalu(const TPM_PCR_INFO_LONG *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_TPM_PCR_INFO_LONG_Marshalu(const TPM_PCR_INFO_LONG *source, UINT32 *written, BYTE **buffer, uint32_t *size);
 
     TPM_RC
-    TSS_TPM_SYMMETRIC_KEY_Marshalu(const TPM_SYMMETRIC_KEY *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_TPM_SYMMETRIC_KEY_Marshalu(const TPM_SYMMETRIC_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size);
 
     TPM_RC
-    TSS_TPM_RSA_KEY_PARMS_Marshalu(const TPM_RSA_KEY_PARMS *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_TPM_RSA_KEY_PARMS_Marshalu(const TPM_RSA_KEY_PARMS *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_TPMU_PARMS_Marshalu(const TPMU_PARMS *source, uint16_t *written, BYTE **buffer, uint32_t *size, uint32_t selector);
+    TSS_TPMU_PARMS_Marshalu(const TPMU_PARMS *source, UINT32 *written, BYTE **buffer, uint32_t *size, uint32_t selector);
     TPM_RC
-    TSS_TPM4B_TPMU_PARMS_Marshalu(const TPMU_PARMS *source, uint16_t *written, BYTE **buffer, uint32_t *size, uint32_t selector);
+    TSS_TPM4B_TPMU_PARMS_Marshalu(const TPMU_PARMS *source, UINT32 *written, BYTE **buffer, uint32_t *size, uint32_t selector);
     TPM_RC
-    TSS_TPM_KEY_PARMS_Marshalu(const TPM_KEY_PARMS *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_TPM_KEY_PARMS_Marshalu(const TPM_KEY_PARMS *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_TPM_STORE_PUBKEY_Marshalu(const TPM_STORE_PUBKEY *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_TPM_STORE_PUBKEY_Marshalu(const TPM_STORE_PUBKEY *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_TPM_KEY12_PUBKEY_Marshalu(const TPM_KEY12 *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_TPM_KEY12_PUBKEY_Marshalu(const TPM_KEY12 *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_TPM_PUBKEY_Marshalu(const TPM_PUBKEY *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_TPM_PUBKEY_Marshalu(const TPM_PUBKEY *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_TPM_KEY12_Marshalu(const TPM_KEY12 *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_TPM_KEY12_Marshalu(const TPM_KEY12 *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_TPM_QUOTE_INFO2_Marshalu(const TPM_QUOTE_INFO2 *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_TPM_QUOTE_INFO2_Marshalu(const TPM_QUOTE_INFO2 *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_TPM_EK_BLOB_Marshalu(const TPM_EK_BLOB *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_TPM_EK_BLOB_Marshalu(const TPM_EK_BLOB *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_TPM_EK_BLOB_ACTIVATE_Marshalu(const TPM_EK_BLOB_ACTIVATE *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_TPM_EK_BLOB_ACTIVATE_Marshalu(const TPM_EK_BLOB_ACTIVATE *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_TPM_NV_ATTRIBUTES_Marshalu(const TPM_NV_ATTRIBUTES *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_TPM_NV_ATTRIBUTES_Marshalu(const TPM_NV_ATTRIBUTES *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_TPM_NV_DATA_PUBLIC_Marshalu(const TPM_NV_DATA_PUBLIC *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_TPM_NV_DATA_PUBLIC_Marshalu(const TPM_NV_DATA_PUBLIC *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_TPM_CAP_VERSION_INFO_Marshalu(const TPM_CAP_VERSION_INFO *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_TPM_CAP_VERSION_INFO_Marshalu(const TPM_CAP_VERSION_INFO *source, UINT32 *written, BYTE **buffer, uint32_t *size);
 
 #ifdef __cplusplus
 }

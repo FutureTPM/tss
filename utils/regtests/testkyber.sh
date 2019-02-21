@@ -99,11 +99,20 @@ echo "Load Alice's ephemeral public key"
 ${PREFIX}loadexternal -kyber -den -ipu ephemeral_pub.bin > run.out
 checkSuccess $?
 
+echo "Load Alice's static public key"
+# Returns key handle 80000003
+${PREFIX}loadexternal -kyber -den -ipu static_alice_pub.bin > run.out
+checkSuccess $?
+
 echo "Perform 2nd phase KEX"
-${PREFIX}kyber_2phase_kex -hk 80000001 -hke 80000002 -pwdk bob_dec -cs alice_cipher_text_3.bin -ss bob_final_shared_key.bin -c1 bob_cipher_text_1.bin -c2 bob_cipher_text_2.bin > run.out
+${PREFIX}kyber_2phase_kex -hk 80000001 -hke 80000002 -hka 80000003 -pwdk bob_dec -cs alice_cipher_text_3.bin -ss bob_final_shared_key.bin -c1 bob_cipher_text_1.bin -c2 bob_cipher_text_2.bin > run.out
 checkSuccess $?
 
 echo "Bob completed the second phase of the KEX!"
+echo "Flushing Alice's static public key context"
+${PREFIX}flushcontext -ha 80000003 > run.out
+checkSuccess $?
+
 echo "Flushing his ephemeral context"
 ${PREFIX}flushcontext -ha 80000002 > run.out
 checkSuccess $?

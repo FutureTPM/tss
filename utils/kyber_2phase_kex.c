@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
 	Kyber_2Phase_KEX_In   in;
 	Kyber_2Phase_KEX_Out  out;
 	TPMI_DH_OBJECT      	static_key_handle = 0;
+	TPMI_DH_OBJECT      	alice_static_key_handle = 0;
 	TPMI_DH_OBJECT      	ephemeral_key_handle = 0;
 	const char          	*cFilename_in_static = NULL;
 	const char          	*cFilename_out_1 = NULL;
@@ -81,6 +82,16 @@ int main(int argc, char *argv[])
 			}
 			else {
 				printf("Missing parameter for -hke\n");
+				printUsage();
+			}
+		}
+		else if (strcmp(argv[i], "-hka") == 0) {
+			i++;
+			if (i < argc) {
+				sscanf(argv[i], "%x", &alice_static_key_handle);
+			}
+			else {
+				printf("Missing parameter for -hka\n");
 				printUsage();
 			}
 		}
@@ -223,6 +234,7 @@ int main(int argc, char *argv[])
 	if (rc == 0) {
 		in.static_key = static_key_handle;
 		in.ephemeral_key = ephemeral_key_handle;
+        in.alice_static_key = alice_static_key_handle;
 	}
 
 	if ((rc == 0) && (cFilename_in_static != NULL)) {
@@ -234,6 +246,15 @@ int main(int argc, char *argv[])
 	{
 		in.cipher_text_static.b.size = 0;
 	}
+
+    if (verbose)
+    {
+        printf("Static Cipher Text: ");
+        UINT32 i;
+        for (i = 0; in.cipher_text_static.b.size != 0 && i < in.cipher_text_static.b.size - 1; i++)
+            printf("%02X", in.cipher_text_static.b.buffer[i]);
+        printf("\n");
+    }
 
 	/* Start a TSS context */
 	if (rc == 0) {
@@ -280,21 +301,24 @@ int main(int argc, char *argv[])
 		if (verbose)
 		{
 			printf("Shared Key: ");
-			for (i = 0; i<out.shared_key.b.size - 1; i++)
+            UINT32 i;
+			for (i = 0; out.shared_key.b.size != 0 && i < out.shared_key.b.size - 1; i++)
 				printf("%02X", out.shared_key.b.buffer[i]);
 			printf("\n");
 		}
 		if (verbose)
 		{
 			printf("Cipher Text 1: ");
-			for (i = 0; i<out.cipher_text_1.b.size - 1; i++)
+            UINT32 i;
+			for (i = 0; out.cipher_text_1.b.size != 0 && i < out.cipher_text_1.b.size - 1; i++)
 				printf("%02X", out.cipher_text_1.b.buffer[i]);
 			printf("\n");
 		}
 		if (verbose)
 		{
 			printf("Cipher Text 2: ");
-			for (i = 0; i<out.cipher_text_2.b.size - 1; i++)
+            UINT32 i;
+			for (i = 0; out.cipher_text_2.b.size != 0 && i < out.cipher_text_2.b.size - 1; i++)
 				printf("%02X", out.cipher_text_2.b.buffer[i]);
 			printf("\n");
 		}
@@ -321,7 +345,8 @@ static void printUsage(void)
 	printf("Runs TPM2_KYBER_2Phase_KEX\n");
 	printf("\n");
 	printf("\t-hk unrestricted decryption static key handle\n");
-	printf("\t-hke unrestricted decryption ephemeral key handle\n");
+	printf("\t-hke unrestricted decryption ephemeral public key handle\n");
+	printf("\t-hke unrestricted decryption static public key handle\n");
 	printf("\t[-pwdk password for key (default empty)]\n");
 	printf("\t-cs cipher object input file name encapsulated with static key \n");
 	printf("\t-ss shared secret output data file name (default do not save)]\n");

@@ -2306,6 +2306,7 @@ Kyber_2Phase_KEX_In_Unmarshal(Kyber_2Phase_KEX_In *target, BYTE **buffer, uint32
     if (rc == TPM_RC_SUCCESS) {
         target->static_key = handles[0];
         target->ephemeral_key = handles[1];
+        target->alice_static_key = handles[2];
     }
 
     if (rc == TPM_RC_SUCCESS) {

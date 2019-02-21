@@ -59,7 +59,7 @@ ALL += 	$(LIBTSS)				\
 	$(LIBTSSA)				\
 	$(LIBTSSUTILS)
 
-# TSS shared library headers 
+# TSS shared library headers
 
 TSS_HEADERS += 					\
 		tssauth.h 			\
@@ -79,6 +79,7 @@ TSS_HEADERS += 					\
 		ibmtss/tssresponsecode.h	\
 		ibmtss/tssutils.h		\
 		ibmtss/Unmarshal_fp.h		\
+		ibmtss/ldaa-parms.h		\
 		ibmtss/Implementation.h
 
 # TSS shared library object files

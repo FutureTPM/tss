@@ -225,6 +225,7 @@ int main(int argc, char *argv[])
 		if (verbose)
 		{
 			printf("Cipher Text: ");
+            UINT32 i;
 			for (i = 0; i<out.cipher_text.b.size-1; i++)
 				printf("%02X", out.cipher_text.b.buffer[i]);
 			printf("\n");
@@ -232,6 +233,7 @@ int main(int argc, char *argv[])
 		if (verbose)
 		{
 			printf("Shared Key: ");
+            UINT32 i;
 			for (i = 0; i<out.shared_key.b.size - 1; i++)
 				printf("%02X", out.shared_key.b.buffer[i]);
 			printf("\n");

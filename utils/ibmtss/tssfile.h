@@ -62,32 +62,32 @@ extern "C" {
     LIB_EXPORT
     TPM_RC TSS_File_ReadBinaryFile(unsigned char **data,
 				   size_t *length,
-				   const char *filename); 
-    LIB_EXPORT 
+				   const char *filename);
+    LIB_EXPORT
     TPM_RC TSS_File_WriteBinaryFile(const unsigned char *data,
 				    size_t length,
-				    const char *filename); 
-    
-    LIB_EXPORT 
+				    const char *filename);
+
+    LIB_EXPORT
     TPM_RC TSS_File_ReadStructure(void 			*structure,
 				  UnmarshalFunction_t 	unmarshalFunction,
 				  const char 		*filename);
-    LIB_EXPORT 
+    LIB_EXPORT
     TPM_RC TSS_File_ReadStructureFlag(void 			*structure,
 				      UnmarshalFunctionFlag_t 	unmarshalFunction,
 				      BOOL 			allowNull,
 				      const char 		*filename);
-    LIB_EXPORT 
+    LIB_EXPORT
     TPM_RC TSS_File_WriteStructure(void 			*structure,
 				   MarshalFunction_t 	marshalFunction,
 				   const char 		*filename);
-    LIB_EXPORT 
+    LIB_EXPORT
     TPM_RC TSS_File_Read2B(TPM2B 		*tpm2b,
-			   uint16_t 	targetSize,
+			   uint32_t 	targetSize,
 			   const char 	*filename);
-    LIB_EXPORT 
-    TPM_RC TSS_File_DeleteFile(const char *filename); 
-    
+    LIB_EXPORT
+    TPM_RC TSS_File_DeleteFile(const char *filename);
+
 #ifdef __cplusplus
 }
 #endif

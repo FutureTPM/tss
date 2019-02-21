@@ -34,6 +34,7 @@ int verbose = TRUE;
 int main(int argc, char *argv[])
 {
 	TPM_RC 			rc = 0;
+#ifdef TPM_ALG_NEWHOPE
 	int 			i;    /* argc iterator */
 	TSS_CONTEXT 		*tssContext = NULL;
 	NEWHOPE_Dec_In   		in;
@@ -225,6 +226,7 @@ int main(int argc, char *argv[])
 		if (verbose)
 		{
 			printf("SS: ");
+            UINT32 i;
 			for (i = 0; i<out.SharedSecret.b.size - 1; i++)
 				printf("%02X", out.SharedSecret.b.buffer[i]);
 			printf("\n");
@@ -240,6 +242,7 @@ int main(int argc, char *argv[])
 		printf("%s%s%s\n", msg, submsg, num);
 		rc = EXIT_FAILURE;
 	}
+#endif
 	return rc;
 }
 

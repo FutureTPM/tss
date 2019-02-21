@@ -60,9 +60,9 @@ TSS_NTC2_CFG_STRUCT_Unmarshalu(NTC2_CFG_STRUCT *target, BYTE **buffer, uint32_t 
     }
     return rc;
 }
-    
+
 TPM_RC
-TSS_NTC2_CFG_STRUCT_Marshal(NTC2_CFG_STRUCT *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_NTC2_CFG_STRUCT_Marshal(NTC2_CFG_STRUCT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -78,8 +78,8 @@ TSS_NTC2_PreConfig_In_Unmarshalu(NTC2_PreConfig_In *target, BYTE **buffer, uint3
     handles = handles;
 
     if (rc == TPM_RC_SUCCESS) {
-	rc = TSS_NTC2_CFG_STRUCT_Unmarshalu(&target->preConfig, buffer, size);	
-	if (rc != TPM_RC_SUCCESS) {	
+	rc = TSS_NTC2_CFG_STRUCT_Unmarshalu(&target->preConfig, buffer, size);
+	if (rc != TPM_RC_SUCCESS) {
 	    rc += RC_NTC2_PreConfig_preConfig;
 	}
     }
@@ -87,7 +87,7 @@ TSS_NTC2_PreConfig_In_Unmarshalu(NTC2_PreConfig_In *target, BYTE **buffer, uint3
 }
 
 TPM_RC
-TSS_NTC2_PreConfig_In_Marshalu(NTC2_PreConfig_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_NTC2_PreConfig_In_Marshalu(NTC2_PreConfig_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -101,7 +101,7 @@ TSS_NTC2_GetConfig_Out_Unmarshalu(NTC2_GetConfig_Out *target, TPM_ST tag, BYTE *
 {
     TPM_RC rc = TPM_RC_SUCCESS;
     tag = tag;
-    
+
     if (rc == TPM_RC_SUCCESS) {
 	rc = TSS_NTC2_CFG_STRUCT_Unmarshalu(&target->preConfig, buffer, size);
     }
@@ -110,7 +110,7 @@ TSS_NTC2_GetConfig_Out_Unmarshalu(NTC2_GetConfig_Out *target, TPM_ST tag, BYTE *
 
 /* These functions are deprecated.  They were adapted from the TPM side, but the signed size
    caused static analysis tool warnings. */
-    
+
 TPM_RC
 NTC2_CFG_STRUCT_Unmarshal(NTC2_CFG_STRUCT *target, BYTE **buffer, INT32 *size)
 {

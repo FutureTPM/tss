@@ -57,29 +57,29 @@
 
 /* 5.1 TPM_STRUCT_VER rev 100
 
-   This indicates the version of the structure or TPM. 
+   This indicates the version of the structure or TPM.
 
    Version 1.2 deprecates the use of this structure in all other structures. The structure is not
    deprecated as many of the structures that contain this structure are not deprecated.
 */
 
-typedef struct tdTPM_STRUCT_VER { 
+typedef struct tdTPM_STRUCT_VER {
     BYTE major;         /* This SHALL indicate the major version of the structure. MUST be 0x01 */
     BYTE minor;         /* This SHALL indicate the minor version of the structure. MUST be 0x01 */
     BYTE revMajor;      /* This MUST be 0x00 on output, ignored on input */
     BYTE revMinor;      /* This MUST be 0x00 on output, ignored on input */
-} TPM_STRUCT_VER; 
+} TPM_STRUCT_VER;
 
 /* 5.2 TPM_VERSION_BYTE rev 87
 
    Allocating a byte for the version information is wasteful of space. The current allocation does
    not provide sufficient resolution to indicate completely the version of the TPM. To allow for
    backwards compatibility the size of the structure does not change from 1.1.
-   
+
    To enable minor version, or revision, numbers with 2-digit resolution, the byte representing a
    version splits into two BDC encoded nibbles. The ordering of the low and high order provides
    backwards compatibility with existing numbering.
-   
+
    An example of an implementation of this is; a version of 1.23 would have the value 2 in bit
    positions 3-0 and the value 3 in bit positions 7-4.
 
@@ -97,14 +97,14 @@ typedef struct tdTPM_STRUCT_VER {
    be in use by TPM_GetCapability to provide the information relative to the TPM.
 */
 
-typedef struct tdTPM_VERSION { 
+typedef struct tdTPM_VERSION {
     TPM_VERSION_BYTE major;     /* This SHALL indicate the major version of the TPM, mostSigVer MUST
                                    be 0x1, leastSigVer MUST be 0x0 */
     TPM_VERSION_BYTE minor;     /* This SHALL indicate the minor version of the TPM, mostSigVer MUST
                                    be 0x1 or 0x2, leastSigVer MUST be 0x0 */
     BYTE revMajor;              /* This SHALL be the value of the TPM_PERMANENT_DATA -> revMajor */
     BYTE revMinor;              /* This SHALL be the value of the TPM_PERMANENT_DATA -> revMinor */
-} TPM_VERSION; 
+} TPM_VERSION;
 
 /* 5.4 TPM_DIGEST rev 111
 
@@ -181,11 +181,11 @@ typedef TPM_AUTHDATA TPM_ENCAUTH; /* A cipher text (encrypted) version of author
    nonce.
 */
 
-typedef struct tdTPM_CHANGEAUTH_VALIDATE { 
+typedef struct tdTPM_CHANGEAUTH_VALIDATE {
     TPM_SECRET newAuthSecret;   /* This SHALL be the new authorization data for the target entity */
     TPM_NONCE n1;               /* This SHOULD be a nonce, to enable the caller to verify that the
                                    target TPM is on-line. */
-} TPM_CHANGEAUTH_VALIDATE; 
+} TPM_CHANGEAUTH_VALIDATE;
 
 #endif
 
@@ -213,11 +213,11 @@ typedef struct tdTPM_CHANGEAUTH_VALIDATE {
    This structure provides a standard method of specifying a list of PCR registers.
 */
 
-typedef struct tdTPM_PCR_SELECTION { 
+typedef struct tdTPM_PCR_SELECTION {
     uint16_t sizeOfSelect;			/* The size in bytes of the pcrSelect structure */
     BYTE pcrSelect[TPM_NUM_PCR/CHAR_BIT];       /* This SHALL be a bit map that indicates if a PCR
                                                    is active or not */
-} TPM_PCR_SELECTION; 
+} TPM_PCR_SELECTION;
 
 #if 0
 /* 8.2 TPM_PCR_COMPOSITE rev 97
@@ -226,7 +226,7 @@ typedef struct tdTPM_PCR_SELECTION {
    the value that SEALS an entity to the composite.
 */
 
-typedef struct tdTPM_PCR_COMPOSITE { 
+typedef struct tdTPM_PCR_COMPOSITE {
     TPM_PCR_SELECTION select;   /* This SHALL be the indication of which PCR values are active */
 #if 0
     uint32_t valueSize;           /* This SHALL be the size of the pcrValue field (not the number of
@@ -236,15 +236,15 @@ typedef struct tdTPM_PCR_COMPOSITE {
                                    concatenated into a single blob */
 #endif
     TPM_SIZED_BUFFER pcrValue;
-} TPM_PCR_COMPOSITE; 
+} TPM_PCR_COMPOSITE;
 
-/* 8.3 TPM_PCR_INFO rev 87 
+/* 8.3 TPM_PCR_INFO rev 87
 
    The TPM_PCR_INFO structure contains the information related to the wrapping of a key or the
    sealing of data, to a set of PCRs.
 */
 
-typedef struct tdTPM_PCR_INFO { 
+typedef struct tdTPM_PCR_INFO {
     TPM_PCR_SELECTION pcrSelection;             /* This SHALL be the selection of PCRs to which the
                                                    data or key is bound. */
     TPM_COMPOSITE_HASH digestAtRelease;         /* This SHALL be the digest of the PCR indices and
@@ -257,11 +257,11 @@ typedef struct tdTPM_PCR_INFO {
                                                    performed. NOTE: This is generated at key
                                                    creation, but is just informative to the host,
                                                    not used for authorization */
-} TPM_PCR_INFO; 
+} TPM_PCR_INFO;
 
 #endif
 
-/* 8.6 TPM_LOCALITY_SELECTION rev 87 
+/* 8.6 TPM_LOCALITY_SELECTION rev 87
 
    When used with localityAtCreation only one bit is set and it corresponds to the locality of the
    command creating the structure.
@@ -291,7 +291,7 @@ typedef BYTE TPM_LOCALITY_SELECTION;
 
 /* Marshaled  TPM_PCR_INFO_LONG */
 
-typedef struct tdTPM_PCR_INFO_LONG { 
+typedef struct tdTPM_PCR_INFO_LONG {
     TPM_STRUCTURE_TAG tag;                      /* This SHALL be TPM_TAG_PCR_INFO_LONG  */
     TPM_LOCALITY_SELECTION localityAtCreation;  /* This SHALL be the locality modifier of the
                                                    function that creates the PCR info structure */
@@ -308,7 +308,7 @@ typedef struct tdTPM_PCR_INFO_LONG {
     TPM_COMPOSITE_HASH digestAtRelease;         /* This SHALL be the digest of the PCR indices and
                                                    PCR values to verify when revealing Sealed Data
                                                    or using a key that was wrapped to PCRs. */
-} TPM_PCR_INFO_LONG; 
+} TPM_PCR_INFO_LONG;
 
 #if 0
 typedef struct {
@@ -324,7 +324,7 @@ typedef struct {
    the release configuration.
 */
 
-typedef struct tdTPM_PCR_INFO_SHORT { 
+typedef struct tdTPM_PCR_INFO_SHORT {
     TPM_PCR_SELECTION pcrSelection;     /* This SHALL be the selection of PCRs that specifies the
                                            digestAtRelease */
     TPM_LOCALITY_SELECTION localityAtRelease;   /* This SHALL be the locality modifier required to
@@ -332,7 +332,7 @@ typedef struct tdTPM_PCR_INFO_SHORT {
                                                    zero (0). */
     TPM_COMPOSITE_HASH digestAtRelease;         /* This SHALL be the digest of the PCR indices and
                                                    PCR values to verify when revealing auth data */
-} TPM_PCR_INFO_SHORT; 
+} TPM_PCR_INFO_SHORT;
 
 #if 0
 /* 8.8 TPM_PCR_ATTRIBUTES rev 107
@@ -346,23 +346,23 @@ typedef struct tdTPM_PCR_INFO_SHORT {
    same type the structure does not need to be reported with each quote.
 */
 
-typedef struct tdTPM_PCR_ATTRIBUTES { 
+typedef struct tdTPM_PCR_ATTRIBUTES {
     TPM_BOOL pcrReset;          /* A value of TRUE SHALL indicate that the PCR register can be reset
                                    using the TPM_PCR_RESET command. */
     TPM_LOCALITY_SELECTION pcrExtendLocal;      /* An indication of which localities can perform
                                                    extends on the PCR. */
     TPM_LOCALITY_SELECTION pcrResetLocal;       /* An indication of which localities can reset the
                                                    PCR */
-} TPM_PCR_ATTRIBUTES; 
+} TPM_PCR_ATTRIBUTES;
 
 /*
-  9. Storage Structures 
+  9. Storage Structures
 */
 
-/* 9.1 TPM_STORED_DATA rev 87 
+/* 9.1 TPM_STORED_DATA rev 87
 
    The definition of this structure is necessary to ensure the enforcement of security properties.
-   
+
    This structure is in use by the TPM_Seal and TPM_Unseal commands to identify the PCR index and
    values that must be present to properly unseal the data.
 
@@ -376,7 +376,7 @@ typedef struct tdTPM_PCR_ATTRIBUTES {
    2. When sealInfoSize is not 0 sealInfo MUST be TPM_PCR_INFO
 */
 
-typedef struct tdTPM_STORED_DATA { 
+typedef struct tdTPM_STORED_DATA {
     TPM_STRUCT_VER ver;         /* This MUST be 1.1.0.0  */
     TPM_SIZED_BUFFER sealInfo;
 #if 0
@@ -392,7 +392,7 @@ typedef struct tdTPM_STORED_DATA {
 #endif
     /* NOTE: kgold - Added this structure, a cache of PCRInfo when not NULL */
     TPM_PCR_INFO *tpm_seal_info;
-} TPM_STORED_DATA; 
+} TPM_STORED_DATA;
 
 
 /* 9.2 TPM_STORED_DATA12 rev 101
@@ -409,7 +409,7 @@ typedef struct tdTPM_STORED_DATA {
    2. If sealInfoSize is not 0 then sealInfo MUST be TPM_PCR_INFO_LONG
 */
 
-typedef struct tdTPM_STORED_DATA12 { 
+typedef struct tdTPM_STORED_DATA12 {
     TPM_STRUCTURE_TAG tag;      /* This SHALL be TPM_TAG_STORED_DATA12 */
     TPM_ENTITY_TYPE et;         /* The type of blob */
     TPM_SIZED_BUFFER sealInfo;
@@ -426,9 +426,9 @@ typedef struct tdTPM_STORED_DATA12 {
 #endif
     /* NOTE: kgold - Added this structure, a cache of PCRInfo when not NULL */
     TPM_PCR_INFO_LONG *tpm_seal_info_long;
-} TPM_STORED_DATA12; 
+} TPM_STORED_DATA12;
 
-/* 9.3 TPM_SEALED_DATA rev 87 
+/* 9.3 TPM_SEALED_DATA rev 87
 
    This structure contains confidential information related to sealed data, including the data
    itself.
@@ -439,7 +439,7 @@ typedef struct tdTPM_STORED_DATA12 {
    2. The digest calculation does not include the encDataSize and encData parameters.
 */
 
-typedef struct tdTPM_SEALED_DATA { 
+typedef struct tdTPM_SEALED_DATA {
     TPM_PAYLOAD_TYPE payload;   /* This SHALL indicate the payload type of TPM_PT_SEAL */
     TPM_SECRET authData;        /* This SHALL be the authorization data for this value */
     TPM_SECRET tpmProof;        /* This SHALL be a copy of TPM_PERMANENT_FLAGS -> tpmProof */
@@ -451,28 +451,28 @@ typedef struct tdTPM_SEALED_DATA {
     uint32_t dataSize;		/* This SHALL be the size of the data parameter */
     BYTE* data;                 /* This SHALL be the data to be sealed */
 #endif
-} TPM_SEALED_DATA; 
+} TPM_SEALED_DATA;
 
 #endif
 
 
-/* 9.4 TPM_SYMMETRIC_KEY rev 87 
+/* 9.4 TPM_SYMMETRIC_KEY rev 87
 
    This structure describes a symmetric key, used during the process "Collating a Request for a
    Trusted Platform Module Identity".
 */
 
-typedef struct tdTPM_SYMMETRIC_KEY { 
+typedef struct tdTPM_SYMMETRIC_KEY {
     TPM_ALGORITHM_ID algId;     /* This SHALL be the algorithm identifier of the symmetric key. */
     TPM_ENC_SCHEME encScheme;   /* This SHALL fully identify the manner in which the key will be
                                    used for encryption operations.  */
     uint16_t size;		/* This SHALL be the size of the data parameter in bytes */
     BYTE data[MAX_SYM_KEY_BYTES];	/* This SHALL be the symmetric key data */
-} TPM_SYMMETRIC_KEY; 
+} TPM_SYMMETRIC_KEY;
 
 #if 0
 
-/* 9.5 TPM_BOUND_DATA rev 87 
+/* 9.5 TPM_BOUND_DATA rev 87
 
    This structure is defined because it is used by a TPM_UnBind command in a consistency check.
 
@@ -496,12 +496,12 @@ typedef struct tdTPM_SYMMETRIC_KEY {
    TPM_UnBind command will fail.
 */
 
-typedef struct tdTPM_BOUND_DATA { 
+typedef struct tdTPM_BOUND_DATA {
     TPM_STRUCT_VER ver;                 /* This MUST be 1.1.0.0  */
     TPM_PAYLOAD_TYPE payload;           /* This SHALL be the value TPM_PT_BIND  */
     uint32_t payloadDataSize;		/* NOTE: added, not part of serialization */
     BYTE *payloadData;                  /* The bound data */
-} TPM_BOUND_DATA; 
+} TPM_BOUND_DATA;
 
 #endif
 
@@ -509,29 +509,29 @@ typedef struct tdTPM_BOUND_DATA {
   10. TPM_KEY Complex
 */
 
-/* 10.1.1 TPM_RSA_KEY_PARMS rev 87 
+/* 10.1.1 TPM_RSA_KEY_PARMS rev 87
 
    This structure describes the parameters of an RSA key.
 */
 
-typedef struct tdTPM_RSA_KEY_PARMS { 
+typedef struct tdTPM_RSA_KEY_PARMS {
     uint32_t keyLength;   /* This specifies the size of the RSA key in bits */
     uint32_t numPrimes;   /* This specifies the number of prime factors used by this RSA key. */
     uint32_t exponentSize;	/* This SHALL be the size of the exponent. If the key is using the
 				   the default public exponent then the exponentSize MUST be 0. */
     uint8_t exponent[4];    	/* The public exponent of this key */
-} TPM_RSA_KEY_PARMS; 
+} TPM_RSA_KEY_PARMS;
 
 /* 10.1.2 TPM_SYMMETRIC_KEY_PARMS rev 87
 
-   This structure describes the parameters for symmetric algorithms 
+   This structure describes the parameters for symmetric algorithms
 */
 
-typedef struct tdTPM_SYMMETRIC_KEY_PARMS { 
+typedef struct tdTPM_SYMMETRIC_KEY_PARMS {
     uint32_t keyLength;	/* This SHALL indicate the length of the key in bits */
     uint32_t blockSize;	/* This SHALL indicate the block size of the algorithm*/
     TPM2B_IV iv;	/* The initialization vector */
-} TPM_SYMMETRIC_KEY_PARMS; 
+} TPM_SYMMETRIC_KEY_PARMS;
 
 /* 10.1 TPM_KEY_PARMS rev 87
 
@@ -553,14 +553,14 @@ typedef struct {
 } TPM4B_PARMS;
 #endif
 
-typedef struct { 
+typedef struct {
     TPM_ALGORITHM_ID algorithmID;       /* This SHALL be the key algorithm in use */
     TPM_ENC_SCHEME encScheme;   /* This SHALL be the encryption scheme that the key uses to encrypt
                                    information */
     TPM_SIG_SCHEME sigScheme;   /* This SHALL be the signature scheme that the key uses to perform
                                    digital signatures */
-    TPMU_PARMS parms;	
-} TPM_KEY_PARMS; 
+    TPMU_PARMS parms;
+} TPM_KEY_PARMS;
 
 #if 0
 
@@ -571,20 +571,20 @@ typedef struct {
 */
 
 #if 0
-typedef struct tdTPM_STORE_PRIVKEY { 
+typedef struct tdTPM_STORE_PRIVKEY {
     uint32_t keyLength;	/* This SHALL be the length of the key field. */
     BYTE* key;          /* This SHALL be a structure interpreted according to the algorithm Id in
                            the corresponding TPM_KEY structure. */
-} TPM_STORE_PRIVKEY; 
+} TPM_STORE_PRIVKEY;
 #endif
 
 /* NOTE: Hard coded for RSA keys.  This will change if other algorithms are supported */
 
-typedef struct tdTPM_STORE_PRIVKEY { 
+typedef struct tdTPM_STORE_PRIVKEY {
     TPM_SIZED_BUFFER d_key;             /* private key */
     TPM_SIZED_BUFFER p_key;             /* private prime factor */
     TPM_SIZED_BUFFER q_key;             /* private prime factor */
-} TPM_STORE_PRIVKEY; 
+} TPM_STORE_PRIVKEY;
 
 /* 10.6 TPM_STORE_ASYMKEY rev 87
 
@@ -604,7 +604,7 @@ typedef struct tdTPM_STORE_PRIVKEY {
    structure MUST be reflected in the TPM_MIGRATE_ASYMKEY structure (section 10.8).
 */
 
-typedef struct tdTPM_STORE_ASYMKEY {    
+typedef struct tdTPM_STORE_ASYMKEY {
     TPM_PAYLOAD_TYPE payload;           /* This SHALL set to TPM_PT_ASYM to indicate an asymmetric
                                            key. If used in TPM_CMK_ConvertMigration the value SHALL
                                            be TPM_PT_MIGRATE_EXTERNAL. If used in TPM_CMK_CreateKey
@@ -636,7 +636,7 @@ typedef struct tdTPM_STORE_ASYMKEY {
                                            variable length which allows for differences in the key
                                            format. The maximum size of the area would be 151
                                            bytes. */
-} TPM_STORE_ASYMKEY;            
+} TPM_STORE_ASYMKEY;
 
 /* 10.8 TPM_MIGRATE_ASYMKEY rev 87
 
@@ -666,7 +666,7 @@ typedef struct tdTPM_MIGRATE_ASYMKEY {
                                    */
 #endif
     TPM_SIZED_BUFFER partPrivKey;
-} TPM_MIGRATE_ASYMKEY; 
+} TPM_MIGRATE_ASYMKEY;
 
 #endif
 
@@ -689,7 +689,7 @@ typedef struct tdTPM_STORE_PUBKEY {
    new structure tagging. In all other aspects this is the same structure.
 */
 
-typedef struct tdTPM_KEY12 { 
+typedef struct tdTPM_KEY12 {
     TPM_STRUCTURE_TAG tag;      /* MUST be TPM_TAG_KEY12 */
     uint16_t fill;		/* MUST be 0x0000 */
     TPM_KEY_USAGE keyUsage;     /* This SHALL be the TPM key usage that determines the operations
@@ -703,7 +703,7 @@ typedef struct tdTPM_KEY12 {
     TPM_STORE_PUBKEY pubKey;    /* This SHALL be the public portion of the key */
     TPM_STORE_PUBKEY encData;	/* This SHALL be an encrypted TPM_STORE_ASYMKEY structure
 					   TPM_MIGRATE_ASYMKEY structure */
-} TPM_KEY12; 
+} TPM_KEY12;
 
 /* 10.5 TPM_PUBKEY rev 99
 
@@ -714,10 +714,10 @@ typedef struct tdTPM_KEY12 {
    The pubKey member of this structure shall contain the public key for a specific algorithm.
 */
 
-typedef struct tdTPM_PUBKEY { 
+typedef struct tdTPM_PUBKEY {
     TPM_KEY_PARMS algorithmParms;       /* This SHALL be the information regarding this key */
     TPM_STORE_PUBKEY pubKey;            /* This SHALL be the public key information */
-} TPM_PUBKEY; 
+} TPM_PUBKEY;
 
 #if 0
 
@@ -754,7 +754,7 @@ typedef struct tdTPM_KEY_HANDLE_ENTRY {
     TPM_BOOL parentPCRStatus;   /* TRUE if parent of this key uses PCR's */
     TPM_KEY_CONTROL keyControl; /* Attributes that can control various aspects of key usage and
                                    manipulation. */
-} TPM_KEY_HANDLE_ENTRY; 
+} TPM_KEY_HANDLE_ENTRY;
 
 /* 5.12 TPM_MIGRATIONKEYAUTH rev 87
 
@@ -762,12 +762,12 @@ typedef struct tdTPM_KEY_HANDLE_ENTRY {
    be a migration key.
 */
 
-typedef struct tdTPM_MIGRATIONKEYAUTH { 
+typedef struct tdTPM_MIGRATIONKEYAUTH {
     TPM_PUBKEY migrationKey;            /* This SHALL be the public key of the migration facility */
     TPM_MIGRATE_SCHEME migrationScheme; /* This shall be the type of migration operation.*/
     TPM_DIGEST digest;                  /* This SHALL be the digest value of the concatenation of
                                            migration key, migration scheme and tpmProof */
-} TPM_MIGRATIONKEYAUTH; 
+} TPM_MIGRATIONKEYAUTH;
 
 /* 5.13 TPM_COUNTER_VALUE rev 87
 
@@ -790,7 +790,7 @@ typedef struct tdTPM_COUNTER_VALUE {
     TPM_SECRET authData;                /* Authorization secret for counter */
     TPM_BOOL valid;
     TPM_DIGEST digest;                  /* for OSAP comparison */
-} TPM_COUNTER_VALUE; 
+} TPM_COUNTER_VALUE;
 
 /* 5.14 TPM_SIGN_INFO Structure rev 102
 
@@ -803,7 +803,7 @@ typedef struct tdTPM_COUNTER_VALUE {
 
 #define TPM_SIGN_INFO_FIXED_SIZE 4
 
-typedef struct tdTPM_SIGN_INFO { 
+typedef struct tdTPM_SIGN_INFO {
 #ifdef TPM_USE_TAG_IN_STRUCTURE
     TPM_STRUCTURE_TAG tag;      /* TPM_TAG_SIGNINFO */
 #endif
@@ -815,7 +815,7 @@ typedef struct tdTPM_SIGN_INFO {
     BYTE* data;                 /* The data that is being signed */
 #endif
     TPM_SIZED_BUFFER data;      /* The data that is being signed */
-} TPM_SIGN_INFO; 
+} TPM_SIGN_INFO;
 
 /* 5.15 TPM_MSA_COMPOSITE Structure rev 87
 
@@ -823,7 +823,7 @@ typedef struct tdTPM_SIGN_INFO {
    Authorities. An instance of TPM_MSA_COMPOSITE is incorporated into the migrationAuth value of a
    certified-migration-key (CMK), and any of the Migration Authorities specified in that instance is
    able to approve the migration of that certified-migration-key.
-   
+
    TPMs MUST support TPM_MSA_COMPOSITE structures with MSAlist of four (4) or less, and MAY support
    larger values of MSAlist.
 */
@@ -835,7 +835,7 @@ typedef struct tdTPM_MSA_COMPOSITE {
                                            to Migration Authorities. */
 } TPM_MSA_COMPOSITE;
 
-/* 5.16 TPM_CMK_AUTH 
+/* 5.16 TPM_CMK_AUTH
 
    The signed digest of TPM_CMK_AUTH is a ticket to prove that the entity with public key
    "migrationAuthority" has approved the public key "destination Key" as a migration destination for
@@ -848,7 +848,7 @@ typedef struct tdTPM_MSA_COMPOSITE {
    "destinationKey" and "sourceKey".
 */
 
-typedef struct tdTPM_CMK_AUTH { 
+typedef struct tdTPM_CMK_AUTH {
     TPM_DIGEST migrationAuthorityDigest;        /* The digest of the public key of a Migration
                                                    Authority */
     TPM_DIGEST destinationKeyDigest;            /* The digest of a TPM_PUBKEY structure that is an
@@ -906,7 +906,7 @@ typedef struct tdTPM_CMK_SIGTICKET {
 } TPM_CMK_SIGTICKET;
 
 /* 5.21 TPM_CMK_MA_APPROVAL rev 87
-    
+
    Structure to keep track of the CMK migration authorization
 */
 
@@ -935,32 +935,32 @@ typedef struct tdTPM_CMK_MA_APPROVAL {
    to separate the delegations then there needs to be a split into two separate ordinals.
 */
 
-#define TPM_DEL_OWNER_BITS 0x00000001 
-#define TPM_DEL_KEY_BITS   0x00000002 
+#define TPM_DEL_OWNER_BITS 0x00000001
+#define TPM_DEL_KEY_BITS   0x00000002
 
-typedef struct tdTPM_DELEGATIONS { 
+typedef struct tdTPM_DELEGATIONS {
 #ifdef TPM_USE_TAG_IN_STRUCTURE
     TPM_STRUCTURE_TAG tag;      /* This SHALL be TPM_TAG_DELEGATIONS */
 #endif
     uint32_t delegateType;        /* Owner or key */
     uint32_t per1;                /* The first block of permissions */
     uint32_t per2;                /* The second block of permissions */
-} TPM_DELEGATIONS; 
+} TPM_DELEGATIONS;
 
 /* 20.4 TPM_FAMILY_LABEL rev 85
 
    Used in the family table to hold a one-byte numeric value (sequence number) that software can map
    to a string of bytes that can be displayed or used by applications.
 
-   This is not sensitive data. 
+   This is not sensitive data.
 */
 
 #if 0
-typedef struct tdTPM_FAMILY_LABEL { 
+typedef struct tdTPM_FAMILY_LABEL {
     BYTE label;         /* A sequence number that software can map to a string of bytes that can be
                            displayed or used by the applications. This MUST not contain sensitive
                            information. */
-} TPM_FAMILY_LABEL; 
+} TPM_FAMILY_LABEL;
 #endif
 
 typedef BYTE TPM_FAMILY_LABEL;  /* NOTE: No need for a structure here */
@@ -977,7 +977,7 @@ typedef BYTE TPM_FAMILY_LABEL;  /* NOTE: No need for a structure here */
    entity using the family table entry
 */
 
-typedef struct tdTPM_FAMILY_TABLE_ENTRY { 
+typedef struct tdTPM_FAMILY_TABLE_ENTRY {
 #ifdef TPM_USE_TAG_IN_STRUCTURE
     TPM_STRUCTURE_TAG tag;              /* This SHALL be TPM_TAG_FAMILY_TABLE_ENTRY */
 #endif
@@ -1002,10 +1002,10 @@ typedef struct tdTPM_FAMILY_TABLE_ENTRY {
    family table.  The family table contains a minimum of 8 rows.
 */
 
-#define TPM_NUM_FAMILY_TABLE_ENTRY_MIN 8 
+#define TPM_NUM_FAMILY_TABLE_ENTRY_MIN 8
 
-typedef struct tdTPM_FAMILY_TABLE { 
-    TPM_FAMILY_TABLE_ENTRY famTableRow[TPM_NUM_FAMILY_TABLE_ENTRY_MIN]; 
+typedef struct tdTPM_FAMILY_TABLE {
+    TPM_FAMILY_TABLE_ENTRY famTableRow[TPM_NUM_FAMILY_TABLE_ENTRY_MIN];
 } TPM_FAMILY_TABLE;
 
 /* 20.7 TPM_DELEGATE_LABEL rev 87
@@ -1015,10 +1015,10 @@ typedef struct tdTPM_FAMILY_TABLE {
 */
 
 #if 0
-typedef struct tdTPM_DELEGATE_LABEL { 
+typedef struct tdTPM_DELEGATE_LABEL {
     BYTE label;         /* A byte that can be displayed or used by the applications. This MUST not
                            contain sensitive information.  */
-} TPM_DELEGATE_LABEL; 
+} TPM_DELEGATE_LABEL;
 #endif
 
 typedef BYTE TPM_DELEGATE_LABEL;        /* NOTE: No need for structure */
@@ -1032,7 +1032,7 @@ typedef BYTE TPM_DELEGATE_LABEL;        /* NOTE: No need for structure */
    validate what configuration was controlling the platform during the blob creation.
 */
 
-typedef struct tdTPM_DELEGATE_PUBLIC { 
+typedef struct tdTPM_DELEGATE_PUBLIC {
 #ifdef TPM_USE_TAG_IN_STRUCTURE
     TPM_STRUCTURE_TAG tag;              /* This SHALL be TPM_TAG_DELEGATE_PUBLIC  */
 #endif
@@ -1051,15 +1051,15 @@ typedef struct tdTPM_DELEGATE_PUBLIC {
                                            the row belongs to. This is not a sensitive value. */
     TPM_FAMILY_VERIFICATION verificationCount;  /* A copy of verificationCount from the associated
                                                    family table. This is not a sensitive value. */
-} TPM_DELEGATE_PUBLIC; 
+} TPM_DELEGATE_PUBLIC;
 
 
 /* 20.9 TPM_DELEGATE_TABLE_ROW rev 101
 
-   A row of the delegate table. 
+   A row of the delegate table.
 */
 
-typedef struct tdTPM_DELEGATE_TABLE_ROW { 
+typedef struct tdTPM_DELEGATE_TABLE_ROW {
 #ifdef TPM_USE_TAG_IN_STRUCTURE
     TPM_STRUCTURE_TAG tag;      /* This SHALL be TPM_TAG_DELEGATE_TABLE_ROW */
 #endif
@@ -1068,7 +1068,7 @@ typedef struct tdTPM_DELEGATE_TABLE_ROW {
                                    permissions. This is a sensitive value. */
     /* NOTE Added */
     TPM_BOOL valid;
-} TPM_DELEGATE_TABLE_ROW; 
+} TPM_DELEGATE_TABLE_ROW;
 
 /* 20.10 TPM_DELEGATE_TABLE rev 87
 
@@ -1077,11 +1077,11 @@ typedef struct tdTPM_DELEGATE_TABLE_ROW {
    This will be an entry in the TPM_PERMANENT_DATA structure.
 */
 
-#define TPM_NUM_DELEGATE_TABLE_ENTRY_MIN 2 
+#define TPM_NUM_DELEGATE_TABLE_ENTRY_MIN 2
 
-typedef struct tdTPM_DELEGATE_TABLE { 
+typedef struct tdTPM_DELEGATE_TABLE {
     TPM_DELEGATE_TABLE_ROW delRow[TPM_NUM_DELEGATE_TABLE_ENTRY_MIN]; /* The array of delegations */
-} TPM_DELEGATE_TABLE; 
+} TPM_DELEGATE_TABLE;
 
 /* 20.11 TPM_DELEGATE_SENSITIVE rev 115
 
@@ -1104,7 +1104,7 @@ typedef struct tdTPM_DELEGATE_SENSITIVE {
 
    This data structure contains all the information necessary to externally store a set of owner
    delegation rights that can subsequently be loaded or used by this TPM.
-   
+
    The encryption mechanism for the sensitive area is a TPM choice. The TPM may use asymmetric
    encryption and the SRK for the key. The TPM may use symmetric encryption and a secret key known
    only to the TPM.
@@ -1124,7 +1124,7 @@ typedef struct tdTPM_DELEGATE_OWNER_BLOB {
 } TPM_DELEGATE_OWNER_BLOB;
 
 /* 20.13 TPM_DELEGATE_KEY_BLOB rev 87
-    
+
    A structure identical to TPM_DELEGATE_OWNER_BLOB but which stores delegation information for user
    keys.  As compared to TPM_DELEGATE_OWNER_BLOB, it adds a hash of the corresponding public key
    value to the public information.
@@ -1152,15 +1152,15 @@ typedef struct tdTPM_DELEGATE_KEY_BLOB {
    ticks from the start of the current session. Session start is a variable function that is
    platform dependent. Some platforms may have batteries or other power sources and keep the TPM
    clock session across TPM initialization sessions.
-   
+
    The <tickRate> element of the TPM_CURRENT_TICKS structure provides the number of microseconds per
    tick.  The platform manufacturer must satisfy input clock requirements set by the TPM vendor to
    ensure the accuracy of the tickRate.
-   
+
    No external entity may ever set the current number of time ticks held in TPM_CURRENT_TICKS. This
    value is always reset to 0 when a new clock session starts and increments under control of the
    TPM.
-   
+
    Maintaining the relationship between the number of ticks counted by the TPM and some real world
    clock is a task for external software.
 */
@@ -1232,9 +1232,9 @@ typedef struct tdTPM_TRANSPORT_INTERNAL {
 
 /* 13.3 TPM_TRANSPORT_LOG_IN rev 87
 
-   The logging of transport commands occurs in two steps, before execution with the input 
+   The logging of transport commands occurs in two steps, before execution with the input
    parameters and after execution with the output parameters.
-   
+
    This structure is in use for input log calculations.
 */
 
@@ -1253,9 +1253,9 @@ typedef struct tdTPM_TRANSPORT_LOG_IN {
 
    The logging of transport commands occurs in two steps, before execution with the input parameters
    and after execution with the output parameters.
-   
-   This structure is in use for output log calculations. 
-   
+
+   This structure is in use for output log calculations.
+
    This structure is in use for the INPUT logging during releaseTransport.
 */
 
@@ -1322,22 +1322,22 @@ typedef struct tdTPM_DAA_ISSUER {
 
 /* 22.4 TPM_DAA_TPM rev 91
 
-   This structure is the abstract representation of TPM specific parameters used during a DAA 
-   context. TPM-specific DAA parameters may be stored outside the TPM, and hence this 
-   structure is needed to save private DAA data from a TPM, or load private DAA data into a 
+   This structure is the abstract representation of TPM specific parameters used during a DAA
+   context. TPM-specific DAA parameters may be stored outside the TPM, and hence this
+   structure is needed to save private DAA data from a TPM, or load private DAA data into a
    TPM.
-   
+
    If a TPM_DAA_TPM structure is stored outside the TPM, it is stored in a confidential format that
    can be interpreted only by the TPM created it. This is to ensure that secret parameters are
    rendered confidential, and that both secret and non-secret data in TPM_DAA_TPM form a
    self-consistent set.
-  
+
    TPM_DAA_TPM includes a digest of the public DAA parameters that were used during creation of the
    TPM_DAA_TPM structure. This is needed to verify that a TPM_DAA_TPM is being used with the public
    DAA parameters used to create the TPM_DAA_TPM structure.  Parameters DAA_digest_v0 and
    DAA_digest_v1 are digests of public DAA_private_v0 and DAA_private_v1 parameters, and used to
    verify that the correct private parameters have been loaded.
-   
+
    Parameter DAA_count is stored in its native form, because it is smaller than a digest, and is
    required to enforce consistency.
 */
@@ -1393,7 +1393,7 @@ typedef struct tdTPM_DAA_CONTEXT {
                                    structure.
 
                                    The TPM MUST set DAA_stage to 0 on TPM_Startup(ANY) */
-    TPM_BOOL    DAA_scratch_null;       
+    TPM_BOOL    DAA_scratch_null;
 } TPM_DAA_CONTEXT;
 
 /* 22.6 TPM_DAA_JOINDATA rev 91
@@ -1457,7 +1457,7 @@ typedef struct tdTPM_DAA_BLOB {
                                            encryption */
     TPM_SIZED_BUFFER sensitiveData;     /* A TPM_DAA_SENSITIVE structure */
 #if 0
-    uint32_t additionalSize;              
+    uint32_t additionalSize;
     [size_is(additionalSize)] BYTE* additionalData;
     uint32_t sensitiveSize;
     [size_is(sensitiveSize)] BYTE* sensitiveData;
@@ -1465,7 +1465,7 @@ typedef struct tdTPM_DAA_BLOB {
 } TPM_DAA_BLOB;
 
 /* 22.9 TPM_DAA_SENSITIVE rev 91
-   
+
    The encrypted area for the DAA parameters
 */
 
@@ -1497,7 +1497,7 @@ typedef struct tdTPM_DAA_SENSITIVE {
         Added: disableFullDALogicInfo
 */
 
-typedef struct tdTPM_PERMANENT_FLAGS { 
+typedef struct tdTPM_PERMANENT_FLAGS {
     TPM_STRUCTURE_TAG tag;      /* TPM_TAG_PERMANENT_FLAGS */
     TPM_BOOL disable;           /* disable The state of the disable flag. The default state is TRUE
                                    */
@@ -1554,14 +1554,14 @@ typedef struct tdTPM_PERMANENT_FLAGS {
                                    the bit is unchangeable after shipping the TPM
 
                                    The default state is FALSE */
-    TPM_BOOL TPMpostLock;       /* With the clarification of TPMPost TPMpostLock is now 
-                                   unnecessary. 
+    TPM_BOOL TPMpostLock;       /* With the clarification of TPMPost TPMpostLock is now
+                                   unnecessary.
                                    This flag is now deprecated */
-    TPM_BOOL FIPS;              /* TRUE: This TPM operates in FIPS mode 
+    TPM_BOOL FIPS;              /* TRUE: This TPM operates in FIPS mode
                                    FALSE: This TPM does NOT operate in FIPS mode */
-    TPM_BOOL tpmOperator;       /* TRUE: The operator authorization value is valid 
+    TPM_BOOL tpmOperator;       /* TRUE: The operator authorization value is valid
                                    FALSE: the operator authorization value is not set */
-    TPM_BOOL enableRevokeEK;    /* TRUE: The TPM_RevokeTrust command is active 
+    TPM_BOOL enableRevokeEK;    /* TRUE: The TPM_RevokeTrust command is active
                                    FALSE: the TPM RevokeTrust command is disabled */
     TPM_BOOL nvLocked;          /* TRUE: All NV area authorization checks are active
                                    FALSE: No NV area checks are performed, except for maxNVWrites.
@@ -1582,7 +1582,7 @@ typedef struct tdTPM_PERMANENT_FLAGS {
                                      */
     /* NOTE: Cannot add vendor specific flags here, since TPM_GetCapability() returns the serialized
        structure */
-} TPM_PERMANENT_FLAGS; 
+} TPM_PERMANENT_FLAGS;
 
 /* 7.2 TPM_STCLEAR_FLAGS rev 109
 
@@ -1590,7 +1590,7 @@ typedef struct tdTPM_PERMANENT_FLAGS {
    not affected by TPM_Startup(ST_State) commands.
 */
 
-typedef struct tdTPM_STCLEAR_FLAGS { 
+typedef struct tdTPM_STCLEAR_FLAGS {
     TPM_STRUCTURE_TAG tag;              /* TPM_TAG_STCLEAR_FLAGS */
     TPM_BOOL deactivated;               /* Prevents the operation of most capabilities. There is no
                                            default state. It is initialized by TPM_Startup to the
@@ -1614,14 +1614,14 @@ typedef struct tdTPM_STCLEAR_FLAGS {
                                            when a write to NV_Index =0 is successful */
     /* NOTE: Cannot add vendor specific flags here, since TPM_GetCapability() returns the serialized
        structure */
-} TPM_STCLEAR_FLAGS; 
+} TPM_STCLEAR_FLAGS;
 
 #if 0
 
 
 /* 7.3 TPM_STANY_FLAGS rev 87
 
-   These flags reset on any TPM_Startup command. 
+   These flags reset on any TPM_Startup command.
 */
 
 typedef struct tdTPM_STANY_FLAGS {
@@ -1639,7 +1639,7 @@ typedef struct tdTPM_STANY_FLAGS {
                                     session active. Execution of ANY command other than
                                     TPM_ExecuteTransport or TPM_ReleaseTransportSigned MUST
                                     invalidate the exclusive transport session.
-                                */    
+                                */
 #endif
     TPM_TRANSHANDLE transportExclusive; /* Defaults to 0x00000000, Set to the handle when an
                                            exclusive transport session is active */
@@ -1666,8 +1666,8 @@ typedef struct tdTPM_STANY_FLAGS {
 */
 
 #define TPM_MIN_COUNTERS 4 /* the minimum number of counters is 4 */
-#define TPM_DELEGATE_KEY TPM_KEY 
-#define TPM_MAX_NV_WRITE_NOOWNER 64 
+#define TPM_DELEGATE_KEY TPM_KEY
+#define TPM_MAX_NV_WRITE_NOOWNER 64
 
 /* Although the ordinal is 32 bits, only the lower 8 bits seem to be used.  So for now, define an
    array of 256/8 bytes for ordinalAuditStatus - kgold */
@@ -1689,10 +1689,10 @@ typedef struct tdTPM_PERMANENT_INSTANCE_DATA {
     TPM_DIGEST migrationDigest;         /* Digest of all migrated data structures */
     TPM_BOOL sourceLock;                /* Lock instance before export migration */
     TPM_BOOL destinationLock;           /* Lock instance before import migration */
-    
+
 } TPM_PERMANENT_INSTANCE_DATA;
 
-#endif /* TPM_VTPM */ 
+#endif /* TPM_VTPM */
 
 #ifdef TPM_VENDOR
 
@@ -1710,7 +1710,7 @@ typedef struct tdTPM_WEC_CFG_STRUCT {
     BYTE pullUp;                /* pull-up of GPIO input pins */
     BYTE pushPull;              /* push-pull of open drain of GPIO output pins */
     BYTE cfg_a;                 /* hardware physical presence, 32 khz clock */
-    BYTE cfg_b;                 /* reserved - keep FFh value */         
+    BYTE cfg_b;                 /* reserved - keep FFh value */
     BYTE cfg_c;                 /* reserved - keep FFh value */
     BYTE cfg_d;                 /* reserved - keep FFh value */
     BYTE cfg_e;                 /* reserved - keep FFh value */
@@ -1721,7 +1721,7 @@ typedef struct tdTPM_WEC_CFG_STRUCT {
     BYTE cfg_j;                 /* reserved - keep FFh value */
 }  TPM_WEC_CFG_STRUCT;
 
-#endif /*TPM_VENDOR */ 
+#endif /*TPM_VENDOR */
 
 
 typedef struct tdTPM_PERMANENT_DATA {
@@ -1818,7 +1818,7 @@ typedef struct tdTPM_PERMANENT_DATA {
     uint32_t instanceOrdinalAuditStatus2;
 #endif
     TPM_BOOL allowLoadMaintPub;         /* TRUE allows the TPM_LoadManuMaintPub command */
-    
+
 #ifdef TPM_VTPM
     TPM_PERMANENT_INSTANCE_DATA instanceData;   /* substructure for VTPM instance data */
 #endif
@@ -1827,9 +1827,9 @@ typedef struct tdTPM_PERMANENT_DATA {
     TPM_BOOL preConfigSet;              /* TRUE if the structure has been set through
                                            WEC_PreConfig */
 #endif
-} TPM_PERMANENT_DATA; 
+} TPM_PERMANENT_DATA;
 
-#define TPM_MIN_AUTH_SESSIONS 3 
+#define TPM_MIN_AUTH_SESSIONS 3
 
 /* NOTE: Vendor specific */
 
@@ -1986,13 +1986,13 @@ typedef struct tdTPM_STCLEAR_DATA {
     /* NOTE Storage for the ordinal response */
     TPM_STORE_BUFFER ordinalResponse;           /* outgoing response buffer for this ordinal */
     uint32_t responseCount;			/* increments after each response */
-} TPM_STCLEAR_DATA; 
+} TPM_STCLEAR_DATA;
 
 /* 7.6 TPM_STANY_DATA rev 87
 
    This is an informative structure and not normative. It is purely for convenience of writing the
    spec.
-    
+
    Most of the data in this structure resets on TPM_Startup(ST_State). A TPM may implement rules
    that provide longer-term persistence for the data. The TPM reflects how it handles the data in
    various getcapability fields including startup effects.
@@ -2018,7 +2018,7 @@ typedef struct tdTPM_STANY_DATA {
    signature headers.
 */
 
-typedef struct tdTPM_CERTIFY_INFO { 
+typedef struct tdTPM_CERTIFY_INFO {
     TPM_STRUCT_VER version;             /* This MUST be 1.1.0.0  */
     TPM_KEY_USAGE keyUsage;             /* This SHALL be the same value that would be set in a
                                            TPM_KEY representation of the key to be certified. The
@@ -2056,7 +2056,7 @@ typedef struct tdTPM_CERTIFY_INFO {
    signature headers.
 */
 
-typedef struct tdTPM_CERTIFY_INFO2 { 
+typedef struct tdTPM_CERTIFY_INFO2 {
 #ifdef TPM_USE_TAG_IN_STRUCTURE
     TPM_STRUCTURE_TAG tag;              /* MUST be TPM_TAG_CERTIFY_INFO2  */
 #endif
@@ -2104,7 +2104,7 @@ typedef struct tdTPM_CERTIFY_INFO2 {
    This structure provides the mechanism for the TPM to quote the current values of a list of PCRs.
 */
 
-typedef struct tdTPM_QUOTE_INFO { 
+typedef struct tdTPM_QUOTE_INFO {
     TPM_STRUCT_VER version;             /* This MUST be 1.1.0.0 */
     BYTE fixed[4];                      /* This SHALL always be the string 'QUOT' */
     TPM_COMPOSITE_HASH digestValue;     /* This SHALL be the result of the composite hash algorithm
@@ -2127,7 +2127,7 @@ typedef struct tdTPM_QUOTE_INFO2 {
 } TPM_QUOTE_INFO2;
 
 /* 12.1 TPM_EK_BLOB rev 87
-  
+
   This structure provides a wrapper to each type of structure that will be in use when the
   endorsement key is in use.
 */
@@ -2184,7 +2184,7 @@ typedef struct tdTPM_IDENTITY_CONTENTS {
                                                    identity */
     TPM_PUBKEY identityPubKey;          /* This SHALL be the public key structure of the identity
                                            key */
-} TPM_IDENTITY_CONTENTS; 
+} TPM_IDENTITY_CONTENTS;
 
 /* 12.8 TPM_ASYM_CA_CONTENTS rev 87
 
@@ -2246,18 +2246,18 @@ typedef struct tdTPM_AUDIT_EVENT_OUT {
 
    This is the header for the wrapped context. The blob contains all information necessary to reload
    the context back into the TPM.
-   
+
    The additional data is used by the TPM manufacturer to save information that will assist in the
    reloading of the context. This area must not contain any shielded data. For instance, the field
    could contain some size information that allows the TPM more efficient loads of the context. The
    additional area could not contain one of the primes for a RSA key.
-   
+
    To ensure integrity of the blob when using symmetric encryption the TPM vendor could use some
    valid cipher chaining mechanism. To ensure the integrity without depending on correct
    implementation, the TPM_CONTEXT_BLOB structure uses a HMAC of the entire structure using tpmProof
    as the secret value.
 
-   Since both additionalData and sensitiveData are informative, any or all of additionalData 
+   Since both additionalData and sensitiveData are informative, any or all of additionalData
    could be moved to sensitiveData.
 */
 
@@ -2318,13 +2318,13 @@ typedef struct tdTPM_CONTEXT_SENSITIVE {
 
 /* 19.2 TPM_NV_ATTRIBUTES rev 99
 
-   This structure allows the TPM to keep track of the data and permissions to manipulate the area. 
+   This structure allows the TPM to keep track of the data and permissions to manipulate the area.
 */
 
-typedef struct tdTPM_NV_ATTRIBUTES { 
+typedef struct tdTPM_NV_ATTRIBUTES {
     TPM_STRUCTURE_TAG tag;      /* TPM_TAG_NV_ATTRIBUTES */
     uint32_t attributes;	/* The attribute area */
-} TPM_NV_ATTRIBUTES; 
+} TPM_NV_ATTRIBUTES;
 
 /* 19.3 TPM_NV_DATA_PUBLIC rev 110
 
@@ -2339,7 +2339,7 @@ typedef struct tdTPM_NV_ATTRIBUTES {
    can return zero.  A TPM that does store the digest may return either the digest or zero.
 */
 
-typedef struct tdTPM_NV_DATA_PUBLIC { 
+typedef struct tdTPM_NV_DATA_PUBLIC {
     TPM_STRUCTURE_TAG tag;              /* This SHALL be TPM_TAG_NV_DATA_PUBLIC */
     TPM12_NV_INDEX nvIndex;               /* The index of the data area */
     TPM_PCR_INFO_SHORT pcrInfoRead;     /* The PCR selection that allows reading of the area */
@@ -2352,17 +2352,17 @@ typedef struct tdTPM_NV_DATA_PUBLIC {
     TPM_BOOL bWriteDefine;              /* Set to FALSE after TPM_NV_DefineSpace and set to TRUE
                                            after a successful WriteValuexxx with a datasize of 0 */
     uint32_t dataSize;			/* The size of the data area in bytes */
-} TPM_NV_DATA_PUBLIC; 
+} TPM_NV_DATA_PUBLIC;
 
 #if 0
 
 /*  19.4 TPM_NV_DATA_SENSITIVE rev 101
-  
+
     This is an internal structure that the TPM uses to keep the actual NV data and the controls
     regarding the area.
 */
 
-typedef struct tdTPM_NV_DATA_SENSITIVE { 
+typedef struct tdTPM_NV_DATA_SENSITIVE {
 #ifdef TPM_USE_TAG_IN_STRUCTURE
     TPM_STRUCTURE_TAG tag;      /* This SHALL be TPM_TAG_NV_DATA_SENSITIVE */
 #endif
@@ -2417,7 +2417,7 @@ typedef struct tdTPM_CAP_VERSION_INFO {
     uint16_t specLevel;		/* A number indicating the level of ordinals supported */
     BYTE errataRev;             /* A number indicating the errata version of the specification */
     BYTE tpmVendorID[4];        /* The vendor ID unique to each TPM manufacturer. */
-    uint16_t vendorSpecificSize;  		/* The size of the vendor specific area */
+    uint32_t vendorSpecificSize;  		/* The size of the vendor specific area */
     BYTE vendorSpecific[MAX_COMMAND_SIZE];      /* Vendor specific information */
 } TPM_CAP_VERSION_INFO;
 
@@ -2425,7 +2425,7 @@ typedef struct tdTPM_CAP_VERSION_INFO {
 
    This structure indicates the action taken when the dictionary attack mitigation logic is active,
    when TPM_DA_STATE is TPM_DA_STATE_ACTIVE.
-*/   
+*/
 
 typedef struct tdTPM_DA_ACTION_TYPE {
     TPM_STRUCTURE_TAG tag;      /* MUST be TPM_TAG_DA_ACTION_TYPE */
@@ -2433,10 +2433,10 @@ typedef struct tdTPM_DA_ACTION_TYPE {
 } TPM_DA_ACTION_TYPE;
 
 /* 21.7  TPM_DA_INFO rev 100
-   
+
    This structure is an output from a TPM_GetCapability -> TPM_CAP_DA_LOGIC request if
    TPM_PERMANENT_FLAGS -> disableFullDALogicInfo is FALSE.
-   
+
    It returns static information describing the TPM response to authorization failures that might
    indicate a dictionary attack and dynamic information regarding the current state of the
    dictionary attack mitigation logic.
@@ -2464,7 +2464,7 @@ typedef struct tdTPM_DA_INFO {
 
    This structure is an output from a TPM_GetCapability -> TPM_CAP_DA_LOGIC request if
    TPM_PERMANENT_FLAGS -> disableFullDALogicInfo is TRUE.
-   
+
    It returns static information describing the TPM response to authorization failures that might
    indicate a dictionary attack and dynamic information regarding the current state of the
    dictionary attack mitigation logic. This structure omits information that might aid an attacker.

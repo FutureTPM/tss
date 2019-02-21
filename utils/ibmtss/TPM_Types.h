@@ -1366,7 +1366,7 @@ typedef struct {
 /* Table 71 - Definition of TPM2B_DIGEST Structure */
 
 typedef struct {
-    UINT16    size;
+    UINT32    size;
     BYTE      buffer[sizeof(TPMU_HA)];
 } DIGEST_2B;
 
@@ -1378,7 +1378,7 @@ typedef union {
 /* Table 72 - Definition of TPM2B_DATA Structure */
 
 typedef struct {
-    UINT16	size;				/* size in octets of the buffer field; may be 0 */
+    UINT32	size;				/* size in octets of the buffer field; may be 0 */
     BYTE	buffer[sizeof(TPMT_HA)];
 } DATA_2B;
 
@@ -1405,6 +1405,76 @@ typedef TPM2B_DIGEST	TPM2B_AUTH;	/* size limited to the same as the digest struc
 */
 
 /*****************************************************************************/
+/*                               LDAA Mods                                   */
+/*****************************************************************************/
+#include <ibmtss/ldaa-parms.h>
+#define MAX_LDAA_PUBLIC_KEY_SIZE   (LDAA_PUBLIC_KEY_LENGTH * 4UL)
+#define MAX_LDAA_SECRET_KEY_SIZE   (LDAA_SECRET_KEY_LENGTH * 4UL)
+#define MAX_LDAA_ISSUER_BNTT_SIZE  (LDAA_ISSUER_BNTT2_LENGTH * 4UL) // Largest case
+#define MAX_LDAA_COMMIT_SIZE       (LDAA_C3_LENGTH * 4UL) // Largest case
+
+typedef union {
+    struct {
+	UINT32                  size;
+	BYTE                    buffer[MAX_LDAA_PUBLIC_KEY_SIZE];
+    }            t;
+    TPM2B        b;
+} TPM2B_LDAA_PUBLIC_KEY;
+
+typedef TPM2B_LDAA_PUBLIC_KEY TPM2B_LDAA_NYM;
+typedef TPM2B_LDAA_PUBLIC_KEY TPM2B_LDAA_PE;
+typedef TPM2B_LDAA_PUBLIC_KEY TPM2B_LDAA_PBSN;
+
+typedef union {
+    struct {
+	UINT32                  size;
+	BYTE                    buffer[MAX_LDAA_SECRET_KEY_SIZE];
+    }            t;
+    TPM2B        b;
+} TPM2B_LDAA_SECRET_KEY;
+
+typedef TPM2B_LDAA_SECRET_KEY TPM2B_LDAA_ISSUER_AT;
+typedef TPM2B_LDAA_SECRET_KEY TPM2B_LDAA_ISSUER_ATNTT;
+
+typedef union {
+    struct {
+	UINT32                  size;
+	BYTE                    buffer[MAX_LDAA_COMMIT_SIZE];
+    }            t;
+    TPM2B        b;
+} TPM2B_LDAA_COMMIT;
+
+typedef union {
+    struct {
+	UINT32                  size;
+	BYTE                    buffer[MAX_LDAA_ISSUER_BNTT_SIZE];
+    }            t;
+    TPM2B        b;
+} TPM2B_LDAA_ISSUER_BNTT;
+
+typedef union {
+    struct {
+	UINT32                  size;
+	BYTE                    buffer[1024]; // TODO: Real Value
+    }            t;
+    TPM2B        b;
+} TPM2B_LDAA_SIGNED_MESSAGE;
+
+typedef union {
+    struct {
+	UINT32                  size;
+	BYTE                    buffer[32];
+    }            t;
+    TPM2B        b;
+} TPM2B_LDAA_BASENAME_ISSUER;
+
+typedef TPM2B_LDAA_BASENAME_ISSUER TPM2B_LDAA_MESSAGE;
+typedef TPM2B_LDAA_BASENAME_ISSUER TPM2B_LDAA_BASENAME;
+/*****************************************************************************/
+/*                               LDAA Mods                                   */
+/*****************************************************************************/
+
+/*****************************************************************************/
 /*                             Dilithium Mods                                */
 /*****************************************************************************/
 #define MAX_DILITHIUM_PUBLIC_KEY_SIZE 1760
@@ -1414,7 +1484,7 @@ typedef TPM2B_DIGEST	TPM2B_AUTH;	/* size limited to the same as the digest struc
 
 typedef union {
     struct {
-	UINT16                  size;
+	UINT32                  size;
 	BYTE                    buffer[MAX_DILITHIUM_PUBLIC_KEY_SIZE];
     }            t;
     TPM2B        b;
@@ -1422,7 +1492,7 @@ typedef union {
 
 typedef union {
     struct {
-	UINT16                  size;
+	UINT32                  size;
 	BYTE                    buffer[MAX_DILITHIUM_SECRET_KEY_SIZE];
     }            t;
     TPM2B        b;
@@ -1430,7 +1500,7 @@ typedef union {
 
 typedef union {
     struct {
-	UINT16                  size;
+	UINT32                  size;
 	BYTE                    buffer[MAX_DILITHIUM_SIGNED_MESSAGE_SIZE];
     }            t;
     TPM2B        b;
@@ -1449,7 +1519,7 @@ typedef union {
 
 typedef union {
     struct {
-	UINT16                  size;
+	UINT32                  size;
 	BYTE                    buffer[MAX_KYBER_CIPHER_TEXT_SIZE];
     }            t;
     TPM2B        b;
@@ -1457,7 +1527,7 @@ typedef union {
 
 typedef union {
     struct {
-	UINT16                  size;
+	UINT32                  size;
 	BYTE                    buffer[MAX_KYBER_PUBLIC_KEY_SIZE];
     }            t;
     TPM2B        b;
@@ -1465,7 +1535,7 @@ typedef union {
 
 typedef union {
     struct {
-	UINT16                  size;
+	UINT32                  size;
 	BYTE                    buffer[MAX_KYBER_SECRET_KEY_SIZE];
     }            t;
     TPM2B        b;
@@ -1473,7 +1543,7 @@ typedef union {
 
 typedef union {
     struct {
-	UINT16                  size;
+	UINT32                  size;
 	BYTE                    buffer[MAX_KYBER_SHARED_KEY_SIZE];
     }            t;
     TPM2B        b;
@@ -1492,7 +1562,7 @@ typedef union {
 
 typedef union {
 	struct {
-		UINT16                  size;
+		UINT32                  size;
 		BYTE                    buffer[MAX_NEWHOPE_PRIVATE_KEY_BYTES];
 	}            t;
 	TPM2B        b;
@@ -1500,7 +1570,7 @@ typedef union {
 
 typedef union {
 	struct {
-		UINT16                  size;
+		UINT32                  size;
 		BYTE                    buffer[MAX_NEWHOPE_PUBLIC_KEY_BYTES];
 	}            t;
 	TPM2B        b;
@@ -1508,7 +1578,7 @@ typedef union {
 
 typedef union {
 	struct {
-		UINT16                  size;
+		UINT32                  size;
 		BYTE                    buffer[MAX_NEWHOPE_CIPHER_BYTES];
 	}            t;
 	TPM2B        b;
@@ -1517,7 +1587,7 @@ typedef union {
 
 typedef union {
 	struct {
-		UINT16                  size;
+		UINT32                  size;
 		BYTE                    buffer[MAX_NEWHOPE_SHAREDSECRET_BYTES];
 	}            t;
 	TPM2B        b;
@@ -1535,7 +1605,7 @@ typedef union {
 
 typedef union {
 	struct {
-		UINT16                  size;
+		UINT32                  size;
 		BYTE                    buffer[MAX_QTESLA_PRIVATE_KEY_BYTES];
 	}            t;
 	TPM2B        b;
@@ -1543,7 +1613,7 @@ typedef union {
 
 typedef union {
 	struct {
-		UINT16                  size;
+		UINT32                  size;
 		BYTE                    buffer[MAX_QTESLA_PUBLIC_KEY_BYTES];
 	}            t;
 	TPM2B        b;
@@ -1551,7 +1621,7 @@ typedef union {
 
 typedef union {
 	struct {
-		UINT16                  size;
+		UINT32                  size;
 		BYTE                    buffer[MAX_QTESLA_SIGNATURE_BYTES];
 	}            t;
 	TPM2B        b;
@@ -1562,7 +1632,7 @@ typedef union {
 
 
 typedef struct {
-    UINT16    size;
+    UINT32    size;
     BYTE      buffer[sizeof(TPMU_HA) +	/* TPM2B_AUTH authValue */
 		     sizeof(TPMT_HA)];	/* salt */
 } KEY_2B;
@@ -1579,7 +1649,7 @@ typedef TPM2B_DIGEST	TPM2B_OPERAND;	/* size limited to the same as the digest st
 /* Table 76 - Definition of TPM2B_EVENT Structure */
 
 typedef struct {
-    UINT16	size;			/* size of the operand */
+    UINT32	size;			/* size of the operand */
     BYTE	buffer [1024];		/* the operand */
 } EVENT_2B;
 
@@ -1593,7 +1663,7 @@ typedef union {
 /* MAX_DIGEST_BUFFER is TPM-dependent but is required to be at least 1,024. */
 
 typedef struct {
-    UINT16	size;				/* size of the buffer */
+    UINT32	size;				/* size of the buffer */
     BYTE	buffer [MAX_DIGEST_BUFFER];	/* the operand  */
 } MAX_BUFFER_2B;
 
@@ -1605,7 +1675,7 @@ typedef union {
 /* Table 78 - Definition of TPM2B_MAX_NV_BUFFER Structure */
 
 typedef struct {
-    UINT16	size;				/* size of the buffer */
+    UINT32	size;				/* size of the buffer */
     BYTE	buffer [MAX_NV_BUFFER_SIZE];	/* the operand  */
 } MAX_NV_BUFFER_2B;
 
@@ -1621,7 +1691,7 @@ typedef TPM2B_DIGEST	TPM2B_TIMEOUT;	/* size limited to the same as the digest st
 /* Table 80 - Definition of TPM2B_IV Structure <IN/OUT> */
 
 typedef struct {
-    UINT16	size;				/* size of the IV value */
+    UINT32	size;				/* size of the IV value */
     BYTE	buffer [MAX_SYM_BLOCK_SIZE]; 	/* the IV value */
 } IV_2B;
 
@@ -1640,7 +1710,7 @@ typedef union {
 /* Table 82 - Definition of TPM2B_NAME Structure */
 
 typedef struct {
-    UINT16	size;				/* size of the Name structure */
+    UINT32	size;				/* size of the Name structure */
     BYTE	name[sizeof(TPMU_NAME)];	/* the Name structure */
 } NAME_2B;
 
@@ -1770,7 +1840,7 @@ typedef struct {
 /* Table 100 - Definition of TPM2B_DIGEST_VALUES Structure */
 
 typedef struct {
-    UINT16	size;					/* size of the operand buffer */
+    UINT32	size;					/* size of the operand buffer */
     BYTE	buffer [sizeof(TPML_DIGEST_VALUES)];	/* the operand */
 } TPM2B_DIGEST_VALUES;
 
@@ -1942,7 +2012,7 @@ typedef struct {
 /* Table 120 - Definition of TPM2B_ATTEST Structure <OUT> */
 
 typedef struct {
-    UINT16	size;					/* size of the attestationData structure */
+    UINT32	size;					/* size of the attestationData structure */
     BYTE	attestationData[sizeof(TPMS_ATTEST)];	/* the signed structure */
 } ATTEST_2B;
 
@@ -2035,7 +2105,7 @@ typedef struct {
 /* Table 129 - Definition of TPM2B_SYM_KEY Structure */
 
 typedef struct {
-    UINT16	size;				/* size, in octets, of the buffer containing the key; may be zero */
+    UINT32	size;				/* size, in octets, of the buffer containing the key; may be zero */
     BYTE	buffer [MAX_SYM_KEY_BYTES]; 	/* the key */
 } SYM_KEY_2B;
 
@@ -2054,7 +2124,7 @@ typedef struct {
 
 typedef union {
     struct {
-	UINT16                  size;
+	UINT32                  size;
 	BYTE                    buffer[LABEL_MAX_BUFFER];
     }            t;
     TPM2B        b;
@@ -2070,7 +2140,7 @@ typedef struct {
 /* Table 131 - Definition of TPM2B_SENSITIVE_DATA Structure */
 
 typedef struct {
-    UINT16	size;
+    UINT32	size;
     BYTE	buffer[MAX_SYM_DATA];	/* the keyed hash private data structure */
 } SENSITIVE_DATA_2B;
 
@@ -2089,7 +2159,7 @@ typedef struct {
 /* Table 133 - Definition of TPM2B_SENSITIVE_CREATE Structure <IN, S> */
 
 typedef struct {
-    UINT16			size;		/* size of sensitive in octets (may not be zero) */
+    UINT32			size;		/* size of sensitive in octets (may not be zero) */
     TPMS_SENSITIVE_CREATE	sensitive;	/* data to be sealed or a symmetric key value. */
 } TPM2B_SENSITIVE_CREATE;
 
@@ -2161,6 +2231,14 @@ typedef TPMS_SCHEME_HASH 	TPMS_SIG_SCHEME_DILITHIUM;
 /*****************************************************************************/
 
 /*****************************************************************************/
+/*                               LDAA Mods                                   */
+/*****************************************************************************/
+typedef  TPMS_SCHEME_HASH     TPMS_SIG_SCHEME_LDAA;
+/*****************************************************************************/
+/*                               LDAA Mods                                   */
+/*****************************************************************************/
+
+/*****************************************************************************/
 /*                               qTesla Mods                                 */
 /*****************************************************************************/
 typedef TPMS_SCHEME_HASH    TPMS_SIG_SCHEME_QTESLA;
@@ -2171,8 +2249,11 @@ typedef TPMS_SCHEME_HASH    TPMS_SIG_SCHEME_QTESLA;
 /* Table 143 - Definition of TPMU_SIG_SCHEME Union <IN/OUT, S> */
 
 typedef union {
+#ifdef TPM_ALG_LDAA
+    TPMS_SIG_SCHEME_LDAA        ldaa;
+#endif
 #ifdef TPM_ALG_QTESLA
-    TPMS_SIG_SCHEME_QTESLA	qtesla;
+    TPMS_SIG_SCHEME_QTESLA	    qtesla;
 #endif
 #ifdef TPM_ALG_DILITHIUM
     TPMS_SIG_SCHEME_DILITHIUM	dilithium;
@@ -2260,40 +2341,43 @@ typedef TPM_ALG_ID 		TPMI_ALG_ASYM_SCHEME;
 
 typedef union {
 #ifdef TPM_ALG_ECDH
-    TPMS_KEY_SCHEME_ECDH	ecdh;		/* TPM_ALG_ECDH */
+    TPMS_KEY_SCHEME_ECDH	ecdh;		     /* TPM_ALG_ECDH */
 #endif
 #ifdef TPM_ALG_ECMQV
-    TPMS_KEY_SCHEME_ECMQV	ecmqvh;		/* TPM_ALG_ECMQV */
+    TPMS_KEY_SCHEME_ECMQV	ecmqvh;		     /* TPM_ALG_ECMQV */
+#endif
+#ifdef TPM_ALG_LDAA
+    TPMS_SIG_SCHEME_LDAA         ldaa;       /* TPM_ALG_LDAA */
 #endif
 #ifdef TPM_ALG_DILITHIUM
-    TPMS_SIG_SCHEME_DILITHIUM	dilithium;		/* TPM_ALG_DILITHIUM */
+    TPMS_SIG_SCHEME_DILITHIUM	dilithium;	 /* TPM_ALG_DILITHIUM */
 #endif
 #ifdef TPM_ALG_RSASSA
-    TPMS_SIG_SCHEME_RSASSA	rsassa;		/* TPM_ALG_RSASSA */
+    TPMS_SIG_SCHEME_RSASSA	rsassa;		     /* TPM_ALG_RSASSA */
 #endif
 #ifdef TPM_ALG_RSAPSS
-    TPMS_SIG_SCHEME_RSAPSS	rsapss;		/* TPM_ALG_RSAPSS */
+    TPMS_SIG_SCHEME_RSAPSS	rsapss;		     /* TPM_ALG_RSAPSS */
 #endif
 #ifdef TPM_ALG_ECDSA
-    TPMS_SIG_SCHEME_ECDSA	ecdsa;		/* TPM_ALG_ECDSA */
+    TPMS_SIG_SCHEME_ECDSA	ecdsa;		     /* TPM_ALG_ECDSA */
 #endif
 #ifdef TPM_ALG_ECDAA
-    TPMS_SIG_SCHEME_ECDAA	ecdaa;		/* TPM_ALG_ECDAA */
+    TPMS_SIG_SCHEME_ECDAA	ecdaa;		     /* TPM_ALG_ECDAA */
 #endif
 #ifdef TPM_ALG_SM2
-    TPMS_SIG_SCHEME_SM2		sm2;		/* TPM_ALG_SM2 */
+    TPMS_SIG_SCHEME_SM2		sm2;		     /* TPM_ALG_SM2 */
 #endif
 #ifdef TPM_ALG_ECSCHNORR
-    TPMS_SIG_SCHEME_ECSCHNORR	ecSchnorr;	/* TPM_ALG_ECSCHNORR */
+    TPMS_SIG_SCHEME_ECSCHNORR	ecSchnorr;	 /* TPM_ALG_ECSCHNORR */
 #endif
 #ifdef TPM_ALG_RSAES
-    TPMS_ENC_SCHEME_RSAES	rsaes;		/* TPM_ALG_RSAES */
+    TPMS_ENC_SCHEME_RSAES	rsaes;		     /* TPM_ALG_RSAES */
 #endif
 #ifdef TPM_ALG_OAEP
-    TPMS_ENC_SCHEME_OAEP	oaep;		/* TPM_ALG_OAEP */
+    TPMS_ENC_SCHEME_OAEP	oaep;		     /* TPM_ALG_OAEP */
 #endif
 #ifdef TPM_ALG_KYBER
-    TPMS_ENC_SCHEME_KYBER	kyber;		/* TPM_ALG_KYBER */
+    TPMS_ENC_SCHEME_KYBER	kyber;		     /* TPM_ALG_KYBER */
 #endif
     TPMS_SCHEME_HASH		anySig;
 } TPMU_ASYM_SCHEME;
@@ -2330,7 +2414,7 @@ typedef struct {
 /* Table 157 - Definition of {RSA} TPM2B_PUBLIC_KEY_RSA Structure */
 
 typedef struct {
-    UINT16	size;				/* size of the buffer */
+    UINT32	size;				/* size of the buffer */
     BYTE	buffer[MAX_RSA_KEY_BYTES];	/* Value */
 } PUBLIC_KEY_RSA_2B;
 
@@ -2346,7 +2430,7 @@ typedef TPM_KEY_BITS TPMI_RSA_KEY_BITS;
 /* Table 159 - Definition of {RSA} TPM2B_PRIVATE_KEY_RSA Structure */
 
 typedef struct {
-    UINT16	size;
+    UINT32	size;
     BYTE	buffer[MAX_RSA_KEY_BYTES/2];
 } PRIVATE_KEY_RSA_2B;
 
@@ -2358,7 +2442,7 @@ typedef union {
 /* Table 160 - Definition of {ECC} TPM2B_ECC_PARAMETER Structure */
 
 typedef struct {
-    UINT16	size;				/* size of the buffer */
+    UINT32	size;				/* size of the buffer */
     BYTE	buffer[MAX_ECC_KEY_BYTES];	/* the parameter data */
 } ECC_PARAMETER_2B;
 
@@ -2377,7 +2461,7 @@ typedef struct {
 /* Table 162 - Definition of {ECC} TPM2B_ECC_POINT Structure */
 
 typedef struct {
-    UINT16		size;	/* size of the remainder of this structure */
+    UINT32		size;	/* size of the remainder of this structure */
     TPMS_ECC_POINT	point;	/* coordinates */
 } TPM2B_ECC_POINT;
 
@@ -2438,6 +2522,17 @@ typedef struct {
 /*****************************************************************************/
 
 /*****************************************************************************/
+/*                                LDAA Mods                                  */
+/*****************************************************************************/
+typedef struct {
+    TPMI_ALG_HASH                  hash;
+    TPM2B_LDAA_SIGNED_MESSAGE      sig;
+} TPMS_SIGNATURE_LDAA;
+/*****************************************************************************/
+/*                                LDAA Mods                                  */
+/*****************************************************************************/
+
+/*****************************************************************************/
 /*                               qTesla Mods                                 */
 /*****************************************************************************/
 typedef struct {
@@ -2471,6 +2566,9 @@ typedef TPMS_SIGNATURE_ECC	TPMS_SIGNATURE_ECSCHNORR;
 /* Table 171 - Definition of TPMU_SIGNATURE Union <IN/OUT, S> */
 
 typedef union {
+#ifdef TPM_ALG_LDAA
+    TPMS_SIGNATURE_LDAA      ldaa;          /* TPM_ALG_LDAA */
+#endif
 #ifdef TPM_ALG_DILITHIUM
     TPMS_SIGNATURE_DILITHIUM dilithium;		/* TPM_ALG_DILITHIUM */
 #endif
@@ -2537,7 +2635,7 @@ typedef union {
 /* Table 174 - Definition of TPM2B_ENCRYPTED_SECRET Structure */
 
 typedef struct {
-    UINT16	size;					/* size of the secret value */
+    UINT32	size;					/* size of the secret value */
     BYTE	secret[sizeof(TPMU_ENCRYPTED_SECRET)];	/* secret */
 } ENCRYPTED_SECRET_2B;
 
@@ -2553,6 +2651,9 @@ typedef TPM_ALG_ID TPMI_ALG_PUBLIC;
 /* Table 176 - Definition of TPMU_PUBLIC_ID Union <IN/OUT, S> */
 
 typedef union {
+#ifdef TPM_ALG_LDAA
+    TPM2B_LDAA_PUBLIC_KEY   ldaa;
+#endif
 #ifdef TPM_ALG_NEWHOPE
 	TPM2B_NEWHOPE_PUBLIC_KEY newhope;
 #endif
@@ -2611,6 +2712,24 @@ typedef struct {
     TPMI_ECC_CURVE	curveID;	/* ECC curve ID */
     TPMT_KDF_SCHEME	kdf;		/* an optional key derivation scheme for generating a symmetric key from a Z value */
 } TPMS_ECC_PARMS;
+
+/*****************************************************************************/
+/*                                LDAA Mods                                  */
+/*****************************************************************************/
+typedef  TPM_ALG_ID         TPMI_ALG_LDAA_SCHEME;
+typedef struct {
+    TPMI_ALG_LDAA_SCHEME scheme;
+    TPMU_ASYM_SCHEME      details;
+} TPMT_LDAA_SCHEME;
+
+typedef struct {
+    TPMT_SYM_DEF_OBJECT  symmetric;
+    TPMT_LDAA_SCHEME     scheme;
+    TPM2B_LDAA_ISSUER_AT issuer_at;
+} TPMS_LDAA_PARMS;
+/*****************************************************************************/
+/*                                LDAA Mods                                  */
+/*****************************************************************************/
 
 /*****************************************************************************/
 /*                             Dilithium Mods                                */
@@ -2695,6 +2814,9 @@ typedef struct {
 /* Table 181 - Definition of TPMU_PUBLIC_PARMS Union <IN/OUT, S> */
 
 typedef union {
+#ifdef TPM_ALG_LDAA
+    TPMS_LDAA_PARMS         ldaaDetail;
+#endif
 #ifdef TPM_ALG_NEWHOPE
 	TPMS_NEWHOPE_PARMS      newhopeDetail;
 #endif
@@ -2743,7 +2865,7 @@ typedef struct {
 /* Table 184 - Definition of TPM2B_PUBLIC Structure */
 
 typedef struct {
-    UINT16	size;		/* size of publicArea */
+    UINT32	size;		/* size of publicArea */
     TPMT_PUBLIC	publicArea;	/* the public area  */
 } TPM2B_PUBLIC;
 
@@ -2751,7 +2873,7 @@ typedef struct {
 
 typedef union {
     struct {
-	UINT16	size;				/* size of publicArea */
+	UINT32	size;				/* size of publicArea */
 	BYTE	buffer[sizeof(TPMT_PUBLIC)];	/* the public area  */
     } t;
     TPM2B       b;
@@ -2760,6 +2882,9 @@ typedef union {
 /* Table 186 - Definition of TPMU_SENSITIVE_COMPOSITE Union <IN/OUT, S> */
 
 typedef union {
+#ifdef TPM_ALG_LDAA
+    TPM2B_LDAA_SECRET_KEY           ldaa;
+#endif
 #ifdef TPM_ALG_NEWHOPE
 	TPM2B_NEWHOPE_PRIVATE_KEY	newhope;
 #endif
@@ -2798,7 +2923,7 @@ typedef struct {
 /* Table 188 - Definition of TPM2B_SENSITIVE Structure <IN/OUT> */
 
 typedef struct {
-    UINT16		size;		/* size of the private structure */
+    UINT32		size;		/* size of the private structure */
     TPMT_SENSITIVE	sensitiveArea;	/* an unencrypted sensitive area */
 } SENSITIVE_2B;
 
@@ -2818,7 +2943,7 @@ typedef struct {
 /* Table 190 - Definition of TPM2B_PRIVATE Structure <IN/OUT, S> */
 
 typedef struct {
-    UINT16	size;				/* size of the private structure */
+    UINT32	size;				/* size of the private structure */
     BYTE	buffer[sizeof(_PRIVATE)];	/* an encrypted private area */
 } PRIVATE_2B;
 
@@ -2837,7 +2962,7 @@ typedef struct {
 /* Table 192 - Definition of TPM2B_ID_OBJECT Structure <IN/OUT> */
 
 typedef struct {
-    UINT16	size;				/* size of the credential structure */
+    UINT32	size;				/* size of the credential structure */
     BYTE	credential[sizeof(_ID_OBJECT)];	/* an encrypted credential area */
 } ID_OBJECT_2B;
 
@@ -3018,20 +3143,20 @@ typedef struct {
     TPMI_ALG_HASH	nameAlg;	/* hash algorithm used to compute the name of the Index and used for the authPolicy */
     TPMA_NV		attributes;	/* the Index attributes */
     TPM2B_DIGEST	authPolicy;	/* optional access policy for the Index */
-    UINT16		dataSize;	/* the size of the data area */
+    UINT32		dataSize;	/* the size of the data area */
 } TPMS_NV_PUBLIC;
 
 /* Table 198 - Definition of TPM2B_NV_PUBLIC Structure */
 
 typedef struct {
-    UINT16		size;		/* size of nvPublic */
+    UINT32		size;		/* size of nvPublic */
     TPMS_NV_PUBLIC	nvPublic;	/* the public area */
 } TPM2B_NV_PUBLIC;
 
 /* Table 199 - Definition of TPM2B_CONTEXT_SENSITIVE Structure <IN/OUT> */
 
 typedef struct {
-    UINT16	size;
+    UINT32	size;
     BYTE	buffer[MAX_CONTEXT_SIZE];	/* the sensitive data */
 } CONTEXT_SENSITIVE_2B;
 
@@ -3050,7 +3175,7 @@ typedef struct {
 /* Table 201 - Definition of TPM2B_CONTEXT_DATA Structure <IN/OUT> */
 
 typedef struct {
-    UINT16		size;
+    UINT32		size;
     BYTE		buffer[sizeof(TPMS_CONTEXT_DATA)];
 } CONTEXT_DATA_2B;
 
@@ -3091,7 +3216,7 @@ typedef struct {
 /* Table 205 - Definition of TPM2B_CREATION_DATA Structure <OUT> */
 
 typedef struct {
-    UINT16		size;	/* size of the creation data */
+    UINT32		size;	/* size of the creation data */
     TPMS_CREATION_DATA	creationData;
 } TPM2B_CREATION_DATA;
 

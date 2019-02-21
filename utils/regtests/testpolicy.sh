@@ -92,7 +92,7 @@ echo "Sign a digest - policy, should fail, session used "
 ${PREFIX}sign -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 1 > run.out
 checkFailure $?
 
-# quote with bad policy or bad command 
+# quote with bad policy or bad command
 
 # echo "Start a policy session"
 # ${PREFIX}startauthsession -se p > run.out
@@ -111,7 +111,7 @@ ${PREFIX}quote -hp 0 -hk 80000001 -os sig.bin -se0 03000000 1 > run.out
 checkFailure $?
 
 echo "Policy restart, set back to zero"
-${PREFIX}policyrestart -ha 03000000 > run.out 
+${PREFIX}policyrestart -ha 03000000 > run.out
 checkSuccess $?
 
 # echo "Flush the session"
@@ -153,7 +153,7 @@ checkSuccess $?
 # policypassword
 
 echo "Policy restart, set back to zero"
-${PREFIX}policyrestart -ha 03000000 > run.out 
+${PREFIX}policyrestart -ha 03000000 > run.out
 checkSuccess $?
 
 echo "Sign a digest - policy, should fail"
@@ -210,7 +210,7 @@ echo ""
 echo "Policy Password and Policy Authvalue flags"
 echo ""
 
-for COMMAND in policypassword policyauthvalue 
+for COMMAND in policypassword policyauthvalue
 
 do
 
@@ -275,7 +275,7 @@ echo ""
 # create rsaprivkey.pem
 # > openssl genrsa -out rsaprivkey.pem -aes256 -passout pass:rrrr 2048
 # extract the public key
-# > openssl pkey -inform pem -outform pem -in rsaprivkey.pem -passin pass:rrrr -pubout -out rsapubkey.pem 
+# > openssl pkey -inform pem -outform pem -in rsaprivkey.pem -passin pass:rrrr -pubout -out rsapubkey.pem
 # sign a test message msg.bin
 # > openssl dgst -sha1 -sign rsaprivkey.pem -passin pass:rrrr -out pssig.bin msg.bin
 #
@@ -305,17 +305,17 @@ echo ""
 # > policymaker -if policies/policysigned$HALG.txt -of policies/policysigned$HALG.bin -pr
 #
 # sha1
-# 9d 81 7a 4e e0 76 eb b5 cf ee c1 82 05 cc 4c 01 
-# b3 a0 5e 59 a9 b9 65 a1 59 af 1e cd 3d bf 54 fb 
+# 9d 81 7a 4e e0 76 eb b5 cf ee c1 82 05 cc 4c 01
+# b3 a0 5e 59 a9 b9 65 a1 59 af 1e cd 3d bf 54 fb
 # sha256
-# de bf 9d fa 3c 98 08 0b f1 7d d1 d0 7b 54 fd e1 
-# 07 93 7f e5 40 50 9e 70 96 aa 73 27 53 b3 83 31 
+# de bf 9d fa 3c 98 08 0b f1 7d d1 d0 7b 54 fd e1
+# 07 93 7f e5 40 50 9e 70 96 aa 73 27 53 b3 83 31
 # sha384
-# 45 c5 da 90 76 92 3a 70 03 6f df 56 ea e7 df db 
-# 41 e2 01 75 24 49 54 94 66 93 6b c4 fc 88 ab 5c 
+# 45 c5 da 90 76 92 3a 70 03 6f df 56 ea e7 df db
+# 41 e2 01 75 24 49 54 94 66 93 6b c4 fc 88 ab 5c
 # sha512
-# cd 34 96 08 39 ea 40 88 5e fa 7f 37 8b a7 21 f1 
-# 78 6d 52 bb 93 47 9c 73 45 88 3c dc 1f 09 06 6f 
+# cd 34 96 08 39 ea 40 88 5e fa 7f 37 8b a7 21 f1
+# 78 6d 52 bb 93 47 9c 73 45 88 3c dc 1f 09 06 6f
 #
 # 80000000 primary key
 # 80000001 verification public key
@@ -365,7 +365,7 @@ do
     checkSuccess $?
 
     echo "Policy restart, set back to zero"
-    ${PREFIX}policyrestart -ha 03000000 > run.out 
+    ${PREFIX}policyrestart -ha 03000000 > run.out
     checkSuccess $?
 
     echo "Sign just expiration (uint32_t 4 zeros) with openssl - $HALG"
@@ -509,14 +509,14 @@ echo ""
 echo "Policy Secret with NV Auth"
 echo ""
 
-# Name is 
-# 00 0b e0 65 10 81 c2 fc da 30 69 93 da 43 d1 de 
-# 5b 24 be 42 6e 2d 61 90 7b 42 83 54 69 13 6c 97 
-# 68 1f 
+# Name is
+# 00 0b e0 65 10 81 c2 fc da 30 69 93 da 43 d1 de
+# 5b 24 be 42 6e 2d 61 90 7b 42 83 54 69 13 6c 97
+# 68 1f
 
 # Policy is
-# c6 93 f9 b0 ef 1a b7 1e ca ae 00 af 1f 0b f4 88 
-# 37 9e ab 16 c1 f8 0d 9f f9 6d 90 41 4e 2f c6 b3 
+# c6 93 f9 b0 ef 1a b7 1e ca ae 00 af 1f 0b f4 88
+# 37 9e ab 16 c1 f8 0d 9f f9 6d 90 41 4e 2f c6 b3
 
 echo "NV Define Space 0100000"
 ${PREFIX}nvdefinespace -hi p -ha 01000000 -pwdn nnn -sz 16 -pwdn nnn > run.out
@@ -563,16 +563,16 @@ echo ""
 # the policy can be precalculated
 
 # Name
-# 00 0b 64 ac 92 1a 03 5c 72 b3 aa 55 ba 7d b8 b5 
-# 99 f1 72 6f 52 ec 2f 68 20 42 fc 0e 0d 29 fa e8 
-# 17 99 
+# 00 0b 64 ac 92 1a 03 5c 72 b3 aa 55 ba 7d b8 b5
+# 99 f1 72 6f 52 ec 2f 68 20 42 fc 0e 0d 29 fa e8
+# 17 99
 
-# 000001151 plus the above name as text, add a blank line for empty policyRef
+# 000000151 plus the above name as text, add a blank line for empty policyRef
 # to create policies/policysecretsha256.txt
 # 00000151000b64ac921a035c72b3aa55ba7db8b599f1726f52ec2f682042fc0e0d29fae81799
 
-# 4b 7f ca c2 b7 c3 ac a2 7c 5c da 9c 71 e6 75 28 
-# 63 d2 87 d2 33 ec 49 0e 7a be 88 f1 ef 94 5d 5c 
+# 4b 7f ca c2 b7 c3 ac a2 7c 5c da 9c 71 e6 75 28
+# 63 d2 87 d2 33 ec 49 0e 7a be 88 f1 ef 94 5d 5c
 
 echo "Load the RSA openssl key pair in the NULL hierarchy 80000001"
 ${PREFIX}loadexternal -rsa -ider policies/rsaprivkey.der -pwdk rrrr > run.out
@@ -644,8 +644,8 @@ echo ""
 #
 # > policymaker -if policies/policyauthorizesha256.txt -of policies/policyauthorizesha256.bin -pr
 #
-# eb a3 f9 8c 5e af 1e a8 f9 4f 51 9b 4d 2a 31 83 
-# ee 79 87 66 72 39 8e 23 15 d9 33 c2 88 a8 e5 03 
+# eb a3 f9 8c 5e af 1e a8 f9 4f 51 9b 4d 2a 31 83
+# ee 79 87 66 72 39 8e 23 15 d9 33 c2 88 a8 e5 03
 
 echo "Create a signing key with policy authorize"
 ${PREFIX}create -hp 80000000 -si -kt f -kt p -opr tmppriv.bin -opu tmppub.bin -pwdp sto -pwdk sig -pol policies/policyauthorizesha256.bin > run.out
@@ -759,8 +759,8 @@ echo ""
 # convert to binary policy
 # > policymaker -halg sha1 -if policies/policypcr.txt -of policies/policypcrbm0.bin -pr -v
 
-# 6d 38 49 38 e1 d5 8b 56 71 92 55 94 3f 06 69 66 
-# b6 fa 2c 23 
+# 6d 38 49 38 e1 d5 8b 56 71 92 55 94 3f 06 69 66
+# b6 fa 2c 23
 
 echo "Create a signing key with policy PCR no select"
 ${PREFIX}create -hp 80000000 -si -kt f -kt p -opr tmppriv.bin -opu tmppub.bin -pwdp sto -pwdk sig -nalg sha1 -pol policies/policypcrbm0.bin > run.out
@@ -787,7 +787,7 @@ ${PREFIX}sign -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 1 > run.out
 checkSuccess $?
 
 echo "Policy restart, set back to zero"
-${PREFIX}policyrestart -ha 03000000 > run.out 
+${PREFIX}policyrestart -ha 03000000 > run.out
 checkSuccess $?
 
 echo "Policy PCR, update with the correct digest"
@@ -807,7 +807,7 @@ ${PREFIX}flushcontext -ha 03000000 > run.out
 checkSuccess $?
 
 echo "Flush the key"
-${PREFIX}flushcontext -ha 80000001 > run.out 
+${PREFIX}flushcontext -ha 80000001 > run.out
 checkSuccess $?
 
 echo ""
@@ -891,7 +891,7 @@ ${PREFIX}flushcontext -ha 03000000 > run.out
 checkSuccess $?
 
 echo "Flush the key"
-${PREFIX}flushcontext -ha 80000001 > run.out 
+${PREFIX}flushcontext -ha 80000001 > run.out
 checkSuccess $?
 
 # 01000000 authorizing index
@@ -910,7 +910,7 @@ checkSuccess $?
 #
 # NV authorizing index
 #
-# after defining index and NV write to set written, use 
+# after defining index and NV write to set written, use
 # ${PREFIX}nvreadpublic -ha 01000000 -nalg sha1
 # to get name
 # 00042234b8df7cdf8605ee0a2088ac7dfe34c6566c5c
@@ -919,7 +919,7 @@ checkSuccess $?
 #
 # convert to binary policy
 # > policymaker -halg sha1 -if policynvnv.txt -of policynvnv.bin -pr -v
-# bc 9b 4c 4f 7b 00 66 19 5b 1d d9 9c 92 7e ad 57 e7 1c 2a fc 
+# bc 9b 4c 4f 7b 00 66 19 5b 1d d9 9c 92 7e ad 57 e7 1c 2a fc
 #
 # file zero8.bin has 8 bytes of hex zero
 
@@ -940,7 +940,7 @@ ${PREFIX}nvsetbits -ha 01000000 -pwdn nnn > run.out
 checkSuccess $?
 
 echo "NV Read public, get Name, written"
-${PREFIX}nvreadpublic -ha 01000000 -nalg sha1 > run.out
+${PREFIX}nvreadpublic -ha 01000000 -nalg sha1 -v > run.out
 checkSuccess $?
 
 echo "NV Read, should be zero"
@@ -962,7 +962,7 @@ checkSuccess $?
 echo "Start policy session"
 ${PREFIX}startauthsession -se p -halg sha1 > run.out
 checkSuccess $?
- 
+
 echo "NV write, policy not satisfied  - should fail"
 ${PREFIX}nvwrite -ha 01000001 -ic aa -se0 03000000 1 > run.out
 checkFailure $?
@@ -1004,11 +1004,11 @@ ${PREFIX}nvundefinespace -hi p -ha 01000000 > run.out
 checkSuccess $?
 
 echo "NV Undefine authorized index"
-${PREFIX}nvundefinespace -hi p -ha 01000001 > run.out 
+${PREFIX}nvundefinespace -hi p -ha 01000001 > run.out
 checkSuccess $?
 
 echo "Flush policy session"
-${PREFIX}flushcontext -ha 03000000 > run.out  
+${PREFIX}flushcontext -ha 03000000 > run.out
 checkSuccess $?
 
 echo ""
@@ -1016,31 +1016,31 @@ echo "Policy NV Written"
 echo ""
 
 echo "Define an ordinary index, authorized index, policyNV"
-${PREFIX}nvdefinespace -hi p -nalg sha1 -ha 01000000 -pwdn nnn -sz 2 -ty o -pol policies/policywrittenset.bin > run.out  
+${PREFIX}nvdefinespace -hi p -nalg sha1 -ha 01000000 -pwdn nnn -sz 2 -ty o -pol policies/policywrittenset.bin > run.out
 checkSuccess $?
 
 echo "NV Read public, get Name, not written"
-${PREFIX}nvreadpublic -ha 01000000 -nalg sha1 > run.out  
+${PREFIX}nvreadpublic -ha 01000000 -nalg sha1 > run.out
 checkSuccess $?
 
 echo "Start policy session"
 ${PREFIX}startauthsession -se p -halg sha1 > run.out
 checkSuccess $?
- 
+
 echo "NV write, policy not satisfied  - should fail"
-${PREFIX}nvwrite -ha 01000000 -ic aa -se0 03000000 1 > run.out  
+${PREFIX}nvwrite -ha 01000000 -ic aa -se0 03000000 1 > run.out
 checkFailure $?
 
 echo "Policy NV Written no, does not satisfy policy"
-${PREFIX}policynvwritten -hs 03000000 -ws n > run.out  
+${PREFIX}policynvwritten -hs 03000000 -ws n > run.out
 checkSuccess $?
 
 echo "NV write, policy not satisfied - should fail"
-${PREFIX}nvwrite -ha 01000000 -ic aa -se0 03000000 1 > run.out  
+${PREFIX}nvwrite -ha 01000000 -ic aa -se0 03000000 1 > run.out
 checkFailure $?
 
 echo "Flush policy session"
-${PREFIX}flushcontext -ha 03000000 > run.out  
+${PREFIX}flushcontext -ha 03000000 > run.out
 checkSuccess $?
 
 echo "Start policy session"
@@ -1056,7 +1056,7 @@ ${PREFIX}nvwrite -ha 01000000 -ic aa -se0 03000000 1 > run.out
 checkFailure $?
 
 echo "Flush policy session"
-${PREFIX}flushcontext -ha 03000000 > run.out  
+${PREFIX}flushcontext -ha 03000000 > run.out
 checkSuccess $?
 
 echo "NV write using password, set written"
@@ -1076,7 +1076,7 @@ ${PREFIX}nvwrite -ha 01000000 -ic aa -se0 03000000 1 > run.out
 checkSuccess $?
 
 echo "Flush policy session"
-${PREFIX}flushcontext -ha 03000000 > run.out  
+${PREFIX}flushcontext -ha 03000000 > run.out
 checkSuccess $?
 
 echo "Start policy session"
@@ -1092,7 +1092,7 @@ ${PREFIX}policynvwritten -hs 03000000 -ws y > run.out
 checkFailure $?
 
 echo "Flush policy session"
-${PREFIX}flushcontext -ha 03000000 > run.out  
+${PREFIX}flushcontext -ha 03000000 > run.out
 checkSuccess $?
 
 echo "NV Undefine authorizing index"
@@ -1129,17 +1129,17 @@ checkSuccess $?
 
 # policymaker -if policies/policywrittenclrsigned.txt -of policies/policywrittenclrsigned.bin -pr -ns -v
 # intermediate policy digest length 32
-#  3c 32 63 23 67 0e 28 ad 37 bd 57 f6 3b 4c c3 4d 
-#  26 ab 20 5e f2 2f 27 5c 58 d4 7f ab 24 85 46 6e 
+#  3c 32 63 23 67 0e 28 ad 37 bd 57 f6 3b 4c c3 4d
+#  26 ab 20 5e f2 2f 27 5c 58 d4 7f ab 24 85 46 6e
 #  intermediate policy digest length 32
-#  6b 0d 2d 2b 55 4d 68 ec bc 6c d5 b8 c0 96 c1 70 
-#  57 5a 95 25 37 56 38 7e 83 d7 76 d9 5b 1b 8e f3 
+#  6b 0d 2d 2b 55 4d 68 ec bc 6c d5 b8 c0 96 c1 70
+#  57 5a 95 25 37 56 38 7e 83 d7 76 d9 5b 1b 8e f3
 #  intermediate policy digest length 32
-#  48 0b 78 2e 02 82 c2 40 88 32 c4 df 9c 0e be 87 
-#  18 6f 92 54 bd e0 5b 0c 2e a9 52 48 3e b7 69 f2 
+#  48 0b 78 2e 02 82 c2 40 88 32 c4 df 9c 0e be 87
+#  18 6f 92 54 bd e0 5b 0c 2e a9 52 48 3e b7 69 f2
 #  policy digest length 32
-#  48 0b 78 2e 02 82 c2 40 88 32 c4 df 9c 0e be 87 
-#  18 6f 92 54 bd e0 5b 0c 2e a9 52 48 3e b7 69 f2 
+#  48 0b 78 2e 02 82 c2 40 88 32 c4 df 9c 0e be 87
+#  18 6f 92 54 bd e0 5b 0c 2e a9 52 48 3e b7 69 f2
 # policy digest:
 # 480b782e0282c2408832c4df9c0ebe87186f9254bde05b0c2ea952483eb769f2
 
@@ -1152,17 +1152,17 @@ checkSuccess $?
 
 # policymaker -if policies/policywrittensetsigned.txt -of policies/policywrittensetsigned.bin -pr -ns -v
 #  intermediate policy digest length 32
-#  f7 88 7d 15 8a e8 d3 8b e0 ac 53 19 f3 7a 9e 07 
-#  61 8b f5 48 85 45 3c 7a 54 dd b0 c6 a6 19 3b eb 
+#  f7 88 7d 15 8a e8 d3 8b e0 ac 53 19 f3 7a 9e 07
+#  61 8b f5 48 85 45 3c 7a 54 dd b0 c6 a6 19 3b eb
 #  intermediate policy digest length 32
-#  7d c2 8f b0 dd 4f ee 97 78 2b 55 43 b1 dc 6b 1e 
-#  e2 bc 79 05 d4 a1 f6 8d e2 97 69 5f a9 aa 78 5f 
+#  7d c2 8f b0 dd 4f ee 97 78 2b 55 43 b1 dc 6b 1e
+#  e2 bc 79 05 d4 a1 f6 8d e2 97 69 5f a9 aa 78 5f
 #  intermediate policy digest length 32
-#  09 43 ba 3c 3b 4d b1 c8 3f c3 97 85 f9 dc 0a 82 
-#  49 f6 79 4a 04 38 e6 45 0a 50 56 8f b4 eb d2 46 
+#  09 43 ba 3c 3b 4d b1 c8 3f c3 97 85 f9 dc 0a 82
+#  49 f6 79 4a 04 38 e6 45 0a 50 56 8f b4 eb d2 46
 #  policy digest length 32
-#  09 43 ba 3c 3b 4d b1 c8 3f c3 97 85 f9 dc 0a 82 
-#  49 f6 79 4a 04 38 e6 45 0a 50 56 8f b4 eb d2 46 
+#  09 43 ba 3c 3b 4d b1 c8 3f c3 97 85 f9 dc 0a 82
+#  49 f6 79 4a 04 38 e6 45 0a 50 56 8f b4 eb d2 46
 # policy digest:
 # 0943ba3c3b4db1c83fc39785f9dc0a8249f6794a0438e6450a50568fb4ebd246
 
@@ -1170,17 +1170,17 @@ checkSuccess $?
 
 # policyorwrittensigned.txt - command code plus two policy digests
 # 00000171480b782e0282c2408832c4df9c0ebe87186f9254bde05b0c2ea952483eb769f20943ba3c3b4db1c83fc39785f9dc0a8249f6794a0438e6450a50568fb4ebd246
-# policymaker -if policies/policyorwrittensigned.txt -of policies/policyorwrittensigned.bin -pr 
+# policymaker -if policies/policyorwrittensigned.txt -of policies/policyorwrittensigned.bin -pr
 #  policy digest length 32
-#  06 00 ae 34 7a 30 b0 67 36 d3 32 85 a0 cc ad 46 
-#  54 1e 62 71 f5 d0 85 10 a7 ff 0e 90 30 54 d6 c9 
+#  06 00 ae 34 7a 30 b0 67 36 d3 32 85 a0 cc ad 46
+#  54 1e 62 71 f5 d0 85 10 a7 ff 0e 90 30 54 d6 c9
 
 echo "Define index 01000000 with the policy OR"
 ${PREFIX}nvdefinespace -ha 01000000 -hi o -sz 8 -pwdn "" -pol policies/policyorwrittensigned.bin -at aw > run.out
 checkSuccess $?
 
 echo "Get the Name of the NV index not written, should be 00 0b ... bb 0b"
-${PREFIX}nvreadpublic -ha 01000000 -ns > run.out
+${PREFIX}nvreadpublic -ha 01000000 -ns -v > run.out
 checkSuccess $?
 
 # 000b366258674dcf8aa16d344f24dde1c799fc60f9427a7286bb8cd1e4e9fd1fbb0b
@@ -1194,15 +1194,15 @@ echo "Policy A - not written"
 echo ""
 
 # construct cpHash for Policy A - not written, writing zeros
- 
+
 # (commandCode || authHandle Name || NV Index Name || data + offset) - data 8 bytes of 0's at offset 0000
 # For index auth, authHandle Name and index Name are the same
 # policies/nvwritecphasha.txt
 # 00000137000b366258674dcf8aa16d344f24dde1c799fc60f9427a7286bb8cd1e4e9fd1fbb0b000b366258674dcf8aa16d344f24dde1c799fc60f9427a7286bb8cd1e4e9fd1fbb0b000800000000000000000000
 # policymaker -nz -if policies/nvwritecphasha.txt -of policies/nvwritecphasha.bin -pr -ns
 #  policy digest length 32
-#  cf 98 1e ee 68 04 3b dd ee 0c ab bc 75 b3 63 be 
-#  3c f9 ee 22 2a 78 b8 26 3f 06 7b b3 55 2c a6 11 
+#  cf 98 1e ee 68 04 3b dd ee 0c ab bc 75 b3 63 be
+#  3c f9 ee 22 2a 78 b8 26 3f 06 7b b3 55 2c a6 11
 # policy digest:
 # cf981eee68043bddee0cabbc75b363be3cf9ee222a78b8263f067bb3552ca611
 
@@ -1219,7 +1219,7 @@ ${PREFIX}policynvwritten -hs 03000000 -ws n > run.out
 checkSuccess $?
 
 echo "Should be policy A first intermediate value 3c 32 63 23 ..."
-${PREFIX}policygetdigest -ha 03000000 > run.out 
+${PREFIX}policygetdigest -ha 03000000 > run.out
 checkSuccess $?
 
 echo "Sign aHash with openssl 8813 6530 ..."
@@ -1231,7 +1231,7 @@ ${PREFIX}policysigned -hk 80000001 -ha 03000000 -halg sha256 -cp policies/nvwrit
 checkSuccess $?
 
 echo "Should be policy A final value 48 0b 78 2e ..."
-${PREFIX}policygetdigest -ha 03000000 > run.out 
+${PREFIX}policygetdigest -ha 03000000 -v > run.out
 checkSuccess $?
 
 echo "Policy OR"
@@ -1239,7 +1239,7 @@ ${PREFIX}policyor -ha 03000000 -if policies/policywrittenclrsigned.bin -if polic
 checkSuccess $?
 
 echo "Should be policy OR final value 06 00 ae 34 "
-${PREFIX}policygetdigest -ha 03000000 > run.out 
+${PREFIX}policygetdigest -ha 03000000 -v > run.out
 checkSuccess $?
 
 echo "NV write to set written"
@@ -1251,34 +1251,35 @@ echo "Policy B - written"
 echo ""
 
 echo "Get the new (written) Name of the NV index not written, should be 00 0b f5 75"
-${PREFIX}nvreadpublic -ha 01000000 -ns > run.out
+${PREFIX}nvreadpublic -ha 01000000 -ns -v > run.out
 checkSuccess $?
 
 # 000bf575f09107d38c4cb82e8ec054b1aca9a91e40a06ec074b578bdd9cdaf4b76c8
 
 # construct cpHash for Policy B
- 
+
 # (commandCode || authHandle Name || NV Index Name || data + offset) - data 8 bytes of abcdefgh at offset 00000
 # For index auth, authHandle Name and index Name are the same
 # policies/nvwritecphashb.txt
-# 00000137000bf575f09107d38c4cb82e8ec054b1aca9a91e40a06ec074b578bdd9cdaf4b76c8000bf575f09107d38c4cb82e8ec054b1aca9a91e40a06ec074b578bdd9cdaf4b76c8000861626364656667680000
+# 00000137
+# 000bf575f09107d38c4cb82e8ec054b1aca9a91e40a06ec074b578bdd9cdaf4b76c8000bf575f09107d38c4cb82e8ec054b1aca9a91e40a06ec074b578bdd9cdaf4b76c8000861626364656667680000
 # policymaker -nz -if policies/nvwritecphashb.txt -of policies/nvwritecphashb.bin -pr -ns
 #  policy digest length 32
-#  df 58 08 f9 ab cb 23 7f 8c d7 c9 09 1c 86 12 2d 
-#  88 6f 02 d4 6e db 53 c8 da 39 bf a2 d6 cf 07 63 
+#  df 58 08 f9 ab cb 23 7f 8c d7 c9 09 1c 86 12 2d
+#  88 6f 02 d4 6e db 53 c8 da 39 bf a2 d6 cf 07 63
 # policy digest:
 # df5808f9abcb237f8cd7c9091c86122d886f02d46edb53c8da39bfa2d6cf0763
 
 # construct aHash for Policy B
 
-# expiration + cpHashA
+# expiration + cpHashB
 # policies/nvwriteahashb.txt
 # 00000000df5808f9abcb237f8cd7c9091c86122d886f02d46edb53c8da39bfa2d6cf0763
 # just convert to binary, because openssl does the hash before signing
 # xxd -r -p policies/nvwriteahashb.txt policies/nvwriteahashb.bin
 
 echo "Policy NV Written yes, satisfy policy"
-${PREFIX}policynvwritten -hs 03000000 -ws y > run.out
+${PREFIX}policynvwritten -hs 03000000 -ws y -v > run.out
 checkSuccess $?
 
 echo "Should be policy A first intermediate value f7 88 7d 15 ..."
@@ -1322,7 +1323,7 @@ ${PREFIX}flushcontext -ha 80000001 > run.out
 checkSuccess $?
 
 echo "Undefine the NV Index 01000000"
-${PREFIX}nvundefinespace -hi o -ha 01000000 > run.out 
+${PREFIX}nvundefinespace -hi o -ha 01000000 > run.out
 checkSuccess $?
 
 # test using clockrateadjust
@@ -1333,7 +1334,7 @@ checkSuccess $?
 # b5f919bbc01f0ebad02010169a67a8c158ec12f3
 # append to policycphash.txt 00000163 + cpHash
 # policymaker -halg sha1 -if policycphash.txt -of policycphash.bin -pr
-#  06 e4 6c f9 f3 c7 0f 30 10 18 7c a6 72 69 b0 84 b4 52 11 6f 
+#  06 e4 6c f9 f3 c7 0f 30 10 18 7c a6 72 69 b0 84 b4 52 11 6f
 
 echo ""
 echo "Policy cpHash"
@@ -1344,11 +1345,11 @@ ${PREFIX}setprimarypolicy -hi p -pol policies/policycphash.bin -halg sha1 > run.
 checkSuccess $?
 
 echo "Clockrate adjust using wrong password - should fail"
-${PREFIX}clockrateadjust -hi p -pwdp ppp -adj 0 > run.out 
+${PREFIX}clockrateadjust -hi p -pwdp ppp -adj 0 > run.out
 checkFailure $?
 
 echo "Start policy session"
-${PREFIX}startauthsession -se p -halg sha1 > run.out 
+${PREFIX}startauthsession -se p -halg sha1 > run.out
 checkSuccess $?
 
 echo "Clockrate adjust, policy not satisfied - should fail"
@@ -1358,25 +1359,25 @@ checkFailure $?
 echo "Policy cpHash, satisfy policy"
 ${PREFIX}policycphash -ha 03000000 -cp policies/policycphashhash.bin > run.out
 checkSuccess $?
- 
+
 echo "Policy get digest, should be 06 e4 6c f9"
-${PREFIX}policygetdigest -ha 03000000 > run.out 
+${PREFIX}policygetdigest -ha 03000000 > run.out
 checkSuccess $?
 
 echo "Clockrate adjust, policy satisfied but bad command params - should fail"
-${PREFIX}clockrateadjust -hi p -pwdp ppp -adj 1 -se0 03000000 1 > run.out 
+${PREFIX}clockrateadjust -hi p -pwdp ppp -adj 1 -se0 03000000 1 > run.out
 checkFailure $?
 
 echo "Clockrate adjust, policy satisfied"
-${PREFIX}clockrateadjust -hi p -pwdp ppp -adj 0 -se0 03000000 1 > run.out 
+${PREFIX}clockrateadjust -hi p -pwdp ppp -adj 0 -se0 03000000 1 > run.out
 checkSuccess $?
 
 echo "Clear the platform policy"
-${PREFIX}setprimarypolicy -hi p > run.out 
+${PREFIX}setprimarypolicy -hi p > run.out
 checkSuccess $?
 
 echo "Flush policy session"
-${PREFIX}flushcontext -ha 03000000 > run.out 
+${PREFIX}flushcontext -ha 03000000 > run.out
 checkSuccess $?
 
 echo ""
@@ -1389,13 +1390,13 @@ echo ""
 
 # command code 00000188
 # newParentName
-# 000b 1a5d f667 7533 4527 37bc 79a5 5ab6 
+# 000b 1a5d f667 7533 4527 37bc 79a5 5ab6
 # d9fa 9174 5c03 3dfe 3f82 cdf0 903b a9d6
 # 55f1
 # includeObject 00
 # policymaker -if policies/policydupsel-no.txt -of policies/policydupsel-no.bin -pr -v
-# 5f 55 ba 2b 69 0f b0 38 ac 15 ff 2a 86 ef 65 66 
-# be a8 23 68 43 97 4c 3f a7 36 37 72 56 ec bc 45 
+# 5f 55 ba 2b 69 0f b0 38 ac 15 ff 2a 86 ef 65 66
+# be a8 23 68 43 97 4c 3f a7 36 37 72 56 ec bc 45
 
 # 80000000 SK storage primary key
 # 80000001 NP new parent, the target of the duplication
@@ -1405,7 +1406,7 @@ echo ""
 echo "Import the new parent storage key NP under the primary key"
 ${PREFIX}importpem -hp 80000000 -pwdp sto -ipem policies/rsaprivkey.pem -st -pwdk rrrr -opu tmpstpub.bin -opr tmpstpriv.bin -halg sha256 > run.out
 checkSuccess $?
-	
+
 echo "Load the new parent TPM storage key NP at 80000001"
 ${PREFIX}load -hp 80000000 -pwdp sto -ipu tmpstpub.bin -ipr tmpstpriv.bin > run.out
 checkSuccess $?
@@ -1476,14 +1477,14 @@ echo ""
 # dbb7 0989 1440 4236 3c7f a838 39d9 da6c
 # 437a
 # HP newParentName
-# 000b 
-# 1a5d f667 7533 4527 37bc 79a5 5ab6 d9fa 
+# 000b
+# 1a5d f667 7533 4527 37bc 79a5 5ab6 d9fa
 # 9174 5c03 3dfe 3f82 cdf0 903b a9d6 55f1
 # includeObject 01
 #
 # policymaker -if policies/policydupsel-yes.txt -of policies/policydupsel-yes.bin -pr -v
-# 14 64 06 4c 80 cb e3 4f f5 03 82 15 38 62 43 17 
-# 93 94 8f f1 e8 8a c6 23 4d d1 b0 c5 4c 05 f7 3b 
+# 14 64 06 4c 80 cb e3 4f f5 03 82 15 38 62 43 17
+# 93 94 8f f1 e8 8a c6 23 4d d1 b0 c5 4c 05 f7 3b
 
 # 80000000 SK storage primary key
 # 80000001 NP new parent, the target of the duplication
@@ -1587,26 +1588,26 @@ echo ""
 
 # signing key SI Name
 # 000b
-# 6319 28da 1624 3135 3a59 c03a 2ca7 dbb7 
-# 0989 1440 4236 3c7f a838 39d9 da6c 437a 
+# 6319 28da 1624 3135 3a59 c03a 2ca7 dbb7
+# 0989 1440 4236 3c7f a838 39d9 da6c 437a
 
 # compute nameHash
 
 # nameHash - just a hash, not an extend
 # policymaker -if policies/pnhnamehash.txt -of policies/pnhnamehash.bin -nz -pr -v -ns
-# 18 e0 0c 62 77 18 d9 fc 81 22 3d 8a 56 33 7e eb 
-# 0e 7d 98 28 bd 7b c7 29 1d 3c 27 3f 7a c4 04 f1 
+# 18 e0 0c 62 77 18 d9 fc 81 22 3d 8a 56 33 7e eb
+# 0e 7d 98 28 bd 7b c7 29 1d 3c 27 3f 7a c4 04 f1
 # 18e00c627718d9fc81223d8a56337eeb0e7d9828bd7bc7291d3c273f7ac404f1
 
-# compute policy (based on 
+# compute policy (based on
 
 # 00000170 TPM_CC_PolicyNameHash
 # signing key SI Name
 # 18e00c627718d9fc81223d8a56337eeb0e7d9828bd7bc7291d3c273f7ac404f1
 
 # policymaker -if policies/policynamehash.txt -of policies/policynamehash.bin -pr -v
-# 96 30 f9 00 c3 4c 66 09 c1 c5 92 41 78 c1 b2 3d 
-# 9f d4 93 f4 f9 c2 98 c8 30 4a e3 0f 97 a2 fd 49 
+# 96 30 f9 00 c3 4c 66 09 c1 c5 92 41 78 c1 b2 3d
+# 9f d4 93 f4 f9 c2 98 c8 30 4a e3 0f 97 a2 fd 49
 
 # 80000000 SK storage primary key
 # 80000001 SI signing key
@@ -1685,13 +1686,13 @@ checkSuccess $?
 # hash -hi n -halg sha1 -if policycountertimerargs.txt -v
 # openssl dgst -sha1 policycountertimerargs.txt
 # 7a5836fe287e11ac39ee88d3c0794916d50b73c3
-# 
-# policycountertimer.txt 
+#
+# policycountertimer.txt
 # policy CC_PolicyCounterTimer || args
 # 0000016d + args
 # convert to binary policy
 # > policymaker -halg sha1 -if policycountertimer.txt -of policycountertimer.bin -pr -v
-# e6 84 81 27 55 c0 39 d3 68 63 21 c8 93 50 25 dd aa 26 42 9a 
+# e6 84 81 27 55 c0 39 d3 68 63 21 c8 93 50 25 dd aa 26 42 9a
 
 echo ""
 echo "Policy Counter Timer"
@@ -1716,25 +1717,25 @@ checkFailure $?
 echo "Policy counter timer, zero operandB, op EQ satisfy policy - should fail"
 ${PREFIX}policycountertimer -ha 03000000 -if policies/zero8.bin -op 0 > run.out
 checkFailure $?
- 
+
 echo "Policy counter timer, zero operandB, op GT satisfy policy"
-${PREFIX}policycountertimer -ha 03000000 -if policies/zero8.bin -op 2 > run.out 
+${PREFIX}policycountertimer -ha 03000000 -if policies/zero8.bin -op 2 > run.out
 checkSuccess $?
- 
+
 echo "Policy get digest, should be e6 84 81 27"
 ${PREFIX}policygetdigest -ha 03000000 > run.out
 checkSuccess $?
 
 echo "Clockrate adjust, policy satisfied"
-${PREFIX}clockrateadjust -hi p -adj 0 -se0 03000000 1 > run.out 
+${PREFIX}clockrateadjust -hi p -adj 0 -se0 03000000 1 > run.out
 checkSuccess $?
 
 echo "Clear the platform policy"
-${PREFIX}setprimarypolicy -hi p > run.out 
+${PREFIX}setprimarypolicy -hi p > run.out
 checkSuccess $?
 
 echo "Flush policy session"
-${PREFIX}flushcontext -ha 03000000 > run.out 
+${PREFIX}flushcontext -ha 03000000 > run.out
 checkSuccess $?
 
 
@@ -1750,8 +1751,8 @@ checkSuccess $?
 # policyor.txt is CC_PolicyOR || digests
 # 00000171 | cc69 ... | a039 ...
 # > policymaker -if policyor.txt -of policyor.bin -pr -v
-# 6b fe c2 3a be 57 b0 2a ce 39 dd 13 bb 60 fa 39 
-# 4d ac 7b 38 96 56 57 84 b3 73 fc 61 92 94 29 db 
+# 6b fe c2 3a be 57 b0 2a ce 39 dd 13 bb 60 fa 39
+# 4d ac 7b 38 96 56 57 84 b3 73 fc 61 92 94 29 db
 
 echo ""
 echo "PolicyOR"
@@ -1822,7 +1823,7 @@ ${PREFIX}quote -hp 0 -hk 80000001 -se0 03000000 1 > run.out
 checkFailure $?
 
 echo "Policy restart, set back to zero"
-${PREFIX}policyrestart -ha 03000000 > run.out 
+${PREFIX}policyrestart -ha 03000000 > run.out
 checkSuccess $?
 
 echo "Policy Command code - quote, digest a0 39 ca d5"

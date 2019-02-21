@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
 */
 
@@ -63,8 +63,8 @@ int main(int argc, char *argv[])
     TSS_CONTEXT			*tssContext = NULL;
     NV_Read_In 			in;
     NV_Read_Out			out;
-    uint16_t 			offset = 0;			/* default 0 */
-    uint16_t 			readLength = 0;			/* bytes to read */
+    uint32_t 			offset = 0;			/* default 0 */
+    uint32_t 			readLength = 0;			/* bytes to read */
     int 			cert = FALSE;			/* boolean, read certificate */
     int				readLengthSet = FALSE;
     char 			hierarchyAuthChar = 0;
@@ -77,11 +77,11 @@ int main(int argc, char *argv[])
     unsigned int		sessionAttributes1 = 0;
     TPMI_SH_AUTH_SESSION    	sessionHandle2 = TPM_RH_NULL;
     unsigned int		sessionAttributes2 = 0;
-    unsigned char 		*readBuffer = NULL; 
+    unsigned char 		*readBuffer = NULL;
     uint32_t 			nvBufferMax;
-    uint16_t 			bytesRead;			/* bytes read so far */
+    uint32_t 			bytesRead;			/* bytes read so far */
     int				done = FALSE;
-   
+
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
     TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "1");
 
@@ -234,10 +234,10 @@ int main(int argc, char *argv[])
     /* Authorization handle */
     if (rc == 0) {
 	if (hierarchyAuthChar == 'o') {
-	    in.authHandle = TPM_RH_OWNER;  
+	    in.authHandle = TPM_RH_OWNER;
 	}
 	else if (hierarchyAuthChar == 'p') {
-	    in.authHandle = TPM_RH_PLATFORM;  
+	    in.authHandle = TPM_RH_PLATFORM;
 	}
 	else if (hierarchyAuthChar == 0) {
 	    in.authHandle = nvIndex;
@@ -286,11 +286,11 @@ int main(int argc, char *argv[])
 	}
     }
     if (rc == 0) {
-	if (readLength > 0) {	
+	if (readLength > 0) {
 	    readBuffer = malloc(readLength);		/* freed @1 */
 	    if (readBuffer == NULL) {
 		printf("Cannot malloc %u bytes for read buffer\n", readLength);
-		exit(1);	
+		exit(1);
 	    }
 	}
 	else {
@@ -301,7 +301,7 @@ int main(int argc, char *argv[])
     if (rc == 0) {
 	rc = readNvBufferMax(tssContext,
 			     &nvBufferMax);
-    }    
+    }
     if (rc == 0) {
 	in.nvIndex = nvIndex;
 	in.offset = offset;	/* start at supplied offset */
@@ -405,5 +405,5 @@ static void printUsage(void)
     printf("\t-se[0-2] session handle / attributes (default PWAP)\n");
     printf("\t01\tcontinue\n");
     printf("\t40\tresponse encrypt\n");
-    exit(1);	
+    exit(1);
 }

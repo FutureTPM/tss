@@ -96,7 +96,7 @@
    with _Marshalu are deprecated.  */
 
 TPM_RC
-TSS_UINT8_Marshalu(const UINT8 *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_UINT8_Marshalu(const UINT8 *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (buffer != NULL) {	/* if buffer is NULL, don't marshal, just return written */
@@ -119,7 +119,7 @@ TSS_UINT8_Marshalu(const UINT8 *source, uint16_t *written, BYTE **buffer, uint32
 }
 
 TPM_RC
-TSS_INT8_Marshalu(const INT8 *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_INT8_Marshalu(const INT8 *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     rc = TSS_UINT8_Marshalu((const UINT8 *)source, written, buffer, size);
@@ -127,7 +127,7 @@ TSS_INT8_Marshalu(const INT8 *source, uint16_t *written, BYTE **buffer, uint32_t
 }
 
 TPM_RC
-TSS_UINT16_Marshalu(const UINT16 *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_UINT16_Marshalu(const UINT16 *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (buffer != NULL) {
@@ -150,7 +150,7 @@ TSS_UINT16_Marshalu(const UINT16 *source, uint16_t *written, BYTE **buffer, uint
 }
 
 TPM_RC
-TSS_UINT32_Marshalu(const UINT32 *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_UINT32_Marshalu(const UINT32 *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (buffer != NULL) {
@@ -175,7 +175,7 @@ TSS_UINT32_Marshalu(const UINT32 *source, uint16_t *written, BYTE **buffer, uint
 }
 
 TPM_RC
-TSS_INT32_Marshalu(const INT32 *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_INT32_Marshalu(const INT32 *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     rc = TSS_UINT32_Marshalu((const UINT32 *)source, written, buffer, size);
@@ -183,7 +183,7 @@ TSS_INT32_Marshalu(const INT32 *source, uint16_t *written, BYTE **buffer, uint32
 }
 
 TPM_RC
-TSS_UINT64_Marshalu(const UINT64 *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_UINT64_Marshalu(const UINT64 *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (buffer != NULL) {
@@ -212,7 +212,7 @@ TSS_UINT64_Marshalu(const UINT64 *source, uint16_t *written, BYTE **buffer, uint
 }
 
 TPM_RC
-TSS_Array_Marshalu(const BYTE *source, uint16_t sourceSize, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_Array_Marshalu(const BYTE *source, UINT32 sourceSize, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (buffer != NULL) {
@@ -241,7 +241,7 @@ TSS_Array_Marshalu(const BYTE *source, uint16_t sourceSize, uint16_t *written, B
 */
 
 TPM_RC
-TSS_Startup_In_Marshalu(const Startup_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_Startup_In_Marshalu(const Startup_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -250,7 +250,7 @@ TSS_Startup_In_Marshalu(const Startup_In *source, uint16_t *written, BYTE **buff
     return rc;
 }
 TPM_RC
-TSS_Shutdown_In_Marshalu(const Shutdown_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_Shutdown_In_Marshalu(const Shutdown_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -259,7 +259,7 @@ TSS_Shutdown_In_Marshalu(const Shutdown_In *source, uint16_t *written, BYTE **bu
     return rc;
 }
 TPM_RC
-TSS_SelfTest_In_Marshalu(const SelfTest_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_SelfTest_In_Marshalu(const SelfTest_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -268,7 +268,7 @@ TSS_SelfTest_In_Marshalu(const SelfTest_In *source, uint16_t *written, BYTE **bu
     return rc;
 }
 TPM_RC
-TSS_IncrementalSelfTest_In_Marshalu(const IncrementalSelfTest_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_IncrementalSelfTest_In_Marshalu(const IncrementalSelfTest_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -277,7 +277,7 @@ TSS_IncrementalSelfTest_In_Marshalu(const IncrementalSelfTest_In *source, uint16
     return rc;
 }
 TPM_RC
-TSS_StartAuthSession_In_Marshalu(const StartAuthSession_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_StartAuthSession_In_Marshalu(const StartAuthSession_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -304,7 +304,7 @@ TSS_StartAuthSession_In_Marshalu(const StartAuthSession_In *source, uint16_t *wr
     return rc;
 }
 TPM_RC
-TSS_PolicyRestart_In_Marshalu(const PolicyRestart_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PolicyRestart_In_Marshalu(const PolicyRestart_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -313,7 +313,7 @@ TSS_PolicyRestart_In_Marshalu(const PolicyRestart_In *source, uint16_t *written,
     return rc;
 }
 TPM_RC
-TSS_Create_In_Marshalu(const Create_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_Create_In_Marshalu(const Create_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -334,7 +334,7 @@ TSS_Create_In_Marshalu(const Create_In *source, uint16_t *written, BYTE **buffer
     return rc;
 }
 TPM_RC
-TSS_Load_In_Marshalu(const Load_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_Load_In_Marshalu(const Load_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -349,14 +349,14 @@ TSS_Load_In_Marshalu(const Load_In *source, uint16_t *written, BYTE **buffer, ui
     return rc;
 }
 TPM_RC
-TSS_LoadExternal_In_Marshalu(const LoadExternal_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_LoadExternal_In_Marshalu(const LoadExternal_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
 	/* optional parameter, use size as flag */
 	if (source->inPrivate.b.size == 0) {		/* not present */
-	    uint16_t zero = 0;
-	    rc = TSS_UINT16_Marshalu(&zero, written, buffer, size);
+	    uint32_t zero = 0;
+	    rc = TSS_UINT32_Marshalu(&zero, written, buffer, size);
 	}
 	else {
 	    rc = TSS_TPM2B_SENSITIVE_Marshalu(&source->inPrivate, written, buffer, size);
@@ -371,7 +371,7 @@ TSS_LoadExternal_In_Marshalu(const LoadExternal_In *source, uint16_t *written, B
     return rc;
 }
 TPM_RC
-TSS_ReadPublic_In_Marshalu(const ReadPublic_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_ReadPublic_In_Marshalu(const ReadPublic_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -380,7 +380,7 @@ TSS_ReadPublic_In_Marshalu(const ReadPublic_In *source, uint16_t *written, BYTE 
     return rc;
 }
 TPM_RC
-TSS_ActivateCredential_In_Marshalu(const ActivateCredential_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_ActivateCredential_In_Marshalu(const ActivateCredential_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -398,7 +398,7 @@ TSS_ActivateCredential_In_Marshalu(const ActivateCredential_In *source, uint16_t
     return rc;
 }
 TPM_RC
-TSS_MakeCredential_In_Marshalu(const MakeCredential_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_MakeCredential_In_Marshalu(const MakeCredential_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -413,7 +413,7 @@ TSS_MakeCredential_In_Marshalu(const MakeCredential_In *source, uint16_t *writte
     return rc;
 }
 TPM_RC
-TSS_Unseal_In_Marshalu(const Unseal_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_Unseal_In_Marshalu(const Unseal_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -422,7 +422,7 @@ TSS_Unseal_In_Marshalu(const Unseal_In *source, uint16_t *written, BYTE **buffer
     return rc;
 }
 TPM_RC
-TSS_ObjectChangeAuth_In_Marshalu(const ObjectChangeAuth_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_ObjectChangeAuth_In_Marshalu(const ObjectChangeAuth_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -437,7 +437,7 @@ TSS_ObjectChangeAuth_In_Marshalu(const ObjectChangeAuth_In *source, uint16_t *wr
     return rc;
 }
 TPM_RC
-TSS_CreateLoaded_In_Marshalu(const CreateLoaded_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_CreateLoaded_In_Marshalu(const CreateLoaded_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -452,7 +452,7 @@ TSS_CreateLoaded_In_Marshalu(const CreateLoaded_In *source, uint16_t *written, B
     return rc;
 }
 TPM_RC
-TSS_Duplicate_In_Marshalu(const Duplicate_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_Duplicate_In_Marshalu(const Duplicate_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -470,7 +470,7 @@ TSS_Duplicate_In_Marshalu(const Duplicate_In *source, uint16_t *written, BYTE **
     return rc;
 }
 TPM_RC
-TSS_Rewrap_In_Marshalu(const Rewrap_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_Rewrap_In_Marshalu(const Rewrap_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -491,7 +491,7 @@ TSS_Rewrap_In_Marshalu(const Rewrap_In *source, uint16_t *written, BYTE **buffer
     return rc;
 }
 TPM_RC
-TSS_Import_In_Marshalu(const Import_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_Import_In_Marshalu(const Import_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -515,7 +515,7 @@ TSS_Import_In_Marshalu(const Import_In *source, uint16_t *written, BYTE **buffer
     return rc;
 }
 TPM_RC
-TSS_RSA_Encrypt_In_Marshalu(const RSA_Encrypt_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_RSA_Encrypt_In_Marshalu(const RSA_Encrypt_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -533,7 +533,7 @@ TSS_RSA_Encrypt_In_Marshalu(const RSA_Encrypt_In *source, uint16_t *written, BYT
     return rc;
 }
 TPM_RC
-TSS_RSA_Decrypt_In_Marshalu(const RSA_Decrypt_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_RSA_Decrypt_In_Marshalu(const RSA_Decrypt_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -551,7 +551,7 @@ TSS_RSA_Decrypt_In_Marshalu(const RSA_Decrypt_In *source, uint16_t *written, BYT
     return rc;
 }
 TPM_RC
-TSS_ECDH_KeyGen_In_Marshalu(const ECDH_KeyGen_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_ECDH_KeyGen_In_Marshalu(const ECDH_KeyGen_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -560,7 +560,7 @@ TSS_ECDH_KeyGen_In_Marshalu(const ECDH_KeyGen_In *source, uint16_t *written, BYT
     return rc;
 }
 TPM_RC
-TSS_ECDH_ZGen_In_Marshalu(const ECDH_ZGen_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_ECDH_ZGen_In_Marshalu(const ECDH_ZGen_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -572,7 +572,7 @@ TSS_ECDH_ZGen_In_Marshalu(const ECDH_ZGen_In *source, uint16_t *written, BYTE **
     return rc;
 }
 TPM_RC
-TSS_ECC_Parameters_In_Marshalu(const ECC_Parameters_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_ECC_Parameters_In_Marshalu(const ECC_Parameters_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -581,7 +581,7 @@ TSS_ECC_Parameters_In_Marshalu(const ECC_Parameters_In *source, uint16_t *writte
     return rc;
 }
 TPM_RC
-TSS_ZGen_2Phase_In_Marshalu(const ZGen_2Phase_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_ZGen_2Phase_In_Marshalu(const ZGen_2Phase_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -602,7 +602,7 @@ TSS_ZGen_2Phase_In_Marshalu(const ZGen_2Phase_In *source, uint16_t *written, BYT
     return rc;
 }
 TPM_RC
-TSS_EncryptDecrypt_In_Marshalu(const EncryptDecrypt_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_EncryptDecrypt_In_Marshalu(const EncryptDecrypt_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -623,7 +623,7 @@ TSS_EncryptDecrypt_In_Marshalu(const EncryptDecrypt_In *source, uint16_t *writte
     return rc;
 }
 TPM_RC
-TSS_EncryptDecrypt2_In_Marshalu(const EncryptDecrypt2_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_EncryptDecrypt2_In_Marshalu(const EncryptDecrypt2_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -644,7 +644,7 @@ TSS_EncryptDecrypt2_In_Marshalu(const EncryptDecrypt2_In *source, uint16_t *writ
     return rc;
 }
 TPM_RC
-TSS_Hash_In_Marshalu(const Hash_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_Hash_In_Marshalu(const Hash_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -659,7 +659,7 @@ TSS_Hash_In_Marshalu(const Hash_In *source, uint16_t *written, BYTE **buffer, ui
     return rc;
 }
 TPM_RC
-TSS_HMAC_In_Marshalu(const HMAC_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_HMAC_In_Marshalu(const HMAC_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -674,7 +674,7 @@ TSS_HMAC_In_Marshalu(const HMAC_In *source, uint16_t *written, BYTE **buffer, ui
     return rc;
 }
 TPM_RC
-TSS_GetRandom_In_Marshalu(const GetRandom_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_GetRandom_In_Marshalu(const GetRandom_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -683,7 +683,7 @@ TSS_GetRandom_In_Marshalu(const GetRandom_In *source, uint16_t *written, BYTE **
     return rc;
 }
 TPM_RC
-TSS_StirRandom_In_Marshalu(const StirRandom_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_StirRandom_In_Marshalu(const StirRandom_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -692,7 +692,7 @@ TSS_StirRandom_In_Marshalu(const StirRandom_In *source, uint16_t *written, BYTE 
     return rc;
 }
 TPM_RC
-TSS_HMAC_Start_In_Marshalu(const HMAC_Start_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_HMAC_Start_In_Marshalu(const HMAC_Start_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -707,7 +707,7 @@ TSS_HMAC_Start_In_Marshalu(const HMAC_Start_In *source, uint16_t *written, BYTE 
     return rc;
 }
 TPM_RC
-TSS_HashSequenceStart_In_Marshalu(const HashSequenceStart_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_HashSequenceStart_In_Marshalu(const HashSequenceStart_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -719,7 +719,7 @@ TSS_HashSequenceStart_In_Marshalu(const HashSequenceStart_In *source, uint16_t *
     return rc;
 }
 TPM_RC
-TSS_SequenceUpdate_In_Marshalu(const SequenceUpdate_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_SequenceUpdate_In_Marshalu(const SequenceUpdate_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -731,7 +731,7 @@ TSS_SequenceUpdate_In_Marshalu(const SequenceUpdate_In *source, uint16_t *writte
     return rc;
 }
 TPM_RC
-TSS_SequenceComplete_In_Marshalu(const SequenceComplete_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_SequenceComplete_In_Marshalu(const SequenceComplete_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -746,7 +746,7 @@ TSS_SequenceComplete_In_Marshalu(const SequenceComplete_In *source, uint16_t *wr
     return rc;
 }
 TPM_RC
-TSS_EventSequenceComplete_In_Marshalu(const EventSequenceComplete_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_EventSequenceComplete_In_Marshalu(const EventSequenceComplete_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -761,7 +761,7 @@ TSS_EventSequenceComplete_In_Marshalu(const EventSequenceComplete_In *source, ui
     return rc;
 }
 TPM_RC
-TSS_Certify_In_Marshalu(const Certify_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_Certify_In_Marshalu(const Certify_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -779,7 +779,7 @@ TSS_Certify_In_Marshalu(const Certify_In *source, uint16_t *written, BYTE **buff
     return rc;
 }
 TPM_RC
-TSS_CertifyCreation_In_Marshalu(const CertifyCreation_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_CertifyCreation_In_Marshalu(const CertifyCreation_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -803,7 +803,7 @@ TSS_CertifyCreation_In_Marshalu(const CertifyCreation_In *source, uint16_t *writ
     return rc;
 }
 TPM_RC
-TSS_Quote_In_Marshalu(const Quote_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_Quote_In_Marshalu(const Quote_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -821,7 +821,7 @@ TSS_Quote_In_Marshalu(const Quote_In *source, uint16_t *written, BYTE **buffer, 
     return rc;
 }
 TPM_RC
-TSS_GetSessionAuditDigest_In_Marshalu(const GetSessionAuditDigest_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_GetSessionAuditDigest_In_Marshalu(const GetSessionAuditDigest_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -842,7 +842,7 @@ TSS_GetSessionAuditDigest_In_Marshalu(const GetSessionAuditDigest_In *source, ui
     return rc;
 }
 TPM_RC
-TSS_GetCommandAuditDigest_In_Marshalu(const GetCommandAuditDigest_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_GetCommandAuditDigest_In_Marshalu(const GetCommandAuditDigest_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -860,7 +860,7 @@ TSS_GetCommandAuditDigest_In_Marshalu(const GetCommandAuditDigest_In *source, ui
     return rc;
 }
 TPM_RC
-TSS_GetTime_In_Marshalu(const GetTime_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_GetTime_In_Marshalu(const GetTime_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -878,7 +878,7 @@ TSS_GetTime_In_Marshalu(const GetTime_In *source, uint16_t *written, BYTE **buff
     return rc;
 }
 TPM_RC
-TSS_Commit_In_Marshalu(const Commit_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_Commit_In_Marshalu(const Commit_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -896,7 +896,7 @@ TSS_Commit_In_Marshalu(const Commit_In *source, uint16_t *written, BYTE **buffer
     return rc;
 }
 TPM_RC
-TSS_EC_Ephemeral_In_Marshalu(const EC_Ephemeral_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_EC_Ephemeral_In_Marshalu(const EC_Ephemeral_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -905,7 +905,7 @@ TSS_EC_Ephemeral_In_Marshalu(const EC_Ephemeral_In *source, uint16_t *written, B
     return rc;
 }
 TPM_RC
-TSS_VerifySignature_In_Marshalu(const VerifySignature_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_VerifySignature_In_Marshalu(const VerifySignature_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -920,7 +920,7 @@ TSS_VerifySignature_In_Marshalu(const VerifySignature_In *source, uint16_t *writ
     return rc;
 }
 TPM_RC
-TSS_Sign_In_Marshalu(const Sign_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_Sign_In_Marshalu(const Sign_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -938,7 +938,7 @@ TSS_Sign_In_Marshalu(const Sign_In *source, uint16_t *written, BYTE **buffer, ui
     return rc;
 }
 TPM_RC
-TSS_SetCommandCodeAuditStatus_In_Marshalu(const SetCommandCodeAuditStatus_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_SetCommandCodeAuditStatus_In_Marshalu(const SetCommandCodeAuditStatus_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -956,7 +956,7 @@ TSS_SetCommandCodeAuditStatus_In_Marshalu(const SetCommandCodeAuditStatus_In *so
     return rc;
 }
 TPM_RC
-TSS_PCR_Extend_In_Marshalu(const PCR_Extend_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PCR_Extend_In_Marshalu(const PCR_Extend_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -968,7 +968,7 @@ TSS_PCR_Extend_In_Marshalu(const PCR_Extend_In *source, uint16_t *written, BYTE 
     return rc;
 }
 TPM_RC
-TSS_PCR_Event_In_Marshalu(const PCR_Event_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PCR_Event_In_Marshalu(const PCR_Event_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -980,7 +980,7 @@ TSS_PCR_Event_In_Marshalu(const PCR_Event_In *source, uint16_t *written, BYTE **
     return rc;
 }
 TPM_RC
-TSS_PCR_Read_In_Marshalu(const PCR_Read_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PCR_Read_In_Marshalu(const PCR_Read_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -989,7 +989,7 @@ TSS_PCR_Read_In_Marshalu(const PCR_Read_In *source, uint16_t *written, BYTE **bu
     return rc;
 }
 TPM_RC
-TSS_PCR_Allocate_In_Marshalu(const PCR_Allocate_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PCR_Allocate_In_Marshalu(const PCR_Allocate_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1001,7 +1001,7 @@ TSS_PCR_Allocate_In_Marshalu(const PCR_Allocate_In *source, uint16_t *written, B
     return rc;
 }
 TPM_RC
-TSS_PCR_SetAuthPolicy_In_Marshalu(const PCR_SetAuthPolicy_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PCR_SetAuthPolicy_In_Marshalu(const PCR_SetAuthPolicy_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1019,7 +1019,7 @@ TSS_PCR_SetAuthPolicy_In_Marshalu(const PCR_SetAuthPolicy_In *source, uint16_t *
     return rc;
 }
 TPM_RC
-TSS_PCR_SetAuthValue_In_Marshalu(const PCR_SetAuthValue_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PCR_SetAuthValue_In_Marshalu(const PCR_SetAuthValue_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1031,7 +1031,7 @@ TSS_PCR_SetAuthValue_In_Marshalu(const PCR_SetAuthValue_In *source, uint16_t *wr
     return rc;
 }
 TPM_RC
-TSS_PCR_Reset_In_Marshalu(const PCR_Reset_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PCR_Reset_In_Marshalu(const PCR_Reset_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1040,7 +1040,7 @@ TSS_PCR_Reset_In_Marshalu(const PCR_Reset_In *source, uint16_t *written, BYTE **
     return rc;
 }
 TPM_RC
-TSS_PolicySigned_In_Marshalu(const PolicySigned_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PolicySigned_In_Marshalu(const PolicySigned_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1067,7 +1067,7 @@ TSS_PolicySigned_In_Marshalu(const PolicySigned_In *source, uint16_t *written, B
     return rc;
 }
 TPM_RC
-TSS_PolicySecret_In_Marshalu(const PolicySecret_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PolicySecret_In_Marshalu(const PolicySecret_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1091,7 +1091,7 @@ TSS_PolicySecret_In_Marshalu(const PolicySecret_In *source, uint16_t *written, B
     return rc;
 }
 TPM_RC
-TSS_PolicyTicket_In_Marshalu(const PolicyTicket_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PolicyTicket_In_Marshalu(const PolicyTicket_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1115,7 +1115,7 @@ TSS_PolicyTicket_In_Marshalu(const PolicyTicket_In *source, uint16_t *written, B
     return rc;
 }
 TPM_RC
-TSS_PolicyOR_In_Marshalu(const PolicyOR_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PolicyOR_In_Marshalu(const PolicyOR_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1127,7 +1127,7 @@ TSS_PolicyOR_In_Marshalu(const PolicyOR_In *source, uint16_t *written, BYTE **bu
     return rc;
 }
 TPM_RC
-TSS_PolicyPCR_In_Marshalu(const PolicyPCR_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PolicyPCR_In_Marshalu(const PolicyPCR_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1142,7 +1142,7 @@ TSS_PolicyPCR_In_Marshalu(const PolicyPCR_In *source, uint16_t *written, BYTE **
     return rc;
 }
 TPM_RC
-TSS_PolicyLocality_In_Marshalu(const PolicyLocality_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PolicyLocality_In_Marshalu(const PolicyLocality_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1154,7 +1154,7 @@ TSS_PolicyLocality_In_Marshalu(const PolicyLocality_In *source, uint16_t *writte
     return rc;
 }
 TPM_RC
-TSS_PolicyNV_In_Marshalu(const PolicyNV_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PolicyNV_In_Marshalu(const PolicyNV_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1178,7 +1178,7 @@ TSS_PolicyNV_In_Marshalu(const PolicyNV_In *source, uint16_t *written, BYTE **bu
     return rc;
 }
 TPM_RC
-TSS_PolicyCounterTimer_In_Marshalu(const PolicyCounterTimer_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PolicyCounterTimer_In_Marshalu(const PolicyCounterTimer_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1196,7 +1196,7 @@ TSS_PolicyCounterTimer_In_Marshalu(const PolicyCounterTimer_In *source, uint16_t
     return rc;
 }
 TPM_RC
-TSS_PolicyCommandCode_In_Marshalu(const PolicyCommandCode_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PolicyCommandCode_In_Marshalu(const PolicyCommandCode_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1208,7 +1208,7 @@ TSS_PolicyCommandCode_In_Marshalu(const PolicyCommandCode_In *source, uint16_t *
     return rc;
 }
 TPM_RC
-TSS_PolicyPhysicalPresence_In_Marshalu(const PolicyPhysicalPresence_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PolicyPhysicalPresence_In_Marshalu(const PolicyPhysicalPresence_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1217,7 +1217,7 @@ TSS_PolicyPhysicalPresence_In_Marshalu(const PolicyPhysicalPresence_In *source, 
     return rc;
 }
 TPM_RC
-TSS_PolicyCpHash_In_Marshalu(const PolicyCpHash_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PolicyCpHash_In_Marshalu(const PolicyCpHash_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1229,7 +1229,7 @@ TSS_PolicyCpHash_In_Marshalu(const PolicyCpHash_In *source, uint16_t *written, B
     return rc;
 }
 TPM_RC
-TSS_PolicyNameHash_In_Marshalu(const PolicyNameHash_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PolicyNameHash_In_Marshalu(const PolicyNameHash_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1241,7 +1241,7 @@ TSS_PolicyNameHash_In_Marshalu(const PolicyNameHash_In *source, uint16_t *writte
     return rc;
 }
 TPM_RC
-TSS_PolicyDuplicationSelect_In_Marshalu(const PolicyDuplicationSelect_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PolicyDuplicationSelect_In_Marshalu(const PolicyDuplicationSelect_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1259,7 +1259,7 @@ TSS_PolicyDuplicationSelect_In_Marshalu(const PolicyDuplicationSelect_In *source
     return rc;
 }
 TPM_RC
-TSS_PolicyAuthorize_In_Marshalu(const PolicyAuthorize_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PolicyAuthorize_In_Marshalu(const PolicyAuthorize_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1280,7 +1280,7 @@ TSS_PolicyAuthorize_In_Marshalu(const PolicyAuthorize_In *source, uint16_t *writ
     return rc;
 }
 TPM_RC
-TSS_PolicyAuthValue_In_Marshalu(const PolicyAuthValue_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PolicyAuthValue_In_Marshalu(const PolicyAuthValue_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1289,7 +1289,7 @@ TSS_PolicyAuthValue_In_Marshalu(const PolicyAuthValue_In *source, uint16_t *writ
     return rc;
 }
 TPM_RC
-TSS_PolicyPassword_In_Marshalu(const PolicyPassword_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PolicyPassword_In_Marshalu(const PolicyPassword_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1298,7 +1298,7 @@ TSS_PolicyPassword_In_Marshalu(const PolicyPassword_In *source, uint16_t *writte
     return rc;
 }
 TPM_RC
-TSS_PolicyGetDigest_In_Marshalu(const PolicyGetDigest_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PolicyGetDigest_In_Marshalu(const PolicyGetDigest_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1307,7 +1307,7 @@ TSS_PolicyGetDigest_In_Marshalu(const PolicyGetDigest_In *source, uint16_t *writ
     return rc;
 }
 TPM_RC
-TSS_PolicyNvWritten_In_Marshalu(const PolicyNvWritten_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PolicyNvWritten_In_Marshalu(const PolicyNvWritten_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1319,7 +1319,7 @@ TSS_PolicyNvWritten_In_Marshalu(const PolicyNvWritten_In *source, uint16_t *writ
     return rc;
 }
 TPM_RC
-TSS_PolicyTemplate_In_Marshalu(const PolicyTemplate_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PolicyTemplate_In_Marshalu(const PolicyTemplate_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1331,7 +1331,7 @@ TSS_PolicyTemplate_In_Marshalu(const PolicyTemplate_In *source, uint16_t *writte
     return rc;
 }
 TPM_RC
-TSS_PolicyAuthorizeNV_In_Marshalu(const PolicyAuthorizeNV_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PolicyAuthorizeNV_In_Marshalu(const PolicyAuthorizeNV_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1346,7 +1346,7 @@ TSS_PolicyAuthorizeNV_In_Marshalu(const PolicyAuthorizeNV_In *source, uint16_t *
     return rc;
 }
 TPM_RC
-TSS_CreatePrimary_In_Marshalu(const CreatePrimary_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_CreatePrimary_In_Marshalu(const CreatePrimary_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1367,7 +1367,7 @@ TSS_CreatePrimary_In_Marshalu(const CreatePrimary_In *source, uint16_t *written,
     return rc;
 }
 TPM_RC
-TSS_HierarchyControl_In_Marshalu(const HierarchyControl_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_HierarchyControl_In_Marshalu(const HierarchyControl_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1382,7 +1382,7 @@ TSS_HierarchyControl_In_Marshalu(const HierarchyControl_In *source, uint16_t *wr
     return rc;
 }
 TPM_RC
-TSS_SetPrimaryPolicy_In_Marshalu(const SetPrimaryPolicy_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_SetPrimaryPolicy_In_Marshalu(const SetPrimaryPolicy_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1397,7 +1397,7 @@ TSS_SetPrimaryPolicy_In_Marshalu(const SetPrimaryPolicy_In *source, uint16_t *wr
     return rc;
 }
 TPM_RC
-TSS_ChangePPS_In_Marshalu(const ChangePPS_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_ChangePPS_In_Marshalu(const ChangePPS_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1406,7 +1406,7 @@ TSS_ChangePPS_In_Marshalu(const ChangePPS_In *source, uint16_t *written, BYTE **
     return rc;
 }
 TPM_RC
-TSS_ChangeEPS_In_Marshalu(const ChangeEPS_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_ChangeEPS_In_Marshalu(const ChangeEPS_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1415,7 +1415,7 @@ TSS_ChangeEPS_In_Marshalu(const ChangeEPS_In *source, uint16_t *written, BYTE **
     return rc;
 }
 TPM_RC
-TSS_Clear_In_Marshalu(const Clear_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_Clear_In_Marshalu(const Clear_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1424,7 +1424,7 @@ TSS_Clear_In_Marshalu(const Clear_In *source, uint16_t *written, BYTE **buffer, 
     return rc;
 }
 TPM_RC
-TSS_ClearControl_In_Marshalu(const ClearControl_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_ClearControl_In_Marshalu(const ClearControl_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1436,7 +1436,7 @@ TSS_ClearControl_In_Marshalu(const ClearControl_In *source, uint16_t *written, B
     return rc;
 }
 TPM_RC
-TSS_HierarchyChangeAuth_In_Marshalu(const HierarchyChangeAuth_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_HierarchyChangeAuth_In_Marshalu(const HierarchyChangeAuth_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1448,7 +1448,7 @@ TSS_HierarchyChangeAuth_In_Marshalu(const HierarchyChangeAuth_In *source, uint16
     return rc;
 }
 TPM_RC
-TSS_DictionaryAttackLockReset_In_Marshalu(const DictionaryAttackLockReset_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_DictionaryAttackLockReset_In_Marshalu(const DictionaryAttackLockReset_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1457,7 +1457,7 @@ TSS_DictionaryAttackLockReset_In_Marshalu(const DictionaryAttackLockReset_In *so
     return rc;
 }
 TPM_RC
-TSS_DictionaryAttackParameters_In_Marshalu(const DictionaryAttackParameters_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_DictionaryAttackParameters_In_Marshalu(const DictionaryAttackParameters_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1475,7 +1475,7 @@ TSS_DictionaryAttackParameters_In_Marshalu(const DictionaryAttackParameters_In *
     return rc;
 }
 TPM_RC
-TSS_PP_Commands_In_Marshalu(const PP_Commands_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_PP_Commands_In_Marshalu(const PP_Commands_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1490,7 +1490,7 @@ TSS_PP_Commands_In_Marshalu(const PP_Commands_In *source, uint16_t *written, BYT
     return rc;
 }
 TPM_RC
-TSS_SetAlgorithmSet_In_Marshalu(const SetAlgorithmSet_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_SetAlgorithmSet_In_Marshalu(const SetAlgorithmSet_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1502,7 +1502,7 @@ TSS_SetAlgorithmSet_In_Marshalu(const SetAlgorithmSet_In *source, uint16_t *writ
     return rc;
 }
 TPM_RC
-TSS_ContextSave_In_Marshalu(const ContextSave_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_ContextSave_In_Marshalu(const ContextSave_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1511,7 +1511,7 @@ TSS_ContextSave_In_Marshalu(const ContextSave_In *source, uint16_t *written, BYT
     return rc;
 }
 TPM_RC
-TSS_ContextLoad_In_Marshalu(const ContextLoad_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_ContextLoad_In_Marshalu(const ContextLoad_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1520,7 +1520,7 @@ TSS_ContextLoad_In_Marshalu(const ContextLoad_In *source, uint16_t *written, BYT
     return rc;
 }
 TPM_RC
-TSS_FlushContext_In_Marshalu(const FlushContext_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_FlushContext_In_Marshalu(const FlushContext_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1529,7 +1529,7 @@ TSS_FlushContext_In_Marshalu(const FlushContext_In *source, uint16_t *written, B
     return rc;
 }
 TPM_RC
-TSS_EvictControl_In_Marshalu(const EvictControl_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_EvictControl_In_Marshalu(const EvictControl_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1544,7 +1544,7 @@ TSS_EvictControl_In_Marshalu(const EvictControl_In *source, uint16_t *written, B
     return rc;
 }
 TPM_RC
-TSS_ClockSet_In_Marshalu(const ClockSet_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_ClockSet_In_Marshalu(const ClockSet_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1556,7 +1556,7 @@ TSS_ClockSet_In_Marshalu(const ClockSet_In *source, uint16_t *written, BYTE **bu
     return rc;
 }
 TPM_RC
-TSS_ClockRateAdjust_In_Marshalu(const ClockRateAdjust_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_ClockRateAdjust_In_Marshalu(const ClockRateAdjust_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1568,7 +1568,7 @@ TSS_ClockRateAdjust_In_Marshalu(const ClockRateAdjust_In *source, uint16_t *writ
     return rc;
 }
 TPM_RC
-TSS_GetCapability_In_Marshalu(const GetCapability_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_GetCapability_In_Marshalu(const GetCapability_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1583,7 +1583,7 @@ TSS_GetCapability_In_Marshalu(const GetCapability_In *source, uint16_t *written,
     return rc;
 }
 TPM_RC
-TSS_TestParms_In_Marshalu(const TestParms_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TestParms_In_Marshalu(const TestParms_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1592,7 +1592,7 @@ TSS_TestParms_In_Marshalu(const TestParms_In *source, uint16_t *written, BYTE **
     return rc;
 }
 TPM_RC
-TSS_NV_DefineSpace_In_Marshalu(const NV_DefineSpace_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_NV_DefineSpace_In_Marshalu(const NV_DefineSpace_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1607,7 +1607,7 @@ TSS_NV_DefineSpace_In_Marshalu(const NV_DefineSpace_In *source, uint16_t *writte
     return rc;
 }
 TPM_RC
-TSS_NV_UndefineSpace_In_Marshalu(const NV_UndefineSpace_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_NV_UndefineSpace_In_Marshalu(const NV_UndefineSpace_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1619,7 +1619,7 @@ TSS_NV_UndefineSpace_In_Marshalu(const NV_UndefineSpace_In *source, uint16_t *wr
     return rc;
 }
 TPM_RC
-TSS_NV_UndefineSpaceSpecial_In_Marshalu(const NV_UndefineSpaceSpecial_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_NV_UndefineSpaceSpecial_In_Marshalu(const NV_UndefineSpaceSpecial_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1631,7 +1631,7 @@ TSS_NV_UndefineSpaceSpecial_In_Marshalu(const NV_UndefineSpaceSpecial_In *source
     return rc;
 }
 TPM_RC
-TSS_NV_ReadPublic_In_Marshalu(const NV_ReadPublic_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_NV_ReadPublic_In_Marshalu(const NV_ReadPublic_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1640,7 +1640,7 @@ TSS_NV_ReadPublic_In_Marshalu(const NV_ReadPublic_In *source, uint16_t *written,
     return rc;
 }
 TPM_RC
-TSS_NV_Write_In_Marshalu(const NV_Write_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_NV_Write_In_Marshalu(const NV_Write_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1658,7 +1658,7 @@ TSS_NV_Write_In_Marshalu(const NV_Write_In *source, uint16_t *written, BYTE **bu
     return rc;
 }
 TPM_RC
-TSS_NV_Increment_In_Marshalu(const NV_Increment_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_NV_Increment_In_Marshalu(const NV_Increment_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1670,7 +1670,7 @@ TSS_NV_Increment_In_Marshalu(const NV_Increment_In *source, uint16_t *written, B
     return rc;
 }
 TPM_RC
-TSS_NV_Extend_In_Marshalu(const NV_Extend_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_NV_Extend_In_Marshalu(const NV_Extend_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1685,7 +1685,7 @@ TSS_NV_Extend_In_Marshalu(const NV_Extend_In *source, uint16_t *written, BYTE **
     return rc;
 }
 TPM_RC
-TSS_NV_SetBits_In_Marshalu(const NV_SetBits_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_NV_SetBits_In_Marshalu(const NV_SetBits_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1700,7 +1700,7 @@ TSS_NV_SetBits_In_Marshalu(const NV_SetBits_In *source, uint16_t *written, BYTE 
     return rc;
 }
 TPM_RC
-TSS_NV_WriteLock_In_Marshalu(const NV_WriteLock_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_NV_WriteLock_In_Marshalu(const NV_WriteLock_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1712,7 +1712,7 @@ TSS_NV_WriteLock_In_Marshalu(const NV_WriteLock_In *source, uint16_t *written, B
     return rc;
 }
 TPM_RC
-TSS_NV_GlobalWriteLock_In_Marshalu(const NV_GlobalWriteLock_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_NV_GlobalWriteLock_In_Marshalu(const NV_GlobalWriteLock_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1721,7 +1721,7 @@ TSS_NV_GlobalWriteLock_In_Marshalu(const NV_GlobalWriteLock_In *source, uint16_t
     return rc;
 }
 TPM_RC
-TSS_NV_Read_In_Marshalu(const NV_Read_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_NV_Read_In_Marshalu(const NV_Read_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1739,7 +1739,7 @@ TSS_NV_Read_In_Marshalu(const NV_Read_In *source, uint16_t *written, BYTE **buff
     return rc;
 }
 TPM_RC
-TSS_NV_ReadLock_In_Marshalu(const NV_ReadLock_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_NV_ReadLock_In_Marshalu(const NV_ReadLock_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1751,7 +1751,7 @@ TSS_NV_ReadLock_In_Marshalu(const NV_ReadLock_In *source, uint16_t *written, BYT
     return rc;
 }
 TPM_RC
-TSS_NV_ChangeAuth_In_Marshalu(const NV_ChangeAuth_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_NV_ChangeAuth_In_Marshalu(const NV_ChangeAuth_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -1763,7 +1763,7 @@ TSS_NV_ChangeAuth_In_Marshalu(const NV_ChangeAuth_In *source, uint16_t *written,
     return rc;
 }
 TPM_RC
-TSS_NV_Certify_In_Marshalu(const NV_Certify_In *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_NV_Certify_In_Marshalu(const NV_Certify_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -2752,11 +2752,11 @@ TSS_NV_Certify_Out_Unmarshalu(NV_Certify_Out *target, TPM_ST tag, BYTE **buffer,
 */
 
 TPM_RC
-TSS_TPM2B_Marshalu(const TPM2B *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_Marshalu(const TPM2B *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
-	rc = TSS_UINT16_Marshalu(&(source->size), written, buffer, size);
+	rc = TSS_UINT32_Marshalu(&(source->size), written, buffer, size);
     }
     if (rc == 0) {
 	rc = TSS_Array_Marshalu(source->buffer, source->size, written, buffer, size);
@@ -2767,7 +2767,7 @@ TSS_TPM2B_Marshalu(const TPM2B *source, uint16_t *written, BYTE **buffer, uint32
 /* Table 5 - Definition of Types for Documentation Clarity */
 
 TPM_RC
-TSS_TPM_KEY_BITS_Marshalu(const TPM_KEY_BITS *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_KEY_BITS_Marshalu(const TPM_KEY_BITS *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -2779,7 +2779,7 @@ TSS_TPM_KEY_BITS_Marshalu(const TPM_KEY_BITS *source, uint16_t *written, BYTE **
 /* Table 7 - Definition of (UINT32) TPM_GENERATED Constants <O> */
 
 TPM_RC
-TSS_TPM_GENERATED_Marshalu(const TPM_GENERATED *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_GENERATED_Marshalu(const TPM_GENERATED *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -2791,7 +2791,7 @@ TSS_TPM_GENERATED_Marshalu(const TPM_GENERATED *source, uint16_t *written, BYTE 
 /* Table 9 - Definition of (UINT16) TPM_ALG_ID Constants <IN/OUT, S> */
 
 TPM_RC
-TSS_TPM_ALG_ID_Marshalu(const TPM_ALG_ID *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_ALG_ID_Marshalu(const TPM_ALG_ID *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -2804,7 +2804,7 @@ TSS_TPM_ALG_ID_Marshalu(const TPM_ALG_ID *source, uint16_t *written, BYTE **buff
 
 #ifdef TPM_ALG_ECC
 TPM_RC
-TSS_TPM_ECC_CURVE_Marshalu(const TPM_ECC_CURVE *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_ECC_CURVE_Marshalu(const TPM_ECC_CURVE *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -2817,7 +2817,7 @@ TSS_TPM_ECC_CURVE_Marshalu(const TPM_ECC_CURVE *source, uint16_t *written, BYTE 
 /* Table 17 - Definition of (UINT32) TPM_RC Constants (Actions) <OUT> */
 
 TPM_RC
-TSS_TPM_RC_Marshalu(const TPM_RC *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_RC_Marshalu(const TPM_RC *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -2829,7 +2829,7 @@ TSS_TPM_RC_Marshalu(const TPM_RC *source, uint16_t *written, BYTE **buffer, uint
 /* Table 18 - Definition of (INT8) TPM_CLOCK_ADJUST Constants <IN> */
 
 TPM_RC
-TSS_TPM_CLOCK_ADJUST_Marshalu(const TPM_CLOCK_ADJUST *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_CLOCK_ADJUST_Marshalu(const TPM_CLOCK_ADJUST *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -2841,7 +2841,7 @@ TSS_TPM_CLOCK_ADJUST_Marshalu(const TPM_CLOCK_ADJUST *source, uint16_t *written,
 /* Table 19 - Definition of (UINT16) TPM_EO Constants <IN/OUT> */
 
 TPM_RC
-TSS_TPM_EO_Marshalu(const TPM_EO *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_EO_Marshalu(const TPM_EO *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -2853,7 +2853,7 @@ TSS_TPM_EO_Marshalu(const TPM_EO *source, uint16_t *written, BYTE **buffer, uint
 /* Table 20 - Definition of (UINT16) TPM_ST Constants <IN/OUT, S> */
 
 TPM_RC
-TSS_TPM_ST_Marshalu(const TPM_ST *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_ST_Marshalu(const TPM_ST *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -2865,7 +2865,7 @@ TSS_TPM_ST_Marshalu(const TPM_ST *source, uint16_t *written, BYTE **buffer, uint
 /* Table 21 - Definition of (UINT16) TPM_SU Constants <IN> */
 
 TPM_RC
-TSS_TPM_SU_Marshalu(const TPM_ST *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_SU_Marshalu(const TPM_ST *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -2877,7 +2877,7 @@ TSS_TPM_SU_Marshalu(const TPM_ST *source, uint16_t *written, BYTE **buffer, uint
 /* Table 22 - Definition of (UINT8) TPM_SE Constants <IN> */
 
 TPM_RC
-TSS_TPM_SE_Marshalu(const TPM_SE  *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_SE_Marshalu(const TPM_SE  *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -2889,7 +2889,7 @@ TSS_TPM_SE_Marshalu(const TPM_SE  *source, uint16_t *written, BYTE **buffer, uin
 /* Table 23 - Definition of (UINT32) TPM_CAP Constants  */
 
 TPM_RC
-TSS_TPM_CAP_Marshalu(const TPM_CAP *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_CAP_Marshalu(const TPM_CAP *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -2901,7 +2901,7 @@ TSS_TPM_CAP_Marshalu(const TPM_CAP *source, uint16_t *written, BYTE **buffer, ui
 /* Table 24 - Definition of (UINT32) TPM_PT Constants <IN/OUT, S> */
 
 TPM_RC
-TSS_TPM_PT_Marshalu(const TPM_PT *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_PT_Marshalu(const TPM_PT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -2913,7 +2913,7 @@ TSS_TPM_PT_Marshalu(const TPM_PT *source, uint16_t *written, BYTE **buffer, uint
 /* Table 25 - Definition of (UINT32) TPM_PT_PCR Constants <IN/OUT, S> */
 
 TPM_RC
-TSS_TPM_PT_PCR_Marshalu(const TPM_PT_PCR *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_PT_PCR_Marshalu(const TPM_PT_PCR *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -2925,7 +2925,7 @@ TSS_TPM_PT_PCR_Marshalu(const TPM_PT_PCR *source, uint16_t *written, BYTE **buff
 /* Table 27 - Definition of Types for Handles */
 
 TPM_RC
-TSS_TPM_HANDLE_Marshalu(const TPM_HANDLE *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_HANDLE_Marshalu(const TPM_HANDLE *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -2937,7 +2937,7 @@ TSS_TPM_HANDLE_Marshalu(const TPM_HANDLE *source, uint16_t *written, BYTE **buff
 /* Table 31 - Definition of (UINT32) TPMA_ALGORITHM Bits */
 
 TPM_RC
-TSS_TPMA_ALGORITHM_Marshalu(const TPMA_ALGORITHM *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMA_ALGORITHM_Marshalu(const TPMA_ALGORITHM *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -2949,7 +2949,7 @@ TSS_TPMA_ALGORITHM_Marshalu(const TPMA_ALGORITHM *source, uint16_t *written, BYT
 /* Table 32 - Definition of (UINT32) TPMA_OBJECT Bits */
 
 TPM_RC
-TSS_TPMA_OBJECT_Marshalu(const TPMA_OBJECT *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMA_OBJECT_Marshalu(const TPMA_OBJECT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -2961,7 +2961,7 @@ TSS_TPMA_OBJECT_Marshalu(const TPMA_OBJECT *source, uint16_t *written, BYTE **bu
 /* Table 33 - Definition of (UINT8) TPMA_SESSION Bits <IN/OUT> */
 
 TPM_RC
-TSS_TPMA_SESSION_Marshalu(const TPMA_SESSION *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMA_SESSION_Marshalu(const TPMA_SESSION *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -2973,7 +2973,7 @@ TSS_TPMA_SESSION_Marshalu(const TPMA_SESSION *source, uint16_t *written, BYTE **
 /* Table 34 - Definition of (UINT8) TPMA_LOCALITY Bits <IN/OUT> */
 
 TPM_RC
-TSS_TPMA_LOCALITY_Marshalu(const TPMA_LOCALITY *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMA_LOCALITY_Marshalu(const TPMA_LOCALITY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -2985,7 +2985,7 @@ TSS_TPMA_LOCALITY_Marshalu(const TPMA_LOCALITY *source, uint16_t *written, BYTE 
 /* Table 38 - Definition of (TPM_CC) TPMA_CC Bits <OUT> */
 
 TPM_RC
-TSS_TPM_CC_Marshalu(const TPM_CC *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM_CC_Marshalu(const TPM_CC *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -2997,7 +2997,7 @@ TSS_TPM_CC_Marshalu(const TPM_CC *source, uint16_t *written, BYTE **buffer, uint
 /* Table 38 - Definition of (TPM_CC) TPMA_CC Bits <OUT> */
 
 TPM_RC
-TSS_TPMA_CC_Marshalu(const TPMA_CC *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMA_CC_Marshalu(const TPMA_CC *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3009,7 +3009,7 @@ TSS_TPMA_CC_Marshalu(const TPMA_CC *source, uint16_t *written, BYTE **buffer, ui
 /* Table 39 - Definition of (BYTE) TPMI_YES_NO Type */
 
 TPM_RC
-TSS_TPMI_YES_NO_Marshalu(const TPMI_YES_NO *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_YES_NO_Marshalu(const TPMI_YES_NO *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3021,7 +3021,7 @@ TSS_TPMI_YES_NO_Marshalu(const TPMI_YES_NO *source, uint16_t *written, BYTE **bu
 /* Table 40 - Definition of (TPM_HANDLE) TPMI_DH_OBJECT Type */
 
 TPM_RC
-TSS_TPMI_DH_OBJECT_Marshalu(const TPMI_DH_OBJECT *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_DH_OBJECT_Marshalu(const TPMI_DH_OBJECT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3033,7 +3033,7 @@ TSS_TPMI_DH_OBJECT_Marshalu(const TPMI_DH_OBJECT *source, uint16_t *written, BYT
 /* Table 41 - Definition of (TPM_HANDLE) TPMI_DH_PERSISTENT Type */
 
 TPM_RC
-TSS_TPMI_DH_PERSISTENT_Marshalu(const TPMI_DH_PERSISTENT *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_DH_PERSISTENT_Marshalu(const TPMI_DH_PERSISTENT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3045,7 +3045,7 @@ TSS_TPMI_DH_PERSISTENT_Marshalu(const TPMI_DH_PERSISTENT *source, uint16_t *writ
 /* Table 42 - Definition of (TPM_HANDLE) TPMI_DH_ENTITY Type <IN> */
 
 TPM_RC
-TSS_TPMI_DH_ENTITY_Marshalu(const TPMI_DH_ENTITY *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_DH_ENTITY_Marshalu(const TPMI_DH_ENTITY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3057,7 +3057,7 @@ TSS_TPMI_DH_ENTITY_Marshalu(const TPMI_DH_ENTITY *source, uint16_t *written, BYT
 /* Table 43 - Definition of (TPM_HANDLE) TPMI_DH_PCR Type <IN> */
 
 TPM_RC
-TSS_TPMI_DH_PCR_Marshalu(const TPMI_DH_PCR  *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_DH_PCR_Marshalu(const TPMI_DH_PCR  *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3069,7 +3069,7 @@ TSS_TPMI_DH_PCR_Marshalu(const TPMI_DH_PCR  *source, uint16_t *written, BYTE **b
 /* Table 44 - Definition of (TPM_HANDLE) TPMI_SH_AUTH_SESSION Type <IN/OUT> */
 
 TPM_RC
-TSS_TPMI_SH_AUTH_SESSION_Marshalu(const TPMI_SH_AUTH_SESSION *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_SH_AUTH_SESSION_Marshalu(const TPMI_SH_AUTH_SESSION *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3081,7 +3081,7 @@ TSS_TPMI_SH_AUTH_SESSION_Marshalu(const TPMI_SH_AUTH_SESSION *source, uint16_t *
 /* Table 45 - Definition of (TPM_HANDLE) TPMI_SH_HMAC Type <IN/OUT> */
 
 TPM_RC
-TSS_TPMI_SH_HMAC_Marshalu(const TPMI_SH_HMAC *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_SH_HMAC_Marshalu(const TPMI_SH_HMAC *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3093,7 +3093,7 @@ TSS_TPMI_SH_HMAC_Marshalu(const TPMI_SH_HMAC *source, uint16_t *written, BYTE **
 /* Table 46 - Definition of (TPM_HANDLE) TPMI_SH_POLICY Type <IN/OUT> */
 
 TPM_RC
-TSS_TPMI_SH_POLICY_Marshalu(const TPMI_SH_POLICY*source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_SH_POLICY_Marshalu(const TPMI_SH_POLICY*source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3105,7 +3105,7 @@ TSS_TPMI_SH_POLICY_Marshalu(const TPMI_SH_POLICY*source, uint16_t *written, BYTE
 /* Table 47 - Definition of (TPM_HANDLE) TPMI_DH_CONTEXT Type  */
 
 TPM_RC
-TSS_TPMI_DH_CONTEXT_Marshalu(const TPMI_DH_CONTEXT *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_DH_CONTEXT_Marshalu(const TPMI_DH_CONTEXT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3117,7 +3117,7 @@ TSS_TPMI_DH_CONTEXT_Marshalu(const TPMI_DH_CONTEXT *source, uint16_t *written, B
 /* Table 49 - Definition of (TPM_HANDLE) TPMI_DH_SAVED Type  */
 
 TPM_RC
-TSS_TPMI_DH_SAVED_Marshalu(const TPMI_DH_SAVED *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_DH_SAVED_Marshalu(const TPMI_DH_SAVED *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3129,7 +3129,7 @@ TSS_TPMI_DH_SAVED_Marshalu(const TPMI_DH_SAVED *source, uint16_t *written, BYTE 
 /* Table 48 - Definition of (TPM_HANDLE) TPMI_RH_HIERARCHY Type  */
 
 TPM_RC
-TSS_TPMI_RH_HIERARCHY_Marshalu(const TPMI_RH_HIERARCHY *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_RH_HIERARCHY_Marshalu(const TPMI_RH_HIERARCHY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3141,7 +3141,7 @@ TSS_TPMI_RH_HIERARCHY_Marshalu(const TPMI_RH_HIERARCHY *source, uint16_t *writte
 /* Table 49 - Definition of (TPM_HANDLE) TPMI_RH_ENABLES Type */
 
 TPM_RC
-TSS_TPMI_RH_ENABLES_Marshalu(const TPMI_RH_ENABLES *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_RH_ENABLES_Marshalu(const TPMI_RH_ENABLES *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3153,7 +3153,7 @@ TSS_TPMI_RH_ENABLES_Marshalu(const TPMI_RH_ENABLES *source, uint16_t *written, B
 /* Table 50 - Definition of (TPM_HANDLE) TPMI_RH_HIERARCHY_AUTH Type <IN> */
 
 TPM_RC
-TSS_TPMI_RH_HIERARCHY_AUTH_Marshalu(const TPMI_RH_HIERARCHY_AUTH *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_RH_HIERARCHY_AUTH_Marshalu(const TPMI_RH_HIERARCHY_AUTH *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3165,7 +3165,7 @@ TSS_TPMI_RH_HIERARCHY_AUTH_Marshalu(const TPMI_RH_HIERARCHY_AUTH *source, uint16
 /* Table 51 - Definition of (TPM_HANDLE) TPMI_RH_PLATFORM Type <IN> */
 
 TPM_RC
-TSS_TPMI_RH_PLATFORM_Marshalu(const TPMI_RH_PLATFORM *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_RH_PLATFORM_Marshalu(const TPMI_RH_PLATFORM *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3177,7 +3177,7 @@ TSS_TPMI_RH_PLATFORM_Marshalu(const TPMI_RH_PLATFORM *source, uint16_t *written,
 /* Table 53 - Definition of (TPM_HANDLE) TPMI_RH_ENDORSEMENT Type <IN> */
 
 TPM_RC
-TSS_TPMI_RH_ENDORSEMENT_Marshalu(const TPMI_RH_ENDORSEMENT *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_RH_ENDORSEMENT_Marshalu(const TPMI_RH_ENDORSEMENT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3189,7 +3189,7 @@ TSS_TPMI_RH_ENDORSEMENT_Marshalu(const TPMI_RH_ENDORSEMENT *source, uint16_t *wr
 /* Table 54 - Definition of (TPM_HANDLE) TPMI_RH_PROVISION Type <IN> */
 
 TPM_RC
-TSS_TPMI_RH_PROVISION_Marshalu(const TPMI_RH_PROVISION *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_RH_PROVISION_Marshalu(const TPMI_RH_PROVISION *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3201,7 +3201,7 @@ TSS_TPMI_RH_PROVISION_Marshalu(const TPMI_RH_PROVISION *source, uint16_t *writte
 /* Table 55 - Definition of (TPM_HANDLE) TPMI_RH_CLEAR Type <IN> */
 
 TPM_RC
-TSS_TPMI_RH_CLEAR_Marshalu(const TPMI_RH_CLEAR *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_RH_CLEAR_Marshalu(const TPMI_RH_CLEAR *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3213,7 +3213,7 @@ TSS_TPMI_RH_CLEAR_Marshalu(const TPMI_RH_CLEAR *source, uint16_t *written, BYTE 
 /* Table 56 - Definition of (TPM_HANDLE) TPMI_RH_NV_AUTH Type <IN> */
 
 TPM_RC
-TSS_TPMI_RH_NV_AUTH_Marshalu(const TPMI_RH_NV_AUTH *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_RH_NV_AUTH_Marshalu(const TPMI_RH_NV_AUTH *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3225,7 +3225,7 @@ TSS_TPMI_RH_NV_AUTH_Marshalu(const TPMI_RH_NV_AUTH *source, uint16_t *written, B
 /* Table 57 - Definition of (TPM_HANDLE) TPMI_RH_LOCKOUT Type <IN> */
 
 TPM_RC
-TSS_TPMI_RH_LOCKOUT_Marshalu(const TPMI_RH_LOCKOUT *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_RH_LOCKOUT_Marshalu(const TPMI_RH_LOCKOUT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3237,7 +3237,7 @@ TSS_TPMI_RH_LOCKOUT_Marshalu(const TPMI_RH_LOCKOUT *source, uint16_t *written, B
 /* Table 58 - Definition of (TPM_HANDLE) TPMI_RH_NV_INDEX Type <IN/OUT> */
 
 TPM_RC
-TSS_TPMI_RH_NV_INDEX_Marshalu(const TPMI_RH_NV_INDEX *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_RH_NV_INDEX_Marshalu(const TPMI_RH_NV_INDEX *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3249,7 +3249,7 @@ TSS_TPMI_RH_NV_INDEX_Marshalu(const TPMI_RH_NV_INDEX *source, uint16_t *written,
 /* Table 59 - Definition of (TPM_ALG_ID) TPMI_ALG_HASH Type  */
 
 TPM_RC
-TSS_TPMI_ALG_HASH_Marshalu(const TPMI_ALG_HASH *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_ALG_HASH_Marshalu(const TPMI_ALG_HASH *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3261,7 +3261,7 @@ TSS_TPMI_ALG_HASH_Marshalu(const TPMI_ALG_HASH *source, uint16_t *written, BYTE 
 /* Table 61 - Definition of (TPM_ALG_ID) TPMI_ALG_SYM Type */
 
 TPM_RC
-TSS_TPMI_ALG_SYM_Marshalu(const TPMI_ALG_SYM *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_ALG_SYM_Marshalu(const TPMI_ALG_SYM *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3273,7 +3273,7 @@ TSS_TPMI_ALG_SYM_Marshalu(const TPMI_ALG_SYM *source, uint16_t *written, BYTE **
 /* Table 62 - Definition of (TPM_ALG_ID) TPMI_ALG_SYM_OBJECT Type */
 
 TPM_RC
-TSS_TPMI_ALG_SYM_OBJECT_Marshalu(const TPMI_ALG_SYM_OBJECT *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_ALG_SYM_OBJECT_Marshalu(const TPMI_ALG_SYM_OBJECT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3285,7 +3285,7 @@ TSS_TPMI_ALG_SYM_OBJECT_Marshalu(const TPMI_ALG_SYM_OBJECT *source, uint16_t *wr
 /* Table 63 - Definition of (TPM_ALG_ID) TPMI_ALG_SYM_MODE Type */
 
 TPM_RC
-TSS_TPMI_ALG_SYM_MODE_Marshalu(const TPMI_ALG_SYM_MODE *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_ALG_SYM_MODE_Marshalu(const TPMI_ALG_SYM_MODE *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3297,7 +3297,7 @@ TSS_TPMI_ALG_SYM_MODE_Marshalu(const TPMI_ALG_SYM_MODE *source, uint16_t *writte
 /* Table 64 - Definition of (TPM_ALG_ID) TPMI_ALG_KDF Type */
 
 TPM_RC
-TSS_TPMI_ALG_KDF_Marshalu(const TPMI_ALG_KDF *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_ALG_KDF_Marshalu(const TPMI_ALG_KDF *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3309,7 +3309,7 @@ TSS_TPMI_ALG_KDF_Marshalu(const TPMI_ALG_KDF *source, uint16_t *written, BYTE **
 /* Table 65 - Definition of (TPM_ALG_ID) TPMI_ALG_SIG_SCHEME Type */
 
 TPM_RC
-TSS_TPMI_ALG_SIG_SCHEME_Marshalu(const TPMI_ALG_SIG_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_ALG_SIG_SCHEME_Marshalu(const TPMI_ALG_SIG_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3321,7 +3321,7 @@ TSS_TPMI_ALG_SIG_SCHEME_Marshalu(const TPMI_ALG_SIG_SCHEME *source, uint16_t *wr
 /* Table 66 - Definition of (TPM_ALG_ID) TPMI_ECC_KEY_EXCHANGE Type */
 
 TPM_RC
-TSS_TPMI_ECC_KEY_EXCHANGE_Marshalu(const TPMI_ECC_KEY_EXCHANGE *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_ECC_KEY_EXCHANGE_Marshalu(const TPMI_ECC_KEY_EXCHANGE *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3333,7 +3333,7 @@ TSS_TPMI_ECC_KEY_EXCHANGE_Marshalu(const TPMI_ECC_KEY_EXCHANGE *source, uint16_t
 /* Table 67 - Definition of (TPM_ST) TPMI_ST_COMMAND_TAG Type */
 
 TPM_RC
-TSS_TPMI_ST_COMMAND_TAG_Marshalu(const TPMI_ST_COMMAND_TAG *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_ST_COMMAND_TAG_Marshalu(const TPMI_ST_COMMAND_TAG *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3345,7 +3345,7 @@ TSS_TPMI_ST_COMMAND_TAG_Marshalu(const TPMI_ST_COMMAND_TAG *source, uint16_t *wr
 /* Table 71 - Definition of (TPM_ALG_ID) TPMI_ALG_MAC_SCHEME Type */
 
 TPM_RC
-TSS_TPMI_ALG_MAC_SCHEME_Marshalu(const TPMI_ALG_MAC_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_ALG_MAC_SCHEME_Marshalu(const TPMI_ALG_MAC_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3357,7 +3357,7 @@ TSS_TPMI_ALG_MAC_SCHEME_Marshalu(const TPMI_ALG_MAC_SCHEME *source, uint16_t *wr
 /* Table 72 - Definition of (TPM_ALG_ID) TPMI_ALG_CIPHER_MODE Type */
 
 TPM_RC
-TSS_TPMI_ALG_CIPHER_MODE_Marshalu(const TPMI_ALG_CIPHER_MODE *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_ALG_CIPHER_MODE_Marshalu(const TPMI_ALG_CIPHER_MODE *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3369,7 +3369,7 @@ TSS_TPMI_ALG_CIPHER_MODE_Marshalu(const TPMI_ALG_CIPHER_MODE *source, uint16_t *
 /* Table 70 - Definition of TPMU_HA Union <IN/OUT, S> */
 
 TPM_RC
-TSS_TPMU_HA_Marshalu(const TPMU_HA *source, uint16_t *written, BYTE **buffer, uint32_t *size, uint32_t selector)
+TSS_TPMU_HA_Marshalu(const TPMU_HA *source, UINT32 *written, BYTE **buffer, uint32_t *size, uint32_t selector)
 {
     TPM_RC rc = 0;
 
@@ -3420,7 +3420,7 @@ TSS_TPMU_HA_Marshalu(const TPMU_HA *source, uint16_t *written, BYTE **buffer, ui
 /* Table 71 - Definition of TPMT_HA Structure <IN/OUT> */
 
 TPM_RC
-TSS_TPMT_HA_Marshalu(const TPMT_HA *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMT_HA_Marshalu(const TPMT_HA *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3435,7 +3435,7 @@ TSS_TPMT_HA_Marshalu(const TPMT_HA *source, uint16_t *written, BYTE **buffer, ui
 /* Table 72 - Definition of TPM2B_DIGEST Structure */
 
 TPM_RC
-TSS_TPM2B_DIGEST_Marshalu(const TPM2B_DIGEST *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_DIGEST_Marshalu(const TPM2B_DIGEST *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3447,7 +3447,7 @@ TSS_TPM2B_DIGEST_Marshalu(const TPM2B_DIGEST *source, uint16_t *written, BYTE **
 /* Table 73 - Definition of TPM2B_DATA Structure */
 
 TPM_RC
-TSS_TPM2B_DATA_Marshalu(const TPM2B_DATA *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_DATA_Marshalu(const TPM2B_DATA *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3459,7 +3459,7 @@ TSS_TPM2B_DATA_Marshalu(const TPM2B_DATA *source, uint16_t *written, BYTE **buff
 /* Table 74 - Definition of Types for TPM2B_NONCE */
 
 TPM_RC
-TSS_TPM2B_NONCE_Marshalu(const TPM2B_NONCE *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_NONCE_Marshalu(const TPM2B_NONCE *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3471,7 +3471,7 @@ TSS_TPM2B_NONCE_Marshalu(const TPM2B_NONCE *source, uint16_t *written, BYTE **bu
 /* Table 75 - Definition of Types for TPM2B_AUTH */
 
 TPM_RC
-TSS_TPM2B_AUTH_Marshalu(const TPM2B_AUTH *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_AUTH_Marshalu(const TPM2B_AUTH *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3483,7 +3483,7 @@ TSS_TPM2B_AUTH_Marshalu(const TPM2B_AUTH *source, uint16_t *written, BYTE **buff
 /* Table 76 - Definition of Types for TPM2B_OPERAND */
 
 TPM_RC
-TSS_TPM2B_OPERAND_Marshalu(const TPM2B_OPERAND *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_OPERAND_Marshalu(const TPM2B_OPERAND *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3495,7 +3495,7 @@ TSS_TPM2B_OPERAND_Marshalu(const TPM2B_OPERAND *source, uint16_t *written, BYTE 
 /* Table 77 - Definition of TPM2B_EVENT Structure */
 
 TPM_RC
-TSS_TPM2B_EVENT_Marshalu(const TPM2B_EVENT *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_EVENT_Marshalu(const TPM2B_EVENT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3507,7 +3507,7 @@ TSS_TPM2B_EVENT_Marshalu(const TPM2B_EVENT *source, uint16_t *written, BYTE **bu
 /* Table 78 - Definition of TPM2B_MAX_BUFFER Structure */
 
 TPM_RC
-TSS_TPM2B_MAX_BUFFER_Marshalu(const TPM2B_MAX_BUFFER *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_MAX_BUFFER_Marshalu(const TPM2B_MAX_BUFFER *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3519,7 +3519,7 @@ TSS_TPM2B_MAX_BUFFER_Marshalu(const TPM2B_MAX_BUFFER *source, uint16_t *written,
 /* Table 79 - Definition of TPM2B_MAX_NV_BUFFER Structure */
 
 TPM_RC
-TSS_TPM2B_MAX_NV_BUFFER_Marshalu(const TPM2B_MAX_NV_BUFFER *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_MAX_NV_BUFFER_Marshalu(const TPM2B_MAX_NV_BUFFER *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3531,7 +3531,7 @@ TSS_TPM2B_MAX_NV_BUFFER_Marshalu(const TPM2B_MAX_NV_BUFFER *source, uint16_t *wr
 /* Table 80 - Definition of TPM2B_TIMEOUT Structure <IN/OUT> */
 
 TPM_RC
-TSS_TPM2B_TIMEOUT_Marshalu(const TPM2B_TIMEOUT *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_TIMEOUT_Marshalu(const TPM2B_TIMEOUT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3543,7 +3543,7 @@ TSS_TPM2B_TIMEOUT_Marshalu(const TPM2B_TIMEOUT *source, uint16_t *written, BYTE 
 /* Table 81 - Definition of TPM2B_IV Structure <IN/OUT> */
 
 TPM_RC
-TSS_TPM2B_IV_Marshalu(const TPM2B_IV *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_IV_Marshalu(const TPM2B_IV *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3555,7 +3555,7 @@ TSS_TPM2B_IV_Marshalu(const TPM2B_IV *source, uint16_t *written, BYTE **buffer, 
 /* Table 83 - Definition of TPM2B_NAME Structure */
 
 TPM_RC
-TSS_TPM2B_NAME_Marshalu(const TPM2B_NAME *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_NAME_Marshalu(const TPM2B_NAME *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3567,7 +3567,7 @@ TSS_TPM2B_NAME_Marshalu(const TPM2B_NAME *source, uint16_t *written, BYTE **buff
 /* Table 85 - Definition of TPMS_PCR_SELECTION Structure */
 
 TPM_RC
-TSS_TPMS_PCR_SELECTION_Marshalu(const TPMS_PCR_SELECTION *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_PCR_SELECTION_Marshalu(const TPMS_PCR_SELECTION *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
 
@@ -3586,7 +3586,7 @@ TSS_TPMS_PCR_SELECTION_Marshalu(const TPMS_PCR_SELECTION *source, uint16_t *writ
 /* Table 88 - Definition of TPMT_TK_CREATION Structure */
 
 TPM_RC
-TSS_TPMT_TK_CREATION_Marshalu(const TPMT_TK_CREATION *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMT_TK_CREATION_Marshalu(const TPMT_TK_CREATION *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3604,7 +3604,7 @@ TSS_TPMT_TK_CREATION_Marshalu(const TPMT_TK_CREATION *source, uint16_t *written,
 /* Table 89 - Definition of TPMT_TK_VERIFIED Structure */
 
 TPM_RC
-TSS_TPMT_TK_VERIFIED_Marshalu(const TPMT_TK_VERIFIED *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMT_TK_VERIFIED_Marshalu(const TPMT_TK_VERIFIED *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3622,7 +3622,7 @@ TSS_TPMT_TK_VERIFIED_Marshalu(const TPMT_TK_VERIFIED *source, uint16_t *written,
 /* Table 90 - Definition of TPMT_TK_AUTH Structure */
 
 TPM_RC
-TSS_TPMT_TK_AUTH_Marshalu(const TPMT_TK_AUTH *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMT_TK_AUTH_Marshalu(const TPMT_TK_AUTH *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3640,7 +3640,7 @@ TSS_TPMT_TK_AUTH_Marshalu(const TPMT_TK_AUTH *source, uint16_t *written, BYTE **
 /* Table 91 - Definition of TPMT_TK_HASHCHECK Structure */
 
 TPM_RC
-TSS_TPMT_TK_HASHCHECK_Marshalu(const TPMT_TK_HASHCHECK *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMT_TK_HASHCHECK_Marshalu(const TPMT_TK_HASHCHECK *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3658,7 +3658,7 @@ TSS_TPMT_TK_HASHCHECK_Marshalu(const TPMT_TK_HASHCHECK *source, uint16_t *writte
 /* Table 92 - Definition of TPMS_ALG_PROPERTY Structure <OUT> */
 
 TPM_RC
-TSS_TPMS_ALG_PROPERTY_Marshalu(const TPMS_ALG_PROPERTY *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_ALG_PROPERTY_Marshalu(const TPMS_ALG_PROPERTY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3673,7 +3673,7 @@ TSS_TPMS_ALG_PROPERTY_Marshalu(const TPMS_ALG_PROPERTY *source, uint16_t *writte
 /* Table 93 - Definition of TPMS_TAGGED_PROPERTY Structure <OUT> */
 
 TPM_RC
-TSS_TPMS_TAGGED_PROPERTY_Marshalu(const TPMS_TAGGED_PROPERTY *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_TAGGED_PROPERTY_Marshalu(const TPMS_TAGGED_PROPERTY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3688,7 +3688,7 @@ TSS_TPMS_TAGGED_PROPERTY_Marshalu(const TPMS_TAGGED_PROPERTY *source, uint16_t *
 /* Table 94 - Definition of TPMS_TAGGED_PCR_SELECT Structure <OUT> */
 
 TPM_RC
-TSS_TPMS_TAGGED_PCR_SELECT_Marshalu(const TPMS_TAGGED_PCR_SELECT *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_TAGGED_PCR_SELECT_Marshalu(const TPMS_TAGGED_PCR_SELECT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3706,7 +3706,7 @@ TSS_TPMS_TAGGED_PCR_SELECT_Marshalu(const TPMS_TAGGED_PCR_SELECT *source, uint16
 /* Table 95 - Definition of TPML_CC Structure */
 
 TPM_RC
-TSS_TPML_CC_Marshalu(const TPML_CC *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPML_CC_Marshalu(const TPML_CC *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     uint32_t i;
@@ -3725,7 +3725,7 @@ TSS_TPML_CC_Marshalu(const TPML_CC *source, uint16_t *written, BYTE **buffer, ui
 /* Table 96 - Definition of TPML_CCA Structure <OUT> */
 
 TPM_RC
-TSS_TPML_CCA_Marshalu(const TPML_CCA *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPML_CCA_Marshalu(const TPML_CCA *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     uint32_t i;
@@ -3744,7 +3744,7 @@ TSS_TPML_CCA_Marshalu(const TPML_CCA *source, uint16_t *written, BYTE **buffer, 
 /* Table 97 - Definition of TPML_ALG Structure */
 
 TPM_RC
-TSS_TPML_ALG_Marshalu(const TPML_ALG *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPML_ALG_Marshalu(const TPML_ALG *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     uint32_t i;
@@ -3763,7 +3763,7 @@ TSS_TPML_ALG_Marshalu(const TPML_ALG *source, uint16_t *written, BYTE **buffer, 
 /* Table 98 - Definition of TPML_HANDLE Structure <OUT> */
 
 TPM_RC
-TSS_TPML_HANDLE_Marshalu(const TPML_HANDLE *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPML_HANDLE_Marshalu(const TPML_HANDLE *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     uint32_t i;
@@ -3782,7 +3782,7 @@ TSS_TPML_HANDLE_Marshalu(const TPML_HANDLE *source, uint16_t *written, BYTE **bu
 /* Table 99 - Definition of TPML_DIGEST Structure */
 
 TPM_RC
-TSS_TPML_DIGEST_Marshalu(const TPML_DIGEST *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPML_DIGEST_Marshalu(const TPML_DIGEST *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     uint32_t i;
@@ -3801,7 +3801,7 @@ TSS_TPML_DIGEST_Marshalu(const TPML_DIGEST *source, uint16_t *written, BYTE **bu
 /* Table 100 - Definition of TPML_DIGEST_VALUES Structure */
 
 TPM_RC
-TSS_TPML_DIGEST_VALUES_Marshalu(const TPML_DIGEST_VALUES *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPML_DIGEST_VALUES_Marshalu(const TPML_DIGEST_VALUES *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     uint32_t i;
@@ -3820,7 +3820,7 @@ TSS_TPML_DIGEST_VALUES_Marshalu(const TPML_DIGEST_VALUES *source, uint16_t *writ
 /* Table 102 - Definition of TPML_PCR_SELECTION Structure */
 
 TPM_RC
-TSS_TPML_PCR_SELECTION_Marshalu(const TPML_PCR_SELECTION *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPML_PCR_SELECTION_Marshalu(const TPML_PCR_SELECTION *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     uint32_t i;
@@ -3839,7 +3839,7 @@ TSS_TPML_PCR_SELECTION_Marshalu(const TPML_PCR_SELECTION *source, uint16_t *writ
 /* Table 103 - Definition of TPML_ALG_PROPERTY Structure <OUT> */
 
 TPM_RC
-TSS_TPML_ALG_PROPERTY_Marshalu(const TPML_ALG_PROPERTY *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPML_ALG_PROPERTY_Marshalu(const TPML_ALG_PROPERTY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     uint32_t i;
@@ -3858,7 +3858,7 @@ TSS_TPML_ALG_PROPERTY_Marshalu(const TPML_ALG_PROPERTY *source, uint16_t *writte
 /* Table 104 - Definition of TPML_TAGGED_TPM_PROPERTY Structure <OUT> */
 
 TPM_RC
-TSS_TPML_TAGGED_TPM_PROPERTY_Marshalu(const TPML_TAGGED_TPM_PROPERTY *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPML_TAGGED_TPM_PROPERTY_Marshalu(const TPML_TAGGED_TPM_PROPERTY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     uint32_t i;
@@ -3877,7 +3877,7 @@ TSS_TPML_TAGGED_TPM_PROPERTY_Marshalu(const TPML_TAGGED_TPM_PROPERTY *source, ui
 /* Table 105 - Definition of TPML_TAGGED_PCR_PROPERTY Structure <OUT> */
 
 TPM_RC
-TSS_TPML_TAGGED_PCR_PROPERTY_Marshalu(const TPML_TAGGED_PCR_PROPERTY *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPML_TAGGED_PCR_PROPERTY_Marshalu(const TPML_TAGGED_PCR_PROPERTY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     uint32_t i;
@@ -3896,7 +3896,7 @@ TSS_TPML_TAGGED_PCR_PROPERTY_Marshalu(const TPML_TAGGED_PCR_PROPERTY *source, ui
 /* Table 106 - Definition of {ECC} TPML_ECC_CURVE Structure <OUT> */
 
 TPM_RC
-TSS_TPML_ECC_CURVE_Marshalu(const TPML_ECC_CURVE *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPML_ECC_CURVE_Marshalu(const TPML_ECC_CURVE *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     uint32_t i;
@@ -3915,7 +3915,7 @@ TSS_TPML_ECC_CURVE_Marshalu(const TPML_ECC_CURVE *source, uint16_t *written, BYT
 /* Table 107 - Definition of TPMU_CAPABILITIES Union <OUT> */
 
 TPM_RC
-TSS_TPMU_CAPABILITIES_Marshalu(const TPMU_CAPABILITIES *source, uint16_t *written, BYTE **buffer, uint32_t *size, uint32_t selector)
+TSS_TPMU_CAPABILITIES_Marshalu(const TPMU_CAPABILITIES *source, UINT32 *written, BYTE **buffer, uint32_t *size, uint32_t selector)
 {
     TPM_RC rc = 0;
     switch (selector) {
@@ -3973,7 +3973,7 @@ TSS_TPMU_CAPABILITIES_Marshalu(const TPMU_CAPABILITIES *source, uint16_t *writte
 /* Table 108 - Definition of TPMS_CAPABILITY_DATA Structure <OUT> */
 
 TPM_RC
-TSS_TPMS_CAPABILITY_DATA_Marshalu(const TPMS_CAPABILITY_DATA *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_CAPABILITY_DATA_Marshalu(const TPMS_CAPABILITY_DATA *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -3988,7 +3988,7 @@ TSS_TPMS_CAPABILITY_DATA_Marshalu(const TPMS_CAPABILITY_DATA *source, uint16_t *
 /* Table 109 - Definition of TPMS_CLOCK_INFO Structure */
 
 TPM_RC
-TSS_TPMS_CLOCK_INFO_Marshalu(const TPMS_CLOCK_INFO *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_CLOCK_INFO_Marshalu(const TPMS_CLOCK_INFO *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4009,7 +4009,7 @@ TSS_TPMS_CLOCK_INFO_Marshalu(const TPMS_CLOCK_INFO *source, uint16_t *written, B
 /* Table 110 - Definition of TPMS_TIME_INFO Structure */
 
 TPM_RC
-TSS_TPMS_TIME_INFO_Marshalu(const TPMS_TIME_INFO *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_TIME_INFO_Marshalu(const TPMS_TIME_INFO *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4024,7 +4024,7 @@ TSS_TPMS_TIME_INFO_Marshalu(const TPMS_TIME_INFO *source, uint16_t *written, BYT
 /* Table 111 - Definition of TPMS_TIME_ATTEST_INFO Structure <OUT> */
 
 TPM_RC
-TSS_TPMS_TIME_ATTEST_INFO_Marshalu(const TPMS_TIME_ATTEST_INFO *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_TIME_ATTEST_INFO_Marshalu(const TPMS_TIME_ATTEST_INFO *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4039,7 +4039,7 @@ TSS_TPMS_TIME_ATTEST_INFO_Marshalu(const TPMS_TIME_ATTEST_INFO *source, uint16_t
 /* Table 112 - Definition of TPMS_CERTIFY_INFO Structure <OUT> */
 
 TPM_RC
-TSS_TPMS_CERTIFY_INFO_Marshalu(const TPMS_CERTIFY_INFO *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_CERTIFY_INFO_Marshalu(const TPMS_CERTIFY_INFO *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4054,7 +4054,7 @@ TSS_TPMS_CERTIFY_INFO_Marshalu(const TPMS_CERTIFY_INFO *source, uint16_t *writte
 /* Table 113 - Definition of TPMS_QUOTE_INFO Structure <OUT> */
 
 TPM_RC
-TSS_TPMS_QUOTE_INFO_Marshalu(const TPMS_QUOTE_INFO *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_QUOTE_INFO_Marshalu(const TPMS_QUOTE_INFO *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4069,7 +4069,7 @@ TSS_TPMS_QUOTE_INFO_Marshalu(const TPMS_QUOTE_INFO *source, uint16_t *written, B
 /* Table 114 - Definition of TPMS_COMMAND_AUDIT_INFO Structure <OUT> */
 
 TPM_RC
-TSS_TPMS_COMMAND_AUDIT_INFO_Marshalu(const TPMS_COMMAND_AUDIT_INFO *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_COMMAND_AUDIT_INFO_Marshalu(const TPMS_COMMAND_AUDIT_INFO *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4090,7 +4090,7 @@ TSS_TPMS_COMMAND_AUDIT_INFO_Marshalu(const TPMS_COMMAND_AUDIT_INFO *source, uint
 /* Table 115 - Definition of TPMS_SESSION_AUDIT_INFO Structure <OUT> */
 
 TPM_RC
-TSS_TPMS_SESSION_AUDIT_INFO_Marshalu(const TPMS_SESSION_AUDIT_INFO *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SESSION_AUDIT_INFO_Marshalu(const TPMS_SESSION_AUDIT_INFO *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4105,7 +4105,7 @@ TSS_TPMS_SESSION_AUDIT_INFO_Marshalu(const TPMS_SESSION_AUDIT_INFO *source, uint
 /* Table 116 - Definition of TPMS_CREATION_INFO Structure <OUT> */
 
 TPM_RC
-TSS_TPMS_CREATION_INFO_Marshalu(const TPMS_CREATION_INFO *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_CREATION_INFO_Marshalu(const TPMS_CREATION_INFO *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4120,7 +4120,7 @@ TSS_TPMS_CREATION_INFO_Marshalu(const TPMS_CREATION_INFO *source, uint16_t *writ
 /* Table 117 - Definition of TPMS_NV_CERTIFY_INFO Structure <OUT> */
 
 TPM_RC
-TSS_TPMS_NV_CERTIFY_INFO_Marshalu(const TPMS_NV_CERTIFY_INFO *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_NV_CERTIFY_INFO_Marshalu(const TPMS_NV_CERTIFY_INFO *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4138,7 +4138,7 @@ TSS_TPMS_NV_CERTIFY_INFO_Marshalu(const TPMS_NV_CERTIFY_INFO *source, uint16_t *
 /* Table 118 - Definition of (TPM_ST) TPMI_ST_ATTEST Type <OUT> */
 
 TPM_RC
-TSS_TPMI_ST_ATTEST_Marshalu(const TPMI_ST_ATTEST *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_ST_ATTEST_Marshalu(const TPMI_ST_ATTEST *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4150,7 +4150,7 @@ TSS_TPMI_ST_ATTEST_Marshalu(const TPMI_ST_ATTEST *source, uint16_t *written, BYT
 /* Table 119 - Definition of TPMU_ATTEST Union <OUT> */
 
 TPM_RC
-TSS_TPMU_ATTEST_Marshalu(const TPMU_ATTEST  *source, uint16_t *written, BYTE **buffer, uint32_t *size, uint32_t selector)
+TSS_TPMU_ATTEST_Marshalu(const TPMU_ATTEST  *source, UINT32 *written, BYTE **buffer, uint32_t *size, uint32_t selector)
 {
     TPM_RC rc = 0;
     switch (selector) {
@@ -4198,7 +4198,7 @@ TSS_TPMU_ATTEST_Marshalu(const TPMU_ATTEST  *source, uint16_t *written, BYTE **b
 /* Table 120 - Definition of TPMS_ATTEST Structure <OUT> */
 
 TPM_RC
-TSS_TPMS_ATTEST_Marshalu(const TPMS_ATTEST  *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_ATTEST_Marshalu(const TPMS_ATTEST  *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4228,7 +4228,7 @@ TSS_TPMS_ATTEST_Marshalu(const TPMS_ATTEST  *source, uint16_t *written, BYTE **b
 /* Table 121 - Definition of TPM2B_ATTEST Structure <OUT> */
 
 TPM_RC
-TSS_TPM2B_ATTEST_Marshalu(const TPM2B_ATTEST *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_ATTEST_Marshalu(const TPM2B_ATTEST *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4240,7 +4240,7 @@ TSS_TPM2B_ATTEST_Marshalu(const TPM2B_ATTEST *source, uint16_t *written, BYTE **
 /* Table 122 - Definition of TPMS_AUTH_COMMAND Structure <IN> */
 
 TPM_RC
-TSS_TPMS_AUTH_COMMAND_Marshalu(const TPMS_AUTH_COMMAND *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_AUTH_COMMAND_Marshalu(const TPMS_AUTH_COMMAND *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4261,7 +4261,7 @@ TSS_TPMS_AUTH_COMMAND_Marshalu(const TPMS_AUTH_COMMAND *source, uint16_t *writte
 /* Table 124 - Definition of {AES} (TPM_KEY_BITS) TPMI_!ALG.S_KEY_BITS Type */
 
 TPM_RC
-TSS_TPMI_AES_KEY_BITS_Marshalu(const TPMI_AES_KEY_BITS *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_AES_KEY_BITS_Marshalu(const TPMI_AES_KEY_BITS *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4273,7 +4273,7 @@ TSS_TPMI_AES_KEY_BITS_Marshalu(const TPMI_AES_KEY_BITS *source, uint16_t *writte
 /* Table 125 - Definition of TPMU_SYM_KEY_BITS Union */
 
 TPM_RC
-TSS_TPMU_SYM_KEY_BITS_Marshalu(const TPMU_SYM_KEY_BITS *source, uint16_t *written, BYTE **buffer, uint32_t *size, uint32_t selector)
+TSS_TPMU_SYM_KEY_BITS_Marshalu(const TPMU_SYM_KEY_BITS *source, UINT32 *written, BYTE **buffer, uint32_t *size, uint32_t selector)
 {
     TPM_RC rc = 0;
     switch(selector) {
@@ -4316,7 +4316,7 @@ TSS_TPMU_SYM_KEY_BITS_Marshalu(const TPMU_SYM_KEY_BITS *source, uint16_t *writte
 /* Table 126 - Definition of TPMU_SYM_MODE Union */
 
 TPM_RC
-TSS_TPMU_SYM_MODE_Marshalu(const TPMU_SYM_MODE *source, uint16_t *written, BYTE **buffer, uint32_t *size, uint32_t selector)
+TSS_TPMU_SYM_MODE_Marshalu(const TPMU_SYM_MODE *source, UINT32 *written, BYTE **buffer, uint32_t *size, uint32_t selector)
 {
     TPM_RC rc = 0;
     switch (selector) {
@@ -4355,7 +4355,7 @@ TSS_TPMU_SYM_MODE_Marshalu(const TPMU_SYM_MODE *source, uint16_t *written, BYTE 
 /* Table 128 - Definition of TPMT_SYM_DEF Structure */
 
 TPM_RC
-TSS_TPMT_SYM_DEF_Marshalu(const TPMT_SYM_DEF *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMT_SYM_DEF_Marshalu(const TPMT_SYM_DEF *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4373,7 +4373,7 @@ TSS_TPMT_SYM_DEF_Marshalu(const TPMT_SYM_DEF *source, uint16_t *written, BYTE **
 /* Table 129 - Definition of TPMT_SYM_DEF_OBJECT Structure */
 
 TPM_RC
-TSS_TPMT_SYM_DEF_OBJECT_Marshalu(const TPMT_SYM_DEF_OBJECT *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMT_SYM_DEF_OBJECT_Marshalu(const TPMT_SYM_DEF_OBJECT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4391,7 +4391,7 @@ TSS_TPMT_SYM_DEF_OBJECT_Marshalu(const TPMT_SYM_DEF_OBJECT *source, uint16_t *wr
 /* Table 130 - Definition of TPM2B_SYM_KEY Structure */
 
 TPM_RC
-TSS_TPM2B_SYM_KEY_Marshalu(const TPM2B_SYM_KEY *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_SYM_KEY_Marshalu(const TPM2B_SYM_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4403,7 +4403,7 @@ TSS_TPM2B_SYM_KEY_Marshalu(const TPM2B_SYM_KEY *source, uint16_t *written, BYTE 
 /* Table 134 - Definition of TPM2B_LABEL Structure */
 
 TPM_RC
-TSS_TPM2B_LABEL_Marshalu(const TPM2B_LABEL *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_LABEL_Marshalu(const TPM2B_LABEL *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4415,7 +4415,7 @@ TSS_TPM2B_LABEL_Marshalu(const TPM2B_LABEL *source, uint16_t *written, BYTE **bu
 /* Table 139 - Definition of TPMS_DERIVE Structure */
 
 TPM_RC
-TSS_TPMS_DERIVE_Marshalu(const TPMS_DERIVE *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_DERIVE_Marshalu(const TPMS_DERIVE *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4430,7 +4430,7 @@ TSS_TPMS_DERIVE_Marshalu(const TPMS_DERIVE *source, uint16_t *written, BYTE **bu
 /* Table 131 - Definition of TPMS_SYMCIPHER_PARMS Structure */
 
 TPM_RC
-TSS_TPMS_SYMCIPHER_PARMS_Marshalu(const TPMS_SYMCIPHER_PARMS *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SYMCIPHER_PARMS_Marshalu(const TPMS_SYMCIPHER_PARMS *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4442,7 +4442,7 @@ TSS_TPMS_SYMCIPHER_PARMS_Marshalu(const TPMS_SYMCIPHER_PARMS *source, uint16_t *
 /* Table 132 - Definition of TPM2B_SENSITIVE_DATA Structure */
 
 TPM_RC
-TSS_TPM2B_SENSITIVE_DATA_Marshalu(const TPM2B_SENSITIVE_DATA *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_SENSITIVE_DATA_Marshalu(const TPM2B_SENSITIVE_DATA *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4454,7 +4454,7 @@ TSS_TPM2B_SENSITIVE_DATA_Marshalu(const TPM2B_SENSITIVE_DATA *source, uint16_t *
 /* Table 133 - Definition of TPMS_SENSITIVE_CREATE Structure <IN> */
 
 TPM_RC
-TSS_TPMS_SENSITIVE_CREATE_Marshalu(const TPMS_SENSITIVE_CREATE *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SENSITIVE_CREATE_Marshalu(const TPMS_SENSITIVE_CREATE *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4469,15 +4469,15 @@ TSS_TPMS_SENSITIVE_CREATE_Marshalu(const TPMS_SENSITIVE_CREATE *source, uint16_t
 /* Table 134 - Definition of TPM2B_SENSITIVE_CREATE Structure <IN, S> */
 
 TPM_RC
-TSS_TPM2B_SENSITIVE_CREATE_Marshalu(const TPM2B_SENSITIVE_CREATE  *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_SENSITIVE_CREATE_Marshalu(const TPM2B_SENSITIVE_CREATE  *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
-    uint16_t sizeWritten = 0;	/* of structure */
+    UINT32 sizeWritten = 0;	/* of structure */
     BYTE *sizePtr;
 
     if (buffer != NULL) {
 	sizePtr = *buffer;
-	*buffer += sizeof(uint16_t);
+	*buffer += sizeof(UINT32);
     }
     if (rc == 0) {
 	rc = TSS_TPMS_SENSITIVE_CREATE_Marshalu(&source->sensitive, &sizeWritten, buffer, size);
@@ -4485,10 +4485,10 @@ TSS_TPM2B_SENSITIVE_CREATE_Marshalu(const TPM2B_SENSITIVE_CREATE  *source, uint1
     if (rc == 0) {
 	*written += sizeWritten;
 	if (buffer != NULL) {
-	    rc = TSS_UINT16_Marshalu(&sizeWritten, written, &sizePtr, size);	/* backfill 2B size */
+	    rc = TSS_UINT32_Marshalu(&sizeWritten, written, &sizePtr, size);	/* backfill 2B size */
 	}
 	else {
-	    *written += sizeof(uint16_t);
+	    *written += sizeof(UINT32);
 	}
     }
     return rc;
@@ -4497,7 +4497,7 @@ TSS_TPM2B_SENSITIVE_CREATE_Marshalu(const TPM2B_SENSITIVE_CREATE  *source, uint1
 /* Table 135 - Definition of TPMS_SCHEME_HASH Structure */
 
 TPM_RC
-TSS_TPMS_SCHEME_HASH_Marshalu(const TPMS_SCHEME_HASH *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SCHEME_HASH_Marshalu(const TPMS_SCHEME_HASH *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4509,7 +4509,7 @@ TSS_TPMS_SCHEME_HASH_Marshalu(const TPMS_SCHEME_HASH *source, uint16_t *written,
 /* Table 136 - Definition of {ECC} TPMS_SCHEME_ECDAA Structure */
 
 TPM_RC
-TSS_TPMS_SCHEME_ECDAA_Marshalu(const TPMS_SCHEME_ECDAA *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SCHEME_ECDAA_Marshalu(const TPMS_SCHEME_ECDAA *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4524,7 +4524,7 @@ TSS_TPMS_SCHEME_ECDAA_Marshalu(const TPMS_SCHEME_ECDAA *source, uint16_t *writte
 /* Table 137 - Definition of (TPM_ALG_ID) TPMI_ALG_KEYEDHASH_SCHEME Type */
 
 TPM_RC
-TSS_TPMI_ALG_KEYEDHASH_SCHEME_Marshalu(const TPMI_ALG_KEYEDHASH_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_ALG_KEYEDHASH_SCHEME_Marshalu(const TPMI_ALG_KEYEDHASH_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4536,7 +4536,7 @@ TSS_TPMI_ALG_KEYEDHASH_SCHEME_Marshalu(const TPMI_ALG_KEYEDHASH_SCHEME *source, 
 /* Table 138 - Definition of Types for HMAC_SIG_SCHEME */
 
 TPM_RC
-TSS_TPMS_SCHEME_HMAC_Marshalu(const TPMS_SCHEME_HMAC *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SCHEME_HMAC_Marshalu(const TPMS_SCHEME_HMAC *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4548,7 +4548,7 @@ TSS_TPMS_SCHEME_HMAC_Marshalu(const TPMS_SCHEME_HMAC *source, uint16_t *written,
 /* Table 139 - Definition of TPMS_SCHEME_XOR Structure */
 
 TPM_RC
-TSS_TPMS_SCHEME_XOR_Marshalu(const TPMS_SCHEME_XOR *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SCHEME_XOR_Marshalu(const TPMS_SCHEME_XOR *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4563,7 +4563,7 @@ TSS_TPMS_SCHEME_XOR_Marshalu(const TPMS_SCHEME_XOR *source, uint16_t *written, B
 /* Table 140 - Definition of TPMU_SCHEME_KEYEDHASH Union <IN/OUT, S> */
 
 TPM_RC
-TSS_TPMU_SCHEME_KEYEDHASH_Marshalu(const TPMU_SCHEME_KEYEDHASH *source, uint16_t *written, BYTE **buffer, uint32_t *size, uint32_t selector)
+TSS_TPMU_SCHEME_KEYEDHASH_Marshalu(const TPMU_SCHEME_KEYEDHASH *source, UINT32 *written, BYTE **buffer, uint32_t *size, uint32_t selector)
 {
     TPM_RC rc = 0;
     switch (selector) {
@@ -4592,7 +4592,7 @@ TSS_TPMU_SCHEME_KEYEDHASH_Marshalu(const TPMU_SCHEME_KEYEDHASH *source, uint16_t
 /* Table 141 - Definition of TPMT_KEYEDHASH_SCHEME Structure */
 
 TPM_RC
-TSS_TPMT_KEYEDHASH_SCHEME_Marshalu(const TPMT_KEYEDHASH_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMT_KEYEDHASH_SCHEME_Marshalu(const TPMT_KEYEDHASH_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4607,7 +4607,7 @@ TSS_TPMT_KEYEDHASH_SCHEME_Marshalu(const TPMT_KEYEDHASH_SCHEME *source, uint16_t
 /* Table 142 - Definition of {RSA} Types for RSA Signature Schemes */
 
 TPM_RC
-TSS_TPMS_SIG_SCHEME_RSASSA_Marshalu(const TPMS_SIG_SCHEME_RSASSA *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SIG_SCHEME_RSASSA_Marshalu(const TPMS_SIG_SCHEME_RSASSA *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4617,7 +4617,7 @@ TSS_TPMS_SIG_SCHEME_RSASSA_Marshalu(const TPMS_SIG_SCHEME_RSASSA *source, uint16
 }
 
 TPM_RC
-TSS_TPMS_SIG_SCHEME_RSAPSS_Marshalu(const TPMS_SIG_SCHEME_RSAPSS *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SIG_SCHEME_RSAPSS_Marshalu(const TPMS_SIG_SCHEME_RSAPSS *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4627,37 +4627,7 @@ TSS_TPMS_SIG_SCHEME_RSAPSS_Marshalu(const TPMS_SIG_SCHEME_RSAPSS *source, uint16
 }
 
 TPM_RC
-TSS_TPMS_SIG_SCHEME_DILITHIUM_Marshalu(const TPMS_SIG_SCHEME_DILITHIUM *source, uint16_t *written, BYTE **buffer, uint32_t *size)
-{
-    TPM_RC rc = 0;
-    if (rc == 0) {
-	rc = TSS_TPMS_SCHEME_HASH_Marshalu(source, written, buffer, size);
-    }
-    return rc;
-}
-
-/* Table 143 - Definition of {ECC} Types for ECC Signature Schemes */
-
-TPM_RC
-TSS_TPMS_SIG_SCHEME_ECDSA_Marshalu(const TPMS_SIG_SCHEME_ECDSA *source, uint16_t *written, BYTE **buffer, uint32_t *size)
-{
-    TPM_RC rc = 0;
-    if (rc == 0) {
-	rc = TSS_TPMS_SCHEME_HASH_Marshalu(source, written, buffer, size);
-    }
-    return rc;
-}
-TPM_RC
-TSS_TPMS_SIG_SCHEME_SM2_Marshalu(const TPMS_SIG_SCHEME_SM2 *source, uint16_t *written, BYTE **buffer, uint32_t *size)
-{
-    TPM_RC rc = 0;
-    if (rc == 0) {
-	rc = TSS_TPMS_SCHEME_HASH_Marshalu(source, written, buffer, size);
-    }
-    return rc;
-}
-TPM_RC
-TSS_TPMS_SIG_SCHEME_ECSCHNORR_Marshalu(const TPMS_SIG_SCHEME_ECSCHNORR *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SIG_SCHEME_DILITHIUM_Marshalu(const TPMS_SIG_SCHEME_DILITHIUM *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4669,7 +4639,37 @@ TSS_TPMS_SIG_SCHEME_ECSCHNORR_Marshalu(const TPMS_SIG_SCHEME_ECSCHNORR *source, 
 /* Table 143 - Definition of {ECC} Types for ECC Signature Schemes */
 
 TPM_RC
-TSS_TPMS_SIG_SCHEME_ECDAA_Marshalu(const TPMS_SIG_SCHEME_ECDAA *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SIG_SCHEME_ECDSA_Marshalu(const TPMS_SIG_SCHEME_ECDSA *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+	rc = TSS_TPMS_SCHEME_HASH_Marshalu(source, written, buffer, size);
+    }
+    return rc;
+}
+TPM_RC
+TSS_TPMS_SIG_SCHEME_SM2_Marshalu(const TPMS_SIG_SCHEME_SM2 *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+	rc = TSS_TPMS_SCHEME_HASH_Marshalu(source, written, buffer, size);
+    }
+    return rc;
+}
+TPM_RC
+TSS_TPMS_SIG_SCHEME_ECSCHNORR_Marshalu(const TPMS_SIG_SCHEME_ECSCHNORR *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+	rc = TSS_TPMS_SCHEME_HASH_Marshalu(source, written, buffer, size);
+    }
+    return rc;
+}
+
+/* Table 143 - Definition of {ECC} Types for ECC Signature Schemes */
+
+TPM_RC
+TSS_TPMS_SIG_SCHEME_ECDAA_Marshalu(const TPMS_SIG_SCHEME_ECDAA *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4681,7 +4681,7 @@ TSS_TPMS_SIG_SCHEME_ECDAA_Marshalu(const TPMS_SIG_SCHEME_ECDAA *source, uint16_t
 /* Table 144 - Definition of TPMU_SIG_SCHEME Union <IN/OUT, S> */
 
 TPM_RC
-TSS_TPMU_SIG_SCHEME_Marshalu(const TPMU_SIG_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size, uint32_t selector)
+TSS_TPMU_SIG_SCHEME_Marshalu(const TPMU_SIG_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size, uint32_t selector)
 {
     TPM_RC rc = 0;
     switch (selector) {
@@ -4752,7 +4752,7 @@ TSS_TPMU_SIG_SCHEME_Marshalu(const TPMU_SIG_SCHEME *source, uint16_t *written, B
 /* Table 145 - Definition of TPMT_SIG_SCHEME Structure */
 
 TPM_RC
-TSS_TPMT_SIG_SCHEME_Marshalu(const TPMT_SIG_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMT_SIG_SCHEME_Marshalu(const TPMT_SIG_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4767,7 +4767,7 @@ TSS_TPMT_SIG_SCHEME_Marshalu(const TPMT_SIG_SCHEME *source, uint16_t *written, B
 /* Table 146 - Definition of Types for {RSA} Encryption Schemes */
 
 TPM_RC
-TSS_TPMS_ENC_SCHEME_OAEP_Marshalu(const TPMS_ENC_SCHEME_OAEP *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_ENC_SCHEME_OAEP_Marshalu(const TPMS_ENC_SCHEME_OAEP *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4777,7 +4777,7 @@ TSS_TPMS_ENC_SCHEME_OAEP_Marshalu(const TPMS_ENC_SCHEME_OAEP *source, uint16_t *
 }
 
 TPM_RC
-TSS_TPMS_ENC_SCHEME_KYBER_Marshalu(const TPMS_ENC_SCHEME_KYBER *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_ENC_SCHEME_KYBER_Marshalu(const TPMS_ENC_SCHEME_KYBER *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4788,7 +4788,7 @@ TSS_TPMS_ENC_SCHEME_KYBER_Marshalu(const TPMS_ENC_SCHEME_KYBER *source, uint16_t
 /* Table 146 - Definition of Types for {RSA} Encryption Schemes */
 
 TPM_RC
-TSS_TPMS_ENC_SCHEME_RSAES_Marshalu(const TPMS_ENC_SCHEME_RSAES *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_ENC_SCHEME_RSAES_Marshalu(const TPMS_ENC_SCHEME_RSAES *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     source = source;
     written = written;
@@ -4800,7 +4800,7 @@ TSS_TPMS_ENC_SCHEME_RSAES_Marshalu(const TPMS_ENC_SCHEME_RSAES *source, uint16_t
 /* Table 147 - Definition of Types for {ECC} ECC Key Exchange */
 
 TPM_RC
-TSS_TPMS_KEY_SCHEME_ECDH_Marshalu(const TPMS_KEY_SCHEME_ECDH *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_KEY_SCHEME_ECDH_Marshalu(const TPMS_KEY_SCHEME_ECDH *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4809,7 +4809,7 @@ TSS_TPMS_KEY_SCHEME_ECDH_Marshalu(const TPMS_KEY_SCHEME_ECDH *source, uint16_t *
     return rc;
 }
 TPM_RC
-TSS_TPMS_KEY_SCHEME_ECMQV_Marshalu(const TPMS_KEY_SCHEME_ECMQV *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_KEY_SCHEME_ECMQV_Marshalu(const TPMS_KEY_SCHEME_ECMQV *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4821,7 +4821,7 @@ TSS_TPMS_KEY_SCHEME_ECMQV_Marshalu(const TPMS_KEY_SCHEME_ECMQV *source, uint16_t
 /* Table 148 - Definition of Types for KDF Schemes, hash-based key- or mask-generation functions */
 
 TPM_RC
-TSS_TPMS_SCHEME_MGF1_Marshalu(const TPMS_SCHEME_MGF1 *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SCHEME_MGF1_Marshalu(const TPMS_SCHEME_MGF1 *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4830,7 +4830,7 @@ TSS_TPMS_SCHEME_MGF1_Marshalu(const TPMS_SCHEME_MGF1 *source, uint16_t *written,
     return rc;
 }
 TPM_RC
-TSS_TPMS_SCHEME_KDF1_SP800_56A_Marshalu(const TPMS_SCHEME_KDF1_SP800_56A *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SCHEME_KDF1_SP800_56A_Marshalu(const TPMS_SCHEME_KDF1_SP800_56A *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4839,7 +4839,7 @@ TSS_TPMS_SCHEME_KDF1_SP800_56A_Marshalu(const TPMS_SCHEME_KDF1_SP800_56A *source
     return rc;
 }
 TPM_RC
-TSS_TPMS_SCHEME_KDF2_Marshalu(const TPMS_SCHEME_KDF2 *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SCHEME_KDF2_Marshalu(const TPMS_SCHEME_KDF2 *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4848,7 +4848,7 @@ TSS_TPMS_SCHEME_KDF2_Marshalu(const TPMS_SCHEME_KDF2 *source, uint16_t *written,
     return rc;
 }
 TPM_RC
-TSS_TPMS_SCHEME_KDF1_SP800_108_Marshalu(const TPMS_SCHEME_KDF1_SP800_108 *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SCHEME_KDF1_SP800_108_Marshalu(const TPMS_SCHEME_KDF1_SP800_108 *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4860,7 +4860,7 @@ TSS_TPMS_SCHEME_KDF1_SP800_108_Marshalu(const TPMS_SCHEME_KDF1_SP800_108 *source
 /* Table 149 - Definition of TPMU_KDF_SCHEME Union <IN/OUT, S> */
 
 TPM_RC
-TSS_TPMU_KDF_SCHEME_Marshalu(const TPMU_KDF_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size, uint32_t selector)
+TSS_TPMU_KDF_SCHEME_Marshalu(const TPMU_KDF_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size, uint32_t selector)
 {
     TPM_RC rc = 0;
     switch (selector) {
@@ -4902,7 +4902,7 @@ TSS_TPMU_KDF_SCHEME_Marshalu(const TPMU_KDF_SCHEME *source, uint16_t *written, B
 /* Table 150 - Definition of TPMT_KDF_SCHEME Structure */
 
 TPM_RC
-TSS_TPMT_KDF_SCHEME_Marshalu(const TPMT_KDF_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMT_KDF_SCHEME_Marshalu(const TPMT_KDF_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -4917,7 +4917,7 @@ TSS_TPMT_KDF_SCHEME_Marshalu(const TPMT_KDF_SCHEME *source, uint16_t *written, B
 /* Table 152 - Definition of TPMU_ASYM_SCHEME Union */
 
 TPM_RC
-TSS_TPMU_ASYM_SCHEME_Marshalu(const TPMU_ASYM_SCHEME  *source, uint16_t *written, BYTE **buffer, uint32_t *size, uint32_t selector)
+TSS_TPMU_ASYM_SCHEME_Marshalu(const TPMU_ASYM_SCHEME  *source, UINT32 *written, BYTE **buffer, uint32_t *size, uint32_t selector)
 {
     TPM_RC rc = 0;
     switch (selector) {
@@ -5027,7 +5027,7 @@ TSS_TPMU_ASYM_SCHEME_Marshalu(const TPMU_ASYM_SCHEME  *source, uint16_t *written
 /*                              NewHope Mods                                 */
 /*****************************************************************************/
 TPM_RC
-TSS_TPMI_ALG_NEWHOPE_SCHEME_Marshalu(const TPMI_ALG_NEWHOPE_SCHEME *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_ALG_NEWHOPE_SCHEME_Marshalu(const TPMI_ALG_NEWHOPE_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
 	TPM_RC rc = 0;
 	if (rc == 0) {
@@ -5037,7 +5037,7 @@ TSS_TPMI_ALG_NEWHOPE_SCHEME_Marshalu(const TPMI_ALG_NEWHOPE_SCHEME *source, UINT
 }
 
 TPM_RC
-TSS_TPMT_NEWHOPE_SCHEME_Marshalu(const TPMT_NEWHOPE_SCHEME *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+TSS_TPMT_NEWHOPE_SCHEME_Marshalu(const TPMT_NEWHOPE_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
 	TPM_RC rc = 0;
 	if (rc == 0) {
@@ -5056,7 +5056,7 @@ TSS_TPMT_NEWHOPE_SCHEME_Marshalu(const TPMT_NEWHOPE_SCHEME *source, UINT16 *writ
 /*                               qTesla Mods                                 */
 /*****************************************************************************/
 TPM_RC
-TSS_TPMI_ALG_QTESLA_SCHEME_Marshalu(const TPMI_ALG_QTESLA_SCHEME *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_ALG_QTESLA_SCHEME_Marshalu(const TPMI_ALG_QTESLA_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
 	TPM_RC rc = 0;
 	if (rc == 0) {
@@ -5066,7 +5066,7 @@ TSS_TPMI_ALG_QTESLA_SCHEME_Marshalu(const TPMI_ALG_QTESLA_SCHEME *source, UINT16
 }
 
 TPM_RC
-TSS_TPMT_QTESLA_SCHEME_Marshalu(const TPMT_QTESLA_SCHEME *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+TSS_TPMT_QTESLA_SCHEME_Marshalu(const TPMT_QTESLA_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
 	TPM_RC rc = 0;
 	if (rc == 0) {
@@ -5085,7 +5085,7 @@ TSS_TPMT_QTESLA_SCHEME_Marshalu(const TPMT_QTESLA_SCHEME *source, UINT16 *writte
 /*                             Dilithium Mods                                */
 /*****************************************************************************/
 TPM_RC
-TSS_TPMI_ALG_DILITHIUM_SCHEME_Marshalu(const TPMI_ALG_DILITHIUM_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_ALG_DILITHIUM_SCHEME_Marshalu(const TPMI_ALG_DILITHIUM_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5101,7 +5101,7 @@ TSS_TPMI_ALG_DILITHIUM_SCHEME_Marshalu(const TPMI_ALG_DILITHIUM_SCHEME *source, 
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
 TPM_RC
-TSS_TPMI_ALG_KYBER_SCHEME_Marshalu(const TPMI_ALG_KYBER_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_ALG_KYBER_SCHEME_Marshalu(const TPMI_ALG_KYBER_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5114,7 +5114,7 @@ TSS_TPMI_ALG_KYBER_SCHEME_Marshalu(const TPMI_ALG_KYBER_SCHEME *source, uint16_t
 /*****************************************************************************/
 
 TPM_RC
-TSS_TPMI_ALG_RSA_SCHEME_Marshalu(const TPMI_ALG_RSA_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_ALG_RSA_SCHEME_Marshalu(const TPMI_ALG_RSA_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5126,7 +5126,7 @@ TSS_TPMI_ALG_RSA_SCHEME_Marshalu(const TPMI_ALG_RSA_SCHEME *source, uint16_t *wr
 /* Table 155 - Definition of {RSA} TPMT_RSA_SCHEME Structure */
 
 TPM_RC
-TSS_TPMT_RSA_SCHEME_Marshalu(const TPMT_RSA_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMT_RSA_SCHEME_Marshalu(const TPMT_RSA_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5142,7 +5142,7 @@ TSS_TPMT_RSA_SCHEME_Marshalu(const TPMT_RSA_SCHEME *source, uint16_t *written, B
 /*                             Dilithium Mods                                */
 /*****************************************************************************/
 TPM_RC
-TSS_TPMT_DILITHIUM_SCHEME_Marshalu(const TPMT_DILITHIUM_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMT_DILITHIUM_SCHEME_Marshalu(const TPMT_DILITHIUM_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5161,7 +5161,7 @@ TSS_TPMT_DILITHIUM_SCHEME_Marshalu(const TPMT_DILITHIUM_SCHEME *source, uint16_t
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
 TPM_RC
-TSS_TPMT_KYBER_SCHEME_Marshalu(const TPMT_KYBER_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMT_KYBER_SCHEME_Marshalu(const TPMT_KYBER_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5180,7 +5180,7 @@ TSS_TPMT_KYBER_SCHEME_Marshalu(const TPMT_KYBER_SCHEME *source, uint16_t *writte
 /*                               qTesla Mods                                 */
 /*****************************************************************************/
 TPM_RC
-TSS_TPMS_SCHEME_QTESLA_Marshalu(const TPMS_SIG_SCHEME_QTESLA *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SCHEME_QTESLA_Marshalu(const TPMS_SIG_SCHEME_QTESLA *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
 	TPM_RC rc = 0;
 	if (rc == 0) {
@@ -5195,7 +5195,7 @@ TSS_TPMS_SCHEME_QTESLA_Marshalu(const TPMS_SIG_SCHEME_QTESLA *source, UINT16 *wr
 /* Table 156 - Definition of (TPM_ALG_ID) {RSA} TPMI_ALG_RSA_DECRYPT Type */
 
 TPM_RC
-TSS_TPMI_ALG_RSA_DECRYPT_Marshalu(const TPMI_ALG_RSA_DECRYPT *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_ALG_RSA_DECRYPT_Marshalu(const TPMI_ALG_RSA_DECRYPT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5207,7 +5207,7 @@ TSS_TPMI_ALG_RSA_DECRYPT_Marshalu(const TPMI_ALG_RSA_DECRYPT *source, uint16_t *
 /* Table 157 - Definition of {RSA} TPMT_RSA_DECRYPT Structure */
 
 TPM_RC
-TSS_TPMT_RSA_DECRYPT_Marshalu(const TPMT_RSA_DECRYPT  *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMT_RSA_DECRYPT_Marshalu(const TPMT_RSA_DECRYPT  *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5222,7 +5222,7 @@ TSS_TPMT_RSA_DECRYPT_Marshalu(const TPMT_RSA_DECRYPT  *source, uint16_t *written
 /* Table 158 - Definition of {RSA} TPM2B_PUBLIC_KEY_RSA Structure */
 
 TPM_RC
-TSS_TPM2B_PUBLIC_KEY_RSA_Marshalu(const TPM2B_PUBLIC_KEY_RSA *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_PUBLIC_KEY_RSA_Marshalu(const TPM2B_PUBLIC_KEY_RSA *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5234,7 +5234,7 @@ TSS_TPM2B_PUBLIC_KEY_RSA_Marshalu(const TPM2B_PUBLIC_KEY_RSA *source, uint16_t *
 /* Table 159 - Definition of {RSA} (TPM_KEY_BITS) TPMI_RSA_KEY_BITS Type */
 
 TPM_RC
-TSS_TPMI_RSA_KEY_BITS_Marshalu(const TPMI_RSA_KEY_BITS *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_RSA_KEY_BITS_Marshalu(const TPMI_RSA_KEY_BITS *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5246,7 +5246,7 @@ TSS_TPMI_RSA_KEY_BITS_Marshalu(const TPMI_RSA_KEY_BITS *source, uint16_t *writte
 /* Table 160 - Definition of {RSA} TPM2B_PRIVATE_KEY_RSA Structure */
 
 TPM_RC
-TSS_TPM2B_PRIVATE_KEY_RSA_Marshalu(const TPM2B_PRIVATE_KEY_RSA *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_PRIVATE_KEY_RSA_Marshalu(const TPM2B_PRIVATE_KEY_RSA *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5258,7 +5258,7 @@ TSS_TPM2B_PRIVATE_KEY_RSA_Marshalu(const TPM2B_PRIVATE_KEY_RSA *source, uint16_t
 /* Table 161 - Definition of {ECC} TPM2B_ECC_PARAMETER Structure */
 
 TPM_RC
-TSS_TPM2B_ECC_PARAMETER_Marshalu(const TPM2B_ECC_PARAMETER *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_ECC_PARAMETER_Marshalu(const TPM2B_ECC_PARAMETER *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5270,7 +5270,7 @@ TSS_TPM2B_ECC_PARAMETER_Marshalu(const TPM2B_ECC_PARAMETER *source, uint16_t *wr
 /* Table 162 - Definition of {ECC} TPMS_ECC_POINT Structure */
 
 TPM_RC
-TSS_TPMS_ECC_POINT_Marshalu(const TPMS_ECC_POINT *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_ECC_POINT_Marshalu(const TPMS_ECC_POINT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5285,15 +5285,15 @@ TSS_TPMS_ECC_POINT_Marshalu(const TPMS_ECC_POINT *source, uint16_t *written, BYT
 /* Table 163 - Definition of {ECC} TPM2B_ECC_POINT Structure */
 
 TPM_RC
-TSS_TPM2B_ECC_POINT_Marshalu(const TPM2B_ECC_POINT *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_ECC_POINT_Marshalu(const TPM2B_ECC_POINT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
-    uint16_t sizeWritten = 0;	/* of structure */
+    UINT32 sizeWritten = 0;	/* of structure */
     BYTE *sizePtr;
 
     if (buffer != NULL) {
 	sizePtr = *buffer;
-	*buffer += sizeof(uint16_t);
+	*buffer += sizeof(UINT32);
     }
     if (rc == 0) {
 	rc = TSS_TPMS_ECC_POINT_Marshalu(&source->point, &sizeWritten, buffer, size);
@@ -5301,10 +5301,10 @@ TSS_TPM2B_ECC_POINT_Marshalu(const TPM2B_ECC_POINT *source, uint16_t *written, B
     if (rc == 0) {
 	*written += sizeWritten;
 	if (buffer != NULL) {
-	    rc = TSS_UINT16_Marshalu(&sizeWritten, written, &sizePtr, size);
+	    rc = TSS_UINT32_Marshalu(&sizeWritten, written, &sizePtr, size);
 	}
 	else {
-	    *written += sizeof(uint16_t);
+	    *written += sizeof(UINT32);
 	}
     }
     return rc;
@@ -5313,7 +5313,7 @@ TSS_TPM2B_ECC_POINT_Marshalu(const TPM2B_ECC_POINT *source, uint16_t *written, B
 /* Table 164 - Definition of (TPM_ALG_ID) {ECC} TPMI_ALG_ECC_SCHEME Type */
 
 TPM_RC
-TSS_TPMI_ALG_ECC_SCHEME_Marshalu(const TPMI_ALG_ECC_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_ALG_ECC_SCHEME_Marshalu(const TPMI_ALG_ECC_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5325,7 +5325,7 @@ TSS_TPMI_ALG_ECC_SCHEME_Marshalu(const TPMI_ALG_ECC_SCHEME *source, uint16_t *wr
 /* Table 165 - Definition of {ECC} (TPM_ECC_CURVE) TPMI_ECC_CURVE Type */
 
 TPM_RC
-TSS_TPMI_ECC_CURVE_Marshalu(const TPMI_ECC_CURVE *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_ECC_CURVE_Marshalu(const TPMI_ECC_CURVE *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5337,7 +5337,7 @@ TSS_TPMI_ECC_CURVE_Marshalu(const TPMI_ECC_CURVE *source, uint16_t *written, BYT
 /* Table 166 - Definition of (TPMT_SIG_SCHEME) {ECC} TPMT_ECC_SCHEME Structure */
 
 TPM_RC
-TSS_TPMT_ECC_SCHEME_Marshalu(const TPMT_ECC_SCHEME *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMT_ECC_SCHEME_Marshalu(const TPMT_ECC_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5352,7 +5352,7 @@ TSS_TPMT_ECC_SCHEME_Marshalu(const TPMT_ECC_SCHEME *source, uint16_t *written, B
 /* Table 167 - Definition of {ECC} TPMS_ALGORITHM_DETAIL_ECC Structure <OUT> */
 
 TPM_RC
-TSS_TPMS_ALGORITHM_DETAIL_ECC_Marshalu(const TPMS_ALGORITHM_DETAIL_ECC *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_ALGORITHM_DETAIL_ECC_Marshalu(const TPMS_ALGORITHM_DETAIL_ECC *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5394,7 +5394,7 @@ TSS_TPMS_ALGORITHM_DETAIL_ECC_Marshalu(const TPMS_ALGORITHM_DETAIL_ECC *source, 
 /* Table 168 - Definition of {RSA} TPMS_SIGNATURE_RSA Structure */
 
 TPM_RC
-TSS_TPMS_SIGNATURE_RSA_Marshalu(const TPMS_SIGNATURE_RSA *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SIGNATURE_RSA_Marshalu(const TPMS_SIGNATURE_RSA *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5409,7 +5409,7 @@ TSS_TPMS_SIGNATURE_RSA_Marshalu(const TPMS_SIGNATURE_RSA *source, uint16_t *writ
 /* Table 169 - Definition of Types for {RSA} Signature */
 
 TPM_RC
-TSS_TPMS_SIGNATURE_RSASSA_Marshalu(const TPMS_SIGNATURE_RSASSA *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SIGNATURE_RSASSA_Marshalu(const TPMS_SIGNATURE_RSASSA *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5418,7 +5418,7 @@ TSS_TPMS_SIGNATURE_RSASSA_Marshalu(const TPMS_SIGNATURE_RSASSA *source, uint16_t
     return rc;
 }
 TPM_RC
-TSS_TPMS_SIGNATURE_RSAPSS_Marshalu(const TPMS_SIGNATURE_RSAPSS *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SIGNATURE_RSAPSS_Marshalu(const TPMS_SIGNATURE_RSAPSS *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5430,7 +5430,7 @@ TSS_TPMS_SIGNATURE_RSAPSS_Marshalu(const TPMS_SIGNATURE_RSAPSS *source, uint16_t
 /* Table 170 - Definition of {ECC} TPMS_SIGNATURE_ECC Structure */
 
 TPM_RC
-TSS_TPMS_SIGNATURE_ECC_Marshalu(const TPMS_SIGNATURE_ECC *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SIGNATURE_ECC_Marshalu(const TPMS_SIGNATURE_ECC *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5451,7 +5451,7 @@ TSS_TPMS_SIGNATURE_ECC_Marshalu(const TPMS_SIGNATURE_ECC *source, uint16_t *writ
 /*                             Dilithium Mods                                */
 /*****************************************************************************/
 TPM_RC
-TSS_TPMS_SIGNATURE_DILITHIUM_Marshalu(const TPMS_SIGNATURE_DILITHIUM *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SIGNATURE_DILITHIUM_Marshalu(const TPMS_SIGNATURE_DILITHIUM *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5473,7 +5473,7 @@ TSS_TPMS_SIGNATURE_DILITHIUM_Marshalu(const TPMS_SIGNATURE_DILITHIUM *source, ui
 /*                               qTesla Mods                                 */
 /*****************************************************************************/
 TPM_RC
-TSS_TPMS_SIGNATURE_QTESLA_Marshalu(const TPMS_SIGNATURE_QTESLA *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SIGNATURE_QTESLA_Marshalu(const TPMS_SIGNATURE_QTESLA *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5489,7 +5489,7 @@ TSS_TPMS_SIGNATURE_QTESLA_Marshalu(const TPMS_SIGNATURE_QTESLA *source, uint16_t
 /*****************************************************************************/
 
 TPM_RC
-TSS_TPMS_SIGNATURE_ECDSA_Marshalu(const TPMS_SIGNATURE_ECDSA *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SIGNATURE_ECDSA_Marshalu(const TPMS_SIGNATURE_ECDSA *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5499,7 +5499,7 @@ TSS_TPMS_SIGNATURE_ECDSA_Marshalu(const TPMS_SIGNATURE_ECDSA *source, uint16_t *
 }
 
 TPM_RC
-TSS_TPMS_SIGNATURE_ECDAA_Marshalu(const TPMS_SIGNATURE_ECDAA *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SIGNATURE_ECDAA_Marshalu(const TPMS_SIGNATURE_ECDAA *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5509,7 +5509,7 @@ TSS_TPMS_SIGNATURE_ECDAA_Marshalu(const TPMS_SIGNATURE_ECDAA *source, uint16_t *
 }
 
 TPM_RC
-TSS_TPMS_SIGNATURE_SM2_Marshalu(const TPMS_SIGNATURE_SM2 *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SIGNATURE_SM2_Marshalu(const TPMS_SIGNATURE_SM2 *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5519,7 +5519,7 @@ TSS_TPMS_SIGNATURE_SM2_Marshalu(const TPMS_SIGNATURE_SM2 *source, uint16_t *writ
 }
 
 TPM_RC
-TSS_TPMS_SIGNATURE_ECSCHNORR_Marshalu(const TPMS_SIGNATURE_ECSCHNORR *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_SIGNATURE_ECSCHNORR_Marshalu(const TPMS_SIGNATURE_ECSCHNORR *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5531,7 +5531,7 @@ TSS_TPMS_SIGNATURE_ECSCHNORR_Marshalu(const TPMS_SIGNATURE_ECSCHNORR *source, ui
 /* Table 172 - Definition of TPMU_SIGNATURE Union <IN/OUT, S> */
 
 TPM_RC
-TSS_TPMU_SIGNATURE_Marshalu(const TPMU_SIGNATURE *source, uint16_t *written, BYTE **buffer, uint32_t *size, uint32_t selector)
+TSS_TPMU_SIGNATURE_Marshalu(const TPMU_SIGNATURE *source, UINT32 *written, BYTE **buffer, uint32_t *size, uint32_t selector)
 {
     TPM_RC rc = 0;
     switch (selector) {
@@ -5609,7 +5609,7 @@ TSS_TPMU_SIGNATURE_Marshalu(const TPMU_SIGNATURE *source, uint16_t *written, BYT
 /* Table 173 - Definition of TPMT_SIGNATURE Structure */
 
 TPM_RC
-TSS_TPMT_SIGNATURE_Marshalu(const TPMT_SIGNATURE *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMT_SIGNATURE_Marshalu(const TPMT_SIGNATURE *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5624,7 +5624,7 @@ TSS_TPMT_SIGNATURE_Marshalu(const TPMT_SIGNATURE *source, uint16_t *written, BYT
 /* Table 175 - Definition of TPM2B_ENCRYPTED_SECRET Structure */
 
 TPM_RC
-TSS_TPM2B_ENCRYPTED_SECRET_Marshalu(const TPM2B_ENCRYPTED_SECRET *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_ENCRYPTED_SECRET_Marshalu(const TPM2B_ENCRYPTED_SECRET *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5636,7 +5636,7 @@ TSS_TPM2B_ENCRYPTED_SECRET_Marshalu(const TPM2B_ENCRYPTED_SECRET *source, uint16
 /* Table 176 - Definition of (TPM_ALG_ID) TPMI_ALG_PUBLIC Type */
 
 TPM_RC
-TSS_TPMI_ALG_PUBLIC_Marshalu(const TPMI_ALG_PUBLIC *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMI_ALG_PUBLIC_Marshalu(const TPMI_ALG_PUBLIC *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5648,7 +5648,7 @@ TSS_TPMI_ALG_PUBLIC_Marshalu(const TPMI_ALG_PUBLIC *source, uint16_t *written, B
 /* Table 177 - Definition of TPMU_PUBLIC_ID Union <IN/OUT, S> */
 
 TPM_RC
-TSS_TPMU_PUBLIC_ID_Marshalu(const TPMU_PUBLIC_ID *source, uint16_t *written, BYTE **buffer, uint32_t *size, uint32_t selector)
+TSS_TPMU_PUBLIC_ID_Marshalu(const TPMU_PUBLIC_ID *source, UINT32 *written, BYTE **buffer, uint32_t *size, uint32_t selector)
 {
     TPM_RC rc = 0;
     switch (selector) {
@@ -5717,7 +5717,7 @@ TSS_TPMU_PUBLIC_ID_Marshalu(const TPMU_PUBLIC_ID *source, uint16_t *written, BYT
 /* Table 178 - Definition of TPMS_KEYEDHASH_PARMS Structure */
 
 TPM_RC
-TSS_TPMS_KEYEDHASH_PARMS_Marshalu(const TPMS_KEYEDHASH_PARMS *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_KEYEDHASH_PARMS_Marshalu(const TPMS_KEYEDHASH_PARMS *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5729,7 +5729,7 @@ TSS_TPMS_KEYEDHASH_PARMS_Marshalu(const TPMS_KEYEDHASH_PARMS *source, uint16_t *
 /* Table 180 - Definition of {RSA} TPMS_RSA_PARMS Structure */
 
 TPM_RC
-TSS_TPMS_RSA_PARMS_Marshalu(const TPMS_RSA_PARMS *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_RSA_PARMS_Marshalu(const TPMS_RSA_PARMS *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5751,7 +5751,7 @@ TSS_TPMS_RSA_PARMS_Marshalu(const TPMS_RSA_PARMS *source, uint16_t *written, BYT
 /*                              NewHope Mods                                 */
 /*****************************************************************************/
 TPM_RC
-TSS_TPMS_NEWHOPE_PARMS_Marshalu(const TPMS_NEWHOPE_PARMS *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_NEWHOPE_PARMS_Marshalu(const TPMS_NEWHOPE_PARMS *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
 	TPM_RC rc = 0;
 	if (rc == 0) {
@@ -5781,7 +5781,7 @@ TSS_TPMS_NEWHOPE_PARMS_Marshalu(const TPMS_NEWHOPE_PARMS *source, UINT16 *writte
 /*                               qTesla Mods                                 */
 /*****************************************************************************/
 TPM_RC
-TSS_TPMS_QTESLA_PARMS_Marshalu(const TPMS_QTESLA_PARMS *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_QTESLA_PARMS_Marshalu(const TPMS_QTESLA_PARMS *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
 	TPM_RC rc = 0;
 	if (rc == 0) {
@@ -5807,7 +5807,7 @@ TSS_TPMS_QTESLA_PARMS_Marshalu(const TPMS_QTESLA_PARMS *source, UINT16 *written,
 /*                             Dilithium Mods                                */
 /*****************************************************************************/
 TPM_RC
-TSS_TPMS_DILITHIUM_PARMS_Marshalu(const TPMS_DILITHIUM_PARMS *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_DILITHIUM_PARMS_Marshalu(const TPMS_DILITHIUM_PARMS *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5829,7 +5829,7 @@ TSS_TPMS_DILITHIUM_PARMS_Marshalu(const TPMS_DILITHIUM_PARMS *source, uint16_t *
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
 TPM_RC
-TSS_TPMS_KYBER_PARMS_Marshalu(const TPMS_KYBER_PARMS *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_KYBER_PARMS_Marshalu(const TPMS_KYBER_PARMS *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5849,7 +5849,7 @@ TSS_TPMS_KYBER_PARMS_Marshalu(const TPMS_KYBER_PARMS *source, uint16_t *written,
 /* Table 181 - Definition of {ECC} TPMS_ECC_PARMS Structure */
 
 TPM_RC
-TSS_TPMS_ECC_PARMS_Marshalu(const TPMS_ECC_PARMS *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_ECC_PARMS_Marshalu(const TPMS_ECC_PARMS *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5870,7 +5870,7 @@ TSS_TPMS_ECC_PARMS_Marshalu(const TPMS_ECC_PARMS *source, uint16_t *written, BYT
 /* Table 182 - Definition of TPMU_PUBLIC_PARMS Union <IN/OUT, S> */
 
 TPM_RC
-TSS_TPMU_PUBLIC_PARMS_Marshalu(const TPMU_PUBLIC_PARMS *source, uint16_t *written, BYTE **buffer, uint32_t *size, uint32_t selector)
+TSS_TPMU_PUBLIC_PARMS_Marshalu(const TPMU_PUBLIC_PARMS *source, UINT32 *written, BYTE **buffer, uint32_t *size, uint32_t selector)
 {
     TPM_RC rc = 0;
     switch (selector) {
@@ -5939,7 +5939,7 @@ TSS_TPMU_PUBLIC_PARMS_Marshalu(const TPMU_PUBLIC_PARMS *source, uint16_t *writte
 /* Table 183 - Definition of TPMT_PUBLIC_PARMS Structure */
 
 TPM_RC
-TSS_TPMT_PUBLIC_PARMS_Marshalu(const TPMT_PUBLIC_PARMS *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMT_PUBLIC_PARMS_Marshalu(const TPMT_PUBLIC_PARMS *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5954,7 +5954,7 @@ TSS_TPMT_PUBLIC_PARMS_Marshalu(const TPMT_PUBLIC_PARMS *source, uint16_t *writte
 /* Table 184 - Definition of TPMT_PUBLIC Structure */
 
 TPM_RC
-TSS_TPMT_PUBLIC_Marshalu(const TPMT_PUBLIC *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMT_PUBLIC_Marshalu(const TPMT_PUBLIC *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -5981,7 +5981,7 @@ TSS_TPMT_PUBLIC_Marshalu(const TPMT_PUBLIC *source, uint16_t *written, BYTE **bu
 /* Table 184 - Definition of TPMT_PUBLIC Structure - special marshaling for derived object template */
 
 TPM_RC
-TSS_TPMT_PUBLIC_D_Marshalu(const TPMT_PUBLIC *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMT_PUBLIC_D_Marshalu(const TPMT_PUBLIC *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -6009,15 +6009,15 @@ TSS_TPMT_PUBLIC_D_Marshalu(const TPMT_PUBLIC *source, uint16_t *written, BYTE **
 /* Table 185 - Definition of TPM2B_PUBLIC Structure */
 
 TPM_RC
-TSS_TPM2B_PUBLIC_Marshalu(const TPM2B_PUBLIC *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_PUBLIC_Marshalu(const TPM2B_PUBLIC *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
-    uint16_t sizeWritten = 0;	/* of structure */
+    UINT32 sizeWritten = 0;	/* of structure */
     BYTE *sizePtr;
 
     if (buffer != NULL) {
 	sizePtr = *buffer;
-	*buffer += sizeof(uint16_t);
+	*buffer += sizeof(UINT32);
     }
     if (rc == 0) {
 	rc = TSS_TPMT_PUBLIC_Marshalu(&source->publicArea, &sizeWritten, buffer, size);
@@ -6025,17 +6025,17 @@ TSS_TPM2B_PUBLIC_Marshalu(const TPM2B_PUBLIC *source, uint16_t *written, BYTE **
     if (rc == 0) {
 	*written += sizeWritten;
 	if (buffer != NULL) {
-	    rc = TSS_UINT16_Marshalu(&sizeWritten, written, &sizePtr, size);
+	    rc = TSS_UINT32_Marshalu(&sizeWritten, written, &sizePtr, size);
 	}
 	else {
-	    *written += sizeof(uint16_t);
+	    *written += sizeof(UINT32);
 	}
     }
     return rc;
 }
 
 TPM_RC
-TSS_TPM2B_TEMPLATE_Marshalu(const TPM2B_TEMPLATE *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_TEMPLATE_Marshalu(const TPM2B_TEMPLATE *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -6047,7 +6047,7 @@ TSS_TPM2B_TEMPLATE_Marshalu(const TPM2B_TEMPLATE *source, uint16_t *written, BYT
 /* Table 187 - Definition of TPMU_SENSITIVE_COMPOSITE Union <IN/OUT, S> */
 
 TPM_RC
-TSS_TPMU_SENSITIVE_COMPOSITE_Marshalu(const TPMU_SENSITIVE_COMPOSITE *source, uint16_t *written, BYTE **buffer, uint32_t *size, uint32_t selector)
+TSS_TPMU_SENSITIVE_COMPOSITE_Marshalu(const TPMU_SENSITIVE_COMPOSITE *source, UINT32 *written, BYTE **buffer, uint32_t *size, uint32_t selector)
 {
     TPM_RC rc = 0;
     switch (selector) {
@@ -6102,7 +6102,7 @@ TSS_TPMU_SENSITIVE_COMPOSITE_Marshalu(const TPMU_SENSITIVE_COMPOSITE *source, ui
 /* Table 188 - Definition of TPMT_SENSITIVE Structure */
 
 TPM_RC
-TSS_TPMT_SENSITIVE_Marshalu(const TPMT_SENSITIVE *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMT_SENSITIVE_Marshalu(const TPMT_SENSITIVE *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -6123,15 +6123,15 @@ TSS_TPMT_SENSITIVE_Marshalu(const TPMT_SENSITIVE *source, uint16_t *written, BYT
 /* Table 189 - Definition of TPM2B_SENSITIVE Structure <IN/OUT> */
 
 TPM_RC
-TSS_TPM2B_SENSITIVE_Marshalu(const TPM2B_SENSITIVE *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_SENSITIVE_Marshalu(const TPM2B_SENSITIVE *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
-    uint16_t sizeWritten = 0;	/* of structure */
+    UINT32 sizeWritten = 0;	/* of structure */
     BYTE *sizePtr;
 
     if (buffer != NULL) {
 	sizePtr = *buffer;
-	*buffer += sizeof(uint16_t);
+	*buffer += sizeof(UINT32);
     }
     if (rc == 0) {
 	rc = TSS_TPMT_SENSITIVE_Marshalu(&source->t.sensitiveArea, &sizeWritten, buffer, size);
@@ -6139,10 +6139,10 @@ TSS_TPM2B_SENSITIVE_Marshalu(const TPM2B_SENSITIVE *source, uint16_t *written, B
     if (rc == 0) {
 	*written += sizeWritten;
 	if (buffer != NULL) {
-	    rc = TSS_UINT16_Marshalu(&sizeWritten, written, &sizePtr, size);
+	    rc = TSS_UINT32_Marshalu(&sizeWritten, written, &sizePtr, size);
 	}
 	else {
-	    *written += sizeof(uint16_t);
+	    *written += sizeof(UINT32);
 	}
     }
     return rc;
@@ -6151,7 +6151,7 @@ TSS_TPM2B_SENSITIVE_Marshalu(const TPM2B_SENSITIVE *source, uint16_t *written, B
 /* Table 191 - Definition of TPM2B_PRIVATE Structure <IN/OUT, S> */
 
 TPM_RC
-TSS_TPM2B_PRIVATE_Marshalu(const TPM2B_PRIVATE *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_PRIVATE_Marshalu(const TPM2B_PRIVATE *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -6163,7 +6163,7 @@ TSS_TPM2B_PRIVATE_Marshalu(const TPM2B_PRIVATE *source, uint16_t *written, BYTE 
 /* Table 193 - Definition of TPM2B_ID_OBJECT Structure <IN/OUT> */
 
 TPM_RC
-TSS_TPM2B_ID_OBJECT_Marshalu(const TPM2B_ID_OBJECT *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_ID_OBJECT_Marshalu(const TPM2B_ID_OBJECT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -6175,7 +6175,7 @@ TSS_TPM2B_ID_OBJECT_Marshalu(const TPM2B_ID_OBJECT *source, uint16_t *written, B
 /* Table 196 - Definition of (UINT32) TPMA_NV Bits */
 
 TPM_RC
-TSS_TPMA_NV_Marshalu(const TPMA_NV *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMA_NV_Marshalu(const TPMA_NV *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -6187,7 +6187,7 @@ TSS_TPMA_NV_Marshalu(const TPMA_NV *source, uint16_t *written, BYTE **buffer, ui
 /* Table 197 - Definition of TPMS_NV_PUBLIC Structure */
 
 TPM_RC
-TSS_TPMS_NV_PUBLIC_Marshalu(const TPMS_NV_PUBLIC *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_NV_PUBLIC_Marshalu(const TPMS_NV_PUBLIC *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -6203,7 +6203,7 @@ TSS_TPMS_NV_PUBLIC_Marshalu(const TPMS_NV_PUBLIC *source, uint16_t *written, BYT
 	rc = TSS_TPM2B_DIGEST_Marshalu(&source->authPolicy, written, buffer, size);
     }
     if (rc == 0) {
-	rc = TSS_UINT16_Marshalu(&source->dataSize, written, buffer, size);
+	rc = TSS_UINT32_Marshalu(&source->dataSize, written, buffer, size);
     }
     return rc;
 }
@@ -6211,15 +6211,15 @@ TSS_TPMS_NV_PUBLIC_Marshalu(const TPMS_NV_PUBLIC *source, uint16_t *written, BYT
 /* Table 198 - Definition of TPM2B_NV_PUBLIC Structure */
 
 TPM_RC
-TSS_TPM2B_NV_PUBLIC_Marshalu(const TPM2B_NV_PUBLIC *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_NV_PUBLIC_Marshalu(const TPM2B_NV_PUBLIC *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
-    uint16_t sizeWritten = 0;	/* of structure */
+    UINT32 sizeWritten = 0;	/* of structure */
     BYTE *sizePtr;
 
     if (buffer != NULL) {
  	sizePtr = *buffer;
-	*buffer += sizeof(uint16_t);
+	*buffer += sizeof(UINT32);
     }
     if (rc == 0) {
 	rc = TSS_TPMS_NV_PUBLIC_Marshalu(&source->nvPublic, &sizeWritten, buffer, size);
@@ -6227,10 +6227,10 @@ TSS_TPM2B_NV_PUBLIC_Marshalu(const TPM2B_NV_PUBLIC *source, uint16_t *written, B
     if (rc == 0) {
 	*written += sizeWritten;
 	if (buffer != NULL) {
-	    rc = TSS_UINT16_Marshalu(&sizeWritten, written, &sizePtr, size);
+	    rc = TSS_UINT32_Marshalu(&sizeWritten, written, &sizePtr, size);
 	}
 	else {
-	    *written += sizeof(uint16_t);
+	    *written += sizeof(UINT32);
 	}
     }
     return rc;
@@ -6239,7 +6239,7 @@ TSS_TPM2B_NV_PUBLIC_Marshalu(const TPM2B_NV_PUBLIC *source, uint16_t *written, B
 /* Table 199 - Definition of TPM2B_CONTEXT_SENSITIVE Structure <IN/OUT> */
 
 TPM_RC
-TSS_TPM2B_CONTEXT_SENSITIVE_Marshalu(const TPM2B_CONTEXT_SENSITIVE *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_CONTEXT_SENSITIVE_Marshalu(const TPM2B_CONTEXT_SENSITIVE *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -6251,7 +6251,7 @@ TSS_TPM2B_CONTEXT_SENSITIVE_Marshalu(const TPM2B_CONTEXT_SENSITIVE *source, uint
 /* Table 201 - Definition of TPM2B_CONTEXT_DATA Structure <IN/OUT> */
 
 TPM_RC
-TSS_TPM2B_CONTEXT_DATA_Marshalu(const TPM2B_CONTEXT_DATA  *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_CONTEXT_DATA_Marshalu(const TPM2B_CONTEXT_DATA  *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -6263,7 +6263,7 @@ TSS_TPM2B_CONTEXT_DATA_Marshalu(const TPM2B_CONTEXT_DATA  *source, uint16_t *wri
 /* Table 202 - Definition of TPMS_CONTEXT Structure */
 
 TPM_RC
-TSS_TPMS_CONTEXT_Marshalu(const TPMS_CONTEXT *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_CONTEXT_Marshalu(const TPMS_CONTEXT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -6284,7 +6284,7 @@ TSS_TPMS_CONTEXT_Marshalu(const TPMS_CONTEXT *source, uint16_t *written, BYTE **
 /* Table 204 - Definition of TPMS_CREATION_DATA Structure <OUT> */
 
 TPM_RC
-TSS_TPMS_CREATION_DATA_Marshalu(const TPMS_CREATION_DATA *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPMS_CREATION_DATA_Marshalu(const TPMS_CREATION_DATA *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -6314,15 +6314,15 @@ TSS_TPMS_CREATION_DATA_Marshalu(const TPMS_CREATION_DATA *source, uint16_t *writ
 /* Table 205 - Definition of TPM2B_CREATION_DATA Structure <OUT> */
 
 TPM_RC
-TSS_TPM2B_CREATION_DATA_Marshalu(const TPM2B_CREATION_DATA *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_CREATION_DATA_Marshalu(const TPM2B_CREATION_DATA *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
-    uint16_t sizeWritten = 0;	/* of structure */
+    UINT32 sizeWritten = 0;	/* of structure */
     BYTE *sizePtr;
 
     if (buffer != NULL) {
 	sizePtr = *buffer;
-	*buffer += sizeof(uint16_t);
+	*buffer += sizeof(UINT32);
     }
     if (rc == 0) {
 	rc = TSS_TPMS_CREATION_DATA_Marshalu(&source->creationData, &sizeWritten, buffer, size);
@@ -6330,10 +6330,10 @@ TSS_TPM2B_CREATION_DATA_Marshalu(const TPM2B_CREATION_DATA *source, uint16_t *wr
     if (rc == 0) {
 	*written += sizeWritten;
 	if (buffer != NULL) {
-	    rc = TSS_UINT16_Marshalu(&sizeWritten, written, &sizePtr, size);
+	    rc = TSS_UINT32_Marshalu(&sizeWritten, written, &sizePtr, size);
 	}
 	else {
-	    *written += sizeof(uint16_t);
+	    *written += sizeof(UINT32);
 	}
     }
     return rc;
@@ -6343,7 +6343,7 @@ TSS_TPM2B_CREATION_DATA_Marshalu(const TPM2B_CREATION_DATA *source, uint16_t *wr
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
 TPM_RC
-TSS_TPM2B_KYBER_PUBLIC_KEY_Marshalu(const TPM2B_KYBER_PUBLIC_KEY *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_KYBER_PUBLIC_KEY_Marshalu(const TPM2B_KYBER_PUBLIC_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -6353,7 +6353,7 @@ TSS_TPM2B_KYBER_PUBLIC_KEY_Marshalu(const TPM2B_KYBER_PUBLIC_KEY *source, uint16
 }
 
 TPM_RC
-TSS_TPM2B_KYBER_SECRET_KEY_Marshalu(const TPM2B_KYBER_SECRET_KEY *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_KYBER_SECRET_KEY_Marshalu(const TPM2B_KYBER_SECRET_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -6363,7 +6363,7 @@ TSS_TPM2B_KYBER_SECRET_KEY_Marshalu(const TPM2B_KYBER_SECRET_KEY *source, uint16
 }
 
 TPM_RC
-TSS_TPM2B_KYBER_CIPHER_TEXT_Marshalu(const TPM2B_KYBER_CIPHER_TEXT *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_KYBER_CIPHER_TEXT_Marshalu(const TPM2B_KYBER_CIPHER_TEXT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -6373,7 +6373,7 @@ TSS_TPM2B_KYBER_CIPHER_TEXT_Marshalu(const TPM2B_KYBER_CIPHER_TEXT *source, uint
 }
 
 TPM_RC
-TSS_TPM2B_KYBER_SHARED_KEY_Marshalu(const TPM2B_KYBER_SHARED_KEY *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_KYBER_SHARED_KEY_Marshalu(const TPM2B_KYBER_SHARED_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -6389,7 +6389,7 @@ TSS_TPM2B_KYBER_SHARED_KEY_Marshalu(const TPM2B_KYBER_SHARED_KEY *source, uint16
 /*                             Dilithium Mods                                */
 /*****************************************************************************/
 TPM_RC
-TSS_TPM2B_DILITHIUM_PUBLIC_KEY_Marshalu(const TPM2B_DILITHIUM_PUBLIC_KEY *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_DILITHIUM_PUBLIC_KEY_Marshalu(const TPM2B_DILITHIUM_PUBLIC_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -6399,7 +6399,7 @@ TSS_TPM2B_DILITHIUM_PUBLIC_KEY_Marshalu(const TPM2B_DILITHIUM_PUBLIC_KEY *source
 }
 
 TPM_RC
-TSS_TPM2B_DILITHIUM_SECRET_KEY_Marshalu(const TPM2B_DILITHIUM_SECRET_KEY *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_DILITHIUM_SECRET_KEY_Marshalu(const TPM2B_DILITHIUM_SECRET_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -6409,7 +6409,7 @@ TSS_TPM2B_DILITHIUM_SECRET_KEY_Marshalu(const TPM2B_DILITHIUM_SECRET_KEY *source
 }
 
 TPM_RC
-TSS_TPM2B_DILITHIUM_SIGNED_MESSAGE_Marshalu(const TPM2B_DILITHIUM_SIGNED_MESSAGE *source, uint16_t *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_DILITHIUM_SIGNED_MESSAGE_Marshalu(const TPM2B_DILITHIUM_SIGNED_MESSAGE *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = 0;
     if (rc == 0) {
@@ -6425,7 +6425,7 @@ TSS_TPM2B_DILITHIUM_SIGNED_MESSAGE_Marshalu(const TPM2B_DILITHIUM_SIGNED_MESSAGE
 /*                               qTesla Mods                                 */
 /*****************************************************************************/
 TPM_RC
-TSS_TPM2B_PUBLIC_KEY_QTESLA_Marshalu(const TPM2B_QTESLA_PUBLIC_KEY *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_PUBLIC_KEY_QTESLA_Marshalu(const TPM2B_QTESLA_PUBLIC_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
 	TPM_RC rc = 0;
 	if (rc == 0)
@@ -6436,7 +6436,7 @@ TSS_TPM2B_PUBLIC_KEY_QTESLA_Marshalu(const TPM2B_QTESLA_PUBLIC_KEY *source, UINT
 }
 
 TPM_RC
-TSS_TPM2B_PRIVATE_KEY_QTESLA_Marshalu(const TPM2B_QTESLA_PRIVATE_KEY *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_PRIVATE_KEY_QTESLA_Marshalu(const TPM2B_QTESLA_PRIVATE_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
 	TPM_RC rc = 0;
 	if (rc == 0)
@@ -6448,7 +6448,7 @@ TSS_TPM2B_PRIVATE_KEY_QTESLA_Marshalu(const TPM2B_QTESLA_PRIVATE_KEY *source, UI
 
 
 TPM_RC
-TSS_TPM2B_SIGNATURE_QTESLA_Marshalu(const TPM2B_QTESLA_SIGNATURE *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_SIGNATURE_QTESLA_Marshalu(const TPM2B_QTESLA_SIGNATURE *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
 	TPM_RC rc = 0;
 	if (rc == 0)
@@ -6465,7 +6465,7 @@ TSS_TPM2B_SIGNATURE_QTESLA_Marshalu(const TPM2B_QTESLA_SIGNATURE *source, UINT16
 /*                              NewHope Mods                                 */
 /*****************************************************************************/
 TPM_RC
-TSS_TPM2B_CIPHER_NEWHOPE_Marshalu(const TPM2B_NEWHOPE_CIPHER *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_CIPHER_NEWHOPE_Marshalu(const TPM2B_NEWHOPE_CIPHER *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
 	TPM_RC rc = 0;
 	if (rc == 0)
@@ -6478,7 +6478,7 @@ TSS_TPM2B_CIPHER_NEWHOPE_Marshalu(const TPM2B_NEWHOPE_CIPHER *source, UINT16 *wr
 
 
 TPM_RC
-TSS_TPM2B_SHAREDSECRET_NEWHOPE_Marshalu(const TPM2B_NEWHOPE_SHAREDSECRET *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_SHAREDSECRET_NEWHOPE_Marshalu(const TPM2B_NEWHOPE_SHAREDSECRET *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
 	TPM_RC rc = 0;
 	if (rc == 0)
@@ -6490,7 +6490,7 @@ TSS_TPM2B_SHAREDSECRET_NEWHOPE_Marshalu(const TPM2B_NEWHOPE_SHAREDSECRET *source
 
 
 TPM_RC
-TSS_TPM2B_PRIVATE_KEY_NEWHOPE_Marshalu(const TPM2B_NEWHOPE_PRIVATE_KEY *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_PRIVATE_KEY_NEWHOPE_Marshalu(const TPM2B_NEWHOPE_PRIVATE_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
 	TPM_RC rc = 0;
 	if (rc == 0)
@@ -6502,7 +6502,7 @@ TSS_TPM2B_PRIVATE_KEY_NEWHOPE_Marshalu(const TPM2B_NEWHOPE_PRIVATE_KEY *source, 
 
 
 TPM_RC
-TSS_TPM2B_PUBLIC_KEY_NEWHOPE_Marshalu(const TPM2B_NEWHOPE_PUBLIC_KEY *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+TSS_TPM2B_PUBLIC_KEY_NEWHOPE_Marshalu(const TPM2B_NEWHOPE_PUBLIC_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
 	TPM_RC rc = 0;
 	if (rc == 0)
@@ -6521,962 +6521,962 @@ TSS_TPM2B_PUBLIC_KEY_NEWHOPE_Marshalu(const TPM2B_NEWHOPE_PUBLIC_KEY *source, UI
 */
 
 TPM_RC
-TSS_UINT8_Marshal(const UINT8 *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_UINT8_Marshal(const UINT8 *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_UINT8_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_INT8_Marshal(const INT8 *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_INT8_Marshal(const INT8 *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_INT8_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_UINT16_Marshal(const UINT16 *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_UINT16_Marshal(const UINT16 *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_UINT16_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_UINT32_Marshal(const UINT32 *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_UINT32_Marshal(const UINT32 *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_UINT32_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_INT32_Marshal(const INT32 *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_INT32_Marshal(const INT32 *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_INT32_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_UINT64_Marshal(const UINT64 *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_UINT64_Marshal(const UINT64 *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_UINT64_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_Array_Marshal(const BYTE *source, uint16_t sourceSize, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_Array_Marshal(const BYTE *source, UINT32 sourceSize, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_Array_Marshalu(source, sourceSize, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_Marshal(const TPM2B *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_Marshal(const TPM2B *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM_KEY_BITS_Marshal(const TPM_KEY_BITS *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM_KEY_BITS_Marshal(const TPM_KEY_BITS *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_KEY_BITS_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM_GENERATED_Marshal(const TPM_GENERATED *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM_GENERATED_Marshal(const TPM_GENERATED *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_GENERATED_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM_ALG_ID_Marshal(const TPM_ALG_ID *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM_ALG_ID_Marshal(const TPM_ALG_ID *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_ALG_ID_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM_ECC_CURVE_Marshal(const TPM_ECC_CURVE *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM_ECC_CURVE_Marshal(const TPM_ECC_CURVE *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_ECC_CURVE_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM_RC_Marshal(const TPM_RC *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM_RC_Marshal(const TPM_RC *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_RC_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM_CLOCK_ADJUST_Marshal(const TPM_CLOCK_ADJUST *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM_CLOCK_ADJUST_Marshal(const TPM_CLOCK_ADJUST *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_CLOCK_ADJUST_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM_EO_Marshal(const TPM_EO *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM_EO_Marshal(const TPM_EO *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_EO_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM_ST_Marshal(const TPM_ST *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM_ST_Marshal(const TPM_ST *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_ST_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM_SU_Marshal(const TPM_ST *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM_SU_Marshal(const TPM_ST *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_SU_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM_SE_Marshal(const TPM_SE  *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM_SE_Marshal(const TPM_SE  *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_SE_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM_CAP_Marshal(const TPM_CAP *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM_CAP_Marshal(const TPM_CAP *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_CAP_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM_PT_Marshal(const TPM_PT *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM_PT_Marshal(const TPM_PT *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_PT_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM_PT_PCR_Marshal(const TPM_PT_PCR *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM_PT_PCR_Marshal(const TPM_PT_PCR *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_PT_PCR_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM_HANDLE_Marshal(const TPM_HANDLE *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM_HANDLE_Marshal(const TPM_HANDLE *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_HANDLE_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMA_ALGORITHM_Marshal(const TPMA_ALGORITHM *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMA_ALGORITHM_Marshal(const TPMA_ALGORITHM *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMA_ALGORITHM_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMA_OBJECT_Marshal(const TPMA_OBJECT *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMA_OBJECT_Marshal(const TPMA_OBJECT *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMA_OBJECT_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMA_SESSION_Marshal(const TPMA_SESSION *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMA_SESSION_Marshal(const TPMA_SESSION *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMA_SESSION_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMA_LOCALITY_Marshal(const TPMA_LOCALITY *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMA_LOCALITY_Marshal(const TPMA_LOCALITY *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMA_LOCALITY_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM_CC_Marshal(const TPM_CC *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM_CC_Marshal(const TPM_CC *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM_CC_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMA_CC_Marshal(const TPMA_CC *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMA_CC_Marshal(const TPMA_CC *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMA_CC_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_YES_NO_Marshal(const TPMI_YES_NO *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_YES_NO_Marshal(const TPMI_YES_NO *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_YES_NO_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_DH_OBJECT_Marshal(const TPMI_DH_OBJECT *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_DH_OBJECT_Marshal(const TPMI_DH_OBJECT *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_DH_OBJECT_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_DH_PERSISTENT_Marshal(const TPMI_DH_PERSISTENT *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_DH_PERSISTENT_Marshal(const TPMI_DH_PERSISTENT *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_DH_PERSISTENT_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_DH_ENTITY_Marshal(const TPMI_DH_ENTITY *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_DH_ENTITY_Marshal(const TPMI_DH_ENTITY *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_DH_ENTITY_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_DH_PCR_Marshal(const TPMI_DH_PCR  *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_DH_PCR_Marshal(const TPMI_DH_PCR  *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_DH_PCR_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_SH_AUTH_SESSION_Marshal(const TPMI_SH_AUTH_SESSION *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_SH_AUTH_SESSION_Marshal(const TPMI_SH_AUTH_SESSION *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_SH_AUTH_SESSION_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_SH_HMAC_Marshal(const TPMI_SH_HMAC *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_SH_HMAC_Marshal(const TPMI_SH_HMAC *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_SH_HMAC_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_SH_POLICY_Marshal(const TPMI_SH_POLICY*source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_SH_POLICY_Marshal(const TPMI_SH_POLICY*source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_SH_POLICY_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_DH_CONTEXT_Marshal(const TPMI_DH_CONTEXT *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_DH_CONTEXT_Marshal(const TPMI_DH_CONTEXT *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_DH_CONTEXT_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_RH_HIERARCHY_Marshal(const TPMI_RH_HIERARCHY *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_RH_HIERARCHY_Marshal(const TPMI_RH_HIERARCHY *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_RH_HIERARCHY_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_RH_ENABLES_Marshal(const TPMI_RH_ENABLES *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_RH_ENABLES_Marshal(const TPMI_RH_ENABLES *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_RH_ENABLES_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_RH_HIERARCHY_AUTH_Marshal(const TPMI_RH_HIERARCHY_AUTH *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_RH_HIERARCHY_AUTH_Marshal(const TPMI_RH_HIERARCHY_AUTH *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_RH_HIERARCHY_AUTH_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_RH_PLATFORM_Marshal(const TPMI_RH_PLATFORM *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_RH_PLATFORM_Marshal(const TPMI_RH_PLATFORM *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_RH_PLATFORM_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_RH_ENDORSEMENT_Marshal(const TPMI_RH_ENDORSEMENT *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_RH_ENDORSEMENT_Marshal(const TPMI_RH_ENDORSEMENT *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_RH_ENDORSEMENT_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_RH_PROVISION_Marshal(const TPMI_RH_PROVISION *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_RH_PROVISION_Marshal(const TPMI_RH_PROVISION *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_RH_PROVISION_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_RH_CLEAR_Marshal(const TPMI_RH_CLEAR *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_RH_CLEAR_Marshal(const TPMI_RH_CLEAR *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_RH_CLEAR_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_RH_NV_AUTH_Marshal(const TPMI_RH_NV_AUTH *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_RH_NV_AUTH_Marshal(const TPMI_RH_NV_AUTH *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_RH_NV_AUTH_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_RH_LOCKOUT_Marshal(const TPMI_RH_LOCKOUT *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_RH_LOCKOUT_Marshal(const TPMI_RH_LOCKOUT *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_RH_LOCKOUT_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_RH_NV_INDEX_Marshal(const TPMI_RH_NV_INDEX *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_RH_NV_INDEX_Marshal(const TPMI_RH_NV_INDEX *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_RH_NV_INDEX_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_ALG_HASH_Marshal(const TPMI_ALG_HASH *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_ALG_HASH_Marshal(const TPMI_ALG_HASH *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_ALG_HASH_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_ALG_SYM_Marshal(const TPMI_ALG_SYM *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_ALG_SYM_Marshal(const TPMI_ALG_SYM *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_ALG_SYM_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_ALG_SYM_OBJECT_Marshal(const TPMI_ALG_SYM_OBJECT *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_ALG_SYM_OBJECT_Marshal(const TPMI_ALG_SYM_OBJECT *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_ALG_SYM_OBJECT_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_ALG_SYM_MODE_Marshal(const TPMI_ALG_SYM_MODE *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_ALG_SYM_MODE_Marshal(const TPMI_ALG_SYM_MODE *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_ALG_SYM_MODE_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_ALG_KDF_Marshal(const TPMI_ALG_KDF *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_ALG_KDF_Marshal(const TPMI_ALG_KDF *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_ALG_KDF_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_ALG_SIG_SCHEME_Marshal(const TPMI_ALG_SIG_SCHEME *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_ALG_SIG_SCHEME_Marshal(const TPMI_ALG_SIG_SCHEME *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_ALG_SIG_SCHEME_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_ECC_KEY_EXCHANGE_Marshal(const TPMI_ECC_KEY_EXCHANGE *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_ECC_KEY_EXCHANGE_Marshal(const TPMI_ECC_KEY_EXCHANGE *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_ECC_KEY_EXCHANGE_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_ST_COMMAND_TAG_Marshal(const TPMI_ST_COMMAND_TAG *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_ST_COMMAND_TAG_Marshal(const TPMI_ST_COMMAND_TAG *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_ST_COMMAND_TAG_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_ALG_MAC_SCHEME_Marshal(const TPMI_ALG_MAC_SCHEME *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_ALG_MAC_SCHEME_Marshal(const TPMI_ALG_MAC_SCHEME *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_ALG_MAC_SCHEME_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_ALG_CIPHER_MODE_Marshal(const TPMI_ALG_CIPHER_MODE *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_ALG_CIPHER_MODE_Marshal(const TPMI_ALG_CIPHER_MODE *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_ALG_CIPHER_MODE_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMU_HA_Marshal(const TPMU_HA *source, UINT16 *written, BYTE **buffer, INT32 *size, UINT32 selector)
+TSS_TPMU_HA_Marshal(const TPMU_HA *source, UINT32 *written, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_HA_Marshalu(source, written, buffer, (uint32_t *)size, selector);
 }
 TPM_RC
-TSS_TPMT_HA_Marshal(const TPMT_HA *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMT_HA_Marshal(const TPMT_HA *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMT_HA_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_DIGEST_Marshal(const TPM2B_DIGEST *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_DIGEST_Marshal(const TPM2B_DIGEST *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_DIGEST_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_DATA_Marshal(const TPM2B_DATA *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_DATA_Marshal(const TPM2B_DATA *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_DATA_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_NONCE_Marshal(const TPM2B_NONCE *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_NONCE_Marshal(const TPM2B_NONCE *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_NONCE_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_AUTH_Marshal(const TPM2B_AUTH *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_AUTH_Marshal(const TPM2B_AUTH *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_AUTH_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_OPERAND_Marshal(const TPM2B_OPERAND *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_OPERAND_Marshal(const TPM2B_OPERAND *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_OPERAND_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_EVENT_Marshal(const TPM2B_EVENT *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_EVENT_Marshal(const TPM2B_EVENT *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_EVENT_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_MAX_BUFFER_Marshal(const TPM2B_MAX_BUFFER *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_MAX_BUFFER_Marshal(const TPM2B_MAX_BUFFER *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_MAX_BUFFER_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_MAX_NV_BUFFER_Marshal(const TPM2B_MAX_NV_BUFFER *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_MAX_NV_BUFFER_Marshal(const TPM2B_MAX_NV_BUFFER *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_MAX_NV_BUFFER_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_TIMEOUT_Marshal(const TPM2B_TIMEOUT *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_TIMEOUT_Marshal(const TPM2B_TIMEOUT *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_TIMEOUT_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_IV_Marshal(const TPM2B_IV *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_IV_Marshal(const TPM2B_IV *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_IV_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_NAME_Marshal(const TPM2B_NAME *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_NAME_Marshal(const TPM2B_NAME *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_NAME_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_PCR_SELECTION_Marshal(const TPMS_PCR_SELECTION *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_PCR_SELECTION_Marshal(const TPMS_PCR_SELECTION *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_PCR_SELECTION_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMT_TK_CREATION_Marshal(const TPMT_TK_CREATION *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMT_TK_CREATION_Marshal(const TPMT_TK_CREATION *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMT_TK_CREATION_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMT_TK_VERIFIED_Marshal(const TPMT_TK_VERIFIED *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMT_TK_VERIFIED_Marshal(const TPMT_TK_VERIFIED *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMT_TK_VERIFIED_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMT_TK_AUTH_Marshal(const TPMT_TK_AUTH *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMT_TK_AUTH_Marshal(const TPMT_TK_AUTH *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMT_TK_AUTH_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMT_TK_HASHCHECK_Marshal(const TPMT_TK_HASHCHECK *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMT_TK_HASHCHECK_Marshal(const TPMT_TK_HASHCHECK *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMT_TK_HASHCHECK_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_ALG_PROPERTY_Marshal(const TPMS_ALG_PROPERTY *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_ALG_PROPERTY_Marshal(const TPMS_ALG_PROPERTY *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_ALG_PROPERTY_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_TAGGED_PROPERTY_Marshal(const TPMS_TAGGED_PROPERTY *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_TAGGED_PROPERTY_Marshal(const TPMS_TAGGED_PROPERTY *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_TAGGED_PROPERTY_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_TAGGED_PCR_SELECT_Marshal(const TPMS_TAGGED_PCR_SELECT *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_TAGGED_PCR_SELECT_Marshal(const TPMS_TAGGED_PCR_SELECT *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_TAGGED_PCR_SELECT_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPML_CC_Marshal(const TPML_CC *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPML_CC_Marshal(const TPML_CC *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPML_CC_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPML_CCA_Marshal(const TPML_CCA *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPML_CCA_Marshal(const TPML_CCA *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPML_CCA_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPML_ALG_Marshal(const TPML_ALG *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPML_ALG_Marshal(const TPML_ALG *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPML_ALG_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPML_HANDLE_Marshal(const TPML_HANDLE *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPML_HANDLE_Marshal(const TPML_HANDLE *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPML_HANDLE_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPML_DIGEST_Marshal(const TPML_DIGEST *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPML_DIGEST_Marshal(const TPML_DIGEST *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPML_DIGEST_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPML_DIGEST_VALUES_Marshal(const TPML_DIGEST_VALUES *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPML_DIGEST_VALUES_Marshal(const TPML_DIGEST_VALUES *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPML_DIGEST_VALUES_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPML_PCR_SELECTION_Marshal(const TPML_PCR_SELECTION *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPML_PCR_SELECTION_Marshal(const TPML_PCR_SELECTION *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPML_PCR_SELECTION_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPML_ALG_PROPERTY_Marshal(const TPML_ALG_PROPERTY *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPML_ALG_PROPERTY_Marshal(const TPML_ALG_PROPERTY *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPML_ALG_PROPERTY_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPML_TAGGED_TPM_PROPERTY_Marshal(const TPML_TAGGED_TPM_PROPERTY *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPML_TAGGED_TPM_PROPERTY_Marshal(const TPML_TAGGED_TPM_PROPERTY *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPML_TAGGED_TPM_PROPERTY_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPML_TAGGED_PCR_PROPERTY_Marshal(const TPML_TAGGED_PCR_PROPERTY *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPML_TAGGED_PCR_PROPERTY_Marshal(const TPML_TAGGED_PCR_PROPERTY *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPML_TAGGED_PCR_PROPERTY_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPML_ECC_CURVE_Marshal(const TPML_ECC_CURVE *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPML_ECC_CURVE_Marshal(const TPML_ECC_CURVE *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPML_ECC_CURVE_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMU_CAPABILITIES_Marshal(const TPMU_CAPABILITIES *source, UINT16 *written, BYTE **buffer, INT32 *size, UINT32 selector)
+TSS_TPMU_CAPABILITIES_Marshal(const TPMU_CAPABILITIES *source, UINT32 *written, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_CAPABILITIES_Marshalu(source, written, buffer, (uint32_t *)size, selector);
 }
 TPM_RC
-TSS_TPMS_CAPABILITY_DATA_Marshal(const TPMS_CAPABILITY_DATA *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_CAPABILITY_DATA_Marshal(const TPMS_CAPABILITY_DATA *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_CAPABILITY_DATA_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_CLOCK_INFO_Marshal(const TPMS_CLOCK_INFO *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_CLOCK_INFO_Marshal(const TPMS_CLOCK_INFO *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_CLOCK_INFO_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_TIME_INFO_Marshal(const TPMS_TIME_INFO *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_TIME_INFO_Marshal(const TPMS_TIME_INFO *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_TIME_INFO_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_TIME_ATTEST_INFO_Marshal(const TPMS_TIME_ATTEST_INFO *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_TIME_ATTEST_INFO_Marshal(const TPMS_TIME_ATTEST_INFO *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_TIME_ATTEST_INFO_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_CERTIFY_INFO_Marshal(const TPMS_CERTIFY_INFO *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_CERTIFY_INFO_Marshal(const TPMS_CERTIFY_INFO *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_CERTIFY_INFO_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_QUOTE_INFO_Marshal(const TPMS_QUOTE_INFO *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_QUOTE_INFO_Marshal(const TPMS_QUOTE_INFO *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_QUOTE_INFO_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_COMMAND_AUDIT_INFO_Marshal(const TPMS_COMMAND_AUDIT_INFO *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_COMMAND_AUDIT_INFO_Marshal(const TPMS_COMMAND_AUDIT_INFO *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_COMMAND_AUDIT_INFO_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_SESSION_AUDIT_INFO_Marshal(const TPMS_SESSION_AUDIT_INFO *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_SESSION_AUDIT_INFO_Marshal(const TPMS_SESSION_AUDIT_INFO *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SESSION_AUDIT_INFO_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_CREATION_INFO_Marshal(const TPMS_CREATION_INFO *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_CREATION_INFO_Marshal(const TPMS_CREATION_INFO *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_CREATION_INFO_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_NV_CERTIFY_INFO_Marshal(const TPMS_NV_CERTIFY_INFO *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_NV_CERTIFY_INFO_Marshal(const TPMS_NV_CERTIFY_INFO *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_NV_CERTIFY_INFO_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_ST_ATTEST_Marshal(const TPMI_ST_ATTEST *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_ST_ATTEST_Marshal(const TPMI_ST_ATTEST *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_ST_ATTEST_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMU_ATTEST_Marshal(const TPMU_ATTEST  *source, UINT16 *written, BYTE **buffer, INT32 *size, UINT32 selector)
+TSS_TPMU_ATTEST_Marshal(const TPMU_ATTEST  *source, UINT32 *written, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_ATTEST_Marshalu(source, written, buffer, (uint32_t *)size, selector);
 }
 TPM_RC
-TSS_TPMS_ATTEST_Marshal(const TPMS_ATTEST  *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_ATTEST_Marshal(const TPMS_ATTEST  *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_ATTEST_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_ATTEST_Marshal(const TPM2B_ATTEST *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_ATTEST_Marshal(const TPM2B_ATTEST *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_ATTEST_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_AUTH_COMMAND_Marshal(const TPMS_AUTH_COMMAND *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_AUTH_COMMAND_Marshal(const TPMS_AUTH_COMMAND *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_AUTH_COMMAND_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_AES_KEY_BITS_Marshal(const TPMI_AES_KEY_BITS *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_AES_KEY_BITS_Marshal(const TPMI_AES_KEY_BITS *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_AES_KEY_BITS_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMU_SYM_KEY_BITS_Marshal(const TPMU_SYM_KEY_BITS *source, UINT16 *written, BYTE **buffer, INT32 *size, UINT32 selector)
+TSS_TPMU_SYM_KEY_BITS_Marshal(const TPMU_SYM_KEY_BITS *source, UINT32 *written, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_SYM_KEY_BITS_Marshalu(source, written, buffer, (uint32_t *)size, selector);
 }
 TPM_RC
-TSS_TPMU_SYM_MODE_Marshal(const TPMU_SYM_MODE *source, UINT16 *written, BYTE **buffer, INT32 *size, UINT32 selector)
+TSS_TPMU_SYM_MODE_Marshal(const TPMU_SYM_MODE *source, UINT32 *written, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_SYM_MODE_Marshalu(source, written, buffer, (uint32_t *)size, selector);
 }
 TPM_RC
-TSS_TPMT_SYM_DEF_Marshal(const TPMT_SYM_DEF *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMT_SYM_DEF_Marshal(const TPMT_SYM_DEF *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMT_SYM_DEF_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMT_SYM_DEF_OBJECT_Marshal(const TPMT_SYM_DEF_OBJECT *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMT_SYM_DEF_OBJECT_Marshal(const TPMT_SYM_DEF_OBJECT *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMT_SYM_DEF_OBJECT_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_SYM_KEY_Marshal(const TPM2B_SYM_KEY *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_SYM_KEY_Marshal(const TPM2B_SYM_KEY *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_SYM_KEY_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_LABEL_Marshal(const TPM2B_LABEL *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_LABEL_Marshal(const TPM2B_LABEL *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_LABEL_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_DERIVE_Marshal(const TPMS_DERIVE *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_DERIVE_Marshal(const TPMS_DERIVE *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_DERIVE_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_SYMCIPHER_PARMS_Marshal(const TPMS_SYMCIPHER_PARMS *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_SYMCIPHER_PARMS_Marshal(const TPMS_SYMCIPHER_PARMS *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SYMCIPHER_PARMS_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_SENSITIVE_DATA_Marshal(const TPM2B_SENSITIVE_DATA *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_SENSITIVE_DATA_Marshal(const TPM2B_SENSITIVE_DATA *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_SENSITIVE_DATA_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_SENSITIVE_CREATE_Marshal(const TPMS_SENSITIVE_CREATE *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_SENSITIVE_CREATE_Marshal(const TPMS_SENSITIVE_CREATE *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SENSITIVE_CREATE_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_SENSITIVE_CREATE_Marshal(const TPM2B_SENSITIVE_CREATE  *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_SENSITIVE_CREATE_Marshal(const TPM2B_SENSITIVE_CREATE  *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_SENSITIVE_CREATE_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_SCHEME_HASH_Marshal(const TPMS_SCHEME_HASH *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_SCHEME_HASH_Marshal(const TPMS_SCHEME_HASH *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SCHEME_HASH_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_SCHEME_ECDAA_Marshal(const TPMS_SCHEME_ECDAA *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_SCHEME_ECDAA_Marshal(const TPMS_SCHEME_ECDAA *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SCHEME_ECDAA_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_ALG_KEYEDHASH_SCHEME_Marshal(const TPMI_ALG_KEYEDHASH_SCHEME *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_ALG_KEYEDHASH_SCHEME_Marshal(const TPMI_ALG_KEYEDHASH_SCHEME *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_ALG_KEYEDHASH_SCHEME_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_SCHEME_HMAC_Marshal(const TPMS_SCHEME_HMAC *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_SCHEME_HMAC_Marshal(const TPMS_SCHEME_HMAC *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SCHEME_HMAC_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_SCHEME_XOR_Marshal(const TPMS_SCHEME_XOR *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_SCHEME_XOR_Marshal(const TPMS_SCHEME_XOR *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SCHEME_XOR_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMU_SCHEME_KEYEDHASH_Marshal(const TPMU_SCHEME_KEYEDHASH *source, UINT16 *written, BYTE **buffer, INT32 *size, UINT32 selector)
+TSS_TPMU_SCHEME_KEYEDHASH_Marshal(const TPMU_SCHEME_KEYEDHASH *source, UINT32 *written, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_SCHEME_KEYEDHASH_Marshalu(source, written, buffer, (uint32_t *)size, selector);
 }
 TPM_RC
-TSS_TPMT_KEYEDHASH_SCHEME_Marshal(const TPMT_KEYEDHASH_SCHEME *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMT_KEYEDHASH_SCHEME_Marshal(const TPMT_KEYEDHASH_SCHEME *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMT_KEYEDHASH_SCHEME_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_SIG_SCHEME_RSASSA_Marshal(const TPMS_SIG_SCHEME_RSASSA *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_SIG_SCHEME_RSASSA_Marshal(const TPMS_SIG_SCHEME_RSASSA *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIG_SCHEME_RSASSA_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_SIG_SCHEME_RSAPSS_Marshal(const TPMS_SIG_SCHEME_RSAPSS *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_SIG_SCHEME_RSAPSS_Marshal(const TPMS_SIG_SCHEME_RSAPSS *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIG_SCHEME_RSAPSS_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_SIG_SCHEME_ECDSA_Marshal(const TPMS_SIG_SCHEME_ECDSA *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_SIG_SCHEME_ECDSA_Marshal(const TPMS_SIG_SCHEME_ECDSA *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIG_SCHEME_ECDSA_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_SIG_SCHEME_SM2_Marshal(const TPMS_SIG_SCHEME_SM2 *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_SIG_SCHEME_SM2_Marshal(const TPMS_SIG_SCHEME_SM2 *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIG_SCHEME_SM2_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_SIG_SCHEME_ECSCHNORR_Marshal(const TPMS_SIG_SCHEME_ECSCHNORR *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_SIG_SCHEME_ECSCHNORR_Marshal(const TPMS_SIG_SCHEME_ECSCHNORR *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIG_SCHEME_ECSCHNORR_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_SIG_SCHEME_ECDAA_Marshal(const TPMS_SIG_SCHEME_ECDAA *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_SIG_SCHEME_ECDAA_Marshal(const TPMS_SIG_SCHEME_ECDAA *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIG_SCHEME_ECDAA_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMU_SIG_SCHEME_Marshal(const TPMU_SIG_SCHEME *source, UINT16 *written, BYTE **buffer, INT32 *size, UINT32 selector)
+TSS_TPMU_SIG_SCHEME_Marshal(const TPMU_SIG_SCHEME *source, UINT32 *written, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_SIG_SCHEME_Marshalu(source, written, buffer, (uint32_t *)size, selector);
 }
 TPM_RC
-TSS_TPMT_SIG_SCHEME_Marshal(const TPMT_SIG_SCHEME *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMT_SIG_SCHEME_Marshal(const TPMT_SIG_SCHEME *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMT_SIG_SCHEME_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_ENC_SCHEME_OAEP_Marshal(const TPMS_ENC_SCHEME_OAEP *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_ENC_SCHEME_OAEP_Marshal(const TPMS_ENC_SCHEME_OAEP *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_ENC_SCHEME_OAEP_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_ENC_SCHEME_RSAES_Marshal(const TPMS_ENC_SCHEME_RSAES *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_ENC_SCHEME_RSAES_Marshal(const TPMS_ENC_SCHEME_RSAES *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_ENC_SCHEME_RSAES_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_KEY_SCHEME_ECDH_Marshal(const TPMS_KEY_SCHEME_ECDH *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_KEY_SCHEME_ECDH_Marshal(const TPMS_KEY_SCHEME_ECDH *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_KEY_SCHEME_ECDH_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_KEY_SCHEME_ECMQV_Marshal(const TPMS_KEY_SCHEME_ECMQV *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_KEY_SCHEME_ECMQV_Marshal(const TPMS_KEY_SCHEME_ECMQV *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_KEY_SCHEME_ECMQV_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_SCHEME_MGF1_Marshal(const TPMS_SCHEME_MGF1 *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_SCHEME_MGF1_Marshal(const TPMS_SCHEME_MGF1 *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SCHEME_MGF1_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_SCHEME_KDF1_SP800_56A_Marshal(const TPMS_SCHEME_KDF1_SP800_56A *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_SCHEME_KDF1_SP800_56A_Marshal(const TPMS_SCHEME_KDF1_SP800_56A *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SCHEME_KDF1_SP800_56A_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_SCHEME_KDF2_Marshal(const TPMS_SCHEME_KDF2 *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_SCHEME_KDF2_Marshal(const TPMS_SCHEME_KDF2 *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SCHEME_KDF2_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_SCHEME_KDF1_SP800_108_Marshal(const TPMS_SCHEME_KDF1_SP800_108 *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_SCHEME_KDF1_SP800_108_Marshal(const TPMS_SCHEME_KDF1_SP800_108 *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SCHEME_KDF1_SP800_108_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMU_KDF_SCHEME_Marshal(const TPMU_KDF_SCHEME *source, UINT16 *written, BYTE **buffer, INT32 *size, UINT32 selector)
+TSS_TPMU_KDF_SCHEME_Marshal(const TPMU_KDF_SCHEME *source, UINT32 *written, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_KDF_SCHEME_Marshalu(source, written, buffer, (uint32_t *)size, selector);
 }
 TPM_RC
-TSS_TPMT_KDF_SCHEME_Marshal(const TPMT_KDF_SCHEME *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMT_KDF_SCHEME_Marshal(const TPMT_KDF_SCHEME *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMT_KDF_SCHEME_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMU_ASYM_SCHEME_Marshal(const TPMU_ASYM_SCHEME  *source, UINT16 *written, BYTE **buffer, INT32 *size, UINT32 selector)
+TSS_TPMU_ASYM_SCHEME_Marshal(const TPMU_ASYM_SCHEME  *source, UINT32 *written, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_ASYM_SCHEME_Marshalu(source, written, buffer, (uint32_t *)size, selector);
 }
 TPM_RC
-TSS_TPMI_ALG_RSA_SCHEME_Marshal(const TPMI_ALG_RSA_SCHEME *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_ALG_RSA_SCHEME_Marshal(const TPMI_ALG_RSA_SCHEME *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_ALG_RSA_SCHEME_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMT_RSA_SCHEME_Marshal(const TPMT_RSA_SCHEME *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMT_RSA_SCHEME_Marshal(const TPMT_RSA_SCHEME *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMT_RSA_SCHEME_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_ALG_RSA_DECRYPT_Marshal(const TPMI_ALG_RSA_DECRYPT *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_ALG_RSA_DECRYPT_Marshal(const TPMI_ALG_RSA_DECRYPT *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_ALG_RSA_DECRYPT_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMT_RSA_DECRYPT_Marshal(const TPMT_RSA_DECRYPT  *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMT_RSA_DECRYPT_Marshal(const TPMT_RSA_DECRYPT  *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMT_RSA_DECRYPT_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_PUBLIC_KEY_RSA_Marshal(const TPM2B_PUBLIC_KEY_RSA *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_PUBLIC_KEY_RSA_Marshal(const TPM2B_PUBLIC_KEY_RSA *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_PUBLIC_KEY_RSA_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_RSA_KEY_BITS_Marshal(const TPMI_RSA_KEY_BITS *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_RSA_KEY_BITS_Marshal(const TPMI_RSA_KEY_BITS *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_RSA_KEY_BITS_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_PRIVATE_KEY_RSA_Marshal(const TPM2B_PRIVATE_KEY_RSA *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_PRIVATE_KEY_RSA_Marshal(const TPM2B_PRIVATE_KEY_RSA *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_PRIVATE_KEY_RSA_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_ECC_PARAMETER_Marshal(const TPM2B_ECC_PARAMETER *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_ECC_PARAMETER_Marshal(const TPM2B_ECC_PARAMETER *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_ECC_PARAMETER_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_ECC_POINT_Marshal(const TPMS_ECC_POINT *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_ECC_POINT_Marshal(const TPMS_ECC_POINT *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_ECC_POINT_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_ECC_POINT_Marshal(const TPM2B_ECC_POINT *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_ECC_POINT_Marshal(const TPM2B_ECC_POINT *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_ECC_POINT_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_ALG_ECC_SCHEME_Marshal(const TPMI_ALG_ECC_SCHEME *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_ALG_ECC_SCHEME_Marshal(const TPMI_ALG_ECC_SCHEME *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_ALG_ECC_SCHEME_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_ECC_CURVE_Marshal(const TPMI_ECC_CURVE *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_ECC_CURVE_Marshal(const TPMI_ECC_CURVE *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_ECC_CURVE_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMT_ECC_SCHEME_Marshal(const TPMT_ECC_SCHEME *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMT_ECC_SCHEME_Marshal(const TPMT_ECC_SCHEME *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMT_ECC_SCHEME_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_ALGORITHM_DETAIL_ECC_Marshal(const TPMS_ALGORITHM_DETAIL_ECC *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_ALGORITHM_DETAIL_ECC_Marshal(const TPMS_ALGORITHM_DETAIL_ECC *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_ALGORITHM_DETAIL_ECC_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_SIGNATURE_RSA_Marshal(const TPMS_SIGNATURE_RSA *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_SIGNATURE_RSA_Marshal(const TPMS_SIGNATURE_RSA *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIGNATURE_RSA_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_SIGNATURE_RSASSA_Marshal(const TPMS_SIGNATURE_RSASSA *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_SIGNATURE_RSASSA_Marshal(const TPMS_SIGNATURE_RSASSA *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIGNATURE_RSASSA_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_SIGNATURE_RSAPSS_Marshal(const TPMS_SIGNATURE_RSAPSS *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_SIGNATURE_RSAPSS_Marshal(const TPMS_SIGNATURE_RSAPSS *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIGNATURE_RSAPSS_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_SIGNATURE_ECC_Marshal(const TPMS_SIGNATURE_ECC *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_SIGNATURE_ECC_Marshal(const TPMS_SIGNATURE_ECC *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIGNATURE_ECC_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_SIGNATURE_ECDSA_Marshal(const TPMS_SIGNATURE_ECDSA *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_SIGNATURE_ECDSA_Marshal(const TPMS_SIGNATURE_ECDSA *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIGNATURE_ECDSA_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_SIGNATURE_ECDAA_Marshal(const TPMS_SIGNATURE_ECDAA *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_SIGNATURE_ECDAA_Marshal(const TPMS_SIGNATURE_ECDAA *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIGNATURE_ECDAA_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_SIGNATURE_SM2_Marshal(const TPMS_SIGNATURE_SM2 *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_SIGNATURE_SM2_Marshal(const TPMS_SIGNATURE_SM2 *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIGNATURE_SM2_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_SIGNATURE_ECSCHNORR_Marshal(const TPMS_SIGNATURE_ECSCHNORR *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_SIGNATURE_ECSCHNORR_Marshal(const TPMS_SIGNATURE_ECSCHNORR *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_SIGNATURE_ECSCHNORR_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMU_SIGNATURE_Marshal(const TPMU_SIGNATURE *source, UINT16 *written, BYTE **buffer, INT32 *size, UINT32 selector)
+TSS_TPMU_SIGNATURE_Marshal(const TPMU_SIGNATURE *source, UINT32 *written, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_SIGNATURE_Marshalu(source, written, buffer, (uint32_t *)size, selector);
 }
 TPM_RC
-TSS_TPMT_SIGNATURE_Marshal(const TPMT_SIGNATURE *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMT_SIGNATURE_Marshal(const TPMT_SIGNATURE *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMT_SIGNATURE_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_ENCRYPTED_SECRET_Marshal(const TPM2B_ENCRYPTED_SECRET *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_ENCRYPTED_SECRET_Marshal(const TPM2B_ENCRYPTED_SECRET *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_ENCRYPTED_SECRET_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMI_ALG_PUBLIC_Marshal(const TPMI_ALG_PUBLIC *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMI_ALG_PUBLIC_Marshal(const TPMI_ALG_PUBLIC *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMI_ALG_PUBLIC_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMU_PUBLIC_ID_Marshal(const TPMU_PUBLIC_ID *source, UINT16 *written, BYTE **buffer, INT32 *size, UINT32 selector)
+TSS_TPMU_PUBLIC_ID_Marshal(const TPMU_PUBLIC_ID *source, UINT32 *written, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_PUBLIC_ID_Marshalu(source, written, buffer, (uint32_t *)size, selector);
 }
 TPM_RC
-TSS_TPMS_KEYEDHASH_PARMS_Marshal(const TPMS_KEYEDHASH_PARMS *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_KEYEDHASH_PARMS_Marshal(const TPMS_KEYEDHASH_PARMS *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_KEYEDHASH_PARMS_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_RSA_PARMS_Marshal(const TPMS_RSA_PARMS *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_RSA_PARMS_Marshal(const TPMS_RSA_PARMS *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_RSA_PARMS_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_ECC_PARMS_Marshal(const TPMS_ECC_PARMS *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_ECC_PARMS_Marshal(const TPMS_ECC_PARMS *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_ECC_PARMS_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMU_PUBLIC_PARMS_Marshal(const TPMU_PUBLIC_PARMS *source, UINT16 *written, BYTE **buffer, INT32 *size, UINT32 selector)
+TSS_TPMU_PUBLIC_PARMS_Marshal(const TPMU_PUBLIC_PARMS *source, UINT32 *written, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_PUBLIC_PARMS_Marshalu(source, written, buffer, (uint32_t *)size, selector);
 }
 TPM_RC
-TSS_TPMT_PUBLIC_PARMS_Marshal(const TPMT_PUBLIC_PARMS *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMT_PUBLIC_PARMS_Marshal(const TPMT_PUBLIC_PARMS *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMT_PUBLIC_PARMS_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMT_PUBLIC_Marshal(const TPMT_PUBLIC *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMT_PUBLIC_Marshal(const TPMT_PUBLIC *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMT_PUBLIC_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMT_PUBLIC_D_Marshal(const TPMT_PUBLIC *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMT_PUBLIC_D_Marshal(const TPMT_PUBLIC *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMT_PUBLIC_D_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_PUBLIC_Marshal(const TPM2B_PUBLIC *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_PUBLIC_Marshal(const TPM2B_PUBLIC *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_PUBLIC_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_TEMPLATE_Marshal(const TPM2B_TEMPLATE *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_TEMPLATE_Marshal(const TPM2B_TEMPLATE *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_TEMPLATE_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMU_SENSITIVE_COMPOSITE_Marshal(const TPMU_SENSITIVE_COMPOSITE *source, UINT16 *written, BYTE **buffer, INT32 *size, UINT32 selector)
+TSS_TPMU_SENSITIVE_COMPOSITE_Marshal(const TPMU_SENSITIVE_COMPOSITE *source, UINT32 *written, BYTE **buffer, UINT32 *size, UINT32 selector)
 {
     return TSS_TPMU_SENSITIVE_COMPOSITE_Marshalu(source, written, buffer, (uint32_t *)size, selector);
 }
 TPM_RC
-TSS_TPMT_SENSITIVE_Marshal(const TPMT_SENSITIVE *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMT_SENSITIVE_Marshal(const TPMT_SENSITIVE *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMT_SENSITIVE_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_SENSITIVE_Marshal(const TPM2B_SENSITIVE *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_SENSITIVE_Marshal(const TPM2B_SENSITIVE *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_SENSITIVE_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_PRIVATE_Marshal(const TPM2B_PRIVATE *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_PRIVATE_Marshal(const TPM2B_PRIVATE *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_PRIVATE_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_ID_OBJECT_Marshal(const TPM2B_ID_OBJECT *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_ID_OBJECT_Marshal(const TPM2B_ID_OBJECT *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_ID_OBJECT_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMA_NV_Marshal(const TPMA_NV *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMA_NV_Marshal(const TPMA_NV *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMA_NV_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_NV_PUBLIC_Marshal(const TPMS_NV_PUBLIC *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_NV_PUBLIC_Marshal(const TPMS_NV_PUBLIC *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_NV_PUBLIC_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_NV_PUBLIC_Marshal(const TPM2B_NV_PUBLIC *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_NV_PUBLIC_Marshal(const TPM2B_NV_PUBLIC *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_NV_PUBLIC_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_CONTEXT_SENSITIVE_Marshal(const TPM2B_CONTEXT_SENSITIVE *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_CONTEXT_SENSITIVE_Marshal(const TPM2B_CONTEXT_SENSITIVE *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_CONTEXT_SENSITIVE_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_CONTEXT_DATA_Marshal(const TPM2B_CONTEXT_DATA  *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_CONTEXT_DATA_Marshal(const TPM2B_CONTEXT_DATA  *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_CONTEXT_DATA_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_CONTEXT_Marshal(const TPMS_CONTEXT *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_CONTEXT_Marshal(const TPMS_CONTEXT *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_CONTEXT_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPMS_CREATION_DATA_Marshal(const TPMS_CREATION_DATA *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPMS_CREATION_DATA_Marshal(const TPMS_CREATION_DATA *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPMS_CREATION_DATA_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TPM2B_CREATION_DATA_Marshal(const TPM2B_CREATION_DATA *source, UINT16 *written, BYTE **buffer, INT32 *size)
+TSS_TPM2B_CREATION_DATA_Marshal(const TPM2B_CREATION_DATA *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TPM2B_CREATION_DATA_Marshalu(source, written, buffer, (uint32_t *)size);
 }
@@ -7484,537 +7484,537 @@ TSS_TPM2B_CREATION_DATA_Marshal(const TPM2B_CREATION_DATA *source, UINT16 *writt
 
 
 TPM_RC
-TSS_Startup_In_Marshal(const Startup_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_Startup_In_Marshal(const Startup_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_Startup_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_Shutdown_In_Marshal(const Shutdown_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_Shutdown_In_Marshal(const Shutdown_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_Shutdown_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_SelfTest_In_Marshal(const SelfTest_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_SelfTest_In_Marshal(const SelfTest_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_SelfTest_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_IncrementalSelfTest_In_Marshal(const IncrementalSelfTest_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_IncrementalSelfTest_In_Marshal(const IncrementalSelfTest_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_IncrementalSelfTest_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_StartAuthSession_In_Marshal(const StartAuthSession_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_StartAuthSession_In_Marshal(const StartAuthSession_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_StartAuthSession_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PolicyRestart_In_Marshal(const PolicyRestart_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PolicyRestart_In_Marshal(const PolicyRestart_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PolicyRestart_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_Create_In_Marshal(const Create_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_Create_In_Marshal(const Create_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_Create_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_Load_In_Marshal(const Load_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_Load_In_Marshal(const Load_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_Load_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_LoadExternal_In_Marshal(const LoadExternal_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_LoadExternal_In_Marshal(const LoadExternal_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_LoadExternal_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_ReadPublic_In_Marshal(const ReadPublic_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_ReadPublic_In_Marshal(const ReadPublic_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_ReadPublic_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_ActivateCredential_In_Marshal(const ActivateCredential_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_ActivateCredential_In_Marshal(const ActivateCredential_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_ActivateCredential_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_MakeCredential_In_Marshal(const MakeCredential_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_MakeCredential_In_Marshal(const MakeCredential_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_MakeCredential_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_Unseal_In_Marshal(const Unseal_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_Unseal_In_Marshal(const Unseal_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_Unseal_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_ObjectChangeAuth_In_Marshal(const ObjectChangeAuth_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_ObjectChangeAuth_In_Marshal(const ObjectChangeAuth_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_ObjectChangeAuth_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_CreateLoaded_In_Marshal(const CreateLoaded_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_CreateLoaded_In_Marshal(const CreateLoaded_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_CreateLoaded_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_Duplicate_In_Marshal(const Duplicate_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_Duplicate_In_Marshal(const Duplicate_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_Duplicate_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_Rewrap_In_Marshal(const Rewrap_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_Rewrap_In_Marshal(const Rewrap_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_Rewrap_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_Import_In_Marshal(const Import_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_Import_In_Marshal(const Import_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_Import_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_RSA_Encrypt_In_Marshal(const RSA_Encrypt_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_RSA_Encrypt_In_Marshal(const RSA_Encrypt_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_RSA_Encrypt_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_RSA_Decrypt_In_Marshal(const RSA_Decrypt_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_RSA_Decrypt_In_Marshal(const RSA_Decrypt_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_RSA_Decrypt_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_ECDH_KeyGen_In_Marshal(const ECDH_KeyGen_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_ECDH_KeyGen_In_Marshal(const ECDH_KeyGen_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_ECDH_KeyGen_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_ECDH_ZGen_In_Marshal(const ECDH_ZGen_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_ECDH_ZGen_In_Marshal(const ECDH_ZGen_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_ECDH_ZGen_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_ECC_Parameters_In_Marshal(const ECC_Parameters_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_ECC_Parameters_In_Marshal(const ECC_Parameters_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_ECC_Parameters_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_ZGen_2Phase_In_Marshal(const ZGen_2Phase_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_ZGen_2Phase_In_Marshal(const ZGen_2Phase_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_ZGen_2Phase_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_EncryptDecrypt_In_Marshal(const EncryptDecrypt_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_EncryptDecrypt_In_Marshal(const EncryptDecrypt_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_EncryptDecrypt_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_EncryptDecrypt2_In_Marshal(const EncryptDecrypt2_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_EncryptDecrypt2_In_Marshal(const EncryptDecrypt2_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_EncryptDecrypt2_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_Hash_In_Marshal(const Hash_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_Hash_In_Marshal(const Hash_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_Hash_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_HMAC_In_Marshal(const HMAC_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_HMAC_In_Marshal(const HMAC_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_HMAC_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_GetRandom_In_Marshal(const GetRandom_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_GetRandom_In_Marshal(const GetRandom_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_GetRandom_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_StirRandom_In_Marshal(const StirRandom_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_StirRandom_In_Marshal(const StirRandom_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_StirRandom_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_HMAC_Start_In_Marshal(const HMAC_Start_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_HMAC_Start_In_Marshal(const HMAC_Start_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_HMAC_Start_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_HashSequenceStart_In_Marshal(const HashSequenceStart_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_HashSequenceStart_In_Marshal(const HashSequenceStart_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_HashSequenceStart_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_SequenceUpdate_In_Marshal(const SequenceUpdate_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_SequenceUpdate_In_Marshal(const SequenceUpdate_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_SequenceUpdate_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_SequenceComplete_In_Marshal(const SequenceComplete_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_SequenceComplete_In_Marshal(const SequenceComplete_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_SequenceComplete_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_EventSequenceComplete_In_Marshal(const EventSequenceComplete_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_EventSequenceComplete_In_Marshal(const EventSequenceComplete_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_EventSequenceComplete_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_Certify_In_Marshal(const Certify_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_Certify_In_Marshal(const Certify_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_Certify_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_CertifyCreation_In_Marshal(const CertifyCreation_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_CertifyCreation_In_Marshal(const CertifyCreation_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_CertifyCreation_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_Quote_In_Marshal(const Quote_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_Quote_In_Marshal(const Quote_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_Quote_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_GetSessionAuditDigest_In_Marshal(const GetSessionAuditDigest_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_GetSessionAuditDigest_In_Marshal(const GetSessionAuditDigest_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_GetSessionAuditDigest_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_GetCommandAuditDigest_In_Marshal(const GetCommandAuditDigest_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_GetCommandAuditDigest_In_Marshal(const GetCommandAuditDigest_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_GetCommandAuditDigest_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_GetTime_In_Marshal(const GetTime_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_GetTime_In_Marshal(const GetTime_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_GetTime_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_Commit_In_Marshal(const Commit_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_Commit_In_Marshal(const Commit_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_Commit_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_EC_Ephemeral_In_Marshal(const EC_Ephemeral_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_EC_Ephemeral_In_Marshal(const EC_Ephemeral_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_EC_Ephemeral_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_VerifySignature_In_Marshal(const VerifySignature_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_VerifySignature_In_Marshal(const VerifySignature_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_VerifySignature_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_Sign_In_Marshal(const Sign_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_Sign_In_Marshal(const Sign_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_Sign_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_SetCommandCodeAuditStatus_In_Marshal(const SetCommandCodeAuditStatus_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_SetCommandCodeAuditStatus_In_Marshal(const SetCommandCodeAuditStatus_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_SetCommandCodeAuditStatus_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PCR_Extend_In_Marshal(const PCR_Extend_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PCR_Extend_In_Marshal(const PCR_Extend_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PCR_Extend_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PCR_Event_In_Marshal(const PCR_Event_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PCR_Event_In_Marshal(const PCR_Event_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PCR_Event_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PCR_Read_In_Marshal(const PCR_Read_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PCR_Read_In_Marshal(const PCR_Read_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PCR_Read_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PCR_Allocate_In_Marshal(const PCR_Allocate_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PCR_Allocate_In_Marshal(const PCR_Allocate_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PCR_Allocate_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PCR_SetAuthPolicy_In_Marshal(const PCR_SetAuthPolicy_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PCR_SetAuthPolicy_In_Marshal(const PCR_SetAuthPolicy_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PCR_SetAuthPolicy_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PCR_SetAuthValue_In_Marshal(const PCR_SetAuthValue_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PCR_SetAuthValue_In_Marshal(const PCR_SetAuthValue_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PCR_SetAuthValue_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PCR_Reset_In_Marshal(const PCR_Reset_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PCR_Reset_In_Marshal(const PCR_Reset_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PCR_Reset_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PolicySigned_In_Marshal(const PolicySigned_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PolicySigned_In_Marshal(const PolicySigned_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PolicySigned_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PolicySecret_In_Marshal(const PolicySecret_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PolicySecret_In_Marshal(const PolicySecret_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PolicySecret_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PolicyTicket_In_Marshal(const PolicyTicket_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PolicyTicket_In_Marshal(const PolicyTicket_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PolicyTicket_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PolicyOR_In_Marshal(const PolicyOR_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PolicyOR_In_Marshal(const PolicyOR_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PolicyOR_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PolicyPCR_In_Marshal(const PolicyPCR_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PolicyPCR_In_Marshal(const PolicyPCR_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PolicyPCR_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PolicyLocality_In_Marshal(const PolicyLocality_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PolicyLocality_In_Marshal(const PolicyLocality_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PolicyLocality_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PolicyNV_In_Marshal(const PolicyNV_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PolicyNV_In_Marshal(const PolicyNV_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PolicyNV_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PolicyCounterTimer_In_Marshal(const PolicyCounterTimer_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PolicyCounterTimer_In_Marshal(const PolicyCounterTimer_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PolicyCounterTimer_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PolicyCommandCode_In_Marshal(const PolicyCommandCode_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PolicyCommandCode_In_Marshal(const PolicyCommandCode_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PolicyCommandCode_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PolicyPhysicalPresence_In_Marshal(const PolicyPhysicalPresence_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PolicyPhysicalPresence_In_Marshal(const PolicyPhysicalPresence_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PolicyPhysicalPresence_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PolicyCpHash_In_Marshal(const PolicyCpHash_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PolicyCpHash_In_Marshal(const PolicyCpHash_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PolicyCpHash_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PolicyNameHash_In_Marshal(const PolicyNameHash_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PolicyNameHash_In_Marshal(const PolicyNameHash_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PolicyNameHash_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PolicyDuplicationSelect_In_Marshal(const PolicyDuplicationSelect_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PolicyDuplicationSelect_In_Marshal(const PolicyDuplicationSelect_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PolicyDuplicationSelect_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PolicyAuthorize_In_Marshal(const PolicyAuthorize_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PolicyAuthorize_In_Marshal(const PolicyAuthorize_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PolicyAuthorize_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PolicyAuthValue_In_Marshal(const PolicyAuthValue_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PolicyAuthValue_In_Marshal(const PolicyAuthValue_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PolicyAuthValue_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PolicyPassword_In_Marshal(const PolicyPassword_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PolicyPassword_In_Marshal(const PolicyPassword_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PolicyPassword_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PolicyGetDigest_In_Marshal(const PolicyGetDigest_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PolicyGetDigest_In_Marshal(const PolicyGetDigest_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PolicyGetDigest_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PolicyNvWritten_In_Marshal(const PolicyNvWritten_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PolicyNvWritten_In_Marshal(const PolicyNvWritten_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PolicyNvWritten_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PolicyTemplate_In_Marshal(const PolicyTemplate_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PolicyTemplate_In_Marshal(const PolicyTemplate_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PolicyTemplate_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PolicyAuthorizeNV_In_Marshal(const PolicyAuthorizeNV_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PolicyAuthorizeNV_In_Marshal(const PolicyAuthorizeNV_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PolicyAuthorizeNV_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_CreatePrimary_In_Marshal(const CreatePrimary_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_CreatePrimary_In_Marshal(const CreatePrimary_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_CreatePrimary_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_HierarchyControl_In_Marshal(const HierarchyControl_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_HierarchyControl_In_Marshal(const HierarchyControl_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_HierarchyControl_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_SetPrimaryPolicy_In_Marshal(const SetPrimaryPolicy_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_SetPrimaryPolicy_In_Marshal(const SetPrimaryPolicy_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_SetPrimaryPolicy_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_ChangePPS_In_Marshal(const ChangePPS_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_ChangePPS_In_Marshal(const ChangePPS_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_ChangePPS_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_ChangeEPS_In_Marshal(const ChangeEPS_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_ChangeEPS_In_Marshal(const ChangeEPS_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_ChangeEPS_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_Clear_In_Marshal(const Clear_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_Clear_In_Marshal(const Clear_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_Clear_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_ClearControl_In_Marshal(const ClearControl_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_ClearControl_In_Marshal(const ClearControl_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_ClearControl_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_HierarchyChangeAuth_In_Marshal(const HierarchyChangeAuth_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_HierarchyChangeAuth_In_Marshal(const HierarchyChangeAuth_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_HierarchyChangeAuth_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_DictionaryAttackLockReset_In_Marshal(const DictionaryAttackLockReset_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_DictionaryAttackLockReset_In_Marshal(const DictionaryAttackLockReset_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_DictionaryAttackLockReset_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_DictionaryAttackParameters_In_Marshal(const DictionaryAttackParameters_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_DictionaryAttackParameters_In_Marshal(const DictionaryAttackParameters_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_DictionaryAttackParameters_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PP_Commands_In_Marshal(const PP_Commands_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_PP_Commands_In_Marshal(const PP_Commands_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_PP_Commands_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_SetAlgorithmSet_In_Marshal(const SetAlgorithmSet_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_SetAlgorithmSet_In_Marshal(const SetAlgorithmSet_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_SetAlgorithmSet_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_ContextSave_In_Marshal(const ContextSave_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_ContextSave_In_Marshal(const ContextSave_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_ContextSave_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_ContextLoad_In_Marshal(const ContextLoad_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_ContextLoad_In_Marshal(const ContextLoad_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_ContextLoad_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_FlushContext_In_Marshal(const FlushContext_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_FlushContext_In_Marshal(const FlushContext_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_FlushContext_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_EvictControl_In_Marshal(const EvictControl_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_EvictControl_In_Marshal(const EvictControl_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_EvictControl_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_ClockSet_In_Marshal(const ClockSet_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_ClockSet_In_Marshal(const ClockSet_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_ClockSet_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_ClockRateAdjust_In_Marshal(const ClockRateAdjust_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_ClockRateAdjust_In_Marshal(const ClockRateAdjust_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_ClockRateAdjust_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_GetCapability_In_Marshal(const GetCapability_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_GetCapability_In_Marshal(const GetCapability_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_GetCapability_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_TestParms_In_Marshal(const TestParms_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_TestParms_In_Marshal(const TestParms_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_TestParms_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_NV_DefineSpace_In_Marshal(const NV_DefineSpace_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_NV_DefineSpace_In_Marshal(const NV_DefineSpace_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_NV_DefineSpace_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_NV_UndefineSpace_In_Marshal(const NV_UndefineSpace_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_NV_UndefineSpace_In_Marshal(const NV_UndefineSpace_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_NV_UndefineSpace_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_NV_UndefineSpaceSpecial_In_Marshal(const NV_UndefineSpaceSpecial_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_NV_UndefineSpaceSpecial_In_Marshal(const NV_UndefineSpaceSpecial_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_NV_UndefineSpaceSpecial_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_NV_ReadPublic_In_Marshal(const NV_ReadPublic_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_NV_ReadPublic_In_Marshal(const NV_ReadPublic_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_NV_ReadPublic_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_NV_Write_In_Marshal(const NV_Write_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_NV_Write_In_Marshal(const NV_Write_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_NV_Write_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_NV_Increment_In_Marshal(const NV_Increment_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_NV_Increment_In_Marshal(const NV_Increment_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_NV_Increment_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_NV_Extend_In_Marshal(const NV_Extend_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_NV_Extend_In_Marshal(const NV_Extend_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_NV_Extend_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_NV_SetBits_In_Marshal(const NV_SetBits_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_NV_SetBits_In_Marshal(const NV_SetBits_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_NV_SetBits_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_NV_WriteLock_In_Marshal(const NV_WriteLock_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_NV_WriteLock_In_Marshal(const NV_WriteLock_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_NV_WriteLock_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_NV_GlobalWriteLock_In_Marshal(const NV_GlobalWriteLock_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_NV_GlobalWriteLock_In_Marshal(const NV_GlobalWriteLock_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_NV_GlobalWriteLock_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_NV_Read_In_Marshal(const NV_Read_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_NV_Read_In_Marshal(const NV_Read_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_NV_Read_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_NV_ReadLock_In_Marshal(const NV_ReadLock_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_NV_ReadLock_In_Marshal(const NV_ReadLock_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_NV_ReadLock_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_NV_ChangeAuth_In_Marshal(const NV_ChangeAuth_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_NV_ChangeAuth_In_Marshal(const NV_ChangeAuth_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_NV_ChangeAuth_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_NV_Certify_In_Marshal(const NV_Certify_In *source, uint16_t *written, BYTE **buffer, int32_t *size)
+TSS_NV_Certify_In_Marshal(const NV_Certify_In *source, UINT32 *written, BYTE **buffer, UINT32 *size)
 {
     return TSS_NV_Certify_In_Marshalu(source, written, buffer, (uint32_t *)size);
 }
@@ -8022,272 +8022,272 @@ TSS_NV_Certify_In_Marshal(const NV_Certify_In *source, uint16_t *written, BYTE *
 
 
 TPM_RC
-TSS_IncrementalSelfTest_Out_Unmarshal(IncrementalSelfTest_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_IncrementalSelfTest_Out_Unmarshal(IncrementalSelfTest_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_IncrementalSelfTest_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_GetTestResult_Out_Unmarshal(GetTestResult_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_GetTestResult_Out_Unmarshal(GetTestResult_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_GetTestResult_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_StartAuthSession_Out_Unmarshal(StartAuthSession_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_StartAuthSession_Out_Unmarshal(StartAuthSession_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_StartAuthSession_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_Create_Out_Unmarshal(Create_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_Create_Out_Unmarshal(Create_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_Create_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_Load_Out_Unmarshal(Load_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_Load_Out_Unmarshal(Load_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_Load_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_LoadExternal_Out_Unmarshal(LoadExternal_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_LoadExternal_Out_Unmarshal(LoadExternal_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_LoadExternal_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_ReadPublic_Out_Unmarshal(ReadPublic_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_ReadPublic_Out_Unmarshal(ReadPublic_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_ReadPublic_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_ActivateCredential_Out_Unmarshal(ActivateCredential_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_ActivateCredential_Out_Unmarshal(ActivateCredential_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_ActivateCredential_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_MakeCredential_Out_Unmarshal(MakeCredential_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_MakeCredential_Out_Unmarshal(MakeCredential_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_MakeCredential_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_Unseal_Out_Unmarshal(Unseal_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_Unseal_Out_Unmarshal(Unseal_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_Unseal_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_ObjectChangeAuth_Out_Unmarshal(ObjectChangeAuth_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_ObjectChangeAuth_Out_Unmarshal(ObjectChangeAuth_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_ObjectChangeAuth_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_CreateLoaded_Out_Unmarshal(CreateLoaded_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_CreateLoaded_Out_Unmarshal(CreateLoaded_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_CreateLoaded_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_Duplicate_Out_Unmarshal(Duplicate_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_Duplicate_Out_Unmarshal(Duplicate_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_Duplicate_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_Rewrap_Out_Unmarshal(Rewrap_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_Rewrap_Out_Unmarshal(Rewrap_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_Rewrap_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_Import_Out_Unmarshal(Import_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_Import_Out_Unmarshal(Import_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_Import_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_RSA_Encrypt_Out_Unmarshal(RSA_Encrypt_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_RSA_Encrypt_Out_Unmarshal(RSA_Encrypt_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_RSA_Encrypt_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_RSA_Decrypt_Out_Unmarshal(RSA_Decrypt_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_RSA_Decrypt_Out_Unmarshal(RSA_Decrypt_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_RSA_Decrypt_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_ECDH_KeyGen_Out_Unmarshal(ECDH_KeyGen_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_ECDH_KeyGen_Out_Unmarshal(ECDH_KeyGen_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_ECDH_KeyGen_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_ECDH_ZGen_Out_Unmarshal(ECDH_ZGen_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_ECDH_ZGen_Out_Unmarshal(ECDH_ZGen_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_ECDH_ZGen_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_ECC_Parameters_Out_Unmarshal(ECC_Parameters_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_ECC_Parameters_Out_Unmarshal(ECC_Parameters_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_ECC_Parameters_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_ZGen_2Phase_Out_Unmarshal(ZGen_2Phase_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_ZGen_2Phase_Out_Unmarshal(ZGen_2Phase_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_ZGen_2Phase_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_EncryptDecrypt_Out_Unmarshal(EncryptDecrypt_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_EncryptDecrypt_Out_Unmarshal(EncryptDecrypt_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_EncryptDecrypt_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_EncryptDecrypt2_Out_Unmarshal(EncryptDecrypt2_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_EncryptDecrypt2_Out_Unmarshal(EncryptDecrypt2_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_EncryptDecrypt2_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_Hash_Out_Unmarshal(Hash_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_Hash_Out_Unmarshal(Hash_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_Hash_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_HMAC_Out_Unmarshal(HMAC_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_HMAC_Out_Unmarshal(HMAC_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_HMAC_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_GetRandom_Out_Unmarshal(GetRandom_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_GetRandom_Out_Unmarshal(GetRandom_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_GetRandom_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_HMAC_Start_Out_Unmarshal(HMAC_Start_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_HMAC_Start_Out_Unmarshal(HMAC_Start_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_HMAC_Start_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_HashSequenceStart_Out_Unmarshal(HashSequenceStart_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_HashSequenceStart_Out_Unmarshal(HashSequenceStart_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_HashSequenceStart_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_SequenceComplete_Out_Unmarshal(SequenceComplete_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_SequenceComplete_Out_Unmarshal(SequenceComplete_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_SequenceComplete_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_EventSequenceComplete_Out_Unmarshal(EventSequenceComplete_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_EventSequenceComplete_Out_Unmarshal(EventSequenceComplete_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_EventSequenceComplete_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_Certify_Out_Unmarshal(Certify_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_Certify_Out_Unmarshal(Certify_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_Certify_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_CertifyCreation_Out_Unmarshal(CertifyCreation_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_CertifyCreation_Out_Unmarshal(CertifyCreation_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_CertifyCreation_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_Quote_Out_Unmarshal(Quote_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_Quote_Out_Unmarshal(Quote_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_Quote_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_GetSessionAuditDigest_Out_Unmarshal(GetSessionAuditDigest_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_GetSessionAuditDigest_Out_Unmarshal(GetSessionAuditDigest_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_GetSessionAuditDigest_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_GetCommandAuditDigest_Out_Unmarshal(GetCommandAuditDigest_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_GetCommandAuditDigest_Out_Unmarshal(GetCommandAuditDigest_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_GetCommandAuditDigest_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_GetTime_Out_Unmarshal(GetTime_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_GetTime_Out_Unmarshal(GetTime_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_GetTime_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_Commit_Out_Unmarshal(Commit_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_Commit_Out_Unmarshal(Commit_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_Commit_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_EC_Ephemeral_Out_Unmarshal(EC_Ephemeral_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_EC_Ephemeral_Out_Unmarshal(EC_Ephemeral_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_EC_Ephemeral_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_VerifySignature_Out_Unmarshal(VerifySignature_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_VerifySignature_Out_Unmarshal(VerifySignature_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_VerifySignature_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_Sign_Out_Unmarshal(Sign_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_Sign_Out_Unmarshal(Sign_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_Sign_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PCR_Event_Out_Unmarshal(PCR_Event_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_PCR_Event_Out_Unmarshal(PCR_Event_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_PCR_Event_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PCR_Read_Out_Unmarshal(PCR_Read_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_PCR_Read_Out_Unmarshal(PCR_Read_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_PCR_Read_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PCR_Allocate_Out_Unmarshal(PCR_Allocate_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_PCR_Allocate_Out_Unmarshal(PCR_Allocate_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_PCR_Allocate_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PolicySigned_Out_Unmarshal(PolicySigned_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_PolicySigned_Out_Unmarshal(PolicySigned_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_PolicySigned_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PolicySecret_Out_Unmarshal(PolicySecret_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_PolicySecret_Out_Unmarshal(PolicySecret_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_PolicySecret_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_PolicyGetDigest_Out_Unmarshal(PolicyGetDigest_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_PolicyGetDigest_Out_Unmarshal(PolicyGetDigest_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_PolicyGetDigest_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_CreatePrimary_Out_Unmarshal(CreatePrimary_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_CreatePrimary_Out_Unmarshal(CreatePrimary_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_CreatePrimary_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_ContextSave_Out_Unmarshal(ContextSave_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_ContextSave_Out_Unmarshal(ContextSave_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_ContextSave_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_ContextLoad_Out_Unmarshal(ContextLoad_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_ContextLoad_Out_Unmarshal(ContextLoad_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_ContextLoad_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_ReadClock_Out_Unmarshal(ReadClock_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_ReadClock_Out_Unmarshal(ReadClock_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_ReadClock_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_GetCapability_Out_Unmarshal(GetCapability_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_GetCapability_Out_Unmarshal(GetCapability_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_GetCapability_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_NV_ReadPublic_Out_Unmarshal(NV_ReadPublic_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_NV_ReadPublic_Out_Unmarshal(NV_ReadPublic_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_NV_ReadPublic_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_NV_Read_Out_Unmarshal(NV_Read_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_NV_Read_Out_Unmarshal(NV_Read_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_NV_Read_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
 TPM_RC
-TSS_NV_Certify_Out_Unmarshal(NV_Certify_Out *target, TPM_ST tag, BYTE **buffer, int32_t *size)
+TSS_NV_Certify_Out_Unmarshal(NV_Certify_Out *target, TPM_ST tag, BYTE **buffer, UINT32 *size)
 {
     return TSS_NV_Certify_Out_Unmarshalu(target, tag, buffer, (uint32_t *)size);
 }
@@ -8296,7 +8296,7 @@ TSS_NV_Certify_Out_Unmarshal(NV_Certify_Out *target, TPM_ST tag, BYTE **buffer, 
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
 TPM_RC
-TSS_Kyber_Encapsulate_In_Marshalu(Kyber_Encapsulate_In *source, uint16_t *written,
+TSS_Kyber_Encapsulate_In_Marshalu(Kyber_Encapsulate_In *source, UINT32 *written,
         BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = TPM_RC_SUCCESS;
@@ -8342,7 +8342,7 @@ TSS_Kyber_Decapsulate_Out_Unmarshalu(Kyber_Decapsulate_Out *target, TPM_ST tag, 
 }
 
 TPM_RC
-TSS_Kyber_Decapsulate_In_Marshalu(Kyber_Decapsulate_In *source, uint16_t *written,
+TSS_Kyber_Decapsulate_In_Marshalu(Kyber_Decapsulate_In *source, UINT32 *written,
         BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = TPM_RC_SUCCESS;
@@ -8378,7 +8378,7 @@ TSS_Kyber_2Phase_KEX_Out_Unmarshalu(Kyber_2Phase_KEX_Out *target, TPM_ST tag, BY
 }
 
 TPM_RC
-TSS_Kyber_2Phase_KEX_In_Marshalu(Kyber_2Phase_KEX_In *source, uint16_t *written,
+TSS_Kyber_2Phase_KEX_In_Marshalu(Kyber_2Phase_KEX_In *source, UINT32 *written,
         BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = TPM_RC_SUCCESS;
@@ -8387,6 +8387,9 @@ TSS_Kyber_2Phase_KEX_In_Marshalu(Kyber_2Phase_KEX_In *source, uint16_t *written,
     }
     if (rc == TPM_RC_SUCCESS) {
         rc = TSS_TPMI_DH_OBJECT_Marshalu(&source->ephemeral_key, written, buffer, size);
+    }
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPMI_DH_OBJECT_Marshalu(&source->alice_static_key, written, buffer, size);
     }
     if (rc == TPM_RC_SUCCESS) {
         rc = TSS_TPM2B_KYBER_CIPHER_TEXT_Marshalu(&source->cipher_text_static, written, buffer, size);
@@ -8411,7 +8414,7 @@ TSS_Kyber_3Phase_KEX_Out_Unmarshalu(Kyber_3Phase_KEX_Out *target, TPM_ST tag, BY
 }
 
 TPM_RC
-TSS_Kyber_3Phase_KEX_In_Marshalu(Kyber_3Phase_KEX_In *source, uint16_t *written,
+TSS_Kyber_3Phase_KEX_In_Marshalu(Kyber_3Phase_KEX_In *source, UINT32 *written,
         BYTE **buffer, uint32_t *size)
 {
     TPM_RC rc = TPM_RC_SUCCESS;
@@ -8440,7 +8443,7 @@ TSS_Kyber_3Phase_KEX_In_Marshalu(Kyber_3Phase_KEX_In *source, uint16_t *written,
 /*                              NewHope Mods                                 */
 /*****************************************************************************/
 TPM_RC
-TSS_NEWHOPE_Dec_In_Marshalu(const NEWHOPE_Dec_In *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+TSS_NEWHOPE_Dec_In_Marshalu(const NEWHOPE_Dec_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
 	TPM_RC rc = 0;
 	if (rc == 0) {
@@ -8453,7 +8456,7 @@ TSS_NEWHOPE_Dec_In_Marshalu(const NEWHOPE_Dec_In *source, UINT16 *written, BYTE 
 }
 
 TPM_RC
-TSS_NEWHOPE_Enc_In_Marshalu(const NEWHOPE_Enc_In *source, UINT16 *written, BYTE **buffer, uint32_t *size)
+TSS_NEWHOPE_Enc_In_Marshalu(const NEWHOPE_Enc_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
 	TPM_RC rc = 0;
 	if (rc == 0) {

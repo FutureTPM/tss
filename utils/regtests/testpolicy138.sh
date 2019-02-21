@@ -49,17 +49,17 @@
 
 # NV index name after written
 
-# 000b 
-# 5e8e bdf0 4581 9419 070c 7d57 77bf eb61 
-# ffac 4996 ea4b 6fba de6d a42b 632d 4918   
+# 000b
+# 5e8e bdf0 4581 9419 070c 7d57 77bf eb61
+# ffac 4996 ea4b 6fba de6d a42b 632d 4918
 
 # Policy Authorize NV with above Name
-                              
-# 66 1f a1 02 db cd c2 f6 a0 61 7b 33 a0 ee 6d 95 
-# ab f6 2c 76 b4 98 b2 91 10 0d 30 91 19 f4 11 fa 
+
+# 66 1f a1 02 db cd c2 f6 a0 61 7b 33 a0 ee 6d 95
+# ab f6 2c 76 b4 98 b2 91 10 0d 30 91 19 f4 11 fa
 
 # Policy in NV index 01000000
-# signing key 80000001 
+# signing key 80000001
 
 echo ""
 echo "Policy Authorize NV"
@@ -80,7 +80,7 @@ checkSuccess $?
 echo "NV Define Space"
 ${PREFIX}nvdefinespace -hi o -ha 01000000 -sz 50 > run.out
 checkSuccess $?
-    
+
 echo "NV not written, policyauthorizenv - should fail"
 ${PREFIX}policyauthorizenv -ha 01000000 -hs 03000000 > run.out
 checkFailure $?
@@ -114,7 +114,7 @@ ${PREFIX}sign -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 1 -pwdk xxx > r
 checkSuccess $?
 
 echo "Policy restart, set back to zero"
-${PREFIX}policyrestart -ha 03000000 > run.out 
+${PREFIX}policyrestart -ha 03000000 > run.out
 checkSuccess $?
 
 echo "Policy command code - sign"
@@ -130,7 +130,7 @@ ${PREFIX}quote -hp 0 -hk 80000001 -os sig.bin -se0 03000000 1 > run.out
 checkFailure $?
 
 echo "Policy restart, set back to zero"
-${PREFIX}policyrestart -ha 03000000 > run.out 
+${PREFIX}policyrestart -ha 03000000 > run.out
 checkSuccess $?
 
 echo "Policy command code - quote"
@@ -159,25 +159,26 @@ echo ""
 
 # create template hash
 
-# run createprimary -si -v, extract template 
+# run createprimary -si -v, extract template
 
 # policies/policytemplate.txt
 
-# 00 01 00 0b 00 04 04 72 00 00 00 10 00 10 08 00 
-# 00 00 00 00 00 00
+# My template has 26 bytes:
+# 00 01 00 0b 00 04 04 72 00 00 00 00 00 10 00 10
+# 08 00 00 00 00 00 00 00 00 00
 
 # policymaker -if policies/policytemplate.txt -pr -of policies/policytemplate.bin -nz
 # -nz says do not extend, just hash the hexascii line
 # yields a template hash for policytemplate
 
-# ef 64 da 91 18 fc ac 82 f4 36 1b 28 84 28 53 d8 
-# aa f8 7d fc e1 45 e9 25 cf fe 58 68 aa 2d 22 b6 
+# ef 64 da 91 18 fc ac 82 f4 36 1b 28 84 28 53 d8
+# aa f8 7d fc e1 45 e9 25 cf fe 58 68 aa 2d 22 b6
 
 # prepend the command code 00000190 to ef 64 ... and construct the actual object policy
 # policymaker -if policies/policytemplatehash.txt -pr -of policies/policytemplatehash.bin
 
-# fb 94 b1 43 e5 2b 07 95 b7 ec 44 37 79 99 d6 47 
-# 70 1c ae 4b 14 24 af 5a b8 7e 46 f2 58 af eb de 
+# fb 94 b1 43 e5 2b 07 95 b7 ec 44 37 79 99 d6 47
+# 70 1c ae 4b 14 24 af 5a b8 7e 46 f2 58 af eb de
 
 echo ""
 echo "Policy Template with TPM2_Create"
@@ -196,7 +197,7 @@ ${PREFIX}policytemplate -ha 03000000 -te policies/policytemplate.bin > run.out
 checkSuccess $?
 
 echo "Policy get digest - should be fb 94 ... "
-${PREFIX}policygetdigest -ha 03000000 > run.out
+${PREFIX}policygetdigest -ha 03000000 -v > run.out
 checkSuccess $?
 
 echo "Create signing key under primary key"
@@ -208,7 +209,7 @@ echo "Policy Template with TPM2_CreateLoaded"
 echo ""
 
 echo "Policy restart, set back to zero"
-${PREFIX}policyrestart -ha 03000000 > run.out 
+${PREFIX}policyrestart -ha 03000000 > run.out
 checkSuccess $?
 
 echo "Policy Template"
@@ -240,7 +241,7 @@ ${PREFIX}setprimarypolicy -hi p -halg sha256 -pol policies/policytemplatehash.bi
 checkSuccess $?
 
 echo "Policy restart, set back to zero"
-${PREFIX}policyrestart -ha 03000000 > run.out 
+${PREFIX}policyrestart -ha 03000000 > run.out
 checkSuccess $?
 
 echo "Policy Template"

@@ -161,7 +161,7 @@ extern "C" {
 				 ImaEvent *imaEvent,
 				 int eventNum);
     TPM_RC IMA_Event_Marshal(ImaEvent *source,
-			     uint16_t *written, uint8_t **buffer, uint32_t *size);
+			     UINT32 *written, uint8_t **buffer, uint32_t *size);
 
     uint32_t IMA_Event_PcrExtend(TPMT_HA pcrs[IMA_PCR_BANKS][IMPLEMENTATION_PCR],
 				 ImaEvent *imaEvent);

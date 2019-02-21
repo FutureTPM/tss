@@ -281,7 +281,7 @@ ${PREFIX}verifysignature -hk 80000001 -if policies/aaa -is sig.bin > run.out
 checkSuccess $?
 
 echo "Flush the signing key"
-${PREFIX}flushcontext -ha 80000001 > run.out 
+${PREFIX}flushcontext -ha 80000001 > run.out
 checkSuccess $?
 
 echo "Flush the session"
@@ -333,11 +333,11 @@ echo "PolicyAuthValue and bind to different object, response encryption"
 echo ""
 
 #intermediate policy digest length 32
-# 54 a0 de 17 1d 03 c6 9b 17 b3 61 22 33 a5 e8 b2 
-# d8 ee e0 87 f9 c6 ea 85 8c 9c 2e 51 05 52 8b 14 
+# 54 a0 de 17 1d 03 c6 9b 17 b3 61 22 33 a5 e8 b2
+# d8 ee e0 87 f9 c6 ea 85 8c 9c 2e 51 05 52 8b 14
 # policy
-# 4b 50 04 f7 3f 2e f8 c0 96 c9 18 d0 bc 18 0e 6b 
-# 49 0c 8a ed 14 bb 8f 86 fc 5a 54 ef 0c d3 90 44 
+# 4b 50 04 f7 3f 2e f8 c0 96 c9 18 d0 bc 18 0e 6b
+# 49 0c 8a ed 14 bb 8f 86 fc 5a 54 ef 0c d3 90 44
 
 echo "Create a storage key under the primary key - policy command code - create, auth"
 ${PREFIX}create -hp 80000000 -st -kt f -kt p -opr tmpspriv.bin -opu tmpspub.bin -pwdp sto -pwdk sto -pol policies/policycccreate-auth.bin > run.out
@@ -372,7 +372,7 @@ ${PREFIX}flushcontext -ha 80000001 > run.out
 checkSuccess $?
 
 echo "Flush the signing key"
-${PREFIX}flushcontext -ha 80000002 > run.out 
+${PREFIX}flushcontext -ha 80000002 > run.out
 checkSuccess $?
 
 echo "Flush the session"
@@ -412,11 +412,11 @@ ${PREFIX}load -hp 80000001 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
 checkSuccess $?
 
 echo "Flush the storage key"
-${PREFIX}flushcontext -ha 80000001 > run.out 
+${PREFIX}flushcontext -ha 80000001 > run.out
 checkSuccess $?
 
 echo "Flush the signing key"
-${PREFIX}flushcontext -ha 80000002 > run.out 
+${PREFIX}flushcontext -ha 80000002 > run.out
 checkSuccess $?
 
 echo "Flush the session"

@@ -92,6 +92,8 @@ int main(int argc, char *argv[]) {
     unsigned int		sessionAttributes1 = 0;
     TPMI_SH_AUTH_SESSION    	sessionHandle2 = TPM_RH_NULL;
     unsigned int		sessionAttributes2 = 0;
+    TPM2B_LDAA_ISSUER_AT ldaa_issuer_at;
+    const char			*ldaa_issuer_at_filename = NULL;
 
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
     TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "3");
@@ -150,6 +152,15 @@ int main(int argc, char *argv[]) {
             rev116 = TRUE;
         } else if (strcmp(argv[i], "-rsa") == 0) {
             algPublic = TPM_ALG_RSA;
+        } else if (strcmp(argv[i], "-ldaa") == 0) {
+            algPublic = TPM_ALG_LDAA;
+            i++;
+            if (i < argc) {
+                ldaa_issuer_at_filename = argv[i];
+            } else {
+                printf("-ldaa option needs a value\n");
+                printUsage();
+            }
         } else if (strcmp(argv[i], "-kyber") == 0) {
             algPublic = TPM_ALG_KYBER;
             i++;
@@ -439,8 +450,8 @@ int main(int argc, char *argv[]) {
         break;
       case TYPE_DAA:
       case TYPE_DAAR:
-        if (algPublic != TPM_ALG_ECC) {
-            printf("-dau and -dar need -ecc\n");
+        if (algPublic != TPM_ALG_ECC && algPublic != TPM_ALG_LDAA) {
+            printf("-dau and -dar need -ecc or -ldaa\n");
             printUsage();
         }
         if (dataFilename != NULL) {
@@ -494,6 +505,16 @@ int main(int argc, char *argv[]) {
         }
     }
 
+    if (rc == 0) {
+        if (ldaa_issuer_at_filename != NULL) {
+            rc = TSS_File_Read2B(&ldaa_issuer_at.b,
+                     sizeof(ldaa_issuer_at.t.buffer),
+                     ldaa_issuer_at_filename);
+        } else {
+            ldaa_issuer_at.t.size = 0;
+        }
+    }
+
     /* TPM2B_PUBLIC */
     if (rc == 0) {
         switch (keyType) {
@@ -514,7 +535,8 @@ int main(int argc, char *argv[]) {
             rc = asymPublicTemplate(&in.inPublic.publicArea,
                         addObjectAttributes, deleteObjectAttributes,
                         keyType, algPublic, curveID, nalg, halg,
-                        policyFilename, dilithium_mode, kyber_k);
+                        policyFilename, dilithium_mode, kyber_k,
+                        &ldaa_issuer_at);
             break;
           case TYPE_DES:
             rc = symmetricCipherTemplate(&in.inPublic.publicArea,
@@ -571,7 +593,7 @@ int main(int argc, char *argv[]) {
       validate the creation data
     */
     {
-        uint16_t	written = 0;;
+        uint32_t	written = 0;;
         uint8_t		*buffer = NULL;		/* for the free */
         uint32_t 	sizeInBytes;
         TPMT_HA		digest;

@@ -117,12 +117,12 @@ void TSS_PrintAlli(const char *string, unsigned int indent, const unsigned char*
     TSS_PrintAllLogLevel(LOGLEVEL_DEBUG, string, indent, buff, length);
 }
 
-/* TSS_PrintAllLogLevel() prints based on loglevel the 'string', the length, and then the entire
-   byte array
-
-   loglevel LOGLEVEL_DEBUG prints the length and prints the array with a newline every 16 bytes.
-   otherwise prints no length and prints the array with no newlines.
-
+/* TSS_PrintAllLogLevel() prints based on loglevel the 'string', the length,
+ * and then the entire byte array
+ *
+ * loglevel LOGLEVEL_DEBUG prints the length and prints the array with a
+ * newline every 16 bytes. Otherwise prints no length and prints the array
+ * with no newlines.
 */
 
 void TSS_PrintAllLogLevel(uint32_t loglevel, const char *string, unsigned int indent,

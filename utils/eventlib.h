@@ -79,7 +79,7 @@
 #define EV_EFI_ACTION				0x80000007
 #define EV_EFI_PLATFORM_FIRMWARE_BLOB		0x80000008
 #define EV_EFI_HANDOFF_TABLES			0x80000009
-#define EV_EFI_HCRTM_EVENT			0x80000010 
+#define EV_EFI_HCRTM_EVENT			0x80000010
 #define EV_EFI_VARIABLE_AUTHORITY		0x800000E0
 
 /* PCR 0-7 are the BIOS / UEFI / firmware / pre-OS PCRs, set to 10 because a Lenovo TPM 1.2 firmware
@@ -95,10 +95,10 @@
 
 typedef struct tdTCG_PCR_EVENT {
     uint32_t pcrIndex;
-    uint32_t eventType;	
+    uint32_t eventType;
     uint8_t digest[SHA1_DIGEST_SIZE];
     uint32_t eventDataSize;
-    uint8_t event[TCG_EVENT_LEN_MAX];				
+    uint8_t event[TCG_EVENT_LEN_MAX];
 } TCG_PCR_EVENT;
 
 /* TCG_PCR_EVENT2 is the TPM 2.0 hash agile event log entry format.  It is defined in the PFP - TCG
@@ -110,14 +110,14 @@ typedef struct tdTCG_PCR_EVENT2 {
     uint32_t 		pcrIndex;
     uint32_t 		eventType;
     TPML_DIGEST_VALUES	digests;
-    uint32_t 		eventSize; 
-    uint8_t 		event[TCG_EVENT_LEN_MAX];				
+    uint32_t 		eventSize;
+    uint8_t 		event[TCG_EVENT_LEN_MAX];
 } TCG_PCR_EVENT2;
 
 /* TCG_EfiSpecIdEventAlgorithmSize is a hash agile mapping of algorithmId to digestSize. It is part
    of the first event log entry.  It permits a parser to unmarshal an event log that contains hash
    algorithms that are unknown to the parser.  */
-		
+
 typedef struct tdTCG_EfiSpecIdEventAlgorithmSize {
     uint16_t      algorithmId;
     uint16_t      digestSize;
@@ -131,7 +131,7 @@ typedef struct tdTCG_EfiSpecIdEventAlgorithmSize {
 */
 
 typedef struct tdTCG_EfiSpecIdEvent {
-    uint8_t					signature[16];  
+    uint8_t					signature[16];
     uint32_t					platformClass;
     uint8_t					specVersionMinor;
     uint8_t					specVersionMajor;
@@ -140,7 +140,7 @@ typedef struct tdTCG_EfiSpecIdEvent {
     uint32_t					numberOfAlgorithms;
     TCG_EfiSpecIdEventAlgorithmSize		digestSizes[HASH_COUNT];
     uint8_t					vendorInfoSize;
-    uint8_t 					vendorInfo[0xff]; 
+    uint8_t 					vendorInfo[0xff];
 } TCG_EfiSpecIDEvent;
 
 #ifdef __cplusplus
@@ -152,20 +152,20 @@ extern "C" {
 			    FILE *inFile);
 
     TPM_RC TSS_EVENT_Line_Marshal(TCG_PCR_EVENT *source,
-				  uint16_t *written, uint8_t **buffer, uint32_t *size);
-    
+				  UINT32 *written, uint8_t **buffer, uint32_t *size);
+
     TPM_RC TSS_EVENT_Line_Unmarshal(TCG_PCR_EVENT *event, BYTE **buffer, uint32_t *size);
 
     TPM_RC TSS_EVENT_PCR_Extend(TPMT_HA pcrs[IMPLEMENTATION_PCR],
 				TCG_PCR_EVENT *event);
-    
+
     void TSS_EVENT_Line_Trace(TCG_PCR_EVENT *event);
 
     int TSS_EVENT2_Line_Read(TCG_PCR_EVENT2 *event2,
 			     int *endOfFile,
 			     FILE *inFile);
 
-    TPM_RC TSS_EVENT2_Line_Marshal(TCG_PCR_EVENT2 *source, uint16_t *written,
+    TPM_RC TSS_EVENT2_Line_Marshal(TCG_PCR_EVENT2 *source, UINT32 *written,
 				   uint8_t **buffer, uint32_t *size);
 
     TPM_RC TSS_EVENT2_Line_Unmarshal(TCG_PCR_EVENT2 *target, BYTE **buffer, uint32_t *size);

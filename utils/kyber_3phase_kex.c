@@ -246,6 +246,15 @@ int main(int argc, char *argv[])
 		in.cipher_text_1.b.size = 0;
 	}
 
+    if (verbose)
+    {
+        printf("Cipher Text 1: ");
+        UINT32 i;
+        for (i = 0; in.cipher_text_1.b.size != 0 && i < in.cipher_text_1.b.size - 1; i++)
+            printf("%02X", in.cipher_text_1.b.buffer[i]);
+        printf("\n");
+    }
+
 	if ((rc == 0) && (cFilename_in_2 != NULL)) {
 		rc = TSS_File_ReadStructure(&in.cipher_text_2,
 			(UnmarshalFunction_t)TSS_TPM2B_KYBER_CIPHER_TEXT_Unmarshalu,
@@ -256,6 +265,15 @@ int main(int argc, char *argv[])
 		in.cipher_text_2.b.size = 0;
 	}
 
+    if (verbose)
+    {
+        printf("Cipher Text 2: ");
+        UINT32 i;
+        for (i = 0; in.cipher_text_2.b.size != 0 && i < in.cipher_text_2.b.size - 1; i++)
+            printf("%02X", in.cipher_text_2.b.buffer[i]);
+        printf("\n");
+    }
+
 	if ((rc == 0) && (ssFilename_in != NULL)) {
 		rc = TSS_File_ReadStructure(&in.shared_key_3,
 			(UnmarshalFunction_t)TSS_TPM2B_KYBER_SHARED_KEY_Unmarshalu,
@@ -265,6 +283,15 @@ int main(int argc, char *argv[])
 	{
 		in.shared_key_3.b.size = 0;
 	}
+
+    if (verbose)
+    {
+        printf("Shared Key 3: ");
+        UINT32 i;
+        for (i = 0; in.shared_key_3.b.size != 0 && i < in.shared_key_3.b.size - 1; i++)
+            printf("%02X", in.shared_key_3.b.buffer[i]);
+        printf("\n");
+    }
 
 	/* Start a TSS context */
 	if (rc == 0) {
@@ -299,6 +326,7 @@ int main(int argc, char *argv[])
 		if (verbose)
 		{
 			printf("Shared Key: ");
+            UINT32 i;
 			for (i = 0; i<out.shared_key.b.size - 1; i++)
 				printf("%02X", out.shared_key.b.buffer[i]);
 			printf("\n");

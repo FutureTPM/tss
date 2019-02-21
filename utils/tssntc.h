@@ -58,11 +58,11 @@ extern "C" {
     TPM_RC
     TSS_NTC2_CFG_STRUCT_Unmarshalu(NTC2_CFG_STRUCT *target, BYTE **buffer, uint32_t *size);
     TPM_RC
-    TSS_NTC2_CFG_STRUCT_Marshal(NTC2_CFG_STRUCT *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_NTC2_CFG_STRUCT_Marshal(NTC2_CFG_STRUCT *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
     TSS_NTC2_PreConfig_In_Unmarshalu(NTC2_PreConfig_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
     TPM_RC
-    TSS_NTC2_PreConfig_In_Marshalu(NTC2_PreConfig_In *source, uint16_t *written, BYTE **buffer, uint32_t *size);
+    TSS_NTC2_PreConfig_In_Marshalu(NTC2_PreConfig_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
     TSS_NTC2_GetConfig_Out_Unmarshalu(NTC2_GetConfig_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
 
@@ -76,7 +76,7 @@ extern "C" {
     TPM_RC
     TSS_NTC2_GetConfig_Out_Unmarshal(NTC2_GetConfig_Out *target, TPM_ST tag, BYTE **buffer, INT32 *size);
 
-    
+
 #ifdef __cplusplus
 }
 #endif
