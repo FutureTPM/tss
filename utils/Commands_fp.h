@@ -195,6 +195,7 @@
 #include <ibmtss/LDaa_SignCommit_fp.h>
 #include <ibmtss/LDaa_CommitTokenLink_fp.h>
 #include <ibmtss/LDaa_SignProof_fp.h>
+#include <ibmtss/LDaa_SignProceed_fp.h>
 /*****************************************************************************/
 /*                                 LDAA Mods                                 */
 /*****************************************************************************/
@@ -563,6 +564,8 @@ TPM_RC
 LDAA_CommitTokenLink_In_Unmarshal(LDAA_CommitTokenLink_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 TPM_RC
 LDAA_SignProof_In_Unmarshal(LDAA_SignProof_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
+TPM_RC
+LDAA_SignProceed_In_Unmarshal(LDAA_SignProceed_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 /*****************************************************************************/
 /*                                 LDAA Mods                                 */
 /*****************************************************************************/

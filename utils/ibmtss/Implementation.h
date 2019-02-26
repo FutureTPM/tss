@@ -400,6 +400,7 @@
 #define CC_LDAA_SignCommit                (CC_YES*ALG_LDAA)
 #define CC_LDAA_CommitTokenLink           (CC_YES*ALG_LDAA)
 #define CC_LDAA_SignProof                 (CC_YES*ALG_LDAA)
+#define CC_LDAA_SignProceed               (CC_YES*ALG_LDAA)
 /*****************************************************************************/
 /*                                LDAA Mods                                  */
 /*****************************************************************************/
@@ -1455,12 +1456,18 @@ typedef  UINT32             TPM_CC;
 #if CC_LDAA_SignProof == YES
 #define TPM_CC_LDAA_SignProof                 (TPM_CC)(0x000001A1)
 #endif
+#ifndef CC_LDAA_SignProceed
+#   define CC_LDAA_SignProceed NO
+#endif
+#if CC_LDAA_SignProceed == YES
+#define TPM_CC_LDAA_SignProceed               (TPM_CC)(0x000001A2)
+#endif
 /*****************************************************************************/
 /*                                 LDAA Mods                                 */
 /*****************************************************************************/
 
 /* Compile variable. May increase based on implementation. */
-#define  TPM_CC_LAST				(TPM_CC)(0x000001A1)
+#define  TPM_CC_LAST				(TPM_CC)(0x000001A2)
 
 #ifndef CC_Vendor_TCG_Test
 #   define CC_Vendor_TCG_Test NO

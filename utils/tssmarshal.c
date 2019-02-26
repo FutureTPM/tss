@@ -8907,6 +8907,19 @@ TSS_LDAA_SignProof_Out_Unmarshalu(LDAA_SignProof_Out *target, TPM_ST tag, BYTE *
 	}
 	return rc;
 }
+
+TPM_RC
+TSS_LDAA_SignProceed_In_Marshalu(const LDAA_SignProceed_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPMI_DH_OBJECT_Marshalu(&source->key_handle, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Marshalu(&source->sid, written, buffer, size);
+	}
+	return rc;
+}
 /*****************************************************************************/
 /*                                LDAA Mods                                  */
 /*****************************************************************************/

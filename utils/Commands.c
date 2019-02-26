@@ -2558,6 +2558,23 @@ LDAA_SignProof_In_Unmarshal(LDAA_SignProof_In *target, BYTE **buffer, uint32_t *
 	}
 	return rc;
 }
+
+TPM_RC
+LDAA_SignProceed_In_Unmarshal(LDAA_SignProceed_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		target->key_handle = handles[0];
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Unmarshalu(&target->sid, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignProof_sid;
+		}
+	}
+	return rc;
+}
 /*****************************************************************************/
 /*                                 LDAA Mods                                 */
 /*****************************************************************************/

@@ -191,6 +191,7 @@
 #include "LDaa_SignCommit_fp.h"
 #include "LDaa_CommitTokenLink_fp.h"
 #include "LDaa_SignProof_fp.h"
+#include "LDaa_SignProceed_fp.h"
 /*****************************************************************************/
 /*                                LDAA Mods                                  */
 /*****************************************************************************/
@@ -564,6 +565,9 @@ extern "C" {
     TSS_LDAA_SignProof_In_Marshalu(const LDAA_SignProof_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
     TSS_LDAA_SignProof_Out_Unmarshalu(LDAA_SignProof_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+
+    TPM_RC
+    TSS_LDAA_SignProceed_In_Marshalu(const LDAA_SignProceed_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
 
     TPM_RC
     TSS_TPM2B_LDAA_NYM_Marshalu(const TPM2B_LDAA_NYM *source, UINT32 *written, BYTE **buffer, uint32_t *size);

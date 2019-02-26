@@ -515,6 +515,10 @@ const TPMA_CC_TSS    s_ccAttr [] = {
 #if (PAD_LIST  || CC_LDAA_SignProof)
     {{0x01A1, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_LDAA_SignProof
 #endif
+
+#if (PAD_LIST  || CC_LDAA_SignProceed)
+    {{0x01A2, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_LDAA_SignProceed
+#endif
 /*****************************************************************************/
 /*                                 LDAA Mods                                 */
 /*****************************************************************************/
@@ -1039,11 +1043,15 @@ const COMMAND_ATTRIBUTES    s_commandAttributes [] = {
 			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
 #endif
 #if (PAD_LIST  || CC_LDAA_CommitTokenLink)
-    (COMMAND_ATTRIBUTES)(CC_LDAA_CommitTokenLink       *  // 0x0120
+    (COMMAND_ATTRIBUTES)(CC_LDAA_CommitTokenLink       *  // 0x01A0
 			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
 #endif
 #if (PAD_LIST  || CC_LDAA_SignProof)
-    (COMMAND_ATTRIBUTES)(CC_LDAA_SignProof             *  // 0x0121
+    (COMMAND_ATTRIBUTES)(CC_LDAA_SignProof             *  // 0x01A1
+			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
+#endif
+#if (PAD_LIST  || CC_LDAA_SignProceed)
+    (COMMAND_ATTRIBUTES)(CC_LDAA_SignProceed           *  // 0x01A2
 			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
 #endif
 /*****************************************************************************/

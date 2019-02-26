@@ -642,7 +642,7 @@ static const MARSHAL_TABLE marshalTable [] = {
      (UnmarshalOutFunction_t)TSS_Kyber_2Phase_KEX_Out_Unmarshalu,
      (UnmarshalInFunction_t)Kyber_2Phase_KEX_In_Unmarshal},
 
-    {TPM_CC_KYBER_3Phase_KEX, "TPM3_KYBER_3Phase_KEX",
+    {TPM_CC_KYBER_3Phase_KEX, "TPM2_KYBER_3Phase_KEX",
      (MarshalInFunction_t)TSS_Kyber_3Phase_KEX_In_Marshalu,
      (UnmarshalOutFunction_t)TSS_Kyber_3Phase_KEX_Out_Unmarshalu,
      (UnmarshalInFunction_t)Kyber_3Phase_KEX_In_Unmarshal},
@@ -668,10 +668,15 @@ static const MARSHAL_TABLE marshalTable [] = {
      (UnmarshalOutFunction_t)TSS_LDAA_CommitTokenLink_Out_Unmarshalu,
      (UnmarshalInFunction_t)LDAA_CommitTokenLink_In_Unmarshal},
 
-    {TPM_CC_LDAA_SignProof, "TPM3_LDAA_SignProof",
+    {TPM_CC_LDAA_SignProof, "TPM2_LDAA_SignProof",
      (MarshalInFunction_t)TSS_LDAA_SignProof_In_Marshalu,
      (UnmarshalOutFunction_t)TSS_LDAA_SignProof_Out_Unmarshalu,
      (UnmarshalInFunction_t)LDAA_SignProof_In_Unmarshal},
+
+    {TPM_CC_LDAA_SignProceed, "TPM2_LDAA_SignProceed",
+     (MarshalInFunction_t)TSS_LDAA_SignProceed_In_Marshalu,
+     NULL,
+     (UnmarshalInFunction_t)LDAA_SignProceed_In_Unmarshal},
 /*****************************************************************************/
 /*                                 LDAA Mods                                 */
 /*****************************************************************************/

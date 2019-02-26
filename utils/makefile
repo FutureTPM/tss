@@ -512,6 +512,8 @@ ldaa_join:		ibmtss/tss.h ldaa_join.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) ldaa_join.o $(LNALIBS) -o ldaa_join
 ldaa_committokenlink:		ibmtss/tss.h ldaa_committokenlink.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) ldaa_committokenlink.o $(LNALIBS) -o ldaa_committokenlink
+ldaa_signproceed:		ibmtss/tss.h ldaa_signproceed.o $(LIBTSS) $(LIBTSSUTILS)
+			$(CC) $(LNFLAGS) $(LNAFLAGS) ldaa_signproceed.o $(LNALIBS) -o ldaa_signproceed
 
 # for applications, not for TSS library
 
