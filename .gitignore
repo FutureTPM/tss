@@ -133,3 +133,4 @@ utils/writeapp
 utils/zgen2phase
 
 utils/ldaa_join
+ldaa_committokenlink

@@ -510,6 +510,8 @@ newhope_enc:		ibmtss/tss.h newhope_enc.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) newhope_enc.o $(LNALIBS) -o newhope_enc
 ldaa_join:		ibmtss/tss.h ldaa_join.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) ldaa_join.o $(LNALIBS) -o ldaa_join
+ldaa_committokenlink:		ibmtss/tss.h ldaa_committokenlink.o $(LIBTSS) $(LIBTSSUTILS)
+			$(CC) $(LNFLAGS) $(LNAFLAGS) ldaa_committokenlink.o $(LNALIBS) -o ldaa_committokenlink
 
 # for applications, not for TSS library
 

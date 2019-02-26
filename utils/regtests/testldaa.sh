@@ -42,3 +42,13 @@ checkSuccess $?
 echo "Performing Join Command"
 ${PREFIX}ldaa_join -hk 80000001 -sid 0 -jsid 1 -bsn ISSUER -onym ldaa_join_token.bin -pwdk ldaa > run.out
 checkSuccess $?
+
+echo "Try to proceed to commit token link processing without approval by the host (should fail)"
+${PREFIX}ldaa_committokenlink -hk 80000001 -sid 0 -bsn BASENAME -onym ldaa_commit_token.bin -ope ldaa_pe.bin -opbsn ldaa_pbsn.bin -pwdk ldaa > run.out
+checkFailure $?
+
+# Cleanup
+rm ldaa_pub.bin ldaa_priv.bin
+rm ldaa_join_token.bin
+rm ldaa_commit_token.bin
+rm ldaa_pe.bin ldaa_pbsn.bin

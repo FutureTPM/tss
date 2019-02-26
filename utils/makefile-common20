@@ -161,6 +161,7 @@ ALL += 	activatecredential$(EXE)		\
 	newhope_dec$(EXE)		    \
 	newhope_enc$(EXE)		    \
 	ldaa_join$(EXE)				\
+	ldaa_committokenlink$(EXE)	\
 
 ALL	+= 					\
 	ntc2getconfig$(EXE)			\
