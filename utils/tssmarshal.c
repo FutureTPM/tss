@@ -4626,6 +4626,9 @@ TSS_TPMS_SIG_SCHEME_RSAPSS_Marshalu(const TPMS_SIG_SCHEME_RSAPSS *source, UINT32
     return rc;
 }
 
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 TPM_RC
 TSS_TPMS_SIG_SCHEME_DILITHIUM_Marshalu(const TPMS_SIG_SCHEME_DILITHIUM *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
@@ -4635,6 +4638,25 @@ TSS_TPMS_SIG_SCHEME_DILITHIUM_Marshalu(const TPMS_SIG_SCHEME_DILITHIUM *source, 
     }
     return rc;
 }
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                                LDAA Mods                                  */
+/*****************************************************************************/
+TPM_RC
+TSS_TPMS_SIG_SCHEME_LDAA_Marshalu(const TPMS_SIG_SCHEME_LDAA *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+	rc = TSS_TPMS_SCHEME_HASH_Marshalu(source, written, buffer, size);
+    }
+    return rc;
+}
+/*****************************************************************************/
+/*                                LDAA Mods                                  */
+/*****************************************************************************/
 
 /* Table 143 - Definition of {ECC} Types for ECC Signature Schemes */
 
@@ -4970,6 +4992,13 @@ TSS_TPMU_ASYM_SCHEME_Marshalu(const TPMU_ASYM_SCHEME  *source, UINT32 *written, 
         }
         break;
 #endif
+#ifdef TPM_ALG_LDAA
+      case TPM_ALG_LDAA:
+        if (rc == 0) {
+            rc = TSS_TPMS_SIG_SCHEME_LDAA_Marshalu(&source->ldaa, written, buffer, size);
+        }
+        break;
+#endif
 #ifdef TPM_ALG_SM2
       case TPM_ALG_SM2:
         if (rc == 0) {
@@ -5113,6 +5142,22 @@ TSS_TPMI_ALG_KYBER_SCHEME_Marshalu(const TPMI_ALG_KYBER_SCHEME *source, UINT32 *
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
 
+/*****************************************************************************/
+/*                                LDAA Mods                                  */
+/*****************************************************************************/
+TPM_RC
+TSS_TPMI_ALG_LDAA_SCHEME_Marshalu(const TPMI_ALG_LDAA_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+	rc = TSS_TPM_ALG_ID_Marshalu(source, written, buffer, size);
+    }
+    return rc;
+}
+/*****************************************************************************/
+/*                                LDAA Mods                                  */
+/*****************************************************************************/
+
 TPM_RC
 TSS_TPMI_ALG_RSA_SCHEME_Marshalu(const TPMI_ALG_RSA_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
@@ -5190,6 +5235,25 @@ TSS_TPMS_SCHEME_QTESLA_Marshalu(const TPMS_SIG_SCHEME_QTESLA *source, UINT32 *wr
 }
 /*****************************************************************************/
 /*                               qTesla Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                                LDAA Mods                                  */
+/*****************************************************************************/
+TPM_RC
+TSS_TPMT_LDAA_SCHEME_Marshalu(const TPMT_LDAA_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+	rc = TSS_TPMI_ALG_LDAA_SCHEME_Marshalu(&source->scheme, written, buffer, size);
+    }
+    if (rc == 0) {
+	rc = TSS_TPMU_ASYM_SCHEME_Marshalu(&source->details, written, buffer, size, source->scheme);
+    }
+    return rc;
+}
+/*****************************************************************************/
+/*                                LDAA Mods                                  */
 /*****************************************************************************/
 
 /* Table 156 - Definition of (TPM_ALG_ID) {RSA} TPMI_ALG_RSA_DECRYPT Type */
@@ -5680,6 +5744,13 @@ TSS_TPMU_PUBLIC_ID_Marshalu(const TPMU_PUBLIC_ID *source, UINT32 *written, BYTE 
         }
         break;
 #endif
+#ifdef TPM_ALG_LDAA
+      case TPM_ALG_LDAA:
+        if (rc == 0) {
+            rc = TSS_TPM2B_LDAA_PUBLIC_KEY_Marshalu(&source->ldaa, written, buffer, size);
+        }
+        break;
+#endif
 #ifdef TPM_ALG_NEWHOPE
 	  case TPM_ALG_NEWHOPE:
 		if (rc == 0) {
@@ -5846,6 +5917,29 @@ TSS_TPMS_KYBER_PARMS_Marshalu(const TPMS_KYBER_PARMS *source, UINT32 *written, B
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
+
+/*****************************************************************************/
+/*                                 LDAA Mods                                 */
+/*****************************************************************************/
+TPM_RC
+TSS_TPMS_LDAA_PARMS_Marshalu(const TPMS_LDAA_PARMS *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+	rc = TSS_TPMT_SYM_DEF_OBJECT_Marshalu(&source->symmetric, written, buffer, size);
+    }
+    if (rc == 0) {
+	rc = TSS_TPMT_LDAA_SCHEME_Marshalu(&source->scheme, written, buffer, size);
+    }
+    if (rc == 0) {
+	rc = TSS_TPM2B_LDAA_ISSUER_AT_Marshalu(&source->issuer_at, written, buffer, size);
+    }
+    return rc;
+}
+/*****************************************************************************/
+/*                                 LDAA Mods                                 */
+/*****************************************************************************/
+
 /* Table 181 - Definition of {ECC} TPMS_ECC_PARMS Structure */
 
 TPM_RC
@@ -5885,6 +5979,13 @@ TSS_TPMU_PUBLIC_PARMS_Marshalu(const TPMU_PUBLIC_PARMS *source, UINT32 *written,
       case TPM_ALG_SYMCIPHER:
         if (rc == 0) {
             rc = TSS_TPMS_SYMCIPHER_PARMS_Marshalu(&source->symDetail, written, buffer, size);
+        }
+        break;
+#endif
+#ifdef TPM_ALG_LDAA
+      case TPM_ALG_LDAA:
+        if (rc == 0) {
+            rc = TSS_TPMS_LDAA_PARMS_Marshalu(&source->ldaaDetail, written, buffer, size);
         }
         break;
 #endif
@@ -6513,6 +6614,111 @@ TSS_TPM2B_PUBLIC_KEY_NEWHOPE_Marshalu(const TPM2B_NEWHOPE_PUBLIC_KEY *source, UI
 }
 /*****************************************************************************/
 /*                              NewHope Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                               LDAA Mods                                   */
+/*****************************************************************************/
+TPM_RC
+TSS_TPM2B_LDAA_BASENAME_ISSUER_Marshalu(const TPM2B_LDAA_BASENAME_ISSUER *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0)
+	{
+		rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_TPM2B_LDAA_PUBLIC_KEY_Marshalu(const TPM2B_LDAA_PUBLIC_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0)
+	{
+		rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_TPM2B_LDAA_ISSUER_AT_Marshalu(const TPM2B_LDAA_ISSUER_AT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0)
+	{
+		rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_TPM2B_LDAA_BASENAME_Marshalu(const TPM2B_LDAA_BASENAME *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0)
+	{
+		rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_TPM2B_LDAA_ISSUER_ATNTT_Marshalu(const TPM2B_LDAA_ISSUER_ATNTT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0)
+	{
+		rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_TPM2B_LDAA_ISSUER_BNTT_Marshalu(const TPM2B_LDAA_ISSUER_BNTT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0)
+	{
+		rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_TPM2B_LDAA_PE_Marshalu(const TPM2B_LDAA_PE *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0)
+	{
+		rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_TPM2B_LDAA_PBSN_Marshalu(const TPM2B_LDAA_PBSN *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0)
+	{
+		rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_TPM2B_LDAA_SIGN_STATE_Marshalu(const TPM2B_LDAA_SIGN_STATE *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0)
+	{
+		rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+	}
+	return rc;
+}
+/*****************************************************************************/
+/*                               LDAA Mods                                   */
 /*****************************************************************************/
 
 /* Deprecated functions that use a sized value for the size parameter.  The recommended functions
@@ -8501,5 +8707,196 @@ TSS_NEWHOPE_Enc_Out_Unmarshalu(NEWHOPE_Enc_Out *target, TPM_ST tag, BYTE **buffe
 }
 /*****************************************************************************/
 /*                              NewHope Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                                LDAA Mods                                  */
+/*****************************************************************************/
+TPM_RC
+TSS_LDAA_Join_In_Marshalu(const LDAA_Join_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPMI_DH_OBJECT_Marshalu(&source->key_handle, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Marshalu(&source->sid, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Marshalu(&source->jsid, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_NONCE_Marshalu(&source->nonce, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_BASENAME_ISSUER_Marshalu(&source->bsn_I, written, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_LDAA_Join_Out_Unmarshalu(LDAA_Join_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+	UINT32 parameterSize = 0;
+	if (rc == TPM_RC_SUCCESS) {
+		if (tag == TPM_ST_SESSIONS) {
+			rc = TSS_UINT32_Unmarshalu(&parameterSize, buffer, size);
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_NYM_Unmarshalu(&target->nym, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_PUBLIC_KEY_Unmarshalu(&target->public_key, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_LDAA_SignCommit_In_Marshalu(const LDAA_SignCommit_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPMI_DH_OBJECT_Marshalu(&source->key_handle, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Marshalu(&source->sid, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Marshalu(&source->ssid, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_BASENAME_Marshalu(&source->bsn, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_ISSUER_ATNTT_Marshalu(&source->issuer_at_ntt, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_ISSUER_BNTT_Marshalu(&source->issuer_bntt, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Marshalu(&source->commit_sel, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Marshalu(&source->sign_state_sel, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_PE_Marshalu(&source->pe, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_PBSN_Marshalu(&source->pbsn, written, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_LDAA_SignCommit_Out_Unmarshalu(LDAA_SignCommit_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	UINT32 parameterSize = 0;
+	if (rc == TPM_RC_SUCCESS) {
+		if (tag == TPM_ST_SESSIONS) {
+			rc = TSS_UINT32_Unmarshalu(&parameterSize, buffer, size);
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Unmarshalu(&target->sid, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Unmarshalu(&target->ssid, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_COMMIT_Unmarshalu(&target->commit, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_LDAA_CommitTokenLink_In_Marshalu(const LDAA_CommitTokenLink_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPMI_DH_OBJECT_Marshalu(&source->key_handle, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Marshalu(&source->sid, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_BASENAME_Marshalu(&source->bsn, written, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_LDAA_CommitTokenLink_Out_Unmarshalu(LDAA_CommitTokenLink_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	UINT32 parameterSize = 0;
+	if (rc == TPM_RC_SUCCESS) {
+		if (tag == TPM_ST_SESSIONS) {
+			rc = TSS_UINT32_Unmarshalu(&parameterSize, buffer, size);
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_NYM_Unmarshalu(&target->nym, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_PE_Unmarshalu(&target->pe, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_PBSN_Unmarshalu(&target->pbsn, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_LDAA_SignProof_In_Marshalu(const LDAA_SignProof_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPMI_DH_OBJECT_Marshalu(&source->key_handle, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Marshalu(&source->sid, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_SIGN_STATE_Marshalu(&source->R1, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_SIGN_STATE_Marshalu(&source->R2, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Marshalu(&source->sign_state_sel, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Marshalu(&source->sign_state_type, written, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_LDAA_SignProof_Out_Unmarshalu(LDAA_SignProof_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	UINT32 parameterSize = 0;
+	if (rc == TPM_RC_SUCCESS) {
+		if (tag == TPM_ST_SESSIONS) {
+			rc = TSS_UINT32_Unmarshalu(&parameterSize, buffer, size);
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_SIGN_STATE_Unmarshalu(&target->R1, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_SIGN_STATE_Unmarshalu(&target->R2, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_SIGN_GROUP_Unmarshalu(&target->sign_group, buffer, size);
+	}
+	return rc;
+}
+/*****************************************************************************/
+/*                                LDAA Mods                                  */
 /*****************************************************************************/
 #endif /* TPM 2.0 */

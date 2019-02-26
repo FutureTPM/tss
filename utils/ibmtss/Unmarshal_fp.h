@@ -564,6 +564,45 @@ extern "C" {
     /*                               qTesla Mods                                 */
     /*****************************************************************************/
 
+    /*****************************************************************************/
+    /*                                LDAA Mods                                  */
+    /*****************************************************************************/
+    TPM_RC
+    TSS_TPMS_LDAA_PARMS_Unmarshalu(TPMS_LDAA_PARMS *target, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPMT_LDAA_SCHEME_Unmarshalu(TPMT_LDAA_SCHEME *target, BYTE **buffer, uint32_t *size, BOOL allowNull);
+    TPM_RC
+    TSS_TPMI_ALG_LDAA_SCHEME_Unmarshalu(TPMI_ALG_LDAA_SCHEME *target, BYTE **buffer, uint32_t *size, BOOL allowNull);
+    TPM_RC
+    TSS_TPM2B_LDAA_NYM_Unmarshalu(TPM2B_LDAA_NYM *target, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_LDAA_PUBLIC_KEY_Unmarshalu(TPM2B_LDAA_PUBLIC_KEY *target, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_LDAA_COMMIT_Unmarshalu(TPM2B_LDAA_COMMIT *target, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_LDAA_PE_Unmarshalu(TPM2B_LDAA_PE *target, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_LDAA_PBSN_Unmarshalu(TPM2B_LDAA_PBSN *target, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_LDAA_SIGN_STATE_Unmarshalu(TPM2B_LDAA_SIGN_STATE *target, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_LDAA_SIGN_GROUP_Unmarshalu(TPM2B_LDAA_SIGN_GROUP *target, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_LDAA_BASENAME_ISSUER_Unmarshalu(TPM2B_LDAA_BASENAME_ISSUER *target, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_LDAA_BASENAME_Unmarshalu(TPM2B_LDAA_BASENAME *target, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_LDAA_ISSUER_BNTT_Unmarshalu(TPM2B_LDAA_ISSUER_BNTT *target, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_LDAA_ISSUER_ATNTT_Unmarshalu(TPM2B_LDAA_ISSUER_ATNTT *target, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_LDAA_ISSUER_AT_Unmarshalu(TPM2B_LDAA_ISSUER_AT *target, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPMS_SIG_SCHEME_LDAA_Unmarshalu(TPMS_SIG_SCHEME_LDAA *target, BYTE **buffer, uint32_t *size);
+    /*****************************************************************************/
+    /*                                LDAA Mods                                  */
+    /*****************************************************************************/
+
     /* These functions are deprecated.  They were adapted from the TPM side, but the signed size
        caused static analysis tool warnings. */
 

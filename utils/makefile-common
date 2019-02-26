@@ -80,6 +80,7 @@ TSS_HEADERS += 					\
 		ibmtss/tssutils.h		\
 		ibmtss/Unmarshal_fp.h		\
 		ibmtss/ldaa-parms.h		\
+		ibmtss/ldaa-structs.h		\
 		ibmtss/Implementation.h
 
 # TSS shared library object files

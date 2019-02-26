@@ -316,6 +316,7 @@ TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
             switch (keyType) {
               case TYPE_DAA:
               case TYPE_DAAR:
+                publicArea->parameters.ldaaDetail.scheme.details.ldaa.hashAlg = halg;
                 publicArea->parameters.ldaaDetail.scheme.scheme = TPM_ALG_LDAA;
                 // Copy polynomial matrix to the parameter struct
                 memcpy(publicArea->parameters.ldaaDetail.issuer_at.t.buffer,

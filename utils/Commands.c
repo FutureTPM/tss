@@ -2392,3 +2392,173 @@ NEWHOPE_Enc_In_Unmarshal(NEWHOPE_Enc_In *target, BYTE **buffer, uint32_t *size, 
 /*                               NewHope Mods                                */
 /*****************************************************************************/
 
+/*****************************************************************************/
+/*                                 LDAA Mods                                 */
+/*****************************************************************************/
+TPM_RC
+LDAA_Join_In_Unmarshal(LDAA_Join_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		target->key_handle = handles[0];
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Unmarshalu(&target->sid, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_Join_sid;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Unmarshalu(&target->jsid, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_Join_jsid;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_NONCE_Unmarshalu(&target->nonce, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_Join_nonce;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_BASENAME_ISSUER_Unmarshalu(&target->bsn_I, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_Join_bsn_I;
+		}
+	}
+	return rc;
+}
+
+TPM_RC
+LDAA_SignCommit_In_Unmarshal(LDAA_SignCommit_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		target->key_handle = handles[0];
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Unmarshalu(&target->sid, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignCommit_sid;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Unmarshalu(&target->ssid, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignCommit_ssid;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_BASENAME_Unmarshalu(&target->bsn, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignCommit_bsn;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_ISSUER_ATNTT_Unmarshalu(&target->issuer_at_ntt, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignCommit_issuer_at_ntt;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_ISSUER_BNTT_Unmarshalu(&target->issuer_bntt, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignCommit_issuer_bntt;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Unmarshalu(&target->commit_sel, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignCommit_commit_sel;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Unmarshalu(&target->sign_state_sel, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignCommit_sign_state_sel;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_PE_Unmarshalu(&target->pe, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignCommit_pe;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_PBSN_Unmarshalu(&target->pbsn, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignCommit_pbsn;
+		}
+	}
+	return rc;
+}
+
+TPM_RC
+LDAA_CommitTokenLink_In_Unmarshal(LDAA_CommitTokenLink_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		target->key_handle = handles[0];
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Unmarshalu(&target->sid, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_CommitTokenLink_sid;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_BASENAME_Unmarshalu(&target->bsn, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_CommitTokenLink_bsn;
+		}
+	}
+	return rc;
+}
+
+TPM_RC
+LDAA_SignProof_In_Unmarshal(LDAA_SignProof_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		target->key_handle = handles[0];
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Unmarshalu(&target->sid, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignProof_sid;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_SIGN_STATE_Unmarshalu(&target->R1, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignProof_R1;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_SIGN_STATE_Unmarshalu(&target->R2, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignProof_R2;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Unmarshalu(&target->sign_state_sel, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignProof_sign_state_sel;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Unmarshalu(&target->sign_state_sel, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignProof_sign_state_sel;
+		}
+	}
+	return rc;
+}
+/*****************************************************************************/
+/*                                 LDAA Mods                                 */
+/*****************************************************************************/
+

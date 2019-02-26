@@ -393,6 +393,17 @@
 /*                              NewHope Mods                                 */
 /*****************************************************************************/
 
+/*****************************************************************************/
+/*                                LDAA Mods                                  */
+/*****************************************************************************/
+#define CC_LDAA_Join                      (CC_YES*ALG_LDAA)
+#define CC_LDAA_SignCommit                (CC_YES*ALG_LDAA)
+#define CC_LDAA_CommitTokenLink           (CC_YES*ALG_LDAA)
+#define CC_LDAA_SignProof                 (CC_YES*ALG_LDAA)
+/*****************************************************************************/
+/*                                LDAA Mods                                  */
+/*****************************************************************************/
+
 #define  CC_NTC2_PreConfig                CC_YES
 #define  CC_NTC2_LockPreConfig            CC_YES
 #define  CC_NTC2_GetConfig                CC_YES
@@ -535,26 +546,6 @@
 #if defined ALG_SHA3_512 && ALG_SHA3_512 == YES
 #define TPM_ALGSHA3_512              (TPM_ALG_ID)(ALG_SHA3_512_VALUE)
 #endif
-#define  ALG_CTR_VALUE               0x0040
-#if defined ALG_CTR && ALG_CTR == YES
-#define  TPM_ALG_CTR                 (TPM_ALG_ID)(ALG_CTR_VALUE)
-#endif
-#define  ALG_OFB_VALUE               0x0041
-#if defined ALG_OFB && ALG_OFB == YES
-#define  TPM_ALG_OFB                 (TPM_ALG_ID)(ALG_OFB_VALUE)
-#endif
-#define  ALG_CBC_VALUE               0x0042
-#if defined ALG_CBC && ALG_CBC == YES
-#define  TPM_ALG_CBC                 (TPM_ALG_ID)(ALG_CBC_VALUE)
-#endif
-#define  ALG_CFB_VALUE               0x0043
-#if defined ALG_CFB && ALG_CFB == YES
-#define  TPM_ALG_CFB                 (TPM_ALG_ID)(ALG_CFB_VALUE)
-#endif
-#define  ALG_ECB_VALUE               0x0044
-#if defined ALG_ECB && ALG_ECB == YES
-#define  TPM_ALG_ECB                 (TPM_ALG_ID)(ALG_ECB_VALUE)
-#endif
 
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
@@ -590,6 +581,17 @@
 /*****************************************************************************/
 
 /*****************************************************************************/
+/*                               LDAA Mods                                   */
+/*****************************************************************************/
+#define     ALG_LDAA_VALUE			    0x002C
+#if defined ALG_LDAA && ALG_LDAA == YES
+#define TPM_ALG_LDAA                    (TPM_ALG_ID)(ALG_LDAA_VALUE)
+#endif   // ALG_LDAA
+/*****************************************************************************/
+/*                               LDAA Mods                                   */
+/*****************************************************************************/
+
+/*****************************************************************************/
 /*                               qTesla Mods                                 */
 /*****************************************************************************/
 #define     ALG_QTESLA_VALUE			 0x0045
@@ -611,16 +613,26 @@
 /*                              NewHope Mods                                 */
 /*****************************************************************************/
 
-/*****************************************************************************/
-/*                               LDAA Mods                                   */
-/*****************************************************************************/
-#define     ALG_LDAA_VALUE			    0x0047
-#if defined ALG_LDAA && ALG_LDAA == YES
-#define TPM_ALG_LDAA                    (TPM_ALG_ID)(ALG_LDAA_VALUE)
-#endif   // ALG_LDAA
-/*****************************************************************************/
-/*                               LDAA Mods                                   */
-/*****************************************************************************/
+#define  ALG_CTR_VALUE               0x0040
+#if defined ALG_CTR && ALG_CTR == YES
+#define  TPM_ALG_CTR                 (TPM_ALG_ID)(ALG_CTR_VALUE)
+#endif
+#define  ALG_OFB_VALUE               0x0041
+#if defined ALG_OFB && ALG_OFB == YES
+#define  TPM_ALG_OFB                 (TPM_ALG_ID)(ALG_OFB_VALUE)
+#endif
+#define  ALG_CBC_VALUE               0x0042
+#if defined ALG_CBC && ALG_CBC == YES
+#define  TPM_ALG_CBC                 (TPM_ALG_ID)(ALG_CBC_VALUE)
+#endif
+#define  ALG_CFB_VALUE               0x0043
+#if defined ALG_CFB && ALG_CFB == YES
+#define  TPM_ALG_CFB                 (TPM_ALG_ID)(ALG_CFB_VALUE)
+#endif
+#define  ALG_ECB_VALUE               0x0044
+#if defined ALG_ECB && ALG_ECB == YES
+#define  TPM_ALG_ECB                 (TPM_ALG_ID)(ALG_ECB_VALUE)
+#endif
 
 //     From TCG Algorithm Registry: Table 3 - Definition of TPM_ECC_CURVE Constants
 
@@ -1416,6 +1428,37 @@ typedef  UINT32             TPM_CC;
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
 
+/*****************************************************************************/
+/*                                 LDAA Mods                                 */
+/*****************************************************************************/
+#ifndef CC_LDAA_Join
+#   define CC_LDAA_Join NO
+#endif
+#if CC_LDAA_Join == YES
+#define TPM_CC_LDAA_Join                      (TPM_CC)(0x0000019E)
+#endif
+#ifndef CC_LDAA_SignCommit
+#   define CC_LDAA_SignCommit NO
+#endif
+#if CC_LDAA_SignCommit == YES
+#define TPM_CC_LDAA_SignCommit                (TPM_CC)(0x0000019F)
+#endif
+#ifndef CC_LDAA_CommitTokenLink
+#   define CC_LDAA_CommitTokenLink NO
+#endif
+#if CC_LDAA_CommitTokenLink == YES
+#define TPM_CC_LDAA_CommitTokenLink           (TPM_CC)(0x000001A0)
+#endif
+#ifndef CC_LDAA_SignProof
+#   define CC_LDAA_SignProof NO
+#endif
+#if CC_LDAA_SignProof == YES
+#define TPM_CC_LDAA_SignProof                 (TPM_CC)(0x000001A1)
+#endif
+/*****************************************************************************/
+/*                                 LDAA Mods                                 */
+/*****************************************************************************/
+
 /* Compile variable. May increase based on implementation. */
 #define  TPM_CC_LAST				(TPM_CC)(0x0000019D)
 
@@ -1572,12 +1615,16 @@ typedef  UINT32             TPM_CC;
 					  + (ADD_FILL || CC_CreateLoaded)               /* 0x00000191 */ \
 					  + (ADD_FILL || CC_PolicyAuthorizeNV)          /* 0x00000192 */ \
 					  + (ADD_FILL || CC_EncryptDecrypt2)            /* 0x00000193 */ \
-					  + (ADD_FILL || CC_KYBER_Enc)                  /* 0x00000198 */ \
-					  + (ADD_FILL || CC_KYBER_Dec)                  /* 0x00000199 */ \
-					  + (ADD_FILL || CC_KYBER_2Phase_KEX)           /* 0x0000019B */ \
-					  + (ADD_FILL || CC_KYBER_3Phase_KEX)           /* 0x0000019C */ \
-					  + (ADD_FILL || CC_NEWHOPE_Enc)                /* 0x0000019D */ \
-					  + (ADD_FILL || CC_NEWHOPE_Dec)                /* 0x0000019E */ \
+					  + (ADD_FILL || CC_NEWHOPE_Dec)                /* 0x00000198 */ \
+					  + (ADD_FILL || CC_NEWHOPE_Enc)                /* 0x00000199 */ \
+					  + (ADD_FILL || CC_KYBER_Enc)                  /* 0x0000019A */ \
+					  + (ADD_FILL || CC_KYBER_Dec)                  /* 0x0000019B */ \
+					  + (ADD_FILL || CC_KYBER_2Phase_KEX)           /* 0x0000019C */ \
+					  + (ADD_FILL || CC_KYBER_3Phase_KEX)           /* 0x0000019D */ \
+					  + (ADD_FILL || CC_LDAA_Join)                  /* 0x0000019E */ \
+					  + (ADD_FILL || CC_LDAA_SignCommit)            /* 0x0000019F */ \
+					  + (ADD_FILL || CC_LDAA_CommitTokenLink)       /* 0x000001A0 */ \
+					  + (ADD_FILL || CC_LDAA_SignProof)             /* 0x000001A1 */ \
 					  )
 
 #define VENDOR_COMMAND_ARRAY_SIZE   ( 0				\

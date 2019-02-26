@@ -184,6 +184,17 @@
 /*                              NewHope Mods                                 */
 /*****************************************************************************/
 
+/*****************************************************************************/
+/*                                LDAA Mods                                  */
+/*****************************************************************************/
+#include "LDaa_Join_fp.h"
+#include "LDaa_SignCommit_fp.h"
+#include "LDaa_CommitTokenLink_fp.h"
+#include "LDaa_SignProof_fp.h"
+/*****************************************************************************/
+/*                                LDAA Mods                                  */
+/*****************************************************************************/
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -529,6 +540,59 @@ extern "C" {
     TSS_TPMS_NEWHOPE_PARMS_Marshalu(const TPMS_NEWHOPE_PARMS *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     /*****************************************************************************/
     /*                              NewHope Mods                                 */
+    /*****************************************************************************/
+
+    /*****************************************************************************/
+    /*                                LDAA Mods                                  */
+    /*****************************************************************************/
+    TPM_RC
+    TSS_LDAA_Join_In_Marshalu(const LDAA_Join_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_LDAA_Join_Out_Unmarshalu(LDAA_Join_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+
+    TPM_RC
+    TSS_LDAA_SignCommit_In_Marshalu(const LDAA_SignCommit_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_LDAA_SignCommit_Out_Unmarshalu(LDAA_SignCommit_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+
+    TPM_RC
+    TSS_LDAA_CommitTokenLink_In_Marshalu(const LDAA_CommitTokenLink_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_LDAA_CommitTokenLink_Out_Unmarshalu(LDAA_CommitTokenLink_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+
+    TPM_RC
+    TSS_LDAA_SignProof_In_Marshalu(const LDAA_SignProof_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_LDAA_SignProof_Out_Unmarshalu(LDAA_SignProof_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+
+    TPM_RC
+    TSS_TPM2B_LDAA_PUBLIC_KEY_Marshalu(const TPM2B_LDAA_PUBLIC_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPMS_SIG_SCHEME_LDAA_Marshalu(const TPMS_SIG_SCHEME_LDAA *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPMT_LDAA_SCHEME_Marshalu(const TPMT_LDAA_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_LDAA_ISSUER_AT_Marshalu(const TPM2B_LDAA_ISSUER_AT *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPMI_ALG_LDAA_SCHEME_Marshalu(const TPMI_ALG_LDAA_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPMS_LDAA_PARMS_Marshalu(const TPMS_LDAA_PARMS *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_LDAA_BASENAME_ISSUER_Marshalu(const TPM2B_LDAA_BASENAME_ISSUER *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_LDAA_BASENAME_Marshalu(const TPM2B_LDAA_BASENAME *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_LDAA_ISSUER_ATNTT_Marshalu(const TPM2B_LDAA_ISSUER_ATNTT *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_LDAA_ISSUER_BNTT_Marshalu(const TPM2B_LDAA_ISSUER_BNTT *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_LDAA_PE_Marshalu(const TPM2B_LDAA_PE *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_LDAA_PBSN_Marshalu(const TPM2B_LDAA_PBSN *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_LDAA_SIGN_STATE_Marshalu(const TPM2B_LDAA_SIGN_STATE *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    /*****************************************************************************/
+    /*                                LDAA Mods                                  */
     /*****************************************************************************/
 
     /* Deprecated functions */

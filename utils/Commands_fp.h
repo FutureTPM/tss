@@ -189,6 +189,17 @@
 /*****************************************************************************/
 
 /*****************************************************************************/
+/*                                 LDAA Mods                                 */
+/*****************************************************************************/
+#include <ibmtss/LDaa_Join_fp.h>
+#include <ibmtss/LDaa_SignCommit_fp.h>
+#include <ibmtss/LDaa_CommitTokenLink_fp.h>
+#include <ibmtss/LDaa_SignProof_fp.h>
+/*****************************************************************************/
+/*                                 LDAA Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
 /*                               NewHope Mods                                */
 /*****************************************************************************/
 #include <ibmtss/Newhope_fp.h>
@@ -539,5 +550,20 @@ TPM_RC
 NEWHOPE_Enc_In_Unmarshal(NEWHOPE_Enc_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 /*****************************************************************************/
 /*                               NewHope Mods                                */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                                 LDAA Mods                                 */
+/*****************************************************************************/
+TPM_RC
+LDAA_Join_In_Unmarshal(LDAA_Join_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
+TPM_RC
+LDAA_SignCommit_In_Unmarshal(LDAA_SignCommit_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
+TPM_RC
+LDAA_CommitTokenLink_In_Unmarshal(LDAA_CommitTokenLink_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
+TPM_RC
+LDAA_SignProof_In_Unmarshal(LDAA_SignProof_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
+/*****************************************************************************/
+/*                                 LDAA Mods                                 */
 /*****************************************************************************/
 #endif

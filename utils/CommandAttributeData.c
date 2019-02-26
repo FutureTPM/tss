@@ -497,6 +497,28 @@ const TPMA_CC_TSS    s_ccAttr [] = {
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
 
+/*****************************************************************************/
+/*                                 LDAA Mods                                 */
+/*****************************************************************************/
+#if (PAD_LIST || CC_LDAA_Join)
+    {{0x019E, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_LDAA_Join
+#endif
+
+#if (PAD_LIST || CC_LDAA_SignCommit)
+    {{0x019F, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_LDAA_SignCommit
+#endif
+
+#if (PAD_LIST  || CC_LDAA_CommitTokenLink)
+    {{0x01A0, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_LDAA_CommitTokenLink
+#endif
+
+#if (PAD_LIST  || CC_LDAA_SignProof)
+    {{0x01A1, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_LDAA_SignProof
+#endif
+/*****************************************************************************/
+/*                                 LDAA Mods                                 */
+/*****************************************************************************/
+
     {{0x0000, 0, 0, 0, 0, 0, 0, 0, 0}},     // kg - terminator?
 };
 
@@ -1003,6 +1025,29 @@ const COMMAND_ATTRIBUTES    s_commandAttributes [] = {
 #endif
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                                 LDAA Mods                                 */
+/*****************************************************************************/
+#if (PAD_LIST || CC_LDAA_Join)
+    (COMMAND_ATTRIBUTES)(CC_LDAA_Join                  *  // 0x019E
+			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
+#endif
+#if (PAD_LIST || CC_LDAA_SignCommit)
+    (COMMAND_ATTRIBUTES)(CC_LDAA_SignCommit            *  // 0x019F
+			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
+#endif
+#if (PAD_LIST  || CC_LDAA_CommitTokenLink)
+    (COMMAND_ATTRIBUTES)(CC_LDAA_CommitTokenLink       *  // 0x0120
+			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
+#endif
+#if (PAD_LIST  || CC_LDAA_SignProof)
+    (COMMAND_ATTRIBUTES)(CC_LDAA_SignProof             *  // 0x0121
+			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
+#endif
+/*****************************************************************************/
+/*                                 LDAA Mods                                 */
 /*****************************************************************************/
 
 #if (PAD_LIST || CC_Vendor_TCG_Test)

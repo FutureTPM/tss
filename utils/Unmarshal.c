@@ -2905,6 +2905,23 @@ TPMS_SIG_SCHEME_QTESLA_Unmarshalu(TPMS_SIG_SCHEME_QTESLA *target, BYTE **buffer,
 /*                               qTesla Mods                                 */
 /*****************************************************************************/
 
+/*****************************************************************************/
+/*                                LDAA Mods                                  */
+/*****************************************************************************/
+TPM_RC
+TSS_TPMS_SIG_SCHEME_LDAA_Unmarshalu(TPMS_SIG_SCHEME_LDAA *target, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+
+    if (rc == TPM_RC_SUCCESS) {
+	rc = TSS_TPMS_SCHEME_HASH_Unmarshalu(target, buffer, size);
+    }
+    return rc;
+}
+/*****************************************************************************/
+/*                                LDAA Mods                                  */
+/*****************************************************************************/
+
 /* Table 143 - Definition of {ECC} Types for ECC Signature Schemes */
 
 TPM_RC
@@ -3275,6 +3292,11 @@ TSS_TPMU_ASYM_SCHEME_Unmarshalu(TPMU_ASYM_SCHEME *target, BYTE **buffer, uint32_
         rc = TSS_TPMS_SIG_SCHEME_ECDAA_Unmarshalu(&target->ecdaa, buffer, size);
         break;
 #endif
+#ifdef TPM_ALG_LDAA
+      case TPM_ALG_LDAA:
+        rc = TSS_TPMS_SIG_SCHEME_LDAA_Unmarshalu(&target->ldaa, buffer, size);
+        break;
+#endif
 #ifdef TPM_ALG_SM2
       case TPM_ALG_SM2:
         rc = TSS_TPMS_SIG_SCHEME_SM2_Unmarshalu(&target->sm2, buffer, size);
@@ -3641,6 +3663,38 @@ TSS_TPMI_ALG_KYBER_SCHEME_Unmarshalu(TPMI_ALG_KYBER_SCHEME *target, BYTE **buffe
 /*****************************************************************************/
 
 /*****************************************************************************/
+/*                                 LDAA Mods                                 */
+/*****************************************************************************/
+TPM_RC
+TSS_TPMI_ALG_LDAA_SCHEME_Unmarshalu(TPMI_ALG_LDAA_SCHEME *target, BYTE **buffer, uint32_t *size, BOOL allowNull)
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+
+    if (rc == TPM_RC_SUCCESS) {
+	rc = TSS_TPM_ALG_ID_Unmarshalu(target, buffer, size);
+    }
+    if (rc == TPM_RC_SUCCESS) {
+        switch (*target) {
+#ifdef TPM_ALG_LDAA
+          case TPM_ALG_LDAA:
+            break;
+#endif
+          case TPM_ALG_NULL:
+            if (!allowNull) {
+                rc = TPM_RC_SCHEME;
+            }
+            break;
+          default:
+            rc = TPM_RC_SCHEME;
+        }
+    }
+    return rc;
+}
+/*****************************************************************************/
+/*                                 LDAA Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
 /*                               qTesla Mods                                 */
 /*****************************************************************************/
 TPM_RC
@@ -3769,6 +3823,9 @@ TSS_TPMT_ECC_SCHEME_Unmarshalu(TPMT_ECC_SCHEME *target, BYTE **buffer, uint32_t 
     return rc;
 }
 
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 TPM_RC
 TSS_TPMT_DILITHIUM_SCHEME_Unmarshalu(TPMT_DILITHIUM_SCHEME *target, BYTE **buffer, uint32_t *size, BOOL allowNull)
 {
@@ -3782,7 +3839,13 @@ TSS_TPMT_DILITHIUM_SCHEME_Unmarshalu(TPMT_DILITHIUM_SCHEME *target, BYTE **buffe
     }
     return rc;
 }
+/*****************************************************************************/
+/*                             Dilithium Mods                                */
+/*****************************************************************************/
 
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
 TPM_RC
 TSS_TPMT_KYBER_SCHEME_Unmarshalu(TPMT_KYBER_SCHEME *target, BYTE **buffer, uint32_t *size, BOOL allowNull)
 {
@@ -3796,6 +3859,29 @@ TSS_TPMT_KYBER_SCHEME_Unmarshalu(TPMT_KYBER_SCHEME *target, BYTE **buffer, uint3
     }
     return rc;
 }
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                                LDAA Mods                                  */
+/*****************************************************************************/
+TPM_RC
+TSS_TPMT_LDAA_SCHEME_Unmarshalu(TPMT_LDAA_SCHEME *target, BYTE **buffer, uint32_t *size, BOOL allowNull)
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+
+    if (rc == TPM_RC_SUCCESS) {
+	rc = TSS_TPMI_ALG_LDAA_SCHEME_Unmarshalu(&target->scheme, buffer, size, allowNull);
+    }
+    if (rc == TPM_RC_SUCCESS) {
+	rc = TSS_TPMU_ASYM_SCHEME_Unmarshalu(&target->details, buffer, size, target->scheme);
+    }
+    return rc;
+}
+/*****************************************************************************/
+/*                                LDAA Mods                                  */
+/*****************************************************************************/
 
 /* Table 167 - Definition of {ECC} TPMS_ALGORITHM_DETAIL_ECC Structure <OUT> */
 
@@ -4109,6 +4195,9 @@ TSS_TPMI_ALG_PUBLIC_Unmarshalu(TPMI_ALG_PUBLIC *target, BYTE **buffer, uint32_t 
 #ifdef TPM_ALG_DILITHIUM
           case TPM_ALG_DILITHIUM:
 #endif
+#ifdef TPM_ALG_LDAA
+          case TPM_ALG_LDAA:
+#endif
 #ifdef TPM_ALG_KYBER
           case TPM_ALG_KYBER:
 #endif
@@ -4154,6 +4243,11 @@ TSS_TPMU_PUBLIC_ID_Unmarshalu(TPMU_PUBLIC_ID *target, BYTE **buffer, uint32_t *s
 #ifdef TPM_ALG_KYBER
       case TPM_ALG_KYBER:
         rc = TSS_TPM2B_KYBER_PUBLIC_KEY_Unmarshalu(&target->kyber, buffer, size);
+        break;
+#endif
+#ifdef TPM_ALG_LDAA
+      case TPM_ALG_LDAA:
+        rc = TSS_TPM2B_LDAA_PUBLIC_KEY_Unmarshalu(&target->ldaa, buffer, size);
         break;
 #endif
 #ifdef TPM_ALG_NEWHOPE
@@ -4299,6 +4393,29 @@ TSS_TPMS_KYBER_PARMS_Unmarshalu(TPMS_KYBER_PARMS *target, BYTE **buffer, uint32_
 /*****************************************************************************/
 
 /*****************************************************************************/
+/*                                 LDAA Mods                                 */
+/*****************************************************************************/
+TPM_RC
+TSS_TPMS_LDAA_PARMS_Unmarshalu(TPMS_LDAA_PARMS *target, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+
+    if (rc == TPM_RC_SUCCESS) {
+	rc = TSS_TPMT_SYM_DEF_OBJECT_Unmarshalu(&target->symmetric, buffer, size, YES);
+    }
+    if (rc == TPM_RC_SUCCESS) {
+	rc = TSS_TPMT_LDAA_SCHEME_Unmarshalu(&target->scheme, buffer, size, YES);
+    }
+    if (rc == TPM_RC_SUCCESS) {
+	rc = TSS_TPM2B_LDAA_ISSUER_AT_Unmarshalu(&target->issuer_at, buffer, size);
+    }
+    return rc;
+}
+/*****************************************************************************/
+/*                                 LDAA Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
 /*                              NewHope Mods                                 */
 /*****************************************************************************/
 TPM_RC
@@ -4384,6 +4501,11 @@ TSS_TPMU_PUBLIC_PARMS_Unmarshalu(TPMU_PUBLIC_PARMS *target, BYTE **buffer, uint3
 #ifdef TPM_ALG_DILITHIUM
       case TPM_ALG_DILITHIUM:
         rc = TSS_TPMS_DILITHIUM_PARMS_Unmarshalu(&target->dilithiumDetail, buffer, size);
+        break;
+#endif
+#ifdef TPM_ALG_LDAA
+      case TPM_ALG_LDAA:
+        rc = TSS_TPMS_LDAA_PARMS_Unmarshalu(&target->ldaaDetail, buffer, size);
         break;
 #endif
 #ifdef TPM_ALG_KYBER
@@ -5001,6 +5123,144 @@ TSS_TPM2B_QTESLA_SIGNATURE_Unmarshalu(TPM2B_QTESLA_SIGNATURE *target, BYTE **buf
 }
 /*****************************************************************************/
 /*                               qTesla Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                                LDAA Mods                                  */
+/*****************************************************************************/
+TPM_RC
+TSS_TPM2B_LDAA_BASENAME_ISSUER_Unmarshalu(TPM2B_LDAA_BASENAME_ISSUER *target, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_Unmarshalu(&target->b, sizeof(target->t.buffer), buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_TPM2B_LDAA_BASENAME_Unmarshalu(TPM2B_LDAA_BASENAME *target, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_Unmarshalu(&target->b, sizeof(target->t.buffer), buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_TPM2B_LDAA_ISSUER_BNTT_Unmarshalu(TPM2B_LDAA_ISSUER_BNTT *target, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_Unmarshalu(&target->b, sizeof(target->t.buffer), buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_TPM2B_LDAA_ISSUER_ATNTT_Unmarshalu(TPM2B_LDAA_ISSUER_ATNTT *target, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_Unmarshalu(&target->b, sizeof(target->t.buffer), buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_TPM2B_LDAA_ISSUER_AT_Unmarshalu(TPM2B_LDAA_ISSUER_AT *target, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_Unmarshalu(&target->b, sizeof(target->t.buffer), buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_TPM2B_LDAA_NYM_Unmarshalu(TPM2B_LDAA_NYM *target, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_Unmarshalu(&target->b, sizeof(target->t.buffer), buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_TPM2B_LDAA_PUBLIC_KEY_Unmarshalu(TPM2B_LDAA_PUBLIC_KEY *target, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_Unmarshalu(&target->b, sizeof(target->t.buffer), buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_TPM2B_LDAA_COMMIT_Unmarshalu(TPM2B_LDAA_COMMIT *target, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_Unmarshalu(&target->b, sizeof(target->t.buffer), buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_TPM2B_LDAA_PE_Unmarshalu(TPM2B_LDAA_PE *target, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_Unmarshalu(&target->b, sizeof(target->t.buffer), buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_TPM2B_LDAA_PBSN_Unmarshalu(TPM2B_LDAA_PBSN *target, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_Unmarshalu(&target->b, sizeof(target->t.buffer), buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_TPM2B_LDAA_SIGN_STATE_Unmarshalu(TPM2B_LDAA_SIGN_STATE *target, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_Unmarshalu(&target->b, sizeof(target->t.buffer), buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_TPM2B_LDAA_SIGN_GROUP_Unmarshalu(TPM2B_LDAA_SIGN_GROUP *target, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_Unmarshalu(&target->b, sizeof(target->t.buffer), buffer, size);
+	}
+	return rc;
+}
+/*****************************************************************************/
+/*                                LDAA Mods                                  */
 /*****************************************************************************/
 
 /* Deprecated functions that use a sized value for the size parameter.  The recommended functions

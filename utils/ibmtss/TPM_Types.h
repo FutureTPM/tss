@@ -1408,6 +1408,7 @@ typedef TPM2B_DIGEST	TPM2B_AUTH;	/* size limited to the same as the digest struc
 /*                               LDAA Mods                                   */
 /*****************************************************************************/
 #include <ibmtss/ldaa-parms.h>
+#include <ibmtss/ldaa-structs.h>
 #define MAX_LDAA_PUBLIC_KEY_SIZE   (LDAA_PUBLIC_KEY_LENGTH * 4UL)
 #define MAX_LDAA_SECRET_KEY_SIZE   (LDAA_SECRET_KEY_LENGTH * 4UL)
 #define MAX_LDAA_ISSUER_BNTT_SIZE  (LDAA_ISSUER_BNTT2_LENGTH * 4UL) // Largest case
@@ -1455,14 +1456,6 @@ typedef union {
 typedef union {
     struct {
 	UINT32                  size;
-	BYTE                    buffer[1024]; // TODO: Real Value
-    }            t;
-    TPM2B        b;
-} TPM2B_LDAA_SIGNED_MESSAGE;
-
-typedef union {
-    struct {
-	UINT32                  size;
 	BYTE                    buffer[32];
     }            t;
     TPM2B        b;
@@ -1470,6 +1463,49 @@ typedef union {
 
 typedef TPM2B_LDAA_BASENAME_ISSUER TPM2B_LDAA_MESSAGE;
 typedef TPM2B_LDAA_BASENAME_ISSUER TPM2B_LDAA_BASENAME;
+
+typedef struct res_1_t {
+    ldaa_integer_matrix_t phi_x[LDAA_M*LDAA_LOG_BETA];
+    ldaa_integer_matrix_t varphi_e[LDAA_LOG_BETA];
+    ldaa_integer_matrix_t varphi_r_e[LDAA_LOG_BETA];
+    ldaa_integer_matrix_t phi_r[LDAA_M*LDAA_LOG_BETA];
+} LDAA_SIGN_GROUP_1;
+
+typedef struct res_2_t {
+    ldaa_permutation_t    phi[LDAA_LOG_BETA];
+    ldaa_permutation_t    varphi[LDAA_LOG_BETA];
+    ldaa_integer_matrix_t v_e[LDAA_LOG_BETA];
+    ldaa_integer_matrix_t v[LDAA_M*LDAA_LOG_BETA];
+} LDAA_SIGN_GROUP_2;
+
+typedef struct res_3_t {
+    ldaa_permutation_t    phi[LDAA_LOG_BETA];
+    ldaa_permutation_t    varphi[LDAA_LOG_BETA];
+    ldaa_integer_matrix_t r_e[LDAA_LOG_BETA];
+    ldaa_integer_matrix_t r[LDAA_M*LDAA_LOG_BETA];
+} LDAA_SIGN_GROUP_3;
+
+typedef union {
+    LDAA_SIGN_GROUP_1 res_1;
+    LDAA_SIGN_GROUP_2 res_2;
+    LDAA_SIGN_GROUP_3 res_3;
+} TPMU_LDAA_SIGN_GROUP;
+
+typedef union {
+    struct {
+	UINT32                  size;
+	BYTE                    buffer[sizeof(TPMU_LDAA_SIGN_GROUP)];
+    }            t;
+    TPM2B        b;
+} TPM2B_LDAA_SIGN_GROUP;
+
+typedef union {
+    struct {
+	UINT32                  size;
+	BYTE                    buffer[sizeof(ldaa_poly_matrix_R_t)];
+    }            t;
+    TPM2B        b;
+} TPM2B_LDAA_SIGN_STATE;
 /*****************************************************************************/
 /*                               LDAA Mods                                   */
 /*****************************************************************************/
@@ -2522,17 +2558,6 @@ typedef struct {
 /*****************************************************************************/
 
 /*****************************************************************************/
-/*                                LDAA Mods                                  */
-/*****************************************************************************/
-typedef struct {
-    TPMI_ALG_HASH                  hash;
-    TPM2B_LDAA_SIGNED_MESSAGE      sig;
-} TPMS_SIGNATURE_LDAA;
-/*****************************************************************************/
-/*                                LDAA Mods                                  */
-/*****************************************************************************/
-
-/*****************************************************************************/
 /*                               qTesla Mods                                 */
 /*****************************************************************************/
 typedef struct {
@@ -2566,9 +2591,6 @@ typedef TPMS_SIGNATURE_ECC	TPMS_SIGNATURE_ECSCHNORR;
 /* Table 171 - Definition of TPMU_SIGNATURE Union <IN/OUT, S> */
 
 typedef union {
-#ifdef TPM_ALG_LDAA
-    TPMS_SIGNATURE_LDAA      ldaa;          /* TPM_ALG_LDAA */
-#endif
 #ifdef TPM_ALG_DILITHIUM
     TPMS_SIGNATURE_DILITHIUM dilithium;		/* TPM_ALG_DILITHIUM */
 #endif
