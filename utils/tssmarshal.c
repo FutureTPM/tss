@@ -6631,6 +6631,17 @@ TSS_TPM2B_LDAA_BASENAME_ISSUER_Marshalu(const TPM2B_LDAA_BASENAME_ISSUER *source
 }
 
 TPM_RC
+TSS_TPM2B_LDAA_NYM_Marshalu(const TPM2B_LDAA_NYM *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == 0)
+	{
+		rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
 TSS_TPM2B_LDAA_PUBLIC_KEY_Marshalu(const TPM2B_LDAA_PUBLIC_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
 	TPM_RC rc = 0;

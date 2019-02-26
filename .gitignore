@@ -132,3 +132,4 @@ utils/verifysignature
 utils/writeapp
 utils/zgen2phase
 
+utils/ldaa_join

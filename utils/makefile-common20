@@ -117,15 +117,15 @@ ALL += 	activatecredential$(EXE)		\
 	policymaker$(EXE)			\
 	policymakerpcr$(EXE)			\
 	policynv$(EXE)				\
-	policyauthorizenv$(EXE)			\
-	policynvwritten$(EXE)			\
-	policypassword$(EXE)			\
+	policyauthorizenv$(EXE)		\
+	policynvwritten$(EXE)		\
+	policypassword$(EXE)		\
 	policypcr$(EXE)				\
 	policyor$(EXE)				\
 	policyrestart$(EXE)			\
 	policysigned$(EXE)			\
 	policysecret$(EXE)			\
-	policytemplate$(EXE)			\
+	policytemplate$(EXE)		\
 	policyticket$(EXE)			\
 	powerup$(EXE)				\
 	quote$(EXE)				\
@@ -135,16 +135,16 @@ ALL += 	activatecredential$(EXE)		\
 	rewrap$(EXE)				\
 	rsadecrypt$(EXE)			\
 	rsaencrypt$(EXE)			\
-	sequencecomplete$(EXE)			\
-	sequenceupdate$(EXE)			\
-	setprimarypolicy$(EXE) 			\
+	sequencecomplete$(EXE)		\
+	sequenceupdate$(EXE)		\
+	setprimarypolicy$(EXE) 		\
 	shutdown$(EXE) 				\
 	sign$(EXE)				\
-	startauthsession$(EXE)			\
+	startauthsession$(EXE)		\
 	startup$(EXE) 				\
 	stirrandom$(EXE)			\
 	unseal$(EXE)				\
-	verifysignature$(EXE)			\
+	verifysignature$(EXE)		\
 	zgen2phase$(EXE)			\
 						\
 	signapp$(EXE)				\
@@ -156,10 +156,11 @@ ALL += 	activatecredential$(EXE)		\
 	tpmpublic2eccpoint$(EXE)    \
 	kyber_dec$(EXE)				\
 	kyber_enc$(EXE)				\
-	kyber_2phase_kex$(EXE)				\
-	kyber_3phase_kex$(EXE)				\
-	newhope_dec$(EXE)				\
-	newhope_enc$(EXE)				\
+	kyber_2phase_kex$(EXE)		\
+	kyber_3phase_kex$(EXE)		\
+	newhope_dec$(EXE)		    \
+	newhope_enc$(EXE)		    \
+	ldaa_join$(EXE)				\
 
 ALL	+= 					\
 	ntc2getconfig$(EXE)			\

@@ -30,3 +30,15 @@ echo ""
 echo "LDAA Create Key"
 ${PREFIX}create -hp 80000000 -dau -ldaa test_keys/issuer_at.bin -kt f -kt p -opr ldaa_priv.bin -opu ldaa_pub.bin -pwdp sto -pwdk ldaa > run.out
 checkSuccess $?
+
+echo ""
+echo "Starting LDAA Session"
+echo ""
+
+echo "Loading LDAA key"
+${PREFIX}load -hp 80000000 -ipr ldaa_priv.bin -ipu ldaa_pub.bin -pwdp sto > run.out
+checkSuccess $?
+
+echo "Performing Join Command"
+${PREFIX}ldaa_join -hk 80000001 -sid 0 -jsid 1 -bsn ISSUER -onym ldaa_join_token.bin -pwdk ldaa > run.out
+checkSuccess $?

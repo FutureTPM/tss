@@ -566,6 +566,8 @@ extern "C" {
     TSS_LDAA_SignProof_Out_Unmarshalu(LDAA_SignProof_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
 
     TPM_RC
+    TSS_TPM2B_LDAA_NYM_Marshalu(const TPM2B_LDAA_NYM *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
     TSS_TPM2B_LDAA_PUBLIC_KEY_Marshalu(const TPM2B_LDAA_PUBLIC_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
     TSS_TPMS_SIG_SCHEME_LDAA_Marshalu(const TPMS_SIG_SCHEME_LDAA *source, UINT32 *written, BYTE **buffer, uint32_t *size);

@@ -508,6 +508,8 @@ newhope_dec:		ibmtss/tss.h newhope_dec.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) newhope_dec.o $(LNALIBS) -o newhope_dec
 newhope_enc:		ibmtss/tss.h newhope_enc.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) newhope_enc.o $(LNALIBS) -o newhope_enc
+ldaa_join:		ibmtss/tss.h ldaa_join.o $(LIBTSS) $(LIBTSSUTILS)
+			$(CC) $(LNFLAGS) $(LNAFLAGS) ldaa_join.o $(LNALIBS) -o ldaa_join
 
 # for applications, not for TSS library
 

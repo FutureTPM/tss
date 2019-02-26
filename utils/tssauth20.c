@@ -650,6 +650,32 @@ static const MARSHAL_TABLE marshalTable [] = {
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
 
+/*****************************************************************************/
+/*                                 LDAA Mods                                 */
+/*****************************************************************************/
+    {TPM_CC_LDAA_Join, "TPM2_LDAA_Join",
+     (MarshalInFunction_t)TSS_LDAA_Join_In_Marshalu,
+     (UnmarshalOutFunction_t)TSS_LDAA_Join_Out_Unmarshalu,
+     (UnmarshalInFunction_t)LDAA_Join_In_Unmarshal},
+
+    {TPM_CC_LDAA_SignCommit, "TPM2_LDAA_SignCommit",
+     (MarshalInFunction_t)TSS_LDAA_SignCommit_In_Marshalu,
+     (UnmarshalOutFunction_t)TSS_LDAA_SignCommit_Out_Unmarshalu,
+     (UnmarshalInFunction_t)LDAA_SignCommit_In_Unmarshal},
+
+    {TPM_CC_LDAA_CommitTokenLink, "TPM2_LDAA_CommitTokenLink",
+     (MarshalInFunction_t)TSS_LDAA_CommitTokenLink_In_Marshalu,
+     (UnmarshalOutFunction_t)TSS_LDAA_CommitTokenLink_Out_Unmarshalu,
+     (UnmarshalInFunction_t)LDAA_CommitTokenLink_In_Unmarshal},
+
+    {TPM_CC_LDAA_SignProof, "TPM3_LDAA_SignProof",
+     (MarshalInFunction_t)TSS_LDAA_SignProof_In_Marshalu,
+     (UnmarshalOutFunction_t)TSS_LDAA_SignProof_Out_Unmarshalu,
+     (UnmarshalInFunction_t)LDAA_SignProof_In_Unmarshal},
+/*****************************************************************************/
+/*                                 LDAA Mods                                 */
+/*****************************************************************************/
+
 #ifdef TPM_TPM20
     {NTC2_CC_PreConfig,"NTC2_CC_PreConfig",
      (MarshalInFunction_t)TSS_NTC2_PreConfig_In_Marshalu,
