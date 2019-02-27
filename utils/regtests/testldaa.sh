@@ -55,6 +55,10 @@ echo "Process Commit Token Link"
 ${PREFIX}ldaa_committokenlink -hk 80000001 -sid 0 -bsn BASENAME -onym ldaa_commit_token.bin -ope ldaa_pe.bin -opbsn ldaa_pbsn.bin -pwdk ldaa > run.out
 checkSuccess $?
 
+echo "Flushing LDAA key"
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
 # Cleanup
 rm ldaa_pub.bin ldaa_priv.bin
 rm ldaa_join_token.bin

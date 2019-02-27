@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
 */
 
@@ -67,8 +67,8 @@ int main(int argc, char *argv[])
     TPMI_DH_OBJECT		objectHandle = 0;
     TPMI_DH_OBJECT		signHandle = 0;
     TPMI_ALG_HASH		halg = TPM_ALG_SHA256;
-    const char			*keyPassword = NULL; 
-    const char			*objectPassword = NULL; 
+    const char			*keyPassword = NULL;
+    const char			*objectPassword = NULL;
     const char			*signatureFilename = NULL;
     const char			*attestInfoFilename = NULL;
     const char			*qualifyingDataFilename = NULL;
@@ -292,14 +292,14 @@ int main(int argc, char *argv[])
 	in.signHandle = signHandle;
 	if (useRsa) {
 	    /* Table 145 - Definition of TPMT_SIG_SCHEME Structure */
-	    in.inScheme.scheme = TPM_ALG_RSASSA;	
+	    in.inScheme.scheme = TPM_ALG_RSASSA;
 	    /* Table 144 - Definition of TPMU_SIG_SCHEME Union <IN/OUT, S> */
 	    /* Table 142 - Definition of {RSA} Types for RSA Signature Schemes */
 	    /* Table 135 - Definition of TPMS_SCHEME_HASH Structure */
 	    in.inScheme.details.rsassa.hashAlg = halg;
 	}
 	else {	/* ecc */
-	    in.inScheme.scheme = TPM_ALG_ECDSA;	
+	    in.inScheme.scheme = TPM_ALG_ECDSA;
 	    in.inScheme.details.ecdsa.hashAlg = halg;
 	}
     }
@@ -342,8 +342,9 @@ int main(int argc, char *argv[])
 	rc = TSS_TPMS_ATTEST_Unmarshalu(&tpmsAttest, &tmpBuffer, &tmpSize);
 	if (verbose) TSS_TPMS_ATTEST_Print(&tpmsAttest, 0);
     }
-    /* For an attestation command using the ECDAA scheme, both the qualifiedSigner and extraData
-       fields in the attestation block (a TPMS_ATTEST) are set to be the Empty Buffer */
+    /* For an attestation command using the ECDAA scheme, both the
+     * qualifiedSigner and extraData fields in the attestation block
+     * (a TPMS_ATTEST) are set to be the Empty Buffer */
     if ((rc == 0) && (in.inScheme.scheme != ALG_ECDAA_VALUE)) {
 	int match;
 	match = TSS_TPM2B_Compare(&in.qualifyingData.b, &tpmsAttest.extraData.b);
@@ -406,5 +407,5 @@ static void printUsage(void)
     printf("\t01\tcontinue\n");
     printf("\t20\tcommand decrypt\n");
     printf("\t40\tresponse encrypt\n");
-    exit(1);	
+    exit(1);
 }
