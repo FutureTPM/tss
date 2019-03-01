@@ -402,7 +402,7 @@ static void printUsage(void)
 	printf("\t-sid session ID of the LDAA session\n");
 	printf("\t-bsn Basename\n");
 	printf("\t-comm Commit to process [1-3]\n");
-	printf("\t-sign Signature to base the commit on [0-27]\n");
+	printf("\t-sign Signature to base the commit on [0-7]\n");
 	printf("\t-iatntt Issuer's transposed NTT A matrix\n");
 	printf("\t-ibntt Host NTT B matrix\n");
 	printf("\t-ipbsn File of basename polynomial\n");

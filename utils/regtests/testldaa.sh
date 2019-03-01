@@ -26,6 +26,8 @@
 echo ""
 echo "LDAA Tests"
 echo ""
+# These tests fake an LDAA session, all of the data used has been pre-processed
+# to guarantee that the results returned are correct
 
 echo "LDAA Create Key"
 ${PREFIX}create -hp 80000000 -dau -ldaa test_keys/issuer_at.bin -kt f -kt p -opr ldaa_priv.bin -opu ldaa_pub.bin -pwdp sto -pwdk ldaa > run.out
@@ -68,6 +70,27 @@ do
         checkSuccess $?
     done
 done
+
+echo ""
+echo "Start sign proof"
+echo ""
+
+signT_array=(0 0 1 0 1 0 2 1)
+
+for SIGN in $(seq 0 7)
+do
+    echo "Processing sign proof for sign state ${SIGN}"
+    ${PREFIX}ldaa_signproof -v -pwdk ldaa -hk 80000001 -sid 0 -sign "${SIGN}" -signT "${signT_array[${SIGN}]}" -isign1 "test_keys/ldaa_sign_state_RES${signT_array[${SIGN}]}_1_commit_${SIGN}.bin" -isign2 "test_keys/ldaa_sign_state_RES${signT_array[${SIGN}]}_2_commit_${SIGN}.bin" -osign1 "sign_result_1_${SIGN}.bin" -osign2 "sign_result_2_${SIGN}.bin" -ogroup "sign_group_${SIGN}.bin" > run.out
+    checkSuccess $?
+done
+
+#echo "Processing sign proof for sign state 1"
+#${PREFIX}ldaa_signproof -v -pwdk ldaa -hk 80000001 -sid 0 -sign 0 -signT 0 -isign1 test_keys/ldaa_sign_state_RES0_R2_commit_1.bin -isign2 test_keys/ldaa_sign_state_RES0_R3_commit_1.bin -osign1 sign_result_1_1.bin -osign2 sign_result_2_1.bin -ogroup sign_group_1.bin > run.out
+#checkSuccess $?
+#
+#echo "Processing sign proof for sign state 2"
+#${PREFIX}ldaa_signproof -v -pwdk ldaa -hk 80000001 -sid 0 -sign 0 -signT 0 -isign1 test_keys/ldaa_sign_state_RES1_R1_commit_2.bin -isign2 test_keys/ldaa_sign_state_RES1_R3_commit_2.bin -osign1 sign_result_1_2.bin -osign2 sign_result_2_2.bin -ogroup sign_group_2.bin > run.out
+#checkSuccess $?
 
 echo "Flushing LDAA key"
 ${PREFIX}flushcontext -ha 80000001 > run.out

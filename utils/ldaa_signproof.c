@@ -393,7 +393,7 @@ static void printUsage(void)
 	printf("\t[-pwdk password for key (default empty)]\n");
 	printf("\t-sid session ID of the LDAA session\n");
 	printf("\t-signT Sign type to process [0-2]\n");
-	printf("\t-sign Signature to base the commit on [0-27]\n");
+	printf("\t-sign Signature to base the commit on [0-7]\n");
 	printf("\t-isign1 File for the first sign state of the Host\n");
 	printf("\t-isign2 File for the second sign state of the Host\n");
 	printf("\t-osign1 Output file of the addition result of the first host sign state and the TPM\n");
