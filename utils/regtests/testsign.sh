@@ -189,34 +189,6 @@ do
     ${PREFIX}verifysignature -hk 80000001 -halg $HALG -dilithium -if policies/aaa -is sig.bin > run.out
     checkSuccess $?
 
-    #echo "Verify the signature using PEM - $HALG"
-    #${PREFIX}verifysignature -ipem signdilpub.pem -halg $HALG -if policies/aaa -is sig.bin > run.out
-    #checkSuccess $?
-
-    #echo "Read the public part"
-    #${PREFIX}readpublic -ho 80000001 -opem tmppub.pem > run.out
-    #checkSuccess $?
-
-    #echo "Verify the signature using readpublic PEM - $HALG"
-    #${PREFIX}verifysignature -ipem tmppub.pem -halg $HALG -if policies/aaa -is sig.bin > run.out
-    #checkSuccess $?
-
-    #echo "Load the openssl key pair in the NULL hierarchy 80000002 - $HALG"
-    #${PREFIX}loadexternal -halg $HALG -ecc -ider tmpkeypairdil.der > run.out
-    #checkSuccess $?
-
-    #echo "Use the TPM as a crypto coprocessor to sign - $HALG"
-    #${PREFIX}sign -hk 80000002 -halg $HALG -ecc -if policies/aaa -os sig.bin > run.out
-    #checkSuccess $?
-
-    #echo "Verify the signature - $HALG"
-    #${PREFIX}verifysignature -hk 80000002 -halg $HALG -ecc -if policies/aaa -is sig.bin > run.out
-    #checkSuccess $?
-
-    #echo "Flush the openssl signing key"
-    #${PREFIX}flushcontext -ha 80000002 > run.out
-    #checkSuccess $?
-
 done
 
 echo "Flush the Dilithium signing key"
