@@ -179,6 +179,30 @@
 #include "ZGen_2Phase_fp.h"
 #include "NTC_fp.h"
 
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
+#include "Kyber_Enc_fp.h"
+#include "Kyber_Dec_fp.h"
+#include "Kyber_2Phase_KEX_fp.h"
+#include "Kyber_3Phase_KEX_fp.h"
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                                 LDAA Mods                                 */
+/*****************************************************************************/
+#include "LDaa_Join_fp.h"
+#include "LDaa_SignCommit_fp.h"
+#include "LDaa_CommitTokenLink_fp.h"
+#include "LDaa_SignProof_fp.h"
+#include "LDaa_SignProceed_fp.h"
+/*****************************************************************************/
+/*                                 LDAA Mods                                 */
+/*****************************************************************************/
+
+
 typedef union {
     ActivateCredential_In         ActivateCredential;
     CertifyCreation_In            CertifyCreation;
@@ -283,6 +307,19 @@ typedef union {
     Unseal_In                     Unseal;
     VerifySignature_In            VerifySignature;
     ZGen_2Phase_In                ZGen_2Phase;
+    // Kyber Mods
+    Kyber_Encapsulate_In          Kyber_Encapsulate;
+    Kyber_Decapsulate_In          Kyber_Decapsulate;
+    Kyber_2Phase_KEX_In           Kyber_2Phase_KEX;
+    Kyber_3Phase_KEX_In           Kyber_3Phase_KEX;
+    // Kyber Mods
+    // LDAA Mods
+    LDAA_Join_In                  LDAA_Join;
+    LDAA_CommitTokenLink_In       LDAA_CommitTokenLink;
+    LDAA_SignProceed_In           LDAA_SignProceed;
+    LDAA_SignCommit_In            LDAA_SignCommit;
+    LDAA_SignProof_In             LDAA_SignProof;
+    // LDAA Mods
 } COMMAND_PARAMETERS;
 
 typedef union
@@ -339,6 +376,18 @@ typedef union
     Unseal_Out                     Unseal;
     VerifySignature_Out            VerifySignature;
     ZGen_2Phase_Out                ZGen_2Phase;
+    // Kyber Mods
+    Kyber_Encapsulate_Out          Kyber_Encapsulate;
+    Kyber_Decapsulate_Out          Kyber_Decapsulate;
+    Kyber_2Phase_KEX_Out           Kyber_2Phase_KEX;
+    Kyber_3Phase_KEX_Out           Kyber_3Phase_KEX;
+    // Kyber Mods
+    // LDAA Mods
+    LDAA_Join_Out                  LDAA_Join;
+    LDAA_CommitTokenLink_Out       LDAA_CommitTokenLink;
+    LDAA_SignCommit_Out            LDAA_SignCommit;
+    LDAA_SignProof_Out             LDAA_SignProof;
+    // LDAA Mods
 } RESPONSE_PARAMETERS;
 
 #endif

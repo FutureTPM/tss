@@ -570,6 +570,8 @@ extern "C" {
     TSS_LDAA_SignProceed_In_Marshalu(const LDAA_SignProceed_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
 
     TPM_RC
+    TSS_TPM2B_LDAA_COMMIT_Marshalu(const TPM2B_LDAA_COMMIT *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
     TSS_TPM2B_LDAA_NYM_Marshalu(const TPM2B_LDAA_NYM *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
     TSS_TPM2B_LDAA_PUBLIC_KEY_Marshalu(const TPM2B_LDAA_PUBLIC_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size);
@@ -597,6 +599,8 @@ extern "C" {
     TSS_TPM2B_LDAA_PBSN_Marshalu(const TPM2B_LDAA_PBSN *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
     TSS_TPM2B_LDAA_SIGN_STATE_Marshalu(const TPM2B_LDAA_SIGN_STATE *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_LDAA_SIGN_GROUP_Marshalu(const TPM2B_LDAA_SIGN_GROUP *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     /*****************************************************************************/
     /*                                LDAA Mods                                  */
     /*****************************************************************************/

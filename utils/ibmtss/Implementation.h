@@ -111,7 +111,7 @@
 #define MAX_CONTEXT_SIZE		2048
 #else
 //#define MAX_CONTEXT_SIZE		5120
-#define MAX_CONTEXT_SIZE        65536
+#define MAX_CONTEXT_SIZE        48234496
 #endif
 
 #define MAX_DIGEST_BUFFER		2048
@@ -125,7 +125,7 @@
 #endif
 
 // Increase Sizes due to Kyber key sizes
-#define MAX_COMMAND_SIZE		65536	/* maximum size of a command */
+#define MAX_COMMAND_SIZE		67108863	/* maximum size of a command */
 #define MAX_RESPONSE_SIZE		67108863	/* maximum size of a response */
 
 #ifdef TPM_TSS_SO_0

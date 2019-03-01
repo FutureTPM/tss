@@ -75,7 +75,7 @@
 
 static uint32_t TSS_Socket_Open(TSS_CONTEXT *tssContext, short port);
 static uint32_t TSS_Socket_SendCommand(TSS_CONTEXT *tssContext,
-				       const uint8_t *buffer, uint16_t length,
+				       const uint8_t *buffer, uint32_t length,
 				       const char *message);
 static uint32_t TSS_Socket_SendPlatform(TSS_SOCKET_FD sock_fd, uint32_t command, const char *message);
 static uint32_t TSS_Socket_ReceiveCommand(TSS_CONTEXT *tssContext, uint8_t *buffer, uint32_t *length);
@@ -101,7 +101,7 @@ TPM_RC TSS_Socket_TransmitPlatform(TSS_CONTEXT *tssContext,
     int 	rawsingle = FALSE;	/* boolean, true for raw format with an open and close per
 					   command */
     /* open on first transmit */
-    if (tssContext->tssFirstTransmit) {	
+    if (tssContext->tssFirstTransmit) {
 	/* detect errors before starting, get the server packet type, MS sim or raw */
 	if (rc == 0) {
 	    rc = TSS_Socket_GetServerType(tssContext, &mssim, &rawsingle);
@@ -111,7 +111,7 @@ TPM_RC TSS_Socket_TransmitPlatform(TSS_CONTEXT *tssContext,
 	    if (!mssim) {
 		if (tssVerbose) printf("TSS_Socket_TransmitPlatform: server type %s unsupported\n",
 				       tssContext->tssServerType);
-		rc = TSS_RC_INSUPPORTED_INTERFACE;	
+		rc = TSS_RC_INSUPPORTED_INTERFACE;
 	    }
 	}
 	if (rc == 0) {
@@ -149,7 +149,7 @@ TPM_RC TSS_Socket_Transmit(TSS_CONTEXT *tssContext,
 					   close for each command */
 
     /* open on first transmit */
-    if (tssContext->tssFirstTransmit) {	
+    if (tssContext->tssFirstTransmit) {
 	/* detect errors before starting, get the server packet type, MS sim or raw */
 	if (rc == 0) {
 	    rc = TSS_Socket_GetServerType(tssContext, &mssim, &rawsingle);
@@ -214,7 +214,7 @@ static uint32_t TSS_Socket_GetServerType(TSS_CONTEXT *tssContext,
 	else {
 	    if (tssVerbose) printf("TSS_Socket_GetServerType: server type %s unsupported\n",
 				   tssContext->tssServerType);
-	    rc = TSS_RC_INSUPPORTED_INTERFACE;	
+	    rc = TSS_RC_INSUPPORTED_INTERFACE;
 	}
     }
     return rc;
@@ -226,7 +226,7 @@ static uint32_t TSS_Socket_GetServerType(TSS_CONTEXT *tssContext,
 
 static uint32_t TSS_Socket_Open(TSS_CONTEXT *tssContext, short port)
 {
-#ifdef TPM_WINDOWS 
+#ifdef TPM_WINDOWS
     WSADATA 		wsaData;
     int			irc;
 #endif
@@ -246,7 +246,7 @@ static uint32_t TSS_Socket_Open(TSS_CONTEXT *tssContext, short port)
 	if (tssVerbose) printf("TSS_Socket_Open: client socket() error: %u\n", tssContext->sock_fd);
 	return TSS_RC_NO_CONNECTION;
     }
-#endif 
+#endif
 #ifdef TPM_POSIX
     if ((tssContext->sock_fd = socket(AF_INET,SOCK_STREAM, 0)) < 0) {
 	if (tssVerbose) printf("TSS_Socket_Open: client socket error: %d %s\n",
@@ -309,14 +309,14 @@ static uint32_t TSS_Socket_Open(TSS_CONTEXT *tssContext, short port)
 */
 
 static uint32_t TSS_Socket_SendCommand(TSS_CONTEXT *tssContext,
-				       const uint8_t *buffer, uint16_t length,
+				       const uint8_t *buffer, uint32_t length,
 				       const char *message)
 {
     uint32_t 	rc = 0;
     int 	mssim;	/* boolean, true for MS simulator packet format, false for raw packet
 			   format */
     int 	rawsingle;
-    
+
     if (message != NULL) {
 	if (tssVverbose) printf("TSS_Socket_SendCommand: %s\n", message);
     }
@@ -418,7 +418,7 @@ static uint32_t TSS_Socket_SendBytes(TSS_SOCKET_FD sock_fd, const uint8_t *buffe
 
    If the receive succeeds, returns TPM packet error code.
 
-   Validates that the packet length and the packet responseSize match 
+   Validates that the packet length and the packet responseSize match
 */
 
 static uint32_t TSS_Socket_ReceiveCommand(TSS_CONTEXT *tssContext,
@@ -433,7 +433,7 @@ static uint32_t TSS_Socket_ReceiveCommand(TSS_CONTEXT *tssContext,
     int 	mssim;		/* boolean, true for MS simulator packet format, false for raw
 				   packet format */
     int		rawsingle;
-    
+
     /* get the server packet type, MS sim or raw */
     if (rc == 0) {
 	rc = TSS_Socket_GetServerType(tssContext, &mssim, &rawsingle);
@@ -453,7 +453,7 @@ static uint32_t TSS_Socket_ReceiveCommand(TSS_CONTEXT *tssContext,
     if (rc == 0) {
 	/* skip over tag to responseSize */
 	bufferPtr += sizeof(TPM_ST);
-	
+
 	size = sizeof(uint32_t);		/* dummy for call */
 	rc = TSS_UINT32_Unmarshalu(&responseSize, &bufferPtr, &size);
 	*length = responseSize;			/* returned length */
@@ -519,7 +519,7 @@ static uint32_t TSS_Socket_ReceivePlatform(TSS_SOCKET_FD sock_fd)
 {
     uint32_t 	rc = 0;
     TPM_RC 	acknowledgement;
-    
+
     /* read the MS sim acknowledgement */
     if (rc == 0) {
 	rc = TSS_Socket_ReceiveBytes(sock_fd, (uint8_t *)&acknowledgement, sizeof(uint32_t));
@@ -532,14 +532,14 @@ static uint32_t TSS_Socket_ReceivePlatform(TSS_SOCKET_FD sock_fd)
 }
 
 /* TSS_Socket_ReceiveBytes() is the low level receive function that reads the buffer over the
-   socket.  'buffer' must be atleast 'nbytes'. 
+   socket.  'buffer' must be atleast 'nbytes'.
 
    It handles partial reads by looping.
 
 */
 
 static uint32_t TSS_Socket_ReceiveBytes(TSS_SOCKET_FD sock_fd,
-					uint8_t *buffer,  
+					uint8_t *buffer,
 					uint32_t nbytes)
 {
     int nread = 0;
@@ -586,7 +586,7 @@ TPM_RC TSS_Socket_Close(TSS_CONTEXT *tssContext)
     int		rawsingle = TRUE;	/* boolean, true for raw format with an open and close per
 					   command.  Initialized to suppress false gcc -O3
 					   warning. */
-    
+
     if (tssVverbose) printf("TSS_Socket_Close: Closing %s-%s\n",
 			    tssContext->tssServerName, tssContext->tssServerType);
     /* get the server packet type, MS sim or raw */

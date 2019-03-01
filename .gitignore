@@ -133,4 +133,7 @@ utils/writeapp
 utils/zgen2phase
 
 utils/ldaa_join
-ldaa_committokenlink
+utils/ldaa_committokenlink
+utils/ldaa_signcommit
+utils/ldaa_signproof
+utils/ldaa_signproceed

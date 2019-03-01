@@ -163,6 +163,8 @@ ALL += 	activatecredential$(EXE)		\
 	ldaa_join$(EXE)				\
 	ldaa_committokenlink$(EXE)	\
 	ldaa_signproceed$(EXE)   	\
+	ldaa_signcommit$(EXE)   	\
+	ldaa_signproof$(EXE)   	\
 
 ALL	+= 					\
 	ntc2getconfig$(EXE)			\

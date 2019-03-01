@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
 */
 
@@ -60,8 +60,8 @@ int main(int argc, char *argv[])
     TPM_RC			rc = 0;
     int				i;    /* argc iterator */
     TSS_CONTEXT			*tssContext = NULL;
-    ContextSave_In 		in;
-    ContextSave_Out 		out;
+    static ContextSave_In 		in;
+    static ContextSave_Out 		out;
     TPMI_DH_CONTEXT		saveHandle = 0;
     const char			*contextFilename = NULL;
 
@@ -158,5 +158,5 @@ static void printUsage(void)
     printf("\n");
     printf("\t-ha\thandle\n");
     printf("\t[-of\tcontext file name (default do not save)]\n");
-    exit(1);	
+    exit(1);
 }

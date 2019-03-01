@@ -812,7 +812,7 @@ TPM_RC TSS_Marshal(TSS_AUTH_CONTEXT *tssAuthContext,
     }
     /* unmarshal to validate the input parameters */
     if ((rc == 0) && (tssAuthContext->unmarshalInFunction != NULL)) {
-	COMMAND_PARAMETERS target;
+	static COMMAND_PARAMETERS target;
 	TPM_HANDLE 	handles[MAX_HANDLE_NUM];
 	size = sizeof(tssAuthContext->commandBuffer) -
 	       (tssAuthContext->commandHandleCount * sizeof(TPM_HANDLE));

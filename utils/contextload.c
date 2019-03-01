@@ -60,8 +60,8 @@ int main(int argc, char *argv[])
     TPM_RC			rc = 0;
     int				i;    /* argc iterator */
     TSS_CONTEXT			*tssContext = NULL;
-    ContextLoad_In 		in;
-    ContextLoad_Out		out;
+    static ContextLoad_In 		in;
+    static ContextLoad_Out		out;
     const char			*contextFilename = NULL;
 
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
