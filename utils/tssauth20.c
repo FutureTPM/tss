@@ -658,10 +658,10 @@ static const MARSHAL_TABLE marshalTable [] = {
      (UnmarshalOutFunction_t)TSS_LDAA_Join_Out_Unmarshalu,
      (UnmarshalInFunction_t)LDAA_Join_In_Unmarshal},
 
-    {TPM_CC_LDAA_SignCommit, "TPM2_LDAA_SignCommit",
-     (MarshalInFunction_t)TSS_LDAA_SignCommit_In_Marshalu,
-     (UnmarshalOutFunction_t)TSS_LDAA_SignCommit_Out_Unmarshalu,
-     (UnmarshalInFunction_t)LDAA_SignCommit_In_Unmarshal},
+    {TPM_CC_LDAA_SignCommit1, "TPM2_LDAA_SignCommit1",
+     (MarshalInFunction_t)TSS_LDAA_SignCommit1_In_Marshalu,
+     (UnmarshalOutFunction_t)TSS_LDAA_SignCommit1_Out_Unmarshalu,
+     (UnmarshalInFunction_t)LDAA_SignCommit1_In_Unmarshal},
 
     {TPM_CC_LDAA_CommitTokenLink, "TPM2_LDAA_CommitTokenLink",
      (MarshalInFunction_t)TSS_LDAA_CommitTokenLink_In_Marshalu,

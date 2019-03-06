@@ -220,7 +220,7 @@ int main(int argc, char *argv[])
 	if (rc == 0) {
 		in.key_handle = keyHandle;
         in.sid = sid;
-        memmove(&in.bsn, &bsn, bsn_len);
+        memmove(in.bsn.t.buffer, bsn, bsn_len);
         in.bsn.t.size = bsn_len;
 	}
 

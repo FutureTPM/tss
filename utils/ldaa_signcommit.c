@@ -34,15 +34,15 @@
 
 static void printUsage(void);
 
-int verbose = TRUE;
+int verbose = FALSE;
 
 int main(int argc, char *argv[])
 {
 	TPM_RC 			rc = 0;
 	int 			i;    /* argc iterator */
 	TSS_CONTEXT 		*tssContext = NULL;
-	static LDAA_SignCommit_In    in;
-	static LDAA_SignCommit_Out   out;
+	static LDAA_SignCommit1_In    in;
+	static LDAA_SignCommit1_Out   out;
 	TPMI_DH_OBJECT      	keyHandle = 0;
 	const char          	*keyPassword = NULL;
 	const char          	*issuerAtNTTFilename = NULL;
@@ -53,7 +53,6 @@ int main(int argc, char *argv[])
     const char              *bsn = NULL;
     unsigned int            bsn_len = 0;
     unsigned char           sid;
-    unsigned char           commit_sel = 255;
     unsigned char           sign_state_sel = 255;
 	TPMI_SH_AUTH_SESSION        sessionHandle0 = TPM_RS_PW;
 	unsigned int                sessionAttributes0 = 0;
@@ -85,16 +84,6 @@ int main(int argc, char *argv[])
 			}
 			else {
 				printf("-sid option needs a value\n");
-				printUsage();
-			}
-		}
-		else if (strcmp(argv[i], "-comm") == 0) {
-			i++;
-			if (i < argc) {
-				sscanf(argv[i], "%hhd", &commit_sel);
-			}
-			else {
-				printf("-comm option needs a value\n");
 				printUsage();
 			}
 		}
@@ -261,10 +250,6 @@ int main(int argc, char *argv[])
 		printf("Missing handle parameter -hk\n");
 		printUsage();
 	}
-	if (commit_sel == 255) {
-		printf("Missing commit sel parameter -comm\n");
-		printUsage();
-	}
 	if (sign_state_sel == 255) {
 		printf("Missing sign state sel parameter -sign\n");
 		printUsage();
@@ -289,15 +274,11 @@ int main(int argc, char *argv[])
 		printf("Missing host NTT B matrix parameter -ibntt\n");
 		printUsage();
     }
-    printf("peFilename = %s\npbsnFilename = %s\nissuerAtNTTFilename = %s\nhostBNTTFilename = %s\n", peFilename, pbsnFilename, issuerAtNTTFilename, hostBNTTFilename);
-    printf("commitFilename = %s\n", commitFilename);
-    printf("SID = %hhd\ncommit sel = %hhd\nsign state sel = %hhd\n", sid, commit_sel, sign_state_sel);
 	if (rc == 0) {
 		in.key_handle = keyHandle;
         in.sid = sid;
-        in.commit_sel = commit_sel;
         in.sign_state_sel = sign_state_sel;
-        memmove(&in.bsn, &bsn, bsn_len);
+        memmove(in.bsn.t.buffer, bsn, bsn_len);
         in.bsn.t.size = bsn_len;
 	}
 
@@ -347,7 +328,7 @@ int main(int argc, char *argv[])
 			(RESPONSE_PARAMETERS *)&out,
 			(COMMAND_PARAMETERS *)&in,
 			NULL,
-			TPM_CC_LDAA_SignCommit,
+			TPM_CC_LDAA_SignCommit1,
 			sessionHandle0, keyPassword, sessionAttributes0,
 			sessionHandle1, NULL, sessionAttributes1,
 			sessionHandle2, NULL, sessionAttributes2,

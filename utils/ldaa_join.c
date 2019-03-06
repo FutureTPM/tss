@@ -209,7 +209,7 @@ int main(int argc, char *argv[])
 		in.key_handle = keyHandle;
         in.sid = sid;
         in.jsid = jsid;
-        memmove(&in.bsn_I, &bsn_I, bsn_I_len);
+        memmove(in.bsn_I.t.buffer, bsn_I, bsn_I_len);
         in.bsn_I.t.size = bsn_I_len;
         in.nonce.t.size = 0;
 	}

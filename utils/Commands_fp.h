@@ -192,7 +192,7 @@
 /*                                 LDAA Mods                                 */
 /*****************************************************************************/
 #include <ibmtss/LDaa_Join_fp.h>
-#include <ibmtss/LDaa_SignCommit_fp.h>
+#include <ibmtss/LDaa_SignCommit1_fp.h>
 #include <ibmtss/LDaa_CommitTokenLink_fp.h>
 #include <ibmtss/LDaa_SignProof_fp.h>
 #include <ibmtss/LDaa_SignProceed_fp.h>
@@ -559,7 +559,7 @@ NEWHOPE_Enc_In_Unmarshal(NEWHOPE_Enc_In *target, BYTE **buffer, uint32_t *size, 
 TPM_RC
 LDAA_Join_In_Unmarshal(LDAA_Join_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 TPM_RC
-LDAA_SignCommit_In_Unmarshal(LDAA_SignCommit_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
+LDAA_SignCommit1_In_Unmarshal(LDAA_SignCommit1_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 TPM_RC
 LDAA_CommitTokenLink_In_Unmarshal(LDAA_CommitTokenLink_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 TPM_RC

@@ -397,7 +397,7 @@
 /*                                LDAA Mods                                  */
 /*****************************************************************************/
 #define CC_LDAA_Join                      (CC_YES*ALG_LDAA)
-#define CC_LDAA_SignCommit                (CC_YES*ALG_LDAA)
+#define CC_LDAA_SignCommit1               (CC_YES*ALG_LDAA)
 #define CC_LDAA_CommitTokenLink           (CC_YES*ALG_LDAA)
 #define CC_LDAA_SignProof                 (CC_YES*ALG_LDAA)
 #define CC_LDAA_SignProceed               (CC_YES*ALG_LDAA)
@@ -1438,11 +1438,11 @@ typedef  UINT32             TPM_CC;
 #if CC_LDAA_Join == YES
 #define TPM_CC_LDAA_Join                      (TPM_CC)(0x0000019E)
 #endif
-#ifndef CC_LDAA_SignCommit
-#   define CC_LDAA_SignCommit NO
+#ifndef CC_LDAA_SignCommit1
+#   define CC_LDAA_SignCommit1 NO
 #endif
-#if CC_LDAA_SignCommit == YES
-#define TPM_CC_LDAA_SignCommit                (TPM_CC)(0x0000019F)
+#if CC_LDAA_SignCommit1 == YES
+#define TPM_CC_LDAA_SignCommit1               (TPM_CC)(0x0000019F)
 #endif
 #ifndef CC_LDAA_CommitTokenLink
 #   define CC_LDAA_CommitTokenLink NO
@@ -1629,7 +1629,7 @@ typedef  UINT32             TPM_CC;
 					  + (ADD_FILL || CC_KYBER_2Phase_KEX)           /* 0x0000019C */ \
 					  + (ADD_FILL || CC_KYBER_3Phase_KEX)           /* 0x0000019D */ \
 					  + (ADD_FILL || CC_LDAA_Join)                  /* 0x0000019E */ \
-					  + (ADD_FILL || CC_LDAA_SignCommit)            /* 0x0000019F */ \
+					  + (ADD_FILL || CC_LDAA_SignCommit1)           /* 0x0000019F */ \
 					  + (ADD_FILL || CC_LDAA_CommitTokenLink)       /* 0x000001A0 */ \
 					  + (ADD_FILL || CC_LDAA_SignProof)             /* 0x000001A1 */ \
 					  )

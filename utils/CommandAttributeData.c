@@ -504,8 +504,8 @@ const TPMA_CC_TSS    s_ccAttr [] = {
     {{0x019E, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_LDAA_Join
 #endif
 
-#if (PAD_LIST || CC_LDAA_SignCommit)
-    {{0x019F, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_LDAA_SignCommit
+#if (PAD_LIST || CC_LDAA_SignCommit1)
+    {{0x019F, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_LDAA_SignCommit1
 #endif
 
 #if (PAD_LIST  || CC_LDAA_CommitTokenLink)
@@ -1038,8 +1038,8 @@ const COMMAND_ATTRIBUTES    s_commandAttributes [] = {
     (COMMAND_ATTRIBUTES)(CC_LDAA_Join                  *  // 0x019E
 			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
 #endif
-#if (PAD_LIST || CC_LDAA_SignCommit)
-    (COMMAND_ATTRIBUTES)(CC_LDAA_SignCommit            *  // 0x019F
+#if (PAD_LIST || CC_LDAA_SignCommit1)
+    (COMMAND_ATTRIBUTES)(CC_LDAA_SignCommit1           *  // 0x019F
 			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
 #endif
 #if (PAD_LIST  || CC_LDAA_CommitTokenLink)

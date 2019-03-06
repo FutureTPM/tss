@@ -66,10 +66,11 @@ do
     for COMM in "1" "2" "3"
     do
         echo "Processing commit ${COMM} for sign state ${SIGN}"
-        ${PREFIX}ldaa_signcommit -v -hk 80000001 -sid 0 -bsn basename -comm "${COMM}" -sign "${SIGN}" -iatntt test_keys/issuer_at_ntt_v2.bin -ibntt "test_keys/host_b_ntt${COMM}_v2.bin" -ipe ldaa_pe.bin -ipbsn ldaa_pbsn.bin -ocomm "ldaa_commit_sign_${SIGN}_commit_${COMM}.bin" -pwdk ldaa > run.out
+        ${PREFIX}ldaa_signcommit -hk 80000001 -sid 0 -bsn basename -comm "${COMM}" -sign "${SIGN}" -iatntt test_keys/issuer_at_ntt_v2.bin -ibntt "test_keys/host_b_ntt${COMM}_v2.bin" -ipe ldaa_pe.bin -ipbsn ldaa_pbsn.bin -ocomm "ldaa_commit_sign_${SIGN}_commit_${COMM}.bin" -pwdk ldaa > run.out
         checkSuccess $?
     done
 done
+exit
 
 echo ""
 echo "Start sign proof"
@@ -80,17 +81,9 @@ signT_array=(0 0 1 0 1 0 2 1)
 for SIGN in $(seq 0 7)
 do
     echo "Processing sign proof for sign state ${SIGN}"
-    ${PREFIX}ldaa_signproof -v -pwdk ldaa -hk 80000001 -sid 0 -sign "${SIGN}" -signT "${signT_array[${SIGN}]}" -isign1 "test_keys/ldaa_sign_state_RES${signT_array[${SIGN}]}_1_commit_${SIGN}.bin" -isign2 "test_keys/ldaa_sign_state_RES${signT_array[${SIGN}]}_2_commit_${SIGN}.bin" -osign1 "sign_result_1_${SIGN}.bin" -osign2 "sign_result_2_${SIGN}.bin" -ogroup "sign_group_${SIGN}.bin" > run.out
+    ${PREFIX}ldaa_signproof -pwdk ldaa -hk 80000001 -sid 0 -sign "${SIGN}" -signT "${signT_array[${SIGN}]}" -isign1 "test_keys/ldaa_sign_state_RES${signT_array[${SIGN}]}_1_commit_${SIGN}.bin" -isign2 "test_keys/ldaa_sign_state_RES${signT_array[${SIGN}]}_2_commit_${SIGN}.bin" -osign1 "sign_result_1_${SIGN}.bin" -osign2 "sign_result_2_${SIGN}.bin" -ogroup "sign_group_${SIGN}.bin" > run.out
     checkSuccess $?
 done
-
-#echo "Processing sign proof for sign state 1"
-#${PREFIX}ldaa_signproof -v -pwdk ldaa -hk 80000001 -sid 0 -sign 0 -signT 0 -isign1 test_keys/ldaa_sign_state_RES0_R2_commit_1.bin -isign2 test_keys/ldaa_sign_state_RES0_R3_commit_1.bin -osign1 sign_result_1_1.bin -osign2 sign_result_2_1.bin -ogroup sign_group_1.bin > run.out
-#checkSuccess $?
-#
-#echo "Processing sign proof for sign state 2"
-#${PREFIX}ldaa_signproof -v -pwdk ldaa -hk 80000001 -sid 0 -sign 0 -signT 0 -isign1 test_keys/ldaa_sign_state_RES1_R1_commit_2.bin -isign2 test_keys/ldaa_sign_state_RES1_R3_commit_2.bin -osign1 sign_result_1_2.bin -osign2 sign_result_2_2.bin -ogroup sign_group_2.bin > run.out
-#checkSuccess $?
 
 echo "Flushing LDAA key"
 ${PREFIX}flushcontext -ha 80000001 > run.out

@@ -8787,7 +8787,7 @@ TSS_LDAA_Join_Out_Unmarshalu(LDAA_Join_Out *target, TPM_ST tag, BYTE **buffer, u
 }
 
 TPM_RC
-TSS_LDAA_SignCommit_In_Marshalu(const LDAA_SignCommit_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+TSS_LDAA_SignCommit1_In_Marshalu(const LDAA_SignCommit1_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
 	TPM_RC rc = 0;
 	if (rc == TPM_RC_SUCCESS) {
@@ -8809,9 +8809,6 @@ TSS_LDAA_SignCommit_In_Marshalu(const LDAA_SignCommit_In *source, UINT32 *writte
 		rc = TSS_TPM2B_LDAA_ISSUER_BNTT_Marshalu(&source->issuer_bntt, written, buffer, size);
 	}
 	if (rc == TPM_RC_SUCCESS) {
-		rc = TSS_UINT8_Marshalu(&source->commit_sel, written, buffer, size);
-	}
-	if (rc == TPM_RC_SUCCESS) {
 		rc = TSS_UINT8_Marshalu(&source->sign_state_sel, written, buffer, size);
 	}
 	if (rc == TPM_RC_SUCCESS) {
@@ -8824,7 +8821,7 @@ TSS_LDAA_SignCommit_In_Marshalu(const LDAA_SignCommit_In *source, UINT32 *writte
 }
 
 TPM_RC
-TSS_LDAA_SignCommit_Out_Unmarshalu(LDAA_SignCommit_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
+TSS_LDAA_SignCommit1_Out_Unmarshalu(LDAA_SignCommit1_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
 {
 	TPM_RC rc = 0;
 	UINT32 parameterSize = 0;
