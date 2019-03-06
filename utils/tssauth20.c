@@ -677,6 +677,16 @@ static const MARSHAL_TABLE marshalTable [] = {
      (MarshalInFunction_t)TSS_LDAA_SignProceed_In_Marshalu,
      NULL,
      (UnmarshalInFunction_t)LDAA_SignProceed_In_Unmarshal},
+
+    {TPM_CC_LDAA_SignCommit2, "TPM2_LDAA_SignCommit2",
+     (MarshalInFunction_t)TSS_LDAA_SignCommit2_In_Marshalu,
+     (UnmarshalOutFunction_t)TSS_LDAA_SignCommit2_Out_Unmarshalu,
+     (UnmarshalInFunction_t)LDAA_SignCommit2_In_Unmarshal},
+
+    {TPM_CC_LDAA_SignCommit3, "TPM2_LDAA_SignCommit3",
+     (MarshalInFunction_t)TSS_LDAA_SignCommit3_In_Marshalu,
+     (UnmarshalOutFunction_t)TSS_LDAA_SignCommit3_Out_Unmarshalu,
+     (UnmarshalInFunction_t)LDAA_SignCommit3_In_Unmarshal},
 /*****************************************************************************/
 /*                                 LDAA Mods                                 */
 /*****************************************************************************/

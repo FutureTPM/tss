@@ -8843,6 +8843,112 @@ TSS_LDAA_SignCommit1_Out_Unmarshalu(LDAA_SignCommit1_Out *target, TPM_ST tag, BY
 }
 
 TPM_RC
+TSS_LDAA_SignCommit2_In_Marshalu(const LDAA_SignCommit2_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPMI_DH_OBJECT_Marshalu(&source->key_handle, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Marshalu(&source->sid, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Marshalu(&source->ssid, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_BASENAME_Marshalu(&source->bsn, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_ISSUER_BNTT_Marshalu(&source->issuer_bntt, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Marshalu(&source->sign_state_sel, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_PE_Marshalu(&source->pe, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_PBSN_Marshalu(&source->pbsn, written, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_LDAA_SignCommit2_Out_Unmarshalu(LDAA_SignCommit2_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	UINT32 parameterSize = 0;
+	if (rc == TPM_RC_SUCCESS) {
+		if (tag == TPM_ST_SESSIONS) {
+			rc = TSS_UINT32_Unmarshalu(&parameterSize, buffer, size);
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Unmarshalu(&target->sid, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Unmarshalu(&target->ssid, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_COMMIT_Unmarshalu(&target->commit, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_LDAA_SignCommit3_In_Marshalu(const LDAA_SignCommit3_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPMI_DH_OBJECT_Marshalu(&source->key_handle, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Marshalu(&source->sid, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Marshalu(&source->ssid, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_BASENAME_Marshalu(&source->bsn, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_ISSUER_BNTT_Marshalu(&source->issuer_bntt, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Marshalu(&source->sign_state_sel, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_PE_Marshalu(&source->pe, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_PBSN_Marshalu(&source->pbsn, written, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
+TSS_LDAA_SignCommit3_Out_Unmarshalu(LDAA_SignCommit3_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
+{
+	TPM_RC rc = 0;
+	UINT32 parameterSize = 0;
+	if (rc == TPM_RC_SUCCESS) {
+		if (tag == TPM_ST_SESSIONS) {
+			rc = TSS_UINT32_Unmarshalu(&parameterSize, buffer, size);
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Unmarshalu(&target->sid, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Unmarshalu(&target->ssid, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_COMMIT_Unmarshalu(&target->commit, buffer, size);
+	}
+	return rc;
+}
+
+TPM_RC
 TSS_LDAA_CommitTokenLink_In_Marshalu(const LDAA_CommitTokenLink_In *source, UINT32 *written, BYTE **buffer, uint32_t *size)
 {
 	TPM_RC rc = 0;

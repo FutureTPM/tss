@@ -514,8 +514,12 @@ ldaa_committokenlink:		ibmtss/tss.h ldaa_committokenlink.o $(LIBTSS) $(LIBTSSUTI
 			$(CC) $(LNFLAGS) $(LNAFLAGS) ldaa_committokenlink.o $(LNALIBS) -o ldaa_committokenlink
 ldaa_signproceed:		ibmtss/tss.h ldaa_signproceed.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) ldaa_signproceed.o $(LNALIBS) -o ldaa_signproceed
-ldaa_signcommit:		ibmtss/tss.h ldaa_signcommit.o $(LIBTSS) $(LIBTSSUTILS)
-			$(CC) $(LNFLAGS) $(LNAFLAGS) ldaa_signcommit.o $(LNALIBS) -o ldaa_signcommit
+ldaa_signcommit1:		ibmtss/tss.h ldaa_signcommit1.o $(LIBTSS) $(LIBTSSUTILS)
+			$(CC) $(LNFLAGS) $(LNAFLAGS) ldaa_signcommit1.o $(LNALIBS) -o ldaa_signcommit1
+ldaa_signcommit2:		ibmtss/tss.h ldaa_signcommit2.o $(LIBTSS) $(LIBTSSUTILS)
+			$(CC) $(LNFLAGS) $(LNAFLAGS) ldaa_signcommit2.o $(LNALIBS) -o ldaa_signcommit2
+ldaa_signcommit3:		ibmtss/tss.h ldaa_signcommit3.o $(LIBTSS) $(LIBTSSUTILS)
+			$(CC) $(LNFLAGS) $(LNAFLAGS) ldaa_signcommit3.o $(LNALIBS) -o ldaa_signcommit3
 ldaa_signproof:		ibmtss/tss.h ldaa_signproof.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) ldaa_signproof.o $(LNALIBS) -o ldaa_signproof
 

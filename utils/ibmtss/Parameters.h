@@ -195,6 +195,8 @@
 /*****************************************************************************/
 #include "LDaa_Join_fp.h"
 #include "LDaa_SignCommit1_fp.h"
+#include "LDaa_SignCommit2_fp.h"
+#include "LDaa_SignCommit3_fp.h"
 #include "LDaa_CommitTokenLink_fp.h"
 #include "LDaa_SignProof_fp.h"
 #include "LDaa_SignProceed_fp.h"
@@ -318,6 +320,8 @@ typedef union {
     LDAA_CommitTokenLink_In       LDAA_CommitTokenLink;
     LDAA_SignProceed_In           LDAA_SignProceed;
     LDAA_SignCommit1_In           LDAA_SignCommit1;
+    LDAA_SignCommit2_In           LDAA_SignCommit2;
+    LDAA_SignCommit3_In           LDAA_SignCommit3;
     LDAA_SignProof_In             LDAA_SignProof;
     // LDAA Mods
 } COMMAND_PARAMETERS;
@@ -386,6 +390,8 @@ typedef union
     LDAA_Join_Out                  LDAA_Join;
     LDAA_CommitTokenLink_Out       LDAA_CommitTokenLink;
     LDAA_SignCommit1_Out           LDAA_SignCommit1;
+    LDAA_SignCommit2_Out           LDAA_SignCommit3;
+    LDAA_SignCommit3_Out           LDAA_SignCommit2;
     LDAA_SignProof_Out             LDAA_SignProof;
     // LDAA Mods
 } RESPONSE_PARAMETERS;

@@ -41,11 +41,10 @@ int main(int argc, char *argv[])
 	TPM_RC 			rc = 0;
 	int 			i;    /* argc iterator */
 	TSS_CONTEXT 		*tssContext = NULL;
-	static LDAA_SignCommit1_In    in;
-	static LDAA_SignCommit1_Out   out;
+	static LDAA_SignCommit3_In    in;
+	static LDAA_SignCommit3_Out   out;
 	TPMI_DH_OBJECT      	keyHandle = 0;
 	const char          	*keyPassword = NULL;
-	const char          	*issuerAtNTTFilename = NULL;
 	const char          	*hostBNTTFilename = NULL;
 	const char          	*commitFilename = NULL;
 	const char          	*peFilename = NULL;
@@ -135,16 +134,6 @@ int main(int argc, char *argv[])
 			}
 			else {
 				printf("-ipbsn option needs a value\n");
-				printUsage();
-			}
-		}
-		else if (strcmp(argv[i], "-iatntt") == 0) {
-			i++;
-			if (i < argc) {
-                issuerAtNTTFilename = argv[i];
-			}
-			else {
-				printf("-iatntt option needs a value\n");
 				printUsage();
 			}
 		}
@@ -266,10 +255,6 @@ int main(int argc, char *argv[])
 		printf("Missing basename polynomial parameter -ipbsn\n");
 		printUsage();
     }
-    if (issuerAtNTTFilename == NULL) {
-		printf("Missing issuer NTT A matrix parameter -iatntt\n");
-		printUsage();
-    }
     if (hostBNTTFilename == NULL) {
 		printf("Missing host NTT B matrix parameter -ibntt\n");
 		printUsage();
@@ -300,15 +285,6 @@ int main(int argc, char *argv[])
         in.pbsn.t.size = 0;
     }
 
-	if ((rc == 0) && (issuerAtNTTFilename != NULL)) {
-		rc = TSS_File_Read2B(&in.issuer_at_ntt.b,
-			sizeof(in.issuer_at_ntt.t.buffer),
-			issuerAtNTTFilename);
-        printf("issuerAtNTT size = %d\n", in.issuer_at_ntt.t.size);
-	} else {
-        in.issuer_at_ntt.t.size = 0;
-    }
-
 	if ((rc == 0) && (hostBNTTFilename != NULL)) {
 		rc = TSS_File_Read2B(&in.issuer_bntt.b,
 			sizeof(in.issuer_bntt.t.buffer),
@@ -328,7 +304,7 @@ int main(int argc, char *argv[])
 			(RESPONSE_PARAMETERS *)&out,
 			(COMMAND_PARAMETERS *)&in,
 			NULL,
-			TPM_CC_LDAA_SignCommit1,
+			TPM_CC_LDAA_SignCommit3,
 			sessionHandle0, keyPassword, sessionAttributes0,
 			sessionHandle1, NULL, sessionAttributes1,
 			sessionHandle2, NULL, sessionAttributes2,
@@ -356,13 +332,13 @@ int main(int argc, char *argv[])
 				printf("%02X", out.commit.b.buffer[i]);
 			printf("\n");
 		}
-		if (verbose) printf("LDAA Sign Commit: success\n");
+		if (verbose) printf("LDAA Sign Commit 3: success\n");
 	}
 	else {
 		const char *msg;
 		const char *submsg;
 		const char *num;
-		printf("LDAA Sign Commit: failed, rc %08x\n", rc);
+		printf("LDAA Sign Commit 3: failed, rc %08x\n", rc);
 		TSS_ResponseCode_toString(&msg, &submsg, &num, rc);
 		printf("%s%s%s\n", msg, submsg, num);
 		rc = EXIT_FAILURE;
@@ -374,9 +350,9 @@ int main(int argc, char *argv[])
 static void printUsage(void)
 {
 	printf("\n");
-	printf("LDAA Sign Commit\n");
+	printf("LDAA Sign Commit 3\n");
 	printf("\n");
-	printf("Runs TPM2_LDAA_SignCommit\n");
+	printf("Runs TPM2_LDAA_SignCommit3\n");
 	printf("\n");
 	printf("\t-hk unrestricted decryption key handle\n");
 	printf("\t[-pwdk password for key (default empty)]\n");
@@ -384,7 +360,6 @@ static void printUsage(void)
 	printf("\t-bsn Basename\n");
 	printf("\t-comm Commit to process [1-3]\n");
 	printf("\t-sign Signature to base the commit on [0-7]\n");
-	printf("\t-iatntt Issuer's transposed NTT A matrix\n");
 	printf("\t-ibntt Host NTT B matrix\n");
 	printf("\t-ipbsn File of basename polynomial\n");
 	printf("\t-ipe File of error polynomial\n");

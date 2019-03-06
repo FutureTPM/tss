@@ -189,6 +189,8 @@
 /*****************************************************************************/
 #include "LDaa_Join_fp.h"
 #include "LDaa_SignCommit1_fp.h"
+#include "LDaa_SignCommit2_fp.h"
+#include "LDaa_SignCommit3_fp.h"
 #include "LDaa_CommitTokenLink_fp.h"
 #include "LDaa_SignProof_fp.h"
 #include "LDaa_SignProceed_fp.h"
@@ -555,6 +557,16 @@ extern "C" {
     TSS_LDAA_SignCommit1_In_Marshalu(const LDAA_SignCommit1_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
     TSS_LDAA_SignCommit1_Out_Unmarshalu(LDAA_SignCommit1_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+
+    TPM_RC
+    TSS_LDAA_SignCommit2_In_Marshalu(const LDAA_SignCommit2_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_LDAA_SignCommit2_Out_Unmarshalu(LDAA_SignCommit2_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+
+    TPM_RC
+    TSS_LDAA_SignCommit3_In_Marshalu(const LDAA_SignCommit3_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_LDAA_SignCommit3_Out_Unmarshalu(LDAA_SignCommit3_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
 
     TPM_RC
     TSS_LDAA_CommitTokenLink_In_Marshalu(const LDAA_CommitTokenLink_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);

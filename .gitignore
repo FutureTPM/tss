@@ -137,3 +137,9 @@ utils/ldaa_committokenlink
 utils/ldaa_signcommit
 utils/ldaa_signproof
 utils/ldaa_signproceed
+utils/ldaa_signcommit1
+utils/ldaa_signcommit1.o
+utils/ldaa_signcommit2
+utils/ldaa_signcommit2.o
+utils/ldaa_signcommit3
+utils/ldaa_signcommit3.o

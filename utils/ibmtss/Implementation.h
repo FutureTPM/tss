@@ -398,6 +398,8 @@
 /*****************************************************************************/
 #define CC_LDAA_Join                      (CC_YES*ALG_LDAA)
 #define CC_LDAA_SignCommit1               (CC_YES*ALG_LDAA)
+#define CC_LDAA_SignCommit2               (CC_YES*ALG_LDAA)
+#define CC_LDAA_SignCommit3               (CC_YES*ALG_LDAA)
 #define CC_LDAA_CommitTokenLink           (CC_YES*ALG_LDAA)
 #define CC_LDAA_SignProof                 (CC_YES*ALG_LDAA)
 #define CC_LDAA_SignProceed               (CC_YES*ALG_LDAA)
@@ -1462,6 +1464,18 @@ typedef  UINT32             TPM_CC;
 #if CC_LDAA_SignProceed == YES
 #define TPM_CC_LDAA_SignProceed               (TPM_CC)(0x000001A2)
 #endif
+#ifndef CC_LDAA_SignCommit2
+#   define CC_LDAA_SignCommit2 NO
+#endif
+#if CC_LDAA_SignCommit2 == YES
+#define TPM_CC_LDAA_SignCommit2               (TPM_CC)(0x000001A3)
+#endif
+#ifndef CC_LDAA_SignCommit3
+#   define CC_LDAA_SignCommit3 NO
+#endif
+#if CC_LDAA_SignCommit3 == YES
+#define TPM_CC_LDAA_SignCommit3               (TPM_CC)(0x000001A4)
+#endif
 /*****************************************************************************/
 /*                                 LDAA Mods                                 */
 /*****************************************************************************/
@@ -1632,6 +1646,8 @@ typedef  UINT32             TPM_CC;
 					  + (ADD_FILL || CC_LDAA_SignCommit1)           /* 0x0000019F */ \
 					  + (ADD_FILL || CC_LDAA_CommitTokenLink)       /* 0x000001A0 */ \
 					  + (ADD_FILL || CC_LDAA_SignProof)             /* 0x000001A1 */ \
+					  + (ADD_FILL || CC_LDAA_SignCommit2)           /* 0x000001A3 */ \
+					  + (ADD_FILL || CC_LDAA_SignCommit3)           /* 0x0000019$ */ \
 					  )
 
 #define VENDOR_COMMAND_ARRAY_SIZE   ( 0				\

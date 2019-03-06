@@ -2490,6 +2490,112 @@ LDAA_SignCommit1_In_Unmarshal(LDAA_SignCommit1_In *target, BYTE **buffer, uint32
 }
 
 TPM_RC
+LDAA_SignCommit2_In_Unmarshal(LDAA_SignCommit2_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		target->key_handle = handles[0];
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Unmarshalu(&target->sid, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignCommit1_sid;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Unmarshalu(&target->ssid, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignCommit1_ssid;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_BASENAME_Unmarshalu(&target->bsn, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignCommit1_bsn;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_ISSUER_BNTT_Unmarshalu(&target->issuer_bntt, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignCommit1_issuer_bntt;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Unmarshalu(&target->sign_state_sel, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignCommit1_sign_state_sel;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_PE_Unmarshalu(&target->pe, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignCommit1_pe;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_PBSN_Unmarshalu(&target->pbsn, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignCommit1_pbsn;
+		}
+	}
+	return rc;
+}
+
+TPM_RC
+LDAA_SignCommit3_In_Unmarshal(LDAA_SignCommit3_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
+{
+	TPM_RC rc = TPM_RC_SUCCESS;
+
+	if (rc == TPM_RC_SUCCESS) {
+		target->key_handle = handles[0];
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Unmarshalu(&target->sid, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignCommit1_sid;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Unmarshalu(&target->ssid, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignCommit1_ssid;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_BASENAME_Unmarshalu(&target->bsn, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignCommit1_bsn;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_ISSUER_BNTT_Unmarshalu(&target->issuer_bntt, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignCommit1_issuer_bntt;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Unmarshalu(&target->sign_state_sel, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignCommit1_sign_state_sel;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_PE_Unmarshalu(&target->pe, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignCommit1_pe;
+		}
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_TPM2B_LDAA_PBSN_Unmarshalu(&target->pbsn, buffer, size);
+		if (rc != TPM_RC_SUCCESS) {
+            rc += RC_LDAA_SignCommit1_pbsn;
+		}
+	}
+	return rc;
+}
+
+TPM_RC
 LDAA_CommitTokenLink_In_Unmarshal(LDAA_CommitTokenLink_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
 {
 	TPM_RC rc = TPM_RC_SUCCESS;

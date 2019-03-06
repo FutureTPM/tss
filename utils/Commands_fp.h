@@ -193,6 +193,8 @@
 /*****************************************************************************/
 #include <ibmtss/LDaa_Join_fp.h>
 #include <ibmtss/LDaa_SignCommit1_fp.h>
+#include <ibmtss/LDaa_SignCommit2_fp.h>
+#include <ibmtss/LDaa_SignCommit3_fp.h>
 #include <ibmtss/LDaa_CommitTokenLink_fp.h>
 #include <ibmtss/LDaa_SignProof_fp.h>
 #include <ibmtss/LDaa_SignProceed_fp.h>
@@ -560,6 +562,10 @@ TPM_RC
 LDAA_Join_In_Unmarshal(LDAA_Join_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 TPM_RC
 LDAA_SignCommit1_In_Unmarshal(LDAA_SignCommit1_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
+TPM_RC
+LDAA_SignCommit2_In_Unmarshal(LDAA_SignCommit2_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
+TPM_RC
+LDAA_SignCommit3_In_Unmarshal(LDAA_SignCommit3_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 TPM_RC
 LDAA_CommitTokenLink_In_Unmarshal(LDAA_CommitTokenLink_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 TPM_RC
