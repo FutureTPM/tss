@@ -111,7 +111,7 @@
 #define MAX_CONTEXT_SIZE		2048
 #else
 //#define MAX_CONTEXT_SIZE		5120
-#define MAX_CONTEXT_SIZE        48234496
+#define  MAX_CONTEXT_SIZE       63176704
 #endif
 
 #define MAX_DIGEST_BUFFER		2048
@@ -1481,7 +1481,7 @@ typedef  UINT32             TPM_CC;
 /*****************************************************************************/
 
 /* Compile variable. May increase based on implementation. */
-#define  TPM_CC_LAST				(TPM_CC)(0x000001A2)
+#define  TPM_CC_LAST				(TPM_CC)(0x000001A4)
 
 #ifndef CC_Vendor_TCG_Test
 #   define CC_Vendor_TCG_Test NO

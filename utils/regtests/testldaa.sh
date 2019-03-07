@@ -63,14 +63,24 @@ echo ""
 
 for SIGN in $(seq 0 7)
 do
-    for COMM in "1" "2" "3"
+    echo "Processing commit 1 for sign state ${SIGN}"
+    ${PREFIX}ldaa_signcommit1 -hk 80000001 -sid 0 -bsn basename -sign "${SIGN}" -iatntt test_keys/issuer_at_ntt_v2.bin -ibntt "test_keys/host_b_ntt1_v2.bin" -ipe ldaa_pe.bin -ipbsn ldaa_pbsn.bin -ocomm "ldaa_commit_sign_${SIGN}_commit_1.bin" -pwdk ldaa > run.out
+    checkSuccess $?
+
+    # The B NTT matrix is split into 43 files of 900 lines each. The B NTT
+    # matrix has a total of 38618, thus we require 43 calls to the endpoint
+    # to obtain the final commit.
+    for SPLIT in $(seq 1 43)
     do
-        echo "Processing commit ${COMM} for sign state ${SIGN}"
-        ${PREFIX}ldaa_signcommit -hk 80000001 -sid 0 -bsn basename -comm "${COMM}" -sign "${SIGN}" -iatntt test_keys/issuer_at_ntt_v2.bin -ibntt "test_keys/host_b_ntt${COMM}_v2.bin" -ipe ldaa_pe.bin -ipbsn ldaa_pbsn.bin -ocomm "ldaa_commit_sign_${SIGN}_commit_${COMM}.bin" -pwdk ldaa > run.out
+        echo "Processing commit 2 for sign state ${SIGN} (900 split offset $(($SPLIT - 1)))"
+        ${PREFIX}ldaa_signcommit2 -hk 80000001 -offset $(($SPLIT - 1)) -sid 0 -bsn basename -sign "${SIGN}" -ibntt "test_keys/host_b_ntt2_${SPLIT}_v2.bin" -ipe ldaa_pe.bin -ipbsn ldaa_pbsn.bin -ocomm "ldaa_commit_sign_${SIGN}_commit_2_${SPLIT}.bin" -pwdk ldaa > run.out
+        checkSuccess $?
+
+        echo "Processing commit 3 for sign state ${SIGN} (900 split offset $(($SPLIT - 1)))"
+        ${PREFIX}ldaa_signcommit3 -hk 80000001 -offset $(($SPLIT - 1)) -sid 0 -bsn basename -sign "${SIGN}" -ibntt "test_keys/host_b_ntt2_${SPLIT}_v2.bin" -ipe ldaa_pe.bin -ipbsn ldaa_pbsn.bin -ocomm "ldaa_commit_sign_${SIGN}_commit_3_${SPLIT}.bin" -pwdk ldaa > run.out
         checkSuccess $?
     done
 done
-exit
 
 echo ""
 echo "Start sign proof"

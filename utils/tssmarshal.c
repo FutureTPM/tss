@@ -8870,6 +8870,9 @@ TSS_LDAA_SignCommit2_In_Marshalu(const LDAA_SignCommit2_In *source, UINT32 *writ
 	if (rc == TPM_RC_SUCCESS) {
 		rc = TSS_TPM2B_LDAA_PBSN_Marshalu(&source->pbsn, written, buffer, size);
 	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Marshalu(&source->offset, written, buffer, size);
+	}
 	return rc;
 }
 
@@ -8922,6 +8925,9 @@ TSS_LDAA_SignCommit3_In_Marshalu(const LDAA_SignCommit3_In *source, UINT32 *writ
 	}
 	if (rc == TPM_RC_SUCCESS) {
 		rc = TSS_TPM2B_LDAA_PBSN_Marshalu(&source->pbsn, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT8_Marshalu(&source->offset, written, buffer, size);
 	}
 	return rc;
 }

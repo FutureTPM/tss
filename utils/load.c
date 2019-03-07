@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
     unsigned int		sessionAttributes2 = 0;
 
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
-    TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "3");
+    TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "1");
 
     for (i=1 ; (i<argc) && (rc == 0) ; i++) {
 	if (strcmp(argv[i],"-hp") == 0) {

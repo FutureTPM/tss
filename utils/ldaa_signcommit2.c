@@ -52,6 +52,7 @@ int main(int argc, char *argv[])
     const char              *bsn = NULL;
     unsigned int            bsn_len = 0;
     unsigned char           sid;
+    unsigned char           offset;
     unsigned char           sign_state_sel = 255;
 	TPMI_SH_AUTH_SESSION        sessionHandle0 = TPM_RS_PW;
 	unsigned int                sessionAttributes0 = 0;
@@ -83,6 +84,16 @@ int main(int argc, char *argv[])
 			}
 			else {
 				printf("-sid option needs a value\n");
+				printUsage();
+			}
+		}
+		else if (strcmp(argv[i], "-offset") == 0) {
+			i++;
+			if (i < argc) {
+				sscanf(argv[i], "%hhd", &offset);
+			}
+			else {
+				printf("-offset option needs a value\n");
 				printUsage();
 			}
 		}
@@ -262,6 +273,7 @@ int main(int argc, char *argv[])
 	if (rc == 0) {
 		in.key_handle = keyHandle;
         in.sid = sid;
+        in.offset = offset;
         in.sign_state_sel = sign_state_sel;
         memmove(in.bsn.t.buffer, bsn, bsn_len);
         in.bsn.t.size = bsn_len;
@@ -357,6 +369,7 @@ static void printUsage(void)
 	printf("\t-hk unrestricted decryption key handle\n");
 	printf("\t[-pwdk password for key (default empty)]\n");
 	printf("\t-sid session ID of the LDAA session\n");
+	printf("\t-offset offset for the Host NTT B matrix\n");
 	printf("\t-bsn Basename\n");
 	printf("\t-comm Commit to process [1-3]\n");
 	printf("\t-sign Signature to base the commit on [0-7]\n");

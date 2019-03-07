@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
     const char			*ldaa_issuer_at_filename = NULL;
 
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
-    TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "3");
+    TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "1");
 
     /* command line argument defaults */
     addObjectAttributes.val = 0;
