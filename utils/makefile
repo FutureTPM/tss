@@ -500,6 +500,10 @@ kyber_dec:		ibmtss/tss.h kyber_dec.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) kyber_dec.o $(LNALIBS) -o kyber_dec
 kyber_enc:		ibmtss/tss.h kyber_enc.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) kyber_enc.o $(LNALIBS) -o kyber_enc
+kyberdecrypt:		ibmtss/tss.h kyberdecrypt.o $(LIBTSS) $(LIBTSSUTILS)
+			$(CC) $(LNFLAGS) $(LNAFLAGS) kyberdecrypt.o $(LNALIBS) -o kyberdecrypt
+kyberencrypt:		ibmtss/tss.h kyberencrypt.o $(LIBTSS) $(LIBTSSUTILS)
+			$(CC) $(LNFLAGS) $(LNAFLAGS) kyberencrypt.o $(LNALIBS) -o kyberencrypt
 kyber_2phase_kex:	ibmtss/tss.h kyber_2phase_kex.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) kyber_2phase_kex.o $(LNALIBS) -o kyber_2phase_kex
 kyber_3phase_kex:	ibmtss/tss.h kyber_3phase_kex.o $(LIBTSS) $(LIBTSSUTILS)

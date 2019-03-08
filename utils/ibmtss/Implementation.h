@@ -378,6 +378,8 @@
 /*****************************************************************************/
 #define CC_KYBER_Enc                      (CC_YES*ALG_KYBER)
 #define CC_KYBER_Dec                      (CC_YES*ALG_KYBER)
+#define CC_KYBER_Encrypt                  (CC_YES*ALG_KYBER)
+#define CC_KYBER_Decrypt                  (CC_YES*ALG_KYBER)
 #define CC_KYBER_2Phase_KEX               (CC_YES*ALG_KYBER)
 #define CC_KYBER_3Phase_KEX               (CC_YES*ALG_KYBER)
 /*****************************************************************************/
@@ -1427,6 +1429,18 @@ typedef  UINT32             TPM_CC;
 #if CC_KYBER_3Phase_KEX == YES
 #define TPM_CC_KYBER_3Phase_KEX               (TPM_CC)(0x0000019D)
 #endif
+#ifndef CC_KYBER_Encrypt
+#   define CC_KYBER_Encrypt NO
+#endif
+#if CC_KYBER_Encrypt == YES
+#define TPM_CC_KYBER_Encrypt                  (TPM_CC)(0x000001A5)
+#endif
+#ifndef CC_KYBER_Decrypt
+#   define CC_KYBER_Decrypt NO
+#endif
+#if CC_KYBER_Decrypt == YES
+#define TPM_CC_KYBER_Decrypt                  (TPM_CC)(0x000001A6)
+#endif
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
@@ -1481,7 +1495,7 @@ typedef  UINT32             TPM_CC;
 /*****************************************************************************/
 
 /* Compile variable. May increase based on implementation. */
-#define  TPM_CC_LAST				(TPM_CC)(0x000001A4)
+#define  TPM_CC_LAST				(TPM_CC)(0x000001A6)
 
 #ifndef CC_Vendor_TCG_Test
 #   define CC_Vendor_TCG_Test NO
@@ -1647,7 +1661,9 @@ typedef  UINT32             TPM_CC;
 					  + (ADD_FILL || CC_LDAA_CommitTokenLink)       /* 0x000001A0 */ \
 					  + (ADD_FILL || CC_LDAA_SignProof)             /* 0x000001A1 */ \
 					  + (ADD_FILL || CC_LDAA_SignCommit2)           /* 0x000001A3 */ \
-					  + (ADD_FILL || CC_LDAA_SignCommit3)           /* 0x0000019$ */ \
+					  + (ADD_FILL || CC_LDAA_SignCommit3)           /* 0x000001A4 */ \
+					  + (ADD_FILL || CC_KYBER_Encrypt)              /* 0x000001A5 */ \
+					  + (ADD_FILL || CC_KYBER_Decrypt)              /* 0x000001A6 */ \
 					  )
 
 #define VENDOR_COMMAND_ARRAY_SIZE   ( 0				\

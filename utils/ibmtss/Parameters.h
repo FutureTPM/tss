@@ -184,6 +184,8 @@
 /*****************************************************************************/
 #include "Kyber_Enc_fp.h"
 #include "Kyber_Dec_fp.h"
+#include "Kyber_Encrypt_fp.h"
+#include "Kyber_Decrypt_fp.h"
 #include "Kyber_2Phase_KEX_fp.h"
 #include "Kyber_3Phase_KEX_fp.h"
 /*****************************************************************************/
@@ -312,6 +314,8 @@ typedef union {
     // Kyber Mods
     Kyber_Encapsulate_In          Kyber_Encapsulate;
     Kyber_Decapsulate_In          Kyber_Decapsulate;
+    Kyber_Encrypt_In              Kyber_Encrypt;
+    Kyber_Decrypt_In              Kyber_Decrypt;
     Kyber_2Phase_KEX_In           Kyber_2Phase_KEX;
     Kyber_3Phase_KEX_In           Kyber_3Phase_KEX;
     // Kyber Mods
@@ -383,6 +387,8 @@ typedef union
     // Kyber Mods
     Kyber_Encapsulate_Out          Kyber_Encapsulate;
     Kyber_Decapsulate_Out          Kyber_Decapsulate;
+    Kyber_Encrypt_Out              Kyber_Encrypt;
+    Kyber_Decrypt_Out              Kyber_Decrypt;
     Kyber_2Phase_KEX_Out           Kyber_2Phase_KEX;
     Kyber_3Phase_KEX_Out           Kyber_3Phase_KEX;
     // Kyber Mods

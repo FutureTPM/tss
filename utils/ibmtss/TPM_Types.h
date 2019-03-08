@@ -1584,6 +1584,14 @@ typedef union {
     }            t;
     TPM2B        b;
 } TPM2B_KYBER_SHARED_KEY;
+
+typedef union {
+    struct {
+	UINT32                  size;
+	BYTE                    buffer[MAX_KYBER_CIPHER_TEXT_SIZE + MAX_DIGEST_BUFFER];
+    }            t;
+    TPM2B        b;
+} TPM2B_KYBER_ENCRYPT;
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/

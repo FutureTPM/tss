@@ -493,6 +493,14 @@ const TPMA_CC_TSS    s_ccAttr [] = {
 #if (PAD_LIST  || CC_KYBER_3Phase_KEX)
     {{0x019D, 0, 0, 0, 0, 2, 0, 0, 0}},     // TPM_CC_KYBER_3Phase_KEX
 #endif
+
+#if (PAD_LIST || CC_KYBER_Encrypt)
+    {{0x01A5, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_KYBER_Encrypt
+#endif
+
+#if (PAD_LIST || CC_KYBER_Decrypt)
+    {{0x01A6, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_KYBER_Decrypt
+#endif
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
@@ -1035,6 +1043,14 @@ const COMMAND_ATTRIBUTES    s_commandAttributes [] = {
 #if (PAD_LIST  || CC_KYBER_3Phase_KEX)
     (COMMAND_ATTRIBUTES)(CC_KYBER_3Phase_KEX           *  // 0x019D
 			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+HANDLE_2_USER+ENCRYPT_2)),
+#endif
+#if (PAD_LIST || CC_KYBER_Encrypt)
+    (COMMAND_ATTRIBUTES)(CC_KYBER_Encrypt              *  // 0x01A5
+			 (IS_IMPLEMENTED+DECRYPT_2+ENCRYPT_2)),
+#endif
+#if (PAD_LIST || CC_KYBER_Decrypt)
+    (COMMAND_ATTRIBUTES)(CC_KYBER_Decrypt              *  // 0x01A6
+			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
 #endif
 /*****************************************************************************/
 /*                                Kyber Mods                                 */

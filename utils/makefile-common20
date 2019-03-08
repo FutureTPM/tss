@@ -156,6 +156,8 @@ ALL += 	activatecredential$(EXE)		\
 	tpmpublic2eccpoint$(EXE)    \
 	kyber_dec$(EXE)				\
 	kyber_enc$(EXE)				\
+	kyberencrypt$(EXE)			\
+	kyberdecrypt$(EXE)			\
 	kyber_2phase_kex$(EXE)		\
 	kyber_3phase_kex$(EXE)		\
 	newhope_dec$(EXE)		    \

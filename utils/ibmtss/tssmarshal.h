@@ -170,6 +170,8 @@
 /*****************************************************************************/
 #include "Kyber_Enc_fp.h"
 #include "Kyber_Dec_fp.h"
+#include "Kyber_Encrypt_fp.h"
+#include "Kyber_Decrypt_fp.h"
 #include "Kyber_2Phase_KEX_fp.h"
 #include "Kyber_3Phase_KEX_fp.h"
 /*****************************************************************************/
@@ -430,6 +432,8 @@ extern "C" {
     TSS_TPM2B_KYBER_CIPHER_TEXT_Marshalu(const TPM2B_KYBER_CIPHER_TEXT *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
     TSS_TPM2B_KYBER_SHARED_KEY_Marshalu(const TPM2B_KYBER_SHARED_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_KYBER_ENCRYPT_Marshalu(const TPM2B_KYBER_ENCRYPT *source, UINT32 *written, BYTE **buffer, uint32_t *size);
 
     TPM_RC
     TSS_Kyber_Encapsulate_In_Marshalu(Kyber_Encapsulate_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
@@ -440,6 +444,16 @@ extern "C" {
     TSS_Kyber_Decapsulate_Out_Unmarshalu(Kyber_Decapsulate_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
     TPM_RC
     TSS_Kyber_Decapsulate_In_Marshalu(Kyber_Decapsulate_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+
+    TPM_RC
+    TSS_Kyber_Encrypt_In_Marshalu(Kyber_Encrypt_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_Kyber_Encrypt_Out_Unmarshalu(Kyber_Encrypt_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+
+    TPM_RC
+    TSS_Kyber_Decrypt_Out_Unmarshalu(Kyber_Decrypt_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_Kyber_Decrypt_In_Marshalu(Kyber_Decrypt_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
 
     TPM_RC
     TSS_Kyber_2Phase_KEX_Out_Unmarshalu(Kyber_2Phase_KEX_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);

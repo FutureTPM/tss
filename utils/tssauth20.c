@@ -637,6 +637,16 @@ static const MARSHAL_TABLE marshalTable [] = {
      (UnmarshalOutFunction_t)TSS_Kyber_Decapsulate_Out_Unmarshalu,
      (UnmarshalInFunction_t)Kyber_Decapsulate_In_Unmarshal},
 
+    {TPM_CC_KYBER_Encrypt, "TPM2_KYBER_Encrypt",
+     (MarshalInFunction_t)TSS_Kyber_Encrypt_In_Marshalu,
+     (UnmarshalOutFunction_t)TSS_Kyber_Encrypt_Out_Unmarshalu,
+     (UnmarshalInFunction_t)Kyber_Encrypt_In_Unmarshal},
+
+    {TPM_CC_KYBER_Decrypt, "TPM2_KYBER_Decrypt",
+     (MarshalInFunction_t)TSS_Kyber_Decrypt_In_Marshalu,
+     (UnmarshalOutFunction_t)TSS_Kyber_Decrypt_Out_Unmarshalu,
+     (UnmarshalInFunction_t)Kyber_Decrypt_In_Unmarshal},
+
     {TPM_CC_KYBER_2Phase_KEX, "TPM2_KYBER_2Phase_KEX",
      (MarshalInFunction_t)TSS_Kyber_2Phase_KEX_In_Marshalu,
      (UnmarshalOutFunction_t)TSS_Kyber_2Phase_KEX_Out_Unmarshalu,

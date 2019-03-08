@@ -143,3 +143,5 @@ utils/ldaa_signcommit2
 utils/ldaa_signcommit2.o
 utils/ldaa_signcommit3
 utils/ldaa_signcommit3.o
+utils/kyberdecrypt
+utils/kyberencrypt

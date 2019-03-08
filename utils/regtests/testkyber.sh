@@ -47,6 +47,23 @@ echo "Verify the shared key result"
 diff shared_key_1.bin shared_key_2.bin > run.out
 checkSuccess $?
 
+echo ""
+echo "Kyber Encryption and Decryption"
+echo ""
+
+echo "Kyber encrypt with the encryption key"
+${PREFIX}kyberencrypt -hk 80000001 -id policies/aaa -oe enc.bin > run.out
+checkSuccess $?
+
+echo "Kyber decrypt with the decryption key"
+${PREFIX}kyberdecrypt -hk 80000001 -ie enc.bin -od dec.bin -pwdk dec > run.out
+checkSuccess $?
+
+echo "Verify the decrypt result"
+tail -c 3 dec.bin > tmp.bin
+diff policies/aaa tmp.bin > run.out
+checkSuccess $?
+
 echo "Flush the kyber key"
 ${PREFIX}flushcontext -ha 80000001 > run.out
 checkSuccess $?

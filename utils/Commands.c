@@ -2297,6 +2297,45 @@ Kyber_Decapsulate_In_Unmarshal(Kyber_Decapsulate_In *target, BYTE **buffer, uint
 }
 
 TPM_RC
+Kyber_Encrypt_In_Unmarshal(Kyber_Encrypt_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+    buffer = buffer;
+    size = size;
+
+    if (rc == TPM_RC_SUCCESS) {
+        target->keyHandle = handles[0];
+    }
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPM2B_MAX_BUFFER_Unmarshalu(&target->message, buffer, size);
+        if (rc != TPM_RC_SUCCESS) {
+            rc += RC_Kyber_Decrypt_message;
+        }
+    }
+    return rc;
+}
+
+TPM_RC
+Kyber_Decrypt_In_Unmarshal(Kyber_Decrypt_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+    buffer = buffer;
+    size = size;
+
+    if (rc == TPM_RC_SUCCESS) {
+        target->keyHandle = handles[0];
+    }
+
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPM2B_KYBER_ENCRYPT_Unmarshalu(&target->message, buffer, size);
+        if (rc != TPM_RC_SUCCESS) {
+            rc += RC_Kyber_Decrypt_message;
+        }
+    }
+    return rc;
+}
+
+TPM_RC
 Kyber_2Phase_KEX_In_Unmarshal(Kyber_2Phase_KEX_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
 {
     TPM_RC rc = TPM_RC_SUCCESS;
