@@ -332,3 +332,6 @@ rm alice_cipher_text_3.bin
 rm alice_final_shared_key.bin bob_final_shared_key.bin
 rm tmp_bob_ss_1.bin tmp_bob_ss_2.bin tmp_bob_ss_3.bin
 rm tmp_alice_ss_1.bin tmp_alice_ss_2.bin shared_key_3.bin
+rm static_alice_priv_uake.bin static_alice_pub_uake.bin
+rm static_bob_priv_uake.bin static_bob_pub_uake.bin
+rm ephemeral_pub_uake.bin ephemeral_priv_uake.bin

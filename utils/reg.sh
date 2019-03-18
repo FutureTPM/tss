@@ -184,10 +184,16 @@ cleanup()
     rm -f khprivsha256.bin
     rm -f khprivsha384.bin
     rm -f khprivsha512.bin
+    rm -f khprivsha3-256.bin
+    rm -f khprivsha3-384.bin
+    rm -f khprivsha3-512.bin
     rm -f khpubsha1.bin
     rm -f khpubsha256.bin
     rm -f khpubsha384.bin
     rm -f khpubsha512.bin
+    rm -f khpubsha3-256.bin
+    rm -f khpubsha3-384.bin
+    rm -f khpubsha3-512.bin
     rm -f pritk.bin
     rm -f stotk.bin
     rm -f prich.bin
@@ -208,6 +214,9 @@ cleanup()
     rm -f tmpsha256.bin
     rm -f tmpsha384.bin
     rm -f tmpsha512.bin
+    rm -f tmpsha3-256.bin
+    rm -f tmpsha3-384.bin
+    rm -f tmpsha3-512.bin
     rm -f tmppriv.bin
     rm -f tmppub.bin
     rm -f tmpspriv.bin

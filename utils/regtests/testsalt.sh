@@ -82,7 +82,7 @@ echo "Salt Session - Load External"
 echo ""
 
 echo "Create RSA and ECC key pairs in PEM format using openssl"
-  
+
 openssl genrsa -out tmpkeypairrsa.pem -aes256 -passout pass:rrrr 2048 > run.out
 openssl ecparam -name prime256v1 -genkey -noout -out tmpkeypairecc.pem > run.out
 
@@ -139,7 +139,7 @@ echo ""
 
 for HALG in ${ITERATE_ALGS}
 do
-    
+
     echo "Create a primary storage key - $HALG"
     ${PREFIX}createprimary -nalg $HALG -hi p > run.out
     checkSuccess $?
@@ -164,7 +164,7 @@ echo ""
 
 for HALG in ${ITERATE_ALGS}
 do
-    
+
     echo "Create a primary RSA key - $HALG"
     ${PREFIX}createprimary -nalg $HALG -halg $HALG -hi p -deo > run.out
     checkSuccess $?
