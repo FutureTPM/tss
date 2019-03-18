@@ -172,8 +172,6 @@
 #include "Kyber_Dec_fp.h"
 #include "Kyber_Encrypt_fp.h"
 #include "Kyber_Decrypt_fp.h"
-#include "Kyber_2Phase_KEX_fp.h"
-#include "Kyber_3Phase_KEX_fp.h"
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
@@ -454,16 +452,6 @@ extern "C" {
     TSS_Kyber_Decrypt_Out_Unmarshalu(Kyber_Decrypt_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
     TPM_RC
     TSS_Kyber_Decrypt_In_Marshalu(Kyber_Decrypt_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
-
-    TPM_RC
-    TSS_Kyber_2Phase_KEX_Out_Unmarshalu(Kyber_2Phase_KEX_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
-    TPM_RC
-    TSS_Kyber_2Phase_KEX_In_Marshalu(Kyber_2Phase_KEX_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
-
-    TPM_RC
-    TSS_Kyber_3Phase_KEX_Out_Unmarshalu(Kyber_3Phase_KEX_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
-    TPM_RC
-    TSS_Kyber_3Phase_KEX_In_Marshalu(Kyber_3Phase_KEX_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
 
     TPM_RC
     TSS_TPMS_KYBER_PARMS_Marshalu(const TPMS_KYBER_PARMS *source, UINT32 *written, BYTE **buffer, uint32_t *size);

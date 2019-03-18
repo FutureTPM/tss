@@ -114,6 +114,9 @@ int main(int argc, char *argv[])
         else if (strcmp(argv[i],"sha3-512") == 0) {
             halg = TPM_ALG_SHA3_512;
         }
+        else if (strcmp(argv[i],"shake256") == 0) {
+            halg = TPM_ALG_SHAKE256;
+        }
 		else {
 		    printf("Bad parameter %s for -halg\n", argv[i]);
 		    printUsage();
@@ -309,7 +312,7 @@ static void printUsage(void)
     printf("\n");
     printf("\t[-hi\thierarchy (e, o, p, n) (default null)]\n");
     printf("\t\te endorsement, o owner, p platform, n null\n");
-    printf("\t[-halg\t(sha1, sha256, sha384, sha512, sha3-256, sha3-384, sha3-512) (default sha256)]\n");
+    printf("\t[-halg\t(sha1, sha256, sha384, sha512, sha3-256, sha3-384, sha3-512, shake256) (default sha256)]\n");
     printf("\t-if\tinput file to be hashed\n");
     printf("\t-ic\tdata string to be hashed\n");
     printf("\t[-ns\tno space, no text, no newlines]\n");

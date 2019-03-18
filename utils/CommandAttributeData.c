@@ -486,14 +486,6 @@ const TPMA_CC_TSS    s_ccAttr [] = {
     {{0x019B, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_KYBER_Dec
 #endif
 
-#if (PAD_LIST  || CC_KYBER_2Phase_KEX)
-    {{0x019C, 0, 0, 0, 0, 3, 0, 0, 0}},     // TPM_CC_KYBER_2Phase_KEX
-#endif
-
-#if (PAD_LIST  || CC_KYBER_3Phase_KEX)
-    {{0x019D, 0, 0, 0, 0, 2, 0, 0, 0}},     // TPM_CC_KYBER_3Phase_KEX
-#endif
-
 #if (PAD_LIST || CC_KYBER_Encrypt)
     {{0x01A5, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_KYBER_Encrypt
 #endif
@@ -1035,14 +1027,6 @@ const COMMAND_ATTRIBUTES    s_commandAttributes [] = {
 #if (PAD_LIST || CC_KYBER_Dec)
     (COMMAND_ATTRIBUTES)(CC_KYBER_Dec                  *  // 0x019B
 			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
-#endif
-#if (PAD_LIST  || CC_KYBER_2Phase_KEX)
-    (COMMAND_ATTRIBUTES)(CC_KYBER_2Phase_KEX           *  // 0x019C
-			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
-#endif
-#if (PAD_LIST  || CC_KYBER_3Phase_KEX)
-    (COMMAND_ATTRIBUTES)(CC_KYBER_3Phase_KEX           *  // 0x019D
-			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+HANDLE_2_USER+ENCRYPT_2)),
 #endif
 #if (PAD_LIST || CC_KYBER_Encrypt)
     (COMMAND_ATTRIBUTES)(CC_KYBER_Encrypt              *  // 0x01A5

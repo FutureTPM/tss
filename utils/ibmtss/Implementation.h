@@ -389,8 +389,6 @@
 #define CC_KYBER_Dec                      (CC_YES*ALG_KYBER)
 #define CC_KYBER_Encrypt                  (CC_YES*ALG_KYBER)
 #define CC_KYBER_Decrypt                  (CC_YES*ALG_KYBER)
-#define CC_KYBER_2Phase_KEX               (CC_YES*ALG_KYBER)
-#define CC_KYBER_3Phase_KEX               (CC_YES*ALG_KYBER)
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
@@ -1474,18 +1472,6 @@ typedef  UINT32             TPM_CC;
 #if CC_KYBER_Dec == YES
 #define TPM_CC_KYBER_Dec                      (TPM_CC)(0x0000019B)
 #endif
-#ifndef CC_KYBER_2Phase_KEX
-#   define CC_KYBER_2Phase_KEX NO
-#endif
-#if CC_KYBER_2Phase_KEX == YES
-#define TPM_CC_KYBER_2Phase_KEX               (TPM_CC)(0x0000019C)
-#endif
-#ifndef CC_KYBER_3Phase_KEX
-#   define CC_KYBER_3Phase_KEX NO
-#endif
-#if CC_KYBER_3Phase_KEX == YES
-#define TPM_CC_KYBER_3Phase_KEX               (TPM_CC)(0x0000019D)
-#endif
 #ifndef CC_KYBER_Encrypt
 #   define CC_KYBER_Encrypt NO
 #endif
@@ -1711,8 +1697,6 @@ typedef  UINT32             TPM_CC;
 					  + (ADD_FILL || CC_NEWHOPE_Enc)                /* 0x00000199 */ \
 					  + (ADD_FILL || CC_KYBER_Enc)                  /* 0x0000019A */ \
 					  + (ADD_FILL || CC_KYBER_Dec)                  /* 0x0000019B */ \
-					  + (ADD_FILL || CC_KYBER_2Phase_KEX)           /* 0x0000019C */ \
-					  + (ADD_FILL || CC_KYBER_3Phase_KEX)           /* 0x0000019D */ \
 					  + (ADD_FILL || CC_LDAA_Join)                  /* 0x0000019E */ \
 					  + (ADD_FILL || CC_LDAA_SignCommit1)           /* 0x0000019F */ \
 					  + (ADD_FILL || CC_LDAA_CommitTokenLink)       /* 0x000001A0 */ \

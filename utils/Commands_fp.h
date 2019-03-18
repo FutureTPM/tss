@@ -184,8 +184,6 @@
 #include <ibmtss/Kyber_Dec_fp.h>
 #include <ibmtss/Kyber_Encrypt_fp.h>
 #include <ibmtss/Kyber_Decrypt_fp.h>
-#include <ibmtss/Kyber_2Phase_KEX_fp.h>
-#include <ibmtss/Kyber_3Phase_KEX_fp.h>
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
@@ -542,10 +540,6 @@ TPM_RC
 Kyber_Encrypt_In_Unmarshal(Kyber_Encrypt_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 TPM_RC
 Kyber_Decrypt_In_Unmarshal(Kyber_Decrypt_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
-TPM_RC
-Kyber_2Phase_KEX_In_Unmarshal(Kyber_2Phase_KEX_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
-TPM_RC
-Kyber_3Phase_KEX_In_Unmarshal(Kyber_3Phase_KEX_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/

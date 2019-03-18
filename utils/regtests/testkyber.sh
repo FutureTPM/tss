@@ -95,7 +95,7 @@ do
     checkSuccess $?
 
     echo "Encapsulate shared key to Bob"
-    ${PREFIX}kyber_enc -v -hk 80000001 -c alice_cipher_text_3.bin -ss shared_key_3.bin > run.out
+    ${PREFIX}kyber_enc -hk 80000001 -c alice_cipher_text_3.bin -ss shared_key_3.bin > run.out
     checkSuccess $?
 
     echo "Alice completed the first phase of the KEX!"
@@ -123,8 +123,28 @@ do
     ${PREFIX}loadexternal -kyber -den -ipu static_alice_pub.bin > run.out
     checkSuccess $?
 
-    echo "Perform 2nd phase KEX"
-    ${PREFIX}kyber_2phase_kex -hk 80000001 -hke 80000002 -hka 80000003 -pwdk bob_dec -cs alice_cipher_text_3.bin -ss bob_final_shared_key.bin -c1 bob_cipher_text_1.bin -c2 bob_cipher_text_2.bin > run.out
+    echo "Encapsulate first secret using alice's ephemeral key"
+    ${PREFIX}kyber_enc -hk 80000002 -c bob_cipher_text_1.bin -ss tmp_bob_ss_1.bin > run.out
+    checkSuccess $?
+
+    echo "Encapsulate second secret using alice's ephemeral key"
+    ${PREFIX}kyber_enc -hk 80000003 -c bob_cipher_text_2.bin -ss tmp_bob_ss_2.bin > run.out
+    checkSuccess $?
+
+    echo "Decapsulate third secret using bob's static key"
+    ${PREFIX}kyber_dec -hk 80000001 -c alice_cipher_text_3.bin -ss tmp_bob_ss_3.bin -pwdk bob_dec > run.out
+    checkSuccess $?
+
+    echo "Cat all shared secrets and hash them"
+    cat tmp_bob_ss_1.bin tmp_bob_ss_2.bin tmp_bob_ss_3.bin > bob_final_shared_key.bin
+    checkSuccess $?
+
+    echo "SHAKE256 the final result"
+    ${PREFIX}hash -if bob_final_shared_key.bin -oh bob_final_shared_key.bin -halg shake256 > run.out
+    checkSuccess $?
+
+    echo "Shared Key is 32B, cut the result"
+    head -c 32 bob_final_shared_key.bin > bob_final_shared_key.bin
     checkSuccess $?
 
     echo "Bob completed the second phase of the KEX!"
@@ -155,8 +175,24 @@ do
     ${PREFIX}load -hp 80000000 -ipu ephemeral_pub.bin -ipr ephemeral_priv.bin -pwdp sto > run.out
     checkSuccess $?
 
-    echo "Perform 3rd phase KEX"
-    ${PREFIX}kyber_3phase_kex -hk 80000001 -hke 80000002 -pwdks alice_dec -pwdke eph -c1 bob_cipher_text_1.bin -c2 bob_cipher_text_2.bin -ssi shared_key_3.bin -sso alice_final_shared_key.bin > run.out
+    echo "Decapsulate first secret using alice's ephemeral key"
+    ${PREFIX}kyber_dec -hk 80000002 -pwdk eph -c bob_cipher_text_1.bin -ss tmp_alice_ss_1.bin > run.out
+    checkSuccess $?
+
+    echo "Decapsulate second secret using alice's static key"
+    ${PREFIX}kyber_dec -hk 80000001 -pwdk alice_dec -c bob_cipher_text_2.bin -ss tmp_alice_ss_2.bin > run.out
+    checkSuccess $?
+
+    echo "Cat all shared secrets and hash them"
+    cat tmp_alice_ss_1.bin tmp_alice_ss_2.bin shared_key_3.bin > alice_final_shared_key.bin
+    checkSuccess $?
+
+    echo "SHAKE256 the final result"
+    ${PREFIX}hash -if alice_final_shared_key.bin -oh alice_final_shared_key.bin -halg shake256 > run.out
+    checkSuccess $?
+
+    echo "Shared Key is 32B, cut the result"
+    head -c 32 alice_final_shared_key.bin > alice_final_shared_key.bin
     checkSuccess $?
 
     echo "Alice completed the third and final phase of the KEX!"
@@ -165,6 +201,118 @@ do
     checkSuccess $?
 
     echo "Flushing her static context"
+    ${PREFIX}flushcontext -ha 80000001 > run.out
+    checkSuccess $?
+
+    echo "Verify the final shared key result"
+    diff alice_final_shared_key.bin bob_final_shared_key.bin > run.out
+    checkSuccess $?
+
+    echo ""
+    echo "Kyber Unilaterally Authenticated Key Exchange (mode = ${mode})"
+    echo ""
+
+    echo "Create static keys for Alice and Bob"
+    ${PREFIX}create -hp 80000000 -kyber k=${mode} -den -kt f -kt p -opr static_alice_priv_uake.bin -opu static_alice_pub_uake.bin -pwdp sto -pwdk alice_dec > run.out
+    checkSuccess $?
+
+    ${PREFIX}create -hp 80000000 -kyber k=${mode} -den -kt f -kt p -opr static_bob_priv_uake.bin -opu static_bob_pub_uake.bin -pwdp sto -pwdk bob_dec > run.out
+    checkSuccess $?
+
+    echo ""
+    echo "1st Phase"
+    echo ""
+
+    echo "Alice starts the first phase of the KEX"
+    echo "Create ephemeral key"
+    ${PREFIX}create -hp 80000000 -kyber k=${mode} -den -kt f -kt p -opr ephemeral_priv_uake.bin -opu ephemeral_pub_uake.bin -pwdp sto -pwdk eph  > run.out
+
+    echo "Load Bob's public key"
+    # Returns key handle 80000001
+    ${PREFIX}loadexternal -kyber -den -ipu static_bob_pub_uake.bin > run.out
+    checkSuccess $?
+
+    echo "Encapsulate shared key to Bob"
+    ${PREFIX}kyber_enc -hk 80000001 -c alice_cipher_text_3.bin -ss shared_key_3.bin > run.out
+    checkSuccess $?
+
+    echo "Alice completed the first phase of the KEX!"
+    echo "Flushing her context"
+    ${PREFIX}flushcontext -ha 80000001 > run.out
+    checkSuccess $?
+
+    echo ""
+    echo "2nd Phase"
+    echo ""
+
+    echo "Bob starts the second phase of the KEX"
+    echo "Load Bob's static key"
+    # Returns key handle 80000001
+    ${PREFIX}load -hp 80000000 -ipr static_bob_priv_uake.bin -ipu static_bob_pub_uake.bin -pwdp sto > run.out
+    checkSuccess $?
+
+    echo "Load Alice's ephemeral public key"
+    # Returns key handle 80000002
+    ${PREFIX}loadexternal -kyber -den -ipu ephemeral_pub_uake.bin > run.out
+    checkSuccess $?
+
+    echo "Encapsulate first secret using alice's ephemeral key"
+    ${PREFIX}kyber_enc -hk 80000002 -c bob_cipher_text_1.bin -ss tmp_bob_ss_1.bin > run.out
+    checkSuccess $?
+
+    echo "Decapsulate second secret using bob's static key"
+    ${PREFIX}kyber_dec -hk 80000001 -c alice_cipher_text_3.bin -ss tmp_bob_ss_3.bin -pwdk bob_dec > run.out
+    checkSuccess $?
+
+    echo "Cat all shared secrets and hash them"
+    cat tmp_bob_ss_1.bin tmp_bob_ss_3.bin > bob_final_shared_key.bin
+    checkSuccess $?
+
+    echo "SHAKE256 the final result"
+    ${PREFIX}hash -if bob_final_shared_key.bin -oh bob_final_shared_key.bin -halg shake256 > run.out
+    checkSuccess $?
+
+    echo "Shared Key is 32B, cut the result"
+    head -c 32 bob_final_shared_key.bin > bob_final_shared_key.bin
+    checkSuccess $?
+
+    echo "Bob completed the second phase of the KEX!"
+    echo "Flushing his ephemeral context"
+    ${PREFIX}flushcontext -ha 80000002 > run.out
+    checkSuccess $?
+
+    echo "Flushing his static context"
+    ${PREFIX}flushcontext -ha 80000001 > run.out
+    checkSuccess $?
+
+    echo ""
+    echo "3rd Phase"
+    echo ""
+
+    echo "Alice starts the third and final phase of the KEX"
+    echo "Load Alice's ephemeral key"
+    # Returns key handle 80000001
+    ${PREFIX}load -hp 80000000 -ipu ephemeral_pub_uake.bin -ipr ephemeral_priv_uake.bin -pwdp sto > run.out
+    checkSuccess $?
+
+    echo "Decapsulate first secret using alice's ephemeral key"
+    ${PREFIX}kyber_dec -hk 80000001 -pwdk eph -c bob_cipher_text_1.bin -ss tmp_alice_ss_1.bin > run.out
+    checkSuccess $?
+
+    echo "Cat all shared secrets and hash them"
+    cat tmp_alice_ss_1.bin shared_key_3.bin > alice_final_shared_key.bin
+    checkSuccess $?
+
+    echo "SHAKE256 the final result"
+    ${PREFIX}hash -if alice_final_shared_key.bin -oh alice_final_shared_key.bin -halg shake256 > run.out
+    checkSuccess $?
+
+    echo "Shared Key is 32B, cut the result"
+    head -c 32 alice_final_shared_key.bin > alice_final_shared_key.bin
+    checkSuccess $?
+
+    echo "Alice completed the third and final phase of the KEX!"
+    echo "Flushing her ephemeral context"
     ${PREFIX}flushcontext -ha 80000001 > run.out
     checkSuccess $?
 
@@ -180,5 +328,7 @@ rm static_alice_priv.bin static_alice_pub.bin
 rm static_bob_priv.bin static_bob_pub.bin
 rm bob_cipher_text_1.bin bob_cipher_text_2.bin
 rm ephemeral_pub.bin ephemeral_priv.bin
-rm shared_key_3.bin alice_cipher_text_3.bin
+rm alice_cipher_text_3.bin
 rm alice_final_shared_key.bin bob_final_shared_key.bin
+rm tmp_bob_ss_1.bin tmp_bob_ss_2.bin tmp_bob_ss_3.bin
+rm tmp_alice_ss_1.bin tmp_alice_ss_2.bin shared_key_3.bin

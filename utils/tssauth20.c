@@ -646,16 +646,6 @@ static const MARSHAL_TABLE marshalTable [] = {
      (MarshalInFunction_t)TSS_Kyber_Decrypt_In_Marshalu,
      (UnmarshalOutFunction_t)TSS_Kyber_Decrypt_Out_Unmarshalu,
      (UnmarshalInFunction_t)Kyber_Decrypt_In_Unmarshal},
-
-    {TPM_CC_KYBER_2Phase_KEX, "TPM2_KYBER_2Phase_KEX",
-     (MarshalInFunction_t)TSS_Kyber_2Phase_KEX_In_Marshalu,
-     (UnmarshalOutFunction_t)TSS_Kyber_2Phase_KEX_Out_Unmarshalu,
-     (UnmarshalInFunction_t)Kyber_2Phase_KEX_In_Unmarshal},
-
-    {TPM_CC_KYBER_3Phase_KEX, "TPM2_KYBER_3Phase_KEX",
-     (MarshalInFunction_t)TSS_Kyber_3Phase_KEX_In_Marshalu,
-     (UnmarshalOutFunction_t)TSS_Kyber_3Phase_KEX_Out_Unmarshalu,
-     (UnmarshalInFunction_t)Kyber_3Phase_KEX_In_Unmarshal},
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
