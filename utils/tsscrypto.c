@@ -136,6 +136,31 @@ static TPM_RC TSS_Hash_GetMd(const EVP_MD **md,
 	    *md = EVP_get_digestbyname("sha512");
 	    break;
 #endif
+#ifdef TPM_ALG_SHA3_256
+	  case TPM_ALG_SHA3_256:
+	    *md = EVP_get_digestbyname("sha3-256");
+	    break;
+#endif
+#ifdef TPM_ALG_SHA3_384
+	  case 	TPM_ALG_SHA3_384:
+	    *md = EVP_get_digestbyname("sha3-384");
+	    break;
+#endif
+#ifdef TPM_ALG_SHA3_512
+	  case 	TPM_ALG_SHA3_512:
+	    *md = EVP_get_digestbyname("sha3-512");
+	    break;
+#endif
+#ifdef TPM_ALG_SHAKE128
+	  case 	TPM_ALG_SHAKE128:
+	    *md = EVP_get_digestbyname("shake128");
+	    break;
+#endif
+#ifdef TPM_ALG_SHAKE256
+	  case 	TPM_ALG_SHAKE256:
+	    *md = EVP_get_digestbyname("shake256");
+	    break;
+#endif
 	  default:
 	    rc = TSS_RC_BAD_HASH_ALGORITHM;
 	}

@@ -141,7 +141,7 @@ TPM_RC convertEvpPkeyToEckey(EC_KEY **ecKey,		/* freed by caller */
 			     EVP_PKEY *evpPkey)
 {
     TPM_RC 	rc = 0;
-    
+
     if (rc == 0) {
 	*ecKey = EVP_PKEY_get1_EC_KEY(evpPkey);
 	if (*ecKey == NULL) {
@@ -160,11 +160,11 @@ TPM_RC convertEvpPkeyToRsakey(RSA **rsaKey,		/* freed by caller */
 			      EVP_PKEY *evpPkey)
 {
     TPM_RC 	rc = 0;
-    
+
     if (rc == 0) {
 	*rsaKey = EVP_PKEY_get1_RSA(evpPkey);
 	if (*rsaKey == NULL) {
-	    printf("convertEvpPkeyToRsakey: EVP_PKEY_get1_RSA failed\n");  
+	    printf("convertEvpPkeyToRsakey: EVP_PKEY_get1_RSA failed\n");
 	    rc = EXIT_FAILURE;
 	}
     }
@@ -224,7 +224,7 @@ TPM_RC convertRsaKeyToPrivateKeyBin(int 	*privateKeyBytes,
     /* convert the private key bignum to binary */
     if (rc == 0) {
 	BN_bn2bin(p, *privateKeyBin);
-    }    
+    }
     return rc;
 }
 
@@ -248,7 +248,7 @@ TPM_RC convertEcKeyToPublicKeyBin(int 		*modulusBytes,
 	    rc = EXIT_FAILURE;
 	}
     }
-    if (rc == 0) {   
+    if (rc == 0) {
 	ecGroup = EC_KEY_get0_group(ecKey);
 	if (ecGroup  == NULL) {
 	    printf("convertEcKeyToPublicKeyBin: Error extracting EC group from EC public key\n");
@@ -256,12 +256,12 @@ TPM_RC convertEcKeyToPublicKeyBin(int 		*modulusBytes,
 	}
     }
     /* get the public modulus */
-    if (rc == 0) {   
+    if (rc == 0) {
 	*modulusBytes = EC_POINT_point2oct(ecGroup, ecPoint,
 					   POINT_CONVERSION_UNCOMPRESSED,
 					   NULL, 0, NULL);
     }
-    if (rc == 0) {   
+    if (rc == 0) {
 	rc = TSS_Malloc(modulusBin, *modulusBytes);
     }
     if (rc == 0) {
@@ -293,7 +293,7 @@ TPM_RC convertRsaKeyToPublicKeyBin(int 		*modulusBytes,
     if (rc == 0) {
 	*modulusBytes = BN_num_bytes(n);
     }
-    if (rc == 0) {   
+    if (rc == 0) {
 	rc = TSS_Malloc(modulusBin, *modulusBytes);
     }
     if (rc == 0) {
@@ -333,7 +333,7 @@ TPM_RC convertEcPrivateKeyBinToPrivate(TPM2B_PRIVATE 	*objectPrivate,
        Empty Buffer.
 
        In this case, the TPM2B_PRIVATE will just be a marshaled TPM2B_SENSITIVE, which is a
-       marshaled TPMT_SENSITIVE */	
+       marshaled TPMT_SENSITIVE */
 
     /* construct TPMT_SENSITIVE	*/
     if (rc == 0) {
@@ -356,7 +356,7 @@ TPM_RC convertEcPrivateKeyBinToPrivate(TPM2B_PRIVATE 	*objectPrivate,
 	memcpy(tSensitive.sensitive.ecc.t.buffer, privateKeyBin, privateKeyBytes);
     }
     /* FIXME common code for EC and RSA */
-    /* marshal the TPMT_SENSITIVE into a TPM2B_SENSITIVE */	
+    /* marshal the TPMT_SENSITIVE into a TPM2B_SENSITIVE */
     if (rc == 0) {
 	if (objectPrivate != NULL) {
 	    uint32_t size = sizeof(bSensitive.t.sensitiveArea);	/* max size */
@@ -369,7 +369,7 @@ TPM_RC convertEcPrivateKeyBinToPrivate(TPM2B_PRIVATE 	*objectPrivate,
 	}
 	else {	/* return TPM2B_SENSITIVE */
 	    objectSensitive->t.sensitiveArea = tSensitive;
-	}	
+	}
     }
     /* marshal the TPM2B_SENSITIVE (as a TPM2B_PRIVATE, see above) into a TPM2B_PRIVATE */
     if (rc == 0) {
@@ -418,7 +418,7 @@ TPM_RC convertRsaPrivateKeyBinToPrivate(TPM2B_PRIVATE 	*objectPrivate,
        Empty Buffer.
 
        In this case, the TPM2B_PRIVATE will just be a marshaled TPM2B_SENSITIVE, which is a
-       marshaled TPMT_SENSITIVE */	
+       marshaled TPMT_SENSITIVE */
 
     /* construct TPMT_SENSITIVE	*/
     if (rc == 0) {
@@ -446,7 +446,7 @@ TPM_RC convertRsaPrivateKeyBinToPrivate(TPM2B_PRIVATE 	*objectPrivate,
 	memcpy(tSensitive.sensitive.rsa.t.buffer, privateKeyBin, privateKeyBytes);
     }
     /* FIXME common code for EC and RSA */
-    /* marshal the TPMT_SENSITIVE into a TPM2B_SENSITIVE */	
+    /* marshal the TPMT_SENSITIVE into a TPM2B_SENSITIVE */
     if (rc == 0) {
 	if (objectPrivate != NULL) {
 	    uint32_t size = sizeof(bSensitive.t.sensitiveArea);	/* max size */
@@ -459,7 +459,7 @@ TPM_RC convertRsaPrivateKeyBinToPrivate(TPM2B_PRIVATE 	*objectPrivate,
 	}
 	else {	/* return TPM2B_SENSITIVE */
 	    objectSensitive->t.sensitiveArea = tSensitive;
-	}	
+	}
     }
     /* marshal the TPM2B_SENSITIVE (as a TPM2B_PRIVATE, see above) into a TPM2B_PRIVATE */
     if (rc == 0) {
@@ -534,15 +534,15 @@ TPM_RC convertEcPublicKeyBinToPublic(TPM2B_PUBLIC 		*objectPublic,
 	objectPublic->publicArea.authPolicy.t.size = 0;
 	/* Table 152 - Definition of TPMU_ASYM_SCHEME Union */
 	objectPublic->publicArea.parameters.eccDetail.scheme.details.ecdsa.hashAlg = halg;
-	objectPublic->publicArea.parameters.eccDetail.curveID = curveID;	
+	objectPublic->publicArea.parameters.eccDetail.curveID = curveID;
 	objectPublic->publicArea.parameters.eccDetail.kdf.scheme = TPM_ALG_NULL;
 	objectPublic->publicArea.parameters.eccDetail.kdf.details.mgf1.hashAlg = halg;
 
-	objectPublic->publicArea.unique.ecc.x.t.size = 32;	
-	memcpy(objectPublic->publicArea.unique.ecc.x.t.buffer, modulusBin +1, 32);	
+	objectPublic->publicArea.unique.ecc.x.t.size = 32;
+	memcpy(objectPublic->publicArea.unique.ecc.x.t.buffer, modulusBin +1, 32);
 
-	objectPublic->publicArea.unique.ecc.y.t.size = 32;	
-	memcpy(objectPublic->publicArea.unique.ecc.y.t.buffer, modulusBin +33, 32);	
+	objectPublic->publicArea.unique.ecc.y.t.size = 32;
+	memcpy(objectPublic->publicArea.unique.ecc.y.t.buffer, modulusBin +33, 32);
     }
     return rc;
 }
@@ -597,7 +597,7 @@ TPM_RC convertRsaPublicKeyBinToPublic(TPM2B_PUBLIC 		*objectPublic,
 	/* Table 182 - Definition of TPMU_PUBLIC_PARMS Union <IN/OUT, S> */
 	objectPublic->publicArea.parameters.rsaDetail.scheme.scheme = scheme;
 	objectPublic->publicArea.parameters.rsaDetail.scheme.details.rsassa.hashAlg = halg;
-	objectPublic->publicArea.parameters.rsaDetail.keyBits = modulusBytes * 8;	
+	objectPublic->publicArea.parameters.rsaDetail.keyBits = modulusBytes * 8;
 	objectPublic->publicArea.parameters.rsaDetail.exponent = 0;
 
 	objectPublic->publicArea.unique.rsa.t.size = modulusBytes;
@@ -621,7 +621,7 @@ TPM_RC convertEcKeyToPrivate(TPM2B_PRIVATE 	*objectPrivate,
     TPM_RC 	rc = 0;
     int 	privateKeyBytes;
     uint8_t 	*privateKeyBin = NULL;
-    
+
     /* convert an openssl EC_KEY token to a binary array */
     if (rc == 0) {
 	rc = convertEcKeyToPrivateKeyBin(&privateKeyBytes,
@@ -687,7 +687,7 @@ TPM_RC convertEcKeyToPublic(TPM2B_PUBLIC 		*objectPublic,
     int 		modulusBytes;
     uint8_t 		*modulusBin = NULL;
     TPMI_ECC_CURVE	curveID;
-    
+
     if (rc == 0) {
 	rc = convertEcKeyToPublicKeyBin(&modulusBytes,
 					&modulusBin,		/* freed @1 */
@@ -724,7 +724,7 @@ TPM_RC convertRsaKeyToPublic(TPM2B_PUBLIC 		*objectPublic,
     TPM_RC 		rc = 0;
     int 		modulusBytes;
     uint8_t 		*modulusBin = NULL;
-    
+
     /* openssl RSA key token to a public modulus */
     if (rc == 0) {
 	rc = convertRsaKeyToPublicKeyBin(&modulusBytes,
@@ -865,7 +865,7 @@ TPM_RC convertRsaPemToKeyPair(TPM2B_PUBLIC 		*objectPublic,
     TPM_RC 	rc = 0;
     EVP_PKEY 	*evpPkey = NULL;
     RSA		*rsaKey = NULL;
-    
+
     if (rc == 0) {
 	rc = convertPemToEvpPrivKey(&evpPkey,		/* freed @1 */
 				    pemKeyFilename,
@@ -928,8 +928,8 @@ TPM_RC convertEcDerToKeyPair(TPM2B_PUBLIC 		*objectPublic,
     if (rc == 0) {
 	rc = TSS_File_ReadBinaryFile(&derBuffer,     	/* freed @1 */
 				     &derSize,
-				     derKeyFilename); 
-    }    
+				     derKeyFilename);
+    }
     if (rc == 0) {
 	const unsigned char *tmpPtr = derBuffer;	/* because pointer moves */
 	d2i_ECPrivateKey(&ecKey, &tmpPtr, derSize);	/* freed @2 */
@@ -939,7 +939,7 @@ TPM_RC convertEcDerToKeyPair(TPM2B_PUBLIC 		*objectPublic,
 				   objectSensitive,	/* TPM2B_SENSITIVE */
 				   ecKey,
 				   password);
-    }	
+    }
     if (rc == 0) {
 	rc = convertEcKeyToPublic(objectPublic,
 				  keyType,
@@ -985,8 +985,8 @@ TPM_RC convertRsaDerToKeyPair(TPM2B_PUBLIC 		*objectPublic,
     if (rc == 0) {
 	rc = TSS_File_ReadBinaryFile(&derBuffer,     	/* freed @1 */
 				     &derSize,
-				     derKeyFilename); 
-    }    
+				     derKeyFilename);
+    }
     if (rc == 0) {
 	const unsigned char *tmpPtr = derBuffer;	/* because pointer moves */
 	d2i_RSAPrivateKey(&rsaKey, &tmpPtr, derSize);	/* freed @2 */
@@ -995,8 +995,8 @@ TPM_RC convertRsaDerToKeyPair(TPM2B_PUBLIC 		*objectPublic,
 	rc = convertRsaKeyToPrivate(NULL,		/* TPM2B_PRIVATE */
 				    objectSensitive,	/* TPM2B_SENSITIVE */
 				    rsaKey,
-				    password);	
-    }	
+				    password);
+    }
     if (rc == 0) {
 	rc = convertRsaKeyToPublic(objectPublic,
 				   keyType,
@@ -1111,7 +1111,7 @@ int getRsaPubkeyAlgorithm(EVP_PKEY *pkey)
 #ifndef TPM_TSS_NOFILE
 
 /* convertPublicToPEM() saves a PEM format public key from a TPM2B_PUBLIC
-   
+
 */
 
 TPM_RC convertPublicToPEM(const TPM2B_PUBLIC *public,
@@ -1164,7 +1164,7 @@ TPM_RC convertRsaPublicToEvpPubKey(EVP_PKEY **evpPubkey,	/* freed by caller */
     TPM_RC 	rc = 0;
     int		irc;
     RSA		*rsaPubKey = NULL;
-    
+
     if (rc == 0) {
 	*evpPubkey = EVP_PKEY_new();
 	if (*evpPubkey == NULL) {
@@ -1209,7 +1209,7 @@ TPM_RC convertEcPublicToEvpPubKey(EVP_PKEY **evpPubkey,		/* freed by caller */
     EC_KEY 	*ecKey = NULL;
     BIGNUM 	*x = NULL;		/* freed @2 */
     BIGNUM 	*y = NULL;		/* freed @3 */
-    
+
     if (rc == 0) {
 	ecKey = EC_KEY_new();		/* freed @1 */
 	if (ecKey == NULL) {
@@ -1239,7 +1239,7 @@ TPM_RC convertEcPublicToEvpPubKey(EVP_PKEY **evpPubkey,		/* freed by caller */
     if (rc == 0) {
 	rc = convertBin2Bn(&x,				/* freed @2 */
 			   tpmsEccPoint->x.t.buffer,
-			   tpmsEccPoint->x.t.size);	
+			   tpmsEccPoint->x.t.size);
     }
     if (rc == 0) {
 	rc = convertBin2Bn(&y,				/* freed @3 */
@@ -1290,8 +1290,8 @@ TPM_RC convertEvpPubkeyToPem(EVP_PKEY *evpPubkey,
 {
     TPM_RC 	rc = 0;
     int		irc;
-    FILE 	*pemFile = NULL; 
-    
+    FILE 	*pemFile = NULL;
+
     if (rc == 0) {
 	pemFile = fopen(pemFilename, "wb");	/* close @1 */
 	if (pemFile == NULL) {
@@ -1328,7 +1328,7 @@ TPM_RC verifySignatureFromPem(unsigned char *message,
 {
     TPM_RC 		rc = 0;
     EVP_PKEY 		*evpPkey = NULL;        /* OpenSSL public key, EVP format */
-    
+
     /* read the public key from PEM format */
     if (rc == 0) {
 	rc = convertPemToEvpPubKey(&evpPkey,		/* freed @1*/
@@ -1379,7 +1379,7 @@ TPM_RC verifyRSASignatureFromEvpPubKey(unsigned char *message,
 {
     TPM_RC 		rc = 0;
     RSA 		*rsaPubKey = NULL;	/* OpenSSL public key, RSA format */
-    
+
     /* construct the RSA key token */
     if (rc == 0) {
 	rsaPubKey = EVP_PKEY_get1_RSA(evpPkey);
@@ -1436,6 +1436,18 @@ TPM_RC verifyRSASignatureFromRSA(unsigned char *message,
 	  case TPM_ALG_SHA512:
 	    nid = NID_sha512;
 	    md = EVP_sha512();
+	    break;
+	  case TPM_ALG_SHA3_256:
+	    nid = NID_sha3_256;
+	    md = EVP_sha3_256();
+	    break;
+	  case TPM_ALG_SHA3_384:
+	    nid = NID_sha3_384;
+	    md = EVP_sha3_384();
+	    break;
+	  case TPM_ALG_SHA3_512:
+	    nid = NID_sha3_512;
+	    md = EVP_sha3_512();
 	    break;
 	  default:
 	    printf("verifyRSASignatureFromRSA: Unknown hash algorithm %04x\n", halg);
@@ -1511,7 +1523,7 @@ TPM_RC verifyEcSignatureFromEvpPubKey(unsigned char *message,
     if (rc == 0) {
 	ecKey = EVP_PKEY_get1_EC_KEY(evpPkey);	/* freed @1 */
 	if (ecKey == NULL) {
-	    printf("verifyEcSignatureFromEvpPubKey: EVP_PKEY_get1_EC_KEY failed\n");  
+	    printf("verifyEcSignatureFromEvpPubKey: EVP_PKEY_get1_EC_KEY failed\n");
 	    rc = TSS_RC_EC_KEY_CONVERT;
 	}
     }
@@ -1520,12 +1532,12 @@ TPM_RC verifyEcSignatureFromEvpPubKey(unsigned char *message,
 	rc = convertBin2Bn(&r,			/* freed @2 */
 			   tSignature->signature.ecdsa.signatureR.t.buffer,
 			   tSignature->signature.ecdsa.signatureR.t.size);
-    }	
+    }
     if (rc == 0) {
 	rc = convertBin2Bn(&s,			/* freed @2 */
 			   tSignature->signature.ecdsa.signatureS.t.buffer,
 			   tSignature->signature.ecdsa.signatureS.t.size);
-    }	
+    }
     if (rc == 0) {
 	ecdsaSig = ECDSA_SIG_new(); 		/* freed @2 */
 	if (ecdsaSig == NULL) {
@@ -1538,7 +1550,7 @@ TPM_RC verifyEcSignatureFromEvpPubKey(unsigned char *message,
 	ecdsaSig->r = r;
 	ecdsaSig->s = s;
 #else
-	int irc = ECDSA_SIG_set0(ecdsaSig, r, s);	
+	int irc = ECDSA_SIG_set0(ecdsaSig, r, s);
 	if (irc != 1) {
             printf("verifyEcSignatureFromEvpPubKey: Error in ECDSA_SIG_set0()\n");
             rc = TSS_RC_EC_KEY_CONVERT;
@@ -1547,7 +1559,7 @@ TPM_RC verifyEcSignatureFromEvpPubKey(unsigned char *message,
     }
     /* verify the signature */
     if (rc == 0) {
-	irc = ECDSA_do_verify(message, messageSize, 
+	irc = ECDSA_do_verify(message, messageSize,
 			      ecdsaSig, ecKey);
 	if (irc != 1) {		/* quote signature did not verify */
 	    printf("verifyEcSignatureFromEvpPubKey: Bad signature\n");
@@ -1603,7 +1615,7 @@ TPM_RC convertEcBinToTSignature(TPMT_SIGNATURE *tSignature,
     int 		sBytes;
     const BIGNUM 	*pr;
     const BIGNUM 	*ps;
-    
+
     if (rc == 0) {
 	tSignature->sigAlg = TPM_ALG_ECDSA;
 	tSignature->signature.ecdsa.hash = halg;
@@ -1643,10 +1655,10 @@ TPM_RC convertEcBinToTSignature(TPMT_SIGNATURE *tSignature,
 	if (verbose) {
 	    TSS_PrintAll("convertEcBinToTSignature: signature R",
 			 tSignature->signature.ecdsa.signatureR.t.buffer,
-			 tSignature->signature.ecdsa.signatureR.t.size);		
+			 tSignature->signature.ecdsa.signatureR.t.size);
 	    TSS_PrintAll("convertEcBinToTSignature: signature S",
 			 tSignature->signature.ecdsa.signatureS.t.buffer,
-			 tSignature->signature.ecdsa.signatureS.t.size);		
+			 tSignature->signature.ecdsa.signatureS.t.size);
 	}
     }
     if (ecSig != NULL) {
@@ -1667,7 +1679,7 @@ TPM_RC getEcCurve(TPMI_ECC_CURVE *curveID,
     TPM_RC 		rc = 0;
     const EC_GROUP 	*ecGroup;
     int			nid;
-    
+
     if (rc == 0) {
 	ecGroup = EC_KEY_get0_group(ecKey);
 	nid = EC_GROUP_get_curve_name(ecGroup);	/* openssl NID */
@@ -1699,7 +1711,7 @@ TPM_RC convertBin2Bn(BIGNUM **bn,			/* freed by caller */
     TPM_RC rc = 0;
 
     /* BIGNUM *BN_bin2bn(const unsigned char *s, int len, BIGNUM *ret);
-    
+
        BN_bin2bn() converts the positive integer in big-endian form of length len at s into a BIGNUM
        and places it in ret. If ret is NULL, a new BIGNUM is created.
 

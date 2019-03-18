@@ -60,7 +60,7 @@ checkSuccess $?
 echo "Allocate initial SHA-1, SHA-256, SHA-384 SHA-512 PCRs"
 ${PREFIX}pcrallocate +sha1 +sha256 +sha384 +sha512 > run.out
 checkSuccess $?
-    
+
 echo "Power cycle"
 ${PREFIX}powerup > run.out
 checkSuccess $?

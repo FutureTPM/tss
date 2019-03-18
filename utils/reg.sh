@@ -69,8 +69,8 @@ PREFIX=./
 
 # hash algorithms to be used for testing
 
-export ITERATE_ALGS="sha1 sha256 sha384 sha512"
-export BAD_ITERATE_ALGS="sha256 sha384 sha512 sha1"
+export     ITERATE_ALGS="sha1   sha256   sha384   sha512   sha3-256 sha3-384 sha3-512"
+export BAD_ITERATE_ALGS="sha256 sha3-512 sha3-256 sha3-384 sha512   sha384   sha1"
 
 printUsage ()
 {
@@ -505,7 +505,7 @@ main ()
 	((I++))
     fi
     if [ "$1" == "-a" ] || [ "$1" == "-31" ]; then
-    	./regtests/testldaa.sh
+    	#./regtests/testldaa.sh
     	RC=$?
 	if [ $RC -ne 0 ]; then
 	    exit 255

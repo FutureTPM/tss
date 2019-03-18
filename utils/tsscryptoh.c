@@ -75,7 +75,7 @@ static TPM_RC TSS_MGF1(unsigned char       	*mask,
 		       TPMI_ALG_HASH 		halg);
 
 /* TSS_HMAC_Generate() can be called directly to HMAC a list of streams.
-   
+
    The ... arguments are a message list of the form
    int length, unsigned char *buffer
    terminated by a 0 length
@@ -89,7 +89,7 @@ TPM_RC TSS_HMAC_Generate(TPMT_HA *digest,		/* largest size of a digest */
 {
     TPM_RC		rc = 0;
     va_list		ap;
-    
+
     va_start(ap, hmacKey);
     rc = TSS_HMAC_Generate_valist(digest, hmacKey, ap);
     va_end(ap);
@@ -97,7 +97,7 @@ TPM_RC TSS_HMAC_Generate(TPMT_HA *digest,		/* largest size of a digest */
 }
 
 /* TSS_HMAC_Verify() can be called directly to check the HMAC of a list of streams.
-   
+
    The ... arguments are a list of the form
    int length, unsigned char *buffer
    terminated by a 0 length
@@ -135,7 +135,7 @@ TPM_RC TSS_HMAC_Verify(TPMT_HA *expect,
 
    As defined in SP800-108, the inner loop for building the key stream is:
 
-   K(i) = HMAC (KI , [i]2 || Label || 00 || Context || [L]2) 
+   K(i) = HMAC (KI , [i]2 || Label || 00 || Context || [L]2)
 */
 
 TPM_RC TSS_KDFA(uint8_t		*keyStream,    	/* OUT: key buffer */
@@ -155,7 +155,7 @@ TPM_RC TSS_KDFA(uint8_t		*keyStream,    	/* OUT: key buffer */
     uint32_t	counter;    			/* counter value */
     uint32_t 	counterNbo;			/* counter in big endian */
     TPMT_HA 	hmac;				/* hmac result for this pass */
-    
+
 
     if (rc == 0) {
 	hmac.hashAlg = hashAlg;			/* for TSS_HMAC_Generate() */
@@ -175,7 +175,7 @@ TPM_RC TSS_KDFA(uint8_t		*keyStream,    	/* OUT: key buffer */
 	    bytesThisPass = bytes;
 	}
 	counterNbo = htonl(counter);	/* counter for this pass in BE format */
-	    
+
 	rc = TSS_HMAC_Generate(&hmac,				/* largest size of an HMAC */
 			       (const TPM2B_KEY *)key,
 			       sizeof(uint32_t), &counterNbo,	/* KDFa i2 counter */
@@ -197,17 +197,17 @@ TPM_RC TSS_KDFA(uint8_t		*keyStream,    	/* OUT: key buffer */
    where
 
    counter is initialized to 1 and incremented for each iteration
-   
-   Z is the X-coordinate of the product of a public (TPM) ECC key and 
+
+   Z is the X-coordinate of the product of a public (TPM) ECC key and
    a different private ECC key
-   
-   Use is a NULL-terminated string that indicates the use of the key 
+
+   Use is a NULL-terminated string that indicates the use of the key
    ("DUPLICATE", "IDENTITY", "SECRET", etc)
-   
+
    PartyUInfo is the X-coordinate of the public point of an ephemeral key
-   
+
    PartyVInfo is the X-coordinate of the public point of the TPM key
-   
+
    bits is a 32-bit value indicating the number of bits to be returned
 */
 
@@ -227,7 +227,7 @@ TPM_RC TSS_KDFE(uint8_t		*keyStream,    	/* OUT: key buffer */
     uint32_t	counter;    			/* counter value */
     uint32_t 	counterNbo;			/* counter in big endian */
     TPMT_HA 	digest;				/* result for this pass */
-    
+
     if (rc == 0) {
 	digest.hashAlg = hashAlg;			/* for TSS_Hash_Generate() */
 	bytesThisPass = TSS_GetDigestSize(hashAlg);	/* start with hashAlg sized chunks */
@@ -245,7 +245,7 @@ TPM_RC TSS_KDFE(uint8_t		*keyStream,    	/* OUT: key buffer */
 	    bytesThisPass = bytes;
 	}
 	counterNbo = htonl(counter);	/* counter for this pass in BE format */
-	    
+
 	rc = TSS_Hash_Generate(&digest,				/* largest size of a digest */
 			       sizeof(uint32_t), &counterNbo,	/* KDFe i2 counter */
 			       key->size, key->buffer,
@@ -285,7 +285,7 @@ TPM_RC TSS_Hash_Generate(TPMT_HA *digest,		/* largest size of a digest */
 uint16_t TSS_GetDigestSize(TPM_ALG_ID hashAlg)
 {
     uint16_t size;
-    
+
     switch (hashAlg) {
       case TPM_ALG_SHA1:
 	size = SHA1_DIGEST_SIZE;
@@ -298,6 +298,21 @@ uint16_t TSS_GetDigestSize(TPM_ALG_ID hashAlg)
 	break;
       case TPM_ALG_SHA512:
 	size = SHA512_DIGEST_SIZE;
+	break;
+      case TPM_ALG_SHA3_256:
+	size = SHA3_256_DIGEST_SIZE;
+	break;
+      case TPM_ALG_SHA3_384:
+	size = SHA3_384_DIGEST_SIZE;
+	break;
+      case TPM_ALG_SHA3_512:
+	size = SHA3_512_DIGEST_SIZE;
+	break;
+      case TPM_ALG_SHAKE128:
+	size = SHAKE128_DIGEST_SIZE;
+	break;
+      case TPM_ALG_SHAKE256:
+	size = SHAKE256_DIGEST_SIZE;
 	break;
 #if 0
       case TPM_ALG_SM3_256:
@@ -313,7 +328,7 @@ uint16_t TSS_GetDigestSize(TPM_ALG_ID hashAlg)
 uint16_t TSS_GetDigestBlockSize(TPM_ALG_ID hashAlg)
 {
     uint16_t size;
-    
+
     switch (hashAlg) {
       case TPM_ALG_SHA1:
 	size = SHA1_BLOCK_SIZE;
@@ -323,6 +338,24 @@ uint16_t TSS_GetDigestBlockSize(TPM_ALG_ID hashAlg)
 	break;
       case TPM_ALG_SHA384:
 	size = SHA384_BLOCK_SIZE;
+	break;
+      case TPM_ALG_SHA512:
+	size = SHA512_BLOCK_SIZE;
+	break;
+      case TPM_ALG_SHA3_256:
+	size = SHA3_256_BLOCK_SIZE;
+	break;
+      case TPM_ALG_SHA3_384:
+	size = SHA3_384_BLOCK_SIZE;
+	break;
+      case TPM_ALG_SHA3_512:
+	size = SHA3_512_BLOCK_SIZE;
+	break;
+      case TPM_ALG_SHAKE128:
+	size = SHAKE128_BLOCK_SIZE;
+	break;
+      case TPM_ALG_SHAKE256:
+	size = SHAKE256_BLOCK_SIZE;
 	break;
 #if 0
       case TPM_ALG_SHA512:
@@ -343,7 +376,7 @@ uint16_t TSS_GetDigestBlockSize(TPM_ALG_ID hashAlg)
 
    The openSSL DLL doesn't export MGF1 in Windows or Linux 1.0.0, so this version is created from
    scratch.
-   
+
    Algorithm and comments (not the code) from:
 
    PKCS #1: RSA Cryptography Specifications Version 2.1 B.2.1 MGF1
@@ -351,20 +384,20 @@ uint16_t TSS_GetDigestBlockSize(TPM_ALG_ID hashAlg)
    Prototype designed to be compatible with openSSL
 
    MGF1 is a Mask Generation Function based on a hash function.
-   
+
    MGF1 (mgfSeed, maskLen)
 
-   Options:     
+   Options:
 
-   Hash hash function (hLen denotes the length in octets of the hash 
+   Hash hash function (hLen denotes the length in octets of the hash
    function output)
 
    Input:
-   
+
    mgfSeed         seed from which mask is generated, an octet string
    maskLen         intended length in octets of the mask, at most 2^32(hLen)
 
-   Output:      
+   Output:
    mask            mask, an octet string of length l; or "mask too long"
 
    Error:          "mask too long'
@@ -382,9 +415,9 @@ static TPM_RC TSS_MGF1(unsigned char       	*mask,
     uint32_t		outLen;
     TPMT_HA 		digest;
     uint16_t 		digestSize = TSS_GetDigestSize(halg);
-    
+
     digest.hashAlg = halg;
-    
+
 #if 0
     if (rc == 0) {
         /* this is possible with arrayLen on a 64 bit architecture, comment to quiet beam */
@@ -432,7 +465,7 @@ static TPM_RC TSS_MGF1(unsigned char       	*mask,
 }
 
 /*
-  OAEP Padding 
+  OAEP Padding
 */
 
 /* TSS_RSA_padding_add_PKCS1_OAEP() is a variation of the the openSSL function
@@ -447,7 +480,7 @@ static TPM_RC TSS_MGF1(unsigned char       	*mask,
 
 
    | <-			  emLen					   -> |
-   
+
                          |  lHash |    PS     | 01 |  Message	      |
 
                             SHA                       flen
@@ -457,8 +490,8 @@ static TPM_RC TSS_MGF1(unsigned char       	*mask,
         |  seed          |
 
 	   SHA
-	   
-        |  seedMask      | 
+
+        |  seedMask      |
    | 00 |  maskSeed      |   maskedDB                                 |
 */
 
@@ -466,12 +499,12 @@ TPM_RC TSS_RSA_padding_add_PKCS1_OAEP(unsigned char *em, uint32_t emLen,
 				      const unsigned char *from, uint32_t fLen,
 				      const unsigned char *p,
 				      int plen,
-				      TPMI_ALG_HASH halg)	
-{	
+				      TPMI_ALG_HASH halg)
+{
     TPM_RC		rc = 0;
     TPMT_HA 		lHash;
     unsigned char 	*db;
-    
+
     unsigned char *dbMask = NULL;			/* freed @1 */
     unsigned char *seed = NULL;				/* freed @2 */
     unsigned char *maskedDb;
@@ -479,7 +512,7 @@ TPM_RC TSS_RSA_padding_add_PKCS1_OAEP(unsigned char *em, uint32_t emLen,
     unsigned char *maskedSeed;
 
     uint16_t hlen = TSS_GetDigestSize(halg);
-    
+
     /* 1.a. If the length of L is greater than the input limitation for */
     /* the hash function (2^61-1 octets for SHA-1) then output "parameter */
     /* string too long" and stop. */
@@ -488,7 +521,7 @@ TPM_RC TSS_RSA_padding_add_PKCS1_OAEP(unsigned char *em, uint32_t emLen,
 	    if (tssVerbose) printf("TSS_RSA_padding_add_PKCS1_OAEP: Error, "
 				   "label %u too long\n", plen);
 	    rc = TSS_RC_RSA_PADDING;
-	}	    
+	}
     }
     /* 1.b. If ||M|| > emLen-2hLen-1 then output "message too long" and stop. */
     if (rc == 0) {
@@ -519,7 +552,7 @@ TPM_RC TSS_RSA_padding_add_PKCS1_OAEP(unsigned char *em, uint32_t emLen,
 	       emLen - fLen - (2 * hlen) - 2);
 	/* position of 0x01 in db is
 	   hlen + PSlen =
-	   hlen + emlen - flen - (2 * hlen) - 2 = 
+	   hlen + emlen - flen - (2 * hlen) - 2 =
 	   emlen - hlen - flen - 2 */
 	db[emLen - fLen - hlen - 2] = 0x01;
 	memcpy(db + emLen - fLen - hlen - 1, from, fLen);	/* M */
@@ -575,7 +608,7 @@ void TSS_XOR(unsigned char *out,
 	     size_t length)
 {
     size_t i;
-    
+
     for (i = 0 ; i < length ; i++) {
 	out[i] = in1[i] ^ in2[i];
     }
@@ -588,11 +621,11 @@ void TSS_XOR(unsigned char *out,
 
 #define TSS_AES_KEY_BITS 128
 
-uint16_t TSS_Sym_GetBlockSize(TPM_ALG_ID	symmetricAlg, 
+uint16_t TSS_Sym_GetBlockSize(TPM_ALG_ID	symmetricAlg,
 			      uint16_t		keySizeInBits)
 {
     keySizeInBits = keySizeInBits;
-    
+
     switch (symmetricAlg) {
 #ifdef TPM_ALG_AES
       case TPM_ALG_AES:

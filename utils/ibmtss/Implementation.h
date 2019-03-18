@@ -140,8 +140,8 @@
    supported hash algoriths, using common TPM / TSS code. */
 #define HASH_COUNT 3
 #else
-/* For the TSS .so.1, the number was increased to support a SW TPM with 4 banks (unlikely for a HW
-   TPM) plus future expansion. */
+/* For the TSS .so.1, the number was increased to support a SW TPM with 4 banks
+ * (unlikely for a HW TPM) plus future expansion. */
 #define HASH_COUNT 16
 #endif
 
@@ -190,9 +190,9 @@
 #define  ALG_SHA256            ALG_YES
 #define  ALG_SHA384            ALG_YES
 #define  ALG_SHA512            ALG_YES
-#define  ALG_SHA3_256          ALG_NO
-#define  ALG_SHA3_384          ALG_NO
-#define  ALG_SHA3_512          ALG_NO
+#define  ALG_SHA3_256          ALG_YES
+#define  ALG_SHA3_384          ALG_YES
+#define  ALG_SHA3_512          ALG_YES
 #define  ALG_SM3_256           ALG_NO
 #define  ALG_SM4               ALG_NO
 #define  ALG_RSASSA            (ALG_YES*ALG_RSA)
@@ -215,6 +215,15 @@
 #define  ALG_CBC               ALG_YES
 #define  ALG_CFB               ALG_YES
 #define  ALG_ECB               ALG_YES
+
+/*****************************************************************************/
+/*                                  SHA Mods                                 */
+/*****************************************************************************/
+#define ALG_SHAKE128                      ALG_YES
+#define ALG_SHAKE256                      ALG_YES
+/*****************************************************************************/
+/*                                  SHA Mods                                 */
+/*****************************************************************************/
 
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
@@ -539,23 +548,31 @@
 #if defined ALG_CAMELLIA && ALG_CAMELLIA == YES
 #define  TPM_ALG_CAMELLIA            (TPM_ALG_ID)(ALG_CAMELLIA_VALUE)
 #endif
-#define  ALG_SHA3_256_VALUE	     0x0027
+#define  ALG_SHA3_256_VALUE	         0x0027
 #if defined ALG_SHA3_256 && ALG_SHA3_256 == YES
-#define TPM_ALGSHA3_256              (TPM_ALG_ID)(ALG_SHA3_256_VALUE)
+#define TPM_ALG_SHA3_256              (TPM_ALG_ID)(ALG_SHA3_256_VALUE)
 #endif
-#define  ALG_SHA3_384_VALUE	     0x0028
+#define  ALG_SHA3_384_VALUE	         0x0028
 #if defined ALG_SHA3_384 && ALG_SHA3_384 == YES
-#define TPM_ALGSHA3_384              (TPM_ALG_ID)(ALG_SHA3_384_VALUE)
+#define TPM_ALG_SHA3_384              (TPM_ALG_ID)(ALG_SHA3_384_VALUE)
 #endif
-#define  ALG_SHA3_512_VALUE	     0x0029
+#define  ALG_SHA3_512_VALUE	         0x0029
 #if defined ALG_SHA3_512 && ALG_SHA3_512 == YES
-#define TPM_ALGSHA3_512              (TPM_ALG_ID)(ALG_SHA3_512_VALUE)
+#define TPM_ALG_SHA3_512              (TPM_ALG_ID)(ALG_SHA3_512_VALUE)
+#endif
+#define  ALG_SHAKE128_VALUE          0x002A
+#if defined ALG_SHAKE128 && ALG_SHAKE128 == YES
+#define TPM_ALG_SHAKE128                (TPM_ALG_ID)(ALG_SHAKE128_VALUE)
+#endif
+#define  ALG_SHAKE256_VALUE          0x002B
+#if defined ALG_SHAKE256 && ALG_SHAKE256 == YES
+#define TPM_ALG_SHAKE256                (TPM_ALG_ID)(ALG_SHAKE256_VALUE)
 #endif
 
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
-#define     ALG_KYBER_VALUE             0x002A
+#define     ALG_KYBER_VALUE             0x002C
 #if defined ALG_KYBER && ALG_KYBER == YES
 #define TPM_ALG_KYBER                   (TPM_ALG_ID)(ALG_KYBER_VALUE)
 #endif   // ALG_KYBER
@@ -571,7 +588,7 @@
 /*****************************************************************************/
 /*                             Dilithium Mods                                */
 /*****************************************************************************/
-#define     ALG_DILITHIUM_VALUE             0x002B
+#define     ALG_DILITHIUM_VALUE             0x002D
 #if defined ALG_DILITHIUM && ALG_DILITHIUM == YES
 #define TPM_ALG_DILITHIUM                   (TPM_ALG_ID)(ALG_DILITHIUM_VALUE)
 #endif   // ALG_DILITHIUM
@@ -588,7 +605,7 @@
 /*****************************************************************************/
 /*                               LDAA Mods                                   */
 /*****************************************************************************/
-#define     ALG_LDAA_VALUE			    0x002C
+#define     ALG_LDAA_VALUE			    0x002E
 #if defined ALG_LDAA && ALG_LDAA == YES
 #define TPM_ALG_LDAA                    (TPM_ALG_ID)(ALG_LDAA_VALUE)
 #endif   // ALG_LDAA
@@ -685,6 +702,46 @@
 #define  SM3_256_DER_SIZE       18
 #define  SM3_256_DER							\
     0x30,0x30,0x30,0x0C,0x06,0x08,0x2A,0x81,0x1C,0x81,0x45,0x01,0x83,0x11,0x05,0x00,0x04,0x20
+
+#define  SHA3_256_DIGEST_SIZE    32
+#define  SHA3_256_BLOCK_SIZE     136
+#define  SHA3_256_DER_SIZE       19
+#define  SHA3_256_DER					\
+    0x30, 0x31, 0x30, 0x0d, 0x06, 0x09, 0x60, 0x86, \
+    0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x08, 0x05, \
+    0x00, 0x04, 0x20
+
+#define  SHA3_384_DIGEST_SIZE    48
+#define  SHA3_384_BLOCK_SIZE     104
+#define  SHA3_384_DER_SIZE       19
+#define  SHA3_384_DER					\
+    0x30, 0x41, 0x30, 0x0d, 0x06, 0x09, 0x60, 0x86, \
+    0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x09, 0x05, \
+    0x00, 0x04, 0x30
+
+#define  SHA3_512_DIGEST_SIZE    64
+#define  SHA3_512_BLOCK_SIZE     72
+#define  SHA3_512_DER_SIZE       19
+#define  SHA3_512_DER					\
+    0x30, 0x51, 0x30, 0x0d, 0x06, 0x09, 0x60, 0x86, \
+    0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x0a, 0x05, \
+    0x00, 0x04, 0x40
+
+#define  SHAKE128_DIGEST_SIZE    1024
+#define  SHAKE128_BLOCK_SIZE     168
+#define  SHAKE128_DER_SIZE       19
+#define  SHAKE128_DER					\
+    0x30, 0x61, 0x30, 0x0d, 0x06, 0x09, 0x60, 0x86, \
+    0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x0b, 0x05, \
+    0x00, 0x04, 0x50
+
+#define  SHAKE256_DIGEST_SIZE    1024
+#define  SHAKE256_BLOCK_SIZE     136
+#define  SHAKE256_DER_SIZE       19
+#define  SHAKE256_DER					\
+    0x30, 0x71, 0x30, 0x0d, 0x06, 0x09, 0x60, 0x86, \
+    0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x0c, 0x05, \
+    0x00, 0x04, 0x60
 
 // From TCG Algorithm Registry: Table 17 - Defines for AES Symmetric Cipher Algorithm Constants
 #define  AES_128_BLOCK_SIZE_BYTES    16

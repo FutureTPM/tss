@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
 */
 
@@ -62,8 +62,8 @@ int main(int argc, char *argv[])
     HMAC_Start_In 		in;
     HMAC_Start_Out 		out;
     TPMI_DH_OBJECT		keyHandle = 0;
-    const char			*keyPassword = NULL; 
-    const char			*authPassword = NULL; 
+    const char			*keyPassword = NULL;
+    const char			*authPassword = NULL;
     TPMI_ALG_HASH		halg = TPM_ALG_SHA256;
     TPMI_SH_AUTH_SESSION    	sessionHandle0 = TPM_RS_PW;
     unsigned int		sessionAttributes0 = 0;
@@ -121,6 +121,15 @@ int main(int argc, char *argv[])
 		else if (strcmp(argv[i],"sha512") == 0) {
 		    halg = TPM_ALG_SHA512;
 		}
+        else if (strcmp(argv[i],"sha3-256") == 0) {
+            halg = TPM_ALG_SHA3_256;
+        }
+        else if (strcmp(argv[i],"sha3-384") == 0) {
+            halg = TPM_ALG_SHA3_384;
+        }
+        else if (strcmp(argv[i],"sha3-512") == 0) {
+            halg = TPM_ALG_SHA3_512;
+        }
 		else {
 		    printf("Bad parameter %s for -halg\n", argv[i]);
 		    printUsage();
@@ -270,9 +279,9 @@ static void printUsage(void)
     printf("\t-hk\tkey handle\n");
     printf("\t-pwdk\tpassword for key (default empty)\n");
     printf("\t-pwda\tpassword for sequence (default empty)\n");
-    printf("\t[-halg\t(sha1, sha256, sha384, sha512) (default sha256)]\n");
+    printf("\t[-halg\t(sha1, sha256, sha384, sha512, sha3-256, sha3-384, sha3-512) (default sha256)]\n");
     printf("\n");
     printf("\t-se[0-2] session handle / attributes (default PWAP)\n");
     printf("\t01\tcontinue\n");
-    exit(1);	
+    exit(1);
 }

@@ -559,8 +559,6 @@ do
 
 done
 
-REM cleanup
-
 echo "Undefine the RSA EK certificate index"
 ${PREFIX}nvundefinespace -hi p -ha 01c00002
 checkSuccess $?

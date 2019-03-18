@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
  */
 
@@ -64,8 +64,8 @@ int main(int argc, char *argv[])
     GetTime_In 			in;
     GetTime_Out 		out;
     TPMI_DH_OBJECT		signHandle = 0;
-    const char			*keyPassword = NULL; 
-    const char			*endorsementPassword = NULL; 
+    const char			*keyPassword = NULL;
+    const char			*endorsementPassword = NULL;
     TPMI_ALG_HASH		halg = TPM_ALG_SHA256;
     const char			*signatureFilename = NULL;
     const char			*attestInfoFilename = NULL;
@@ -78,12 +78,12 @@ int main(int argc, char *argv[])
     unsigned int		sessionAttributes1 = 0;
     TPMI_SH_AUTH_SESSION    	sessionHandle2 = TPM_RH_NULL;
     unsigned int		sessionAttributes2 = 0;
- 
+
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
     TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "1");
 
     /* command line argument defaults */
-    
+
     for (i=1 ; (i<argc) && (rc == 0) ; i++) {
 	if (strcmp(argv[i],"-hk") == 0) {
 	    i++;
@@ -130,6 +130,15 @@ int main(int argc, char *argv[])
 		else if (strcmp(argv[i],"sha512") == 0) {
 		    halg = TPM_ALG_SHA512;
 		}
+        else if (strcmp(argv[i],"sha3-256") == 0) {
+            halg = TPM_ALG_SHA3_256;
+        }
+        else if (strcmp(argv[i],"sha3-384") == 0) {
+            halg = TPM_ALG_SHA3_384;
+        }
+        else if (strcmp(argv[i],"sha3-512") == 0) {
+            halg = TPM_ALG_SHA3_512;
+        }
 		else {
 		    printf("Bad parameter %s for -halg\n", argv[i]);
 		    printUsage();
@@ -278,14 +287,14 @@ int main(int argc, char *argv[])
 	in.signHandle = signHandle;
 	if (useRsa) {
 	    /* Table 145 - Definition of TPMT_SIG_SCHEME Structure */
-	    in.inScheme.scheme = TPM_ALG_RSASSA;	
+	    in.inScheme.scheme = TPM_ALG_RSASSA;
 	    /* Table 144 - Definition of TPMU_SIG_SCHEME Union <IN/OUT, S> */
 	    /* Table 142 - Definition of {RSA} Types for RSA Signature Schemes */
 	    /* Table 135 - Definition of TPMS_SCHEME_HASH Structure */
 	    in.inScheme.details.rsassa.hashAlg = halg;
 	}
 	else {	/* ecc */
-	    in.inScheme.scheme = TPM_ALG_ECDSA;	
+	    in.inScheme.scheme = TPM_ALG_ECDSA;
 	    in.inScheme.details.ecdsa.hashAlg = halg;
 	}
     }
@@ -340,7 +349,7 @@ int main(int argc, char *argv[])
 	rc = TSS_File_WriteStructure(&out.signature,
 				     (MarshalFunction_t)TSS_TPMT_SIGNATURE_Marshal,
 				     signatureFilename);
-    }    
+    }
     if ((rc == 0) && (attestInfoFilename != NULL)) {
 	rc = TSS_File_WriteBinaryFile(out.timeInfo.t.attestationData,
 				      out.timeInfo.t.size,
@@ -373,7 +382,7 @@ static void printUsage(void)
     printf("\t-hk\tsigning key handle\n");
     printf("\t[-pwdk\tpassword for signing key (default empty)]\n");
     printf("\t[-pwde\tpassword for endorsement hierarchy (default empty)]\n");
-    printf("\t[-halg\t(sha1, sha256, sha384, sha512) (default sha256)]\n");
+    printf("\t[-halg\t(sha1, sha256, sha384, sha512, sha3-256, sha3-384, sha3-512) (default sha256)]\n");
     printf("\t[-salg\tsignature algorithm (rsa, ecc) (default rsa)]\n");
     printf("\t[-qd\tqualifying data file name]\n");
     printf("\t[-os\tsignature file name  (default do not save)]\n");
@@ -383,5 +392,5 @@ static void printUsage(void)
     printf("\t01\tcontinue\n");
     printf("\t20\tcommand decrypt\n");
     printf("\t40\tresponse encrypt\n");
-    exit(1);	
+    exit(1);
 }

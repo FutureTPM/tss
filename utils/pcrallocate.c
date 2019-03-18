@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
  */
 
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
     TSS_CONTEXT			*tssContext = NULL;
     PCR_Allocate_In 		in;
     PCR_Allocate_Out 		out;
-    const char			*platformPassword = NULL; 
+    const char			*platformPassword = NULL;
     TPMI_SH_AUTH_SESSION    	sessionHandle0 = TPM_RS_PW;
     unsigned int		sessionAttributes0 = 0;
     TPMI_SH_AUTH_SESSION    	sessionHandle1 = TPM_RH_NULL;
@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
     TPMI_SH_AUTH_SESSION    	sessionHandle2 = TPM_RH_NULL;
     unsigned int		sessionAttributes2 = 0;
     unsigned int		bankNumber = 0;
-   
+
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
     TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "1");
 
@@ -176,6 +176,78 @@ int main(int argc, char *argv[])
 	    if (bankNumber < HASH_COUNT) {
 		setPcrSelect(&in.pcrAllocation.pcrSelections[bankNumber],
 			     TPM_ALG_SHA512, 0xff);
+		bankNumber++;
+	    }
+	    else {
+		printf("%u banks specified, TSS supports %u banks\n",
+		       bankNumber+1, HASH_COUNT);
+		printUsage();
+	    }
+	}
+	else if (strcmp(argv[i],"-sha3-256") == 0) {
+	    if (bankNumber < HASH_COUNT) {
+		setPcrSelect(&in.pcrAllocation.pcrSelections[bankNumber],
+			     TPM_ALG_SHA3_256, 0X00);
+		bankNumber++;
+	    }
+	    else {
+		printf("%u banks specified, TSS supports %u banks\n",
+		       bankNumber+1, HASH_COUNT);
+		printUsage();
+	    }
+	}
+	else if (strcmp(argv[i],"+sha3-256") == 0) {
+	    if (bankNumber < HASH_COUNT) {
+		setPcrSelect(&in.pcrAllocation.pcrSelections[bankNumber],
+			     TPM_ALG_SHA3_256, 0XFF);
+		bankNumber++;
+	    }
+	    else {
+		printf("%u banks specified, TSS supports %u banks\n",
+		       bankNumber+1, HASH_COUNT);
+		printUsage();
+	    }
+	}
+	else if (strcmp(argv[i],"-sha3-384") == 0) {
+	    if (bankNumber < HASH_COUNT) {
+		setPcrSelect(&in.pcrAllocation.pcrSelections[bankNumber],
+			     TPM_ALG_SHA3_384, 0X00);
+		bankNumber++;
+	    }
+	    else {
+		printf("%u banks specified, TSS supports %u banks\n",
+		       bankNumber+1, HASH_COUNT);
+		printUsage();
+	    }
+	}
+	else if (strcmp(argv[i],"+sha3-384") == 0) {
+	    if (bankNumber < HASH_COUNT) {
+		setPcrSelect(&in.pcrAllocation.pcrSelections[bankNumber],
+			     TPM_ALG_SHA3_384, 0XFF);
+		bankNumber++;
+	    }
+	    else {
+		printf("%u banks specified, TSS supports %u banks\n",
+		       bankNumber+1, HASH_COUNT);
+		printUsage();
+	    }
+	}
+	else if (strcmp(argv[i],"-sha3-512") == 0) {
+	    if (bankNumber < HASH_COUNT) {
+		setPcrSelect(&in.pcrAllocation.pcrSelections[bankNumber],
+			     TPM_ALG_SHA3_512, 0x00);
+		bankNumber++;
+	    }
+	    else {
+		printf("%u banks specified, TSS supports %u banks\n",
+		       bankNumber+1, HASH_COUNT);
+		printUsage();
+	    }
+	}
+	else if (strcmp(argv[i],"+sha3-512") == 0) {
+	    if (bankNumber < HASH_COUNT) {
+		setPcrSelect(&in.pcrAllocation.pcrSelections[bankNumber],
+			     TPM_ALG_SHA3_512, 0xff);
 		bankNumber++;
 	    }
 	    else {
@@ -337,6 +409,9 @@ static void printUsage(void)
     printf("\t+sha256 -sha256 allocate / deallocate a SHA-256 bank\n");
     printf("\t+sha384 -sha384 allocate / deallocate a SHA-384 bank\n");
     printf("\t+sha512 -sha512 allocate / deallocate a SHA-512 bank\n");
+    printf("\t+sha3-256 -sha3-256 allocate / deallocate a SHA3-256 bank\n");
+    printf("\t+sha3-384 -sha3-384 allocate / deallocate a SHA3-384 bank\n");
+    printf("\t+sha3-512 -sha3-512 allocate / deallocate a SHA3-512 bank\n");
     printf("\t\tMore than one algorithm can be specified\n");
-    exit(1);	
+    exit(1);
 }

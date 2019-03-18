@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
 */
 
@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
     unsigned int		sessionAttributes1 = 0;
     TPMI_SH_AUTH_SESSION    	sessionHandle2 = TPM_RH_NULL;
     unsigned int		sessionAttributes2 = 0;
-   
+
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
     TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "1");
 
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
 		printf("Missing parameter for -ha\n");
 		printUsage();
 	    }
-	    
+
 	}
 	else if (strcmp(argv[i],"-halg") == 0) {
 	    i++;
@@ -101,6 +101,15 @@ int main(int argc, char *argv[])
 		else if (strcmp(argv[i],"sha512") == 0) {
 		    halg = TPM_ALG_SHA512;
 		}
+        else if (strcmp(argv[i],"sha3-256") == 0) {
+            halg = TPM_ALG_SHA3_256;
+        }
+        else if (strcmp(argv[i],"sha3-384") == 0) {
+            halg = TPM_ALG_SHA3_384;
+        }
+        else if (strcmp(argv[i],"sha3-512") == 0) {
+            halg = TPM_ALG_SHA3_512;
+        }
 		else {
 		    printf("Bad parameter %s for -halg\n", argv[i]);
 		    printUsage();
@@ -231,7 +240,7 @@ int main(int argc, char *argv[])
     /* call TSS to execute the command */
     if (rc == 0) {
 	rc = TSS_Execute(tssContext,
-			 NULL, 
+			 NULL,
 			 (COMMAND_PARAMETERS *)&in,
 			 NULL,
 			 TPM_CC_PolicyPCR,
@@ -269,8 +278,8 @@ static void printUsage(void)
     printf("Runs TPM2_PolicyPCR\n");
     printf("\n");
     printf("\t-ha\tpolicy session handle\n");
-    printf("\t[-halg\t(sha1, sha256, sha384, sha512) (default sha256)]\n");
+    printf("\t[-halg\t(sha1, sha256, sha384, sha512, sha3-256, sha3-384, sha3-512) (default sha256)]\n");
     printf("\t-bm\tpcr mask in hex\n");
     printf("\t\te.g., -bm 10000 is PCR 16, 000001 is PCR 0\n");
-    exit(1);	
+    exit(1);
 }

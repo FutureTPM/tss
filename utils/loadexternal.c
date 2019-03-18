@@ -137,6 +137,15 @@ int main(int argc, char *argv[])
 		else if (strcmp(argv[i],"sha512") == 0) {
 		    halg = TPM_ALG_SHA512;
 		}
+		else if (strcmp(argv[i],"sha3-256") == 0) {
+		    halg = TPM_ALG_SHA3_256;
+		}
+		else if (strcmp(argv[i],"sha3-384") == 0) {
+		    halg = TPM_ALG_SHA3_384;
+		}
+		else if (strcmp(argv[i],"sha3-512") == 0) {
+		    halg = TPM_ALG_SHA3_512;
+		}
 		else {
 		    printf("Bad parameter %s for -halg\n", argv[i]);
 		    printUsage();
@@ -161,6 +170,15 @@ int main(int argc, char *argv[])
 		}
 		else if (strcmp(argv[i],"sha512") == 0) {
 		    nalg = TPM_ALG_SHA512;
+		}
+		else if (strcmp(argv[i],"sha3-256") == 0) {
+		    nalg = TPM_ALG_SHA3_256;
+		}
+		else if (strcmp(argv[i],"sha3-384") == 0) {
+		    nalg = TPM_ALG_SHA3_384;
+		}
+		else if (strcmp(argv[i],"sha3-512") == 0) {
+		    nalg = TPM_ALG_SHA3_512;
 		}
 		else {
 		    printf("Bad parameter %s for -nalg\n", argv[i]);
@@ -522,8 +540,8 @@ static void printUsage(void)
     printf("Runs TPM2_LoadExternal\n");
     printf("\n");
     printf("\t[-hi\thierarchy (e, o, p, n) (default NULL)]\n");
-    printf("\t[-nalg\tname hash algorithm (sha1, sha256, sha384, sha512) (default sha256)]\n");
-    printf("\t[-halg (sha1, sha256, sha384, sha512) (default sha256)]\n");
+    printf("\t[-nalg\tname hash algorithm (sha1, sha256, sha384, sha512, sha3-256, sha3-384, sha3-512) (default sha256)]\n");
+    printf("\t[-halg (sha1, sha256, sha384, sha512, sha3-256, sha3-384, sha3-512) (default sha256)]\n");
     printf("\n");
     printf("\t[Asymmetric Key Algorithm]\n");
     printf("\n");

@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
 */
 
@@ -68,11 +68,17 @@ int main(int argc, char *argv[])
     const char			*outFilename2 = NULL;	/* for sha256 */
     const char			*outFilename3 = NULL;	/* for sha384 */
     const char			*outFilename5 = NULL;	/* for sha512 */
+    const char			*outFilename3_2 = NULL;	/* for sha3-256 */
+    const char			*outFilename3_3 = NULL;	/* for sha3-384 */
+    const char			*outFilename3_5 = NULL;	/* for sha3-512 */
     int				process1 = FALSE;	/* these catch the case */
     int				process2 = FALSE;	/* where an output file was */
     int				process3 = FALSE;	/* specified but the TPM did */
     int				process5 = FALSE;	/* not return the algorithm */
-   
+    int				process3_2 = FALSE;
+    int				process3_3 = FALSE;
+    int				process3_5 = FALSE;
+
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
     TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "1");
 
@@ -147,6 +153,36 @@ int main(int argc, char *argv[])
 		printUsage();
 	    }
 	}
+	else if (strcmp(argv[i], "-of32")  == 0) {
+	    i++;
+	    if (i < argc) {
+		outFilename3_2 = argv[i];
+		process3_2 = TRUE;
+	    } else {
+		printf("-of32 option needs a value\n");
+		printUsage();
+	    }
+	}
+	else if (strcmp(argv[i], "-of33")  == 0) {
+	    i++;
+	    if (i < argc) {
+		outFilename3_3 = argv[i];
+		process3_3 = TRUE;
+	    } else {
+		printf("-of33 option needs a value\n");
+		printUsage();
+	    }
+	}
+	else if (strcmp(argv[i], "-of35")  == 0) {
+	    i++;
+	    if (i < argc) {
+		outFilename3_5 = argv[i];
+		process3_5 = TRUE;
+	    } else {
+		printf("-of35 option needs a value\n");
+		printUsage();
+	    }
+	}
  	else if (strcmp(argv[i],"-h") == 0) {
 	    printUsage();
 	}
@@ -192,7 +228,7 @@ int main(int argc, char *argv[])
     /* call TSS to execute the command */
     if (rc == 0) {
 	rc = TSS_Execute(tssContext,
-			 (RESPONSE_PARAMETERS *)&out, 
+			 (RESPONSE_PARAMETERS *)&out,
 			 (COMMAND_PARAMETERS *)&in,
 			 NULL,
 			 TPM_CC_PCR_Event,
@@ -235,7 +271,7 @@ int main(int argc, char *argv[])
 		if (outFilename2 != NULL) {
 		    rc = TSS_File_WriteBinaryFile((uint8_t *)&out.digests.digests[c].digest.sha256,
 						  SHA256_DIGEST_SIZE,
-						  outFilename2); 
+						  outFilename2);
 		    process2 = FALSE;
 		}
 		break;
@@ -247,7 +283,7 @@ int main(int argc, char *argv[])
 		if (outFilename3 != NULL) {
 		    rc = TSS_File_WriteBinaryFile((uint8_t *)&out.digests.digests[c].digest.sha384,
 						  SHA384_DIGEST_SIZE,
-						  outFilename3); 
+						  outFilename3);
 		    process3 = FALSE;
 		}
 		break;
@@ -259,8 +295,44 @@ int main(int argc, char *argv[])
 		if (outFilename5 != NULL) {
 		    rc = TSS_File_WriteBinaryFile((uint8_t *)&out.digests.digests[c].digest.sha512,
 						  SHA512_DIGEST_SIZE,
-						  outFilename5); 
+						  outFilename5);
 		    process5 = FALSE;
+		}
+		break;
+	      case TPM_ALG_SHA3_256:
+		if (verbose) printf("Hash algorithm SHA3-256\n");
+		if (verbose) TSS_PrintAll("Digest",
+					  (uint8_t *)&out.digests.digests[c].digest.sha3_256,
+					  SHA3_256_DIGEST_SIZE);
+		if (outFilename3_2 != NULL) {
+		    rc = TSS_File_WriteBinaryFile((uint8_t *)&out.digests.digests[c].digest.sha3_256,
+						  SHA3_256_DIGEST_SIZE,
+						  outFilename3_2);
+		    process3_2 = FALSE;
+		}
+		break;
+	      case TPM_ALG_SHA3_384:
+		if (verbose) printf("Hash algorithm SHA3-384\n");
+		if (verbose) TSS_PrintAll("Digest",
+					  (uint8_t *)&out.digests.digests[c].digest.sha3_384,
+					  SHA3_384_DIGEST_SIZE);
+		if (outFilename3_3 != NULL) {
+		    rc = TSS_File_WriteBinaryFile((uint8_t *)&out.digests.digests[c].digest.sha3_384,
+						  SHA3_384_DIGEST_SIZE,
+						  outFilename3_3);
+		    process3_3 = FALSE;
+		}
+		break;
+	      case TPM_ALG_SHA3_512:
+		if (verbose) printf("Hash algorithm SHA3-512\n");
+		if (verbose) TSS_PrintAll("Digest",
+					  (uint8_t *)&out.digests.digests[c].digest.sha3_512,
+					  SHA3_512_DIGEST_SIZE);
+		if (outFilename3_5 != NULL) {
+		    rc = TSS_File_WriteBinaryFile((uint8_t *)&out.digests.digests[c].digest.sha3_512,
+						  SHA3_512_DIGEST_SIZE,
+						  outFilename3_5);
+		    process3_5 = FALSE;
 		}
 		break;
 	      default:
@@ -295,6 +367,18 @@ int main(int argc, char *argv[])
 	    printf("-of5 specified but TPM did not return SHA-512\n");
 	    rc = EXIT_FAILURE;
 	}
+	if (process3_2) {
+	    printf("-of32 specified but TPM did not return SHA3-256\n");
+	    rc = EXIT_FAILURE;
+	}
+	if (process3_3) {
+	    printf("-of33 specified but TPM did not return SHA3-384\n");
+	    rc = EXIT_FAILURE;
+	}
+	if (process3_5) {
+	    printf("-of35 specified but TPM did not return SHA3-512\n");
+	    rc = EXIT_FAILURE;
+	}
     }
     return rc;
 }
@@ -313,5 +397,8 @@ static void printUsage(void)
     printf("\t[-of2\tsha256 output digest file (default do not save)]\n");
     printf("\t[-of3\tsha384 output digest file (default do not save)]\n");
     printf("\t[-of5\tsha512 output digest file (default do not save)]\n");
-   exit(1);	
+    printf("\t[-of32\tsha3-256 output digest file (default do not save)]\n");
+    printf("\t[-of33\tsha3-384 output digest file (default do not save)]\n");
+    printf("\t[-of35\tsha3-512 output digest file (default do not save)]\n");
+   exit(1);
 }

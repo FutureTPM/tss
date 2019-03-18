@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
     unsigned int		sessionAttributes2 = 0;
 
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
-    TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "3");
+    TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "1");
 
     /* command line argument defaults */
     for (i=1 ; (i<argc) && (rc == 0) ; i++) {
@@ -140,6 +140,15 @@ int main(int argc, char *argv[])
 		else if (strcmp(argv[i],"sha512") == 0) {
 		    halg = TPM_ALG_SHA512;
 		}
+        else if (strcmp(argv[i],"sha3-256") == 0) {
+            halg = TPM_ALG_SHA3_256;
+        }
+        else if (strcmp(argv[i],"sha3-384") == 0) {
+            halg = TPM_ALG_SHA3_384;
+        }
+        else if (strcmp(argv[i],"sha3-512") == 0) {
+            halg = TPM_ALG_SHA3_512;
+        }
 		else {
 		    printf("Bad parameter %s for -halg\n", argv[i]);
 		    printUsage();
@@ -464,7 +473,7 @@ static void printUsage(void)
     printf("\n");
     printf("\t[-tk\tticket file name (requires -hk)]\n");
     printf("\n");
-    printf("\t[-halg\t(sha1, sha256, sha384 sha512) (default sha256)]\n");
+    printf("\t[-halg\t(sha1, sha256, sha384, sha512, sha3-256, sha3-384, sha3-512) (default sha256)]\n");
     printf("\n");
     printf("\t[Asymmetric Key Algorithm]\n");
     printf("\n");

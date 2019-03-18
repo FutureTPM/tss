@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
 */
 
@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
     const char			*hashFilename = NULL;
     const char			*ticketFilename = NULL;
     int				noSpace = FALSE;
- 
+
     size_t 			length = 0;
     uint8_t			*buffer = NULL;	/* for the free */
 
@@ -105,6 +105,15 @@ int main(int argc, char *argv[])
 		else if (strcmp(argv[i],"sha512") == 0) {
 		    halg = TPM_ALG_SHA512;
 		}
+        else if (strcmp(argv[i],"sha3-256") == 0) {
+            halg = TPM_ALG_SHA3_256;
+        }
+        else if (strcmp(argv[i],"sha3-384") == 0) {
+            halg = TPM_ALG_SHA3_384;
+        }
+        else if (strcmp(argv[i],"sha3-512") == 0) {
+            halg = TPM_ALG_SHA3_512;
+        }
 		else {
 		    printf("Bad parameter %s for -halg\n", argv[i]);
 		    printUsage();
@@ -222,7 +231,7 @@ int main(int argc, char *argv[])
 	    if (length > sizeof(in.data.t.buffer)) {
 		printf("Input data too long %lu\n", (unsigned long)length);
 		rc = TSS_RC_INSUFFICIENT_BUFFER;
-	    } 
+	    }
 	}
 	if (rc == 0) {
 	    /* data to be hashed */
@@ -240,7 +249,7 @@ int main(int argc, char *argv[])
     /* call TSS to execute the command */
     if (rc == 0) {
 	rc = TSS_Execute(tssContext,
-			 (RESPONSE_PARAMETERS *)&out, 
+			 (RESPONSE_PARAMETERS *)&out,
 			 (COMMAND_PARAMETERS *)&in,
 			 NULL,
 			 TPM_CC_Hash,
@@ -255,7 +264,7 @@ int main(int argc, char *argv[])
     if ((rc == 0) && (hashFilename != NULL)) {
 	rc = TSS_File_WriteBinaryFile(out.outHash.t.buffer,
 				      out.outHash.t.size,
-				      hashFilename); 
+				      hashFilename);
     }
     if ((rc == 0) && (ticketFilename != NULL)) {
 	rc = TSS_File_WriteStructure(&out.validation,
@@ -300,11 +309,11 @@ static void printUsage(void)
     printf("\n");
     printf("\t[-hi\thierarchy (e, o, p, n) (default null)]\n");
     printf("\t\te endorsement, o owner, p platform, n null\n");
-    printf("\t[-halg\t(sha1, sha256, sha384, sha512) (default sha256)]\n");
+    printf("\t[-halg\t(sha1, sha256, sha384, sha512, sha3-256, sha3-384, sha3-512) (default sha256)]\n");
     printf("\t-if\tinput file to be hashed\n");
     printf("\t-ic\tdata string to be hashed\n");
     printf("\t[-ns\tno space, no text, no newlines]\n");
     printf("\t[-oh\thash file name (default do not save)]\n");
     printf("\t[-tk\tticket file name (default do not save)]\n");
-    exit(1);	
+    exit(1);
 }

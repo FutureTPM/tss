@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
 */
 
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
     TPMI_DH_PCR 		pcrHandle = IMPLEMENTATION_PCR;
     const char 			*dataString = NULL;
     const char 			*datafilename = NULL;
-   
+
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
     TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "1");
 
@@ -113,6 +113,15 @@ int main(int argc, char *argv[])
 		else if (strcmp(argv[i],"sha512") == 0) {
 		    in.digests.digests[in.digests.count-1].hashAlg = TPM_ALG_SHA512;
 		}
+        else if (strcmp(argv[i],"sha3-256") == 0) {
+		    in.digests.digests[in.digests.count-1].hashAlg = TPM_ALG_SHA3_256;
+        }
+        else if (strcmp(argv[i],"sha3-384") == 0) {
+		    in.digests.digests[in.digests.count-1].hashAlg = TPM_ALG_SHA3_384;
+        }
+        else if (strcmp(argv[i],"sha3-512") == 0) {
+		    in.digests.digests[in.digests.count-1].hashAlg = TPM_ALG_SHA3_512;
+        }
 		else {
 		    printf("Bad parameter %s for -halg\n", argv[i]);
 		    printUsage();
@@ -205,7 +214,7 @@ int main(int argc, char *argv[])
 		printf("Data length greater than maximum hash size %lu bytes\n",
 		       (unsigned long)sizeof(TPMU_HA));
 		rc = EXIT_FAILURE;
-	    } 
+	    }
 	}
 	if (rc == 0) {
 	    if (verbose) printf("Extending %u bytes from file into %u banks\n",
@@ -223,7 +232,7 @@ int main(int argc, char *argv[])
     /* call TSS to execute the command */
     if (rc == 0) {
 	rc = TSS_Execute(tssContext,
-			 NULL, 
+			 NULL,
 			 (COMMAND_PARAMETERS *)&in,
 			 NULL,
 			 TPM_CC_PCR_Extend,
@@ -259,10 +268,10 @@ static void printUsage(void)
     printf("Runs TPM2_PCR_Extend\n");
     printf("\n");
     printf("\t-ha\tpcr handle\n");
-    printf("\t[-halg\t(sha1, sha256, sha384, sha512) (default sha256)]\n");
+    printf("\t[-halg\t(sha1, sha256, sha384, sha512, sha3-256, sha3-384, sha3-512) (default sha256)]\n");
     printf("\t\t-halg may be specified more than once\n");
     printf("\n");
     printf("\t-ic\tdata string, 0 pad appended to halg length\n");
     printf("\t-if\tdata file, 0 pad appended to halg length\n");
-    exit(1);	
+    exit(1);
 }

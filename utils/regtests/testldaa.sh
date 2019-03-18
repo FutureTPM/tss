@@ -105,3 +105,5 @@ rm ldaa_join_token.bin
 rm ldaa_commit_token.bin
 rm ldaa_pe.bin ldaa_pbsn.bin
 rm ldaa_commit_sign_*_commit_*.bin
+rm sign_group_*.bin
+rm sign_result_?_?.bin

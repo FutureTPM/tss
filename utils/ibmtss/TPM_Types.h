@@ -1348,7 +1348,12 @@ typedef union {
     BYTE	sha384 [SHA384_DIGEST_SIZE];	/* TPM_ALG_SHA384 */
     BYTE	sha512 [SHA512_DIGEST_SIZE];	/* TPM_ALG_SHA512 */
     BYTE	sm3_256 [SM3_256_DIGEST_SIZE];	/* TPM_ALG_SM3_256 */
-    BYTE	tssmax [128];			/* to make union size larger */
+    BYTE	sha3_256 [SHA3_256_DIGEST_SIZE]; 	/* TPM_ALG_SHA3_256 */
+    BYTE	sha3_384 [SHA3_384_DIGEST_SIZE];	/* TPM_ALG_SHA3_384 */
+    BYTE	sha3_512 [SHA3_512_DIGEST_SIZE];	/* TPM_ALG_SHA3_512 */
+    BYTE	shake128 [SHAKE128_DIGEST_SIZE];	/* TPM_ALG_SHAKE128 */
+    BYTE	shake256 [SHAKE256_DIGEST_SIZE];	/* TPM_ALG_SHAKE256 */
+    BYTE	tssmax [1024];			/* to make union size larger */
 
 } TPMU_HA;
 

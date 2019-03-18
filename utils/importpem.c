@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
 
     RSA				*rsaKey = NULL;
     FILE 			*pemKeyFile = NULL;
-    
+
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
     TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "1");
 
@@ -227,6 +227,15 @@ int main(int argc, char *argv[])
 		else if (strcmp(argv[i],"sha512") == 0) {
 		    halg = TPM_ALG_SHA512;
 		}
+		else if (strcmp(argv[i],"sha3-256") == 0) {
+		    halg = TPM_ALG_SHA3_256;
+		}
+		else if (strcmp(argv[i],"sha3-384") == 0) {
+		    halg = TPM_ALG_SHA3_384;
+		}
+		else if (strcmp(argv[i],"sha3-512") == 0) {
+		    halg = TPM_ALG_SHA3_512;
+		}
 		else {
 		    printf("Bad parameter %s for -halg\n", argv[i]);
 		    printUsage();
@@ -251,6 +260,15 @@ int main(int argc, char *argv[])
 		}
 		else if (strcmp(argv[i],"sha512") == 0) {
 		    nalg = TPM_ALG_SHA512;
+		}
+		else if (strcmp(argv[i],"sha3-256") == 0) {
+		    nalg = TPM_ALG_SHA3_256;
+		}
+		else if (strcmp(argv[i],"sha3-384") == 0) {
+		    nalg = TPM_ALG_SHA3_384;
+		}
+		else if (strcmp(argv[i],"sha3-512") == 0) {
+		    nalg = TPM_ALG_SHA3_512;
 		}
 		else {
 		    printf("Bad parameter %s for -nalg\n", argv[i]);
@@ -477,13 +495,13 @@ static void printUsage(void)
     printf("\t[-pwdk\tpassword for key (default empty)]\n");
     printf("\t-opu\tpublic area file name\n");
     printf("\t-opr\tprivate area file name\n");
-    printf("\t[-nalg\tname hash algorithm (sha1, sha256, sha384, sha512) (default sha256)]\n");
-    printf("\t[-halg\tscheme hash algorithm (sha1, sha256, sha384, sha512) (default sha256)]\n");
+    printf("\t[-nalg\tname hash algorithm (sha1, sha256, sha384, sha512, sha3-256, sha3-384, sha3-512) (default sha256)]\n");
+    printf("\t[-halg\tscheme hash algorithm (sha1, sha256, sha384, sha512, sha3-256, sha3-384, sha3-512) (default sha256)]\n");
     printf("\t[-pol\tpolicy file (default empty)]\n");
     printf("\n");
     printf("\t-se[0-2] session handle / attributes (default PWAP)\n");
     printf("\t01\tcontinue\n");
     printf("\t20\tcommand decrypt\n");
     printf("\t40\tresponse encrypt\n");
-    exit(1);	
+    exit(1);
 }

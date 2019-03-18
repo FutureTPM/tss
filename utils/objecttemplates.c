@@ -646,7 +646,7 @@ void printUsageTemplate(void)
     printf("\t[-pol\tpolicy file (default empty)]\n");
     printf("\t[-uwa\tuserWithAuth attribute clear (default set)]\n");
     printf("\n");
-    printf("\t[-nalg\tname hash algorithm (sha1, sha256, sha384, sha512) (default sha256)]\n");
-    printf("\t[-halg\tscheme hash algorithm (sha1, sha256, sha384, sha512) (default sha256)]\n");
+    printf("\t[-nalg\tname hash algorithm (sha1, sha256, sha384, sha512, sha3-256, sha3-384, sha3-512) (default sha256)]\n");
+    printf("\t[-halg\tscheme hash algorithm (sha1, sha256, sha384, sha512, sha3-256, sha3-384, sha3-512) (default sha256)]\n");
     return;
 }

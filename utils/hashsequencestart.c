@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
 */
 
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
     TSS_CONTEXT			*tssContext = NULL;
     HashSequenceStart_In 	in;
     HashSequenceStart_Out	out;
-    const char			*authPassword = NULL; 
+    const char			*authPassword = NULL;
     TPMI_ALG_HASH		hashAlg = TPM_ALG_SHA256;
     TPMI_SH_AUTH_SESSION    	sessionHandle0 = TPM_RH_NULL;
     unsigned int		sessionAttributes0 = 0;
@@ -99,6 +99,15 @@ int main(int argc, char *argv[])
 		else if (strcmp(argv[i],"sha512") == 0) {
 		    hashAlg = TPM_ALG_SHA512;
 		}
+        else if (strcmp(argv[i],"sha3-256") == 0) {
+            hashAlg = TPM_ALG_SHA3_256;
+        }
+        else if (strcmp(argv[i],"sha3-384") == 0) {
+            hashAlg = TPM_ALG_SHA3_384;
+        }
+        else if (strcmp(argv[i],"sha3-512") == 0) {
+            hashAlg = TPM_ALG_SHA3_512;
+        }
 		else if (strcmp(argv[i],"null") == 0) {
 		    hashAlg = TPM_ALG_NULL;
 		}
@@ -243,11 +252,11 @@ static void printUsage(void)
     printf("Runs TPM2_HashSequenceStart\n");
     printf("\n");
     printf("\t[-pwda\tpassword for sequence (default empty)]\n");
-    printf("\t[-halg\t(sha1, sha256, sha384, sha512, null) (default sha256)]\n");
+    printf("\t[-halg\t(sha1, sha256, sha384, sha512, sha3-256, sha3-384, sha3-512, null) (default sha256)]\n");
     printf("\t\tnull is an event sequence\n");
     printf("\n");
     printf("\t-se[0-2] session handle / attributes (default NULL)\n");
     printf("\t01\tcontinue\n");
     printf("\t20\tcommand decrypt\n");
-    exit(1);	
+    exit(1);
 }

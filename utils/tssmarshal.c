@@ -3409,6 +3409,41 @@ TSS_TPMU_HA_Marshalu(const TPMU_HA *source, UINT32 *written, BYTE **buffer, uint
 	}
 	break;
 #endif
+#ifdef TPM_ALG_SHA3_256
+      case TPM_ALG_SHA3_256:
+	if (rc == 0) {
+	    rc = TSS_Array_Marshalu(&source->sha3_256[0], SHA3_256_DIGEST_SIZE, written, buffer, size);
+	}
+	break;
+#endif
+#ifdef TPM_ALG_SHA3_384
+      case TPM_ALG_SHA3_384:
+	if (rc == 0) {
+	    rc = TSS_Array_Marshalu(&source->sha3_384[0], SHA3_384_DIGEST_SIZE, written, buffer, size);
+	}
+	break;
+#endif
+#ifdef TPM_ALG_SHA3_512
+      case TPM_ALG_SHA3_512:
+	if (rc == 0) {
+	    rc = TSS_Array_Marshalu(&source->sha3_512[0], SHA3_512_DIGEST_SIZE, written, buffer, size);
+	}
+	break;
+#endif
+#ifdef TPM_ALG_SHAKE128
+      case TPM_ALG_SHAKE128:
+	if (rc == 0) {
+	    rc = TSS_Array_Marshalu(&source->shake128[0], SHAKE128_DIGEST_SIZE, written, buffer, size);
+	}
+	break;
+#endif
+#ifdef TPM_ALG_SHAKE256
+      case TPM_ALG_SHAKE256:
+	if (rc == 0) {
+	    rc = TSS_Array_Marshalu(&source->shake256[0], SHAKE256_DIGEST_SIZE, written, buffer, size);
+	}
+	break;
+#endif
       case TPM_ALG_NULL:
 	break;
       default:

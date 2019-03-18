@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
  */
 
@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
     size_t			signatureLength;
     TPMI_ALG_HASH		halg = TPM_ALG_SHA256;
     TPMT_HA 			aHash;
-    
+
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
     TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "1");
     OpenSSL_add_all_algorithms();
@@ -226,6 +226,15 @@ int main(int argc, char *argv[])
 		else if (strcmp(argv[i],"sha512") == 0) {
 		    halg = TPM_ALG_SHA512;
 		}
+        else if (strcmp(argv[i],"sha3-256") == 0) {
+            halg = TPM_ALG_SHA3_256;
+        }
+        else if (strcmp(argv[i],"sha3-384") == 0) {
+            halg = TPM_ALG_SHA3_384;
+        }
+        else if (strcmp(argv[i],"sha3-512") == 0) {
+            halg = TPM_ALG_SHA3_512;
+        }
 		else {
 		    printf("Bad parameter %s for -halg\n", argv[i]);
 		    printUsage();
@@ -268,7 +277,7 @@ int main(int argc, char *argv[])
 	in.authObject = authObject;
 	in.policySession = policySession;
     }
-    /* read the optional components - nonceTPM, cpHashA, policyRef */ 
+    /* read the optional components - nonceTPM, cpHashA, policyRef */
     if ((rc == 0) && (nonceTPMFilename != NULL)) {
 	rc = TSS_File_Read2B(&in.nonceTPM.b,
 			     sizeof(in.nonceTPM.t.buffer),
@@ -330,7 +339,7 @@ int main(int argc, char *argv[])
 	}
 	if (rc == 0) {
 	    in.auth.signature.rsassa.sig.t.size = signatureLength;
-	    memcpy(&in.auth.signature.rsassa.sig.t.buffer, signature, signatureLength); 
+	    memcpy(&in.auth.signature.rsassa.sig.t.buffer, signature, signatureLength);
 	}
     }
     /* Start a TSS context */
@@ -340,7 +349,7 @@ int main(int argc, char *argv[])
     /* call TSS to execute the command */
     if (rc == 0) {
 	rc = TSS_Execute(tssContext,
-			 (RESPONSE_PARAMETERS *)&out, 
+			 (RESPONSE_PARAMETERS *)&out,
 			 (COMMAND_PARAMETERS *)&in,
 			 NULL,
 			 TPM_CC_PolicySigned,
@@ -360,7 +369,7 @@ int main(int argc, char *argv[])
     if ((rc == 0) && (timeoutFilename != NULL)) {
 	rc = TSS_File_WriteBinaryFile(out.timeout.b.buffer,
 				      out.timeout.b.size,
-				      timeoutFilename); 
+				      timeoutFilename);
     }
     if (rc == 0) {
 	if (verbose) printf("policysigned: success\n");
@@ -421,6 +430,15 @@ TPM_RC signAHash(TPM2B_PUBLIC_KEY_RSA *signature,
 	    break;
 	  case TPM_ALG_SHA512:
 	    nid = NID_sha512;
+	    break;
+	  case TPM_ALG_SHA3_256:
+	    nid = NID_sha3_256;
+	    break;
+	  case TPM_ALG_SHA3_384:
+	    nid = NID_sha3_384;
+	    break;
+	  case TPM_ALG_SHA3_512:
+	    nid = NID_sha3_512;
 	    break;
 	  default:
 	    printf("signAHash: Error, hash algorithm %04hx unsupported\n", aHash->hashAlg);
@@ -495,7 +513,7 @@ static void printUsage(void)
     printf("\t[-cp\tcpHash file (default none)]\n");
     printf("\t[-pref\tpolicyRef file (default none)]\n");
     printf("\t[-exp\texpiration in decimal (default none)]\n");
-    printf("\t[-halg\t(sha1, sha256, sha384, sha512) (default sha256)]\n");
+    printf("\t[-halg\t(sha1, sha256, sha384, sha512, sha3-256, sha3-384, sha3-512) (default sha256)]\n");
     printf("\t-sk\tRSA signing key file name (PEM format)\n");
     printf("\t\tUse this signing key.\n");
     printf("\t-is\tsignature file name\n");
@@ -503,5 +521,5 @@ static void printUsage(void)
     printf("\t[-pwdk\tsigning key password (default null)]\n");
     printf("\t[-tk\tticket file name]\n");
     printf("\t[-to\ttimeout file name]\n");
-    exit(1);	
+    exit(1);
 }

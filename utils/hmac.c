@@ -37,7 +37,7 @@
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
 /********************************************************************************/
 
-/* 
+/*
 
 */
 
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     const char			*inFilename = NULL;
     const char 			*inString = NULL;
     const char			*hmacFilename = NULL;
-    const char			*keyPassword = NULL; 
+    const char			*keyPassword = NULL;
     TPMI_SH_AUTH_SESSION    	sessionHandle0 = TPM_RS_PW;
     unsigned int		sessionAttributes0 = 0;
     TPMI_SH_AUTH_SESSION    	sessionHandle1 = TPM_RH_NULL;
@@ -117,6 +117,15 @@ int main(int argc, char *argv[])
 		else if (strcmp(argv[i],"sha512") == 0) {
 		    halg = TPM_ALG_SHA512;
 		}
+        else if (strcmp(argv[i],"sha3-256") == 0) {
+            halg = TPM_ALG_SHA3_256;
+        }
+        else if (strcmp(argv[i],"sha3-384") == 0) {
+            halg = TPM_ALG_SHA3_384;
+        }
+        else if (strcmp(argv[i],"sha3-512") == 0) {
+            halg = TPM_ALG_SHA3_512;
+        }
 		else {
 		    printf("Bad parameter %s for -halg\n", argv[i]);
 		    printUsage();
@@ -271,7 +280,7 @@ int main(int argc, char *argv[])
 	    if (length > sizeof(in.buffer.t.buffer)) {
 		printf("Input data too long %lu\n", (unsigned long)length);
 		rc = TSS_RC_INSUFFICIENT_BUFFER;
-	    } 
+	    }
 	}
 	if (rc == 0) {
 	    /* data to be hashed */
@@ -310,8 +319,8 @@ int main(int argc, char *argv[])
     if ((rc == 0) && (hmacFilename != NULL)) {
 	rc = TSS_File_WriteBinaryFile(out.outHMAC.t.buffer,
 				      out.outHMAC.t.size,
-				      hmacFilename); 
-    }    
+				      hmacFilename);
+    }
     free(buffer);
     if (rc == 0) {
 	if (verbose) printHmac(&out);
@@ -343,7 +352,7 @@ static void printUsage(void)
     printf("\n");
     printf("\t-hk\tkey handle\n");
     printf("\t[-pwdk\tpassword for key (default empty)]\n");
-    printf("\t[-halg\t(sha1, sha256, sha384, sha512) (default sha256)]\n");
+    printf("\t[-halg\t(sha1, sha256, sha384, sha512, sha3-256, sha3-384, sha3-512) (default sha256)]\n");
     printf("\t-if\tinput file to be HMACed\n");
     printf("\t-ic\tdata string to be HMACed\n");
     printf("\t[-os\thmac file name (default do not save)]\n");
@@ -352,5 +361,5 @@ static void printUsage(void)
     printf("\t01\tcontinue\n");
     printf("\t20\tcommand decrypt\n");
     printf("\t40\tresponse encrypt\n");
-    exit(1);	
+    exit(1);
 }

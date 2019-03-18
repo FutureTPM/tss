@@ -120,6 +120,15 @@ int main(int argc, char *argv[])
                 else if (strcmp(argv[i],"sha512") == 0) {
                     digest.hashAlg = TPM_ALG_SHA512;
                 }
+                else if (strcmp(argv[i],"sha3-256") == 0) {
+                    digest.hashAlg = TPM_ALG_SHA3_256;
+                }
+                else if (strcmp(argv[i],"sha3-384") == 0) {
+                    digest.hashAlg = TPM_ALG_SHA3_384;
+                }
+                else if (strcmp(argv[i],"sha3-512") == 0) {
+                    digest.hashAlg = TPM_ALG_SHA3_512;
+                }
                 else {
                     printf("Bad parameter %s for -halg\n", argv[i]);
                     printUsage();
@@ -325,7 +334,7 @@ static void printUsage(void)
     printf("\n");
     printf("policymaker\n");
     printf("\n");
-    printf("\t[-halg\thash algorithm (sha1 sha256 sha384 sha512) (default sha256)]\n");
+    printf("\t[-halg\thash algorithm (sha1 sha256 sha384 sha512 sha3-256 sha3-384 sha3-512) (default sha256)]\n");
     printf("\t[-nz\tdo not extend starting with zeros, just hash the last line]\n");
     printf("\t-if\tinput policy statements in hex ascii\n");
     printf("\t[-of\toutput file - policy hash in binary]\n");

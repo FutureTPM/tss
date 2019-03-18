@@ -141,6 +141,15 @@ int main(int argc, char *argv[])
 		else if (strcmp(argv[i],"sha512") == 0) {
 		    halg = TPM_ALG_SHA512;
 		}
+        else if (strcmp(argv[i],"sha3-256") == 0) {
+            halg = TPM_ALG_SHA3_256;
+        }
+        else if (strcmp(argv[i],"sha3-384") == 0) {
+            halg = TPM_ALG_SHA3_384;
+        }
+        else if (strcmp(argv[i],"sha3-512") == 0) {
+            halg = TPM_ALG_SHA3_512;
+        }
 		else {
 		    printf("Bad parameter %s for -halg\n", argv[i]);
 		    printUsage();
@@ -397,7 +406,7 @@ static void printUsage(void)
     printf("\t[-pwdo\tpassword for object (default empty)]\n");
     printf("\t-hk\tcertifying key handle\n");
     printf("\t[-pwdk\tpassword for key (default empty)]\n");
-    printf("\t[-halg\t(sha1, sha256, sha384 sha512) (default sha256)]\n");
+    printf("\t[-halg\t(sha1, sha256, sha384 sha512, sha3-256, sha3-384 sha3-512) (default sha256)]\n");
     printf("\t[-salg\tsignature algorithm (rsa, ecc) (default rsa)]\n");
     printf("\t[-qd\tqualifying data file name]\n");
     printf("\t[-os\tsignature file name (default do not save)]\n");

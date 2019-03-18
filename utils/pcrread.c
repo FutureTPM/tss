@@ -120,6 +120,15 @@ int main(int argc, char *argv[])
 		else if (strcmp(argv[i],"sha512") == 0) {
 		    in.pcrSelectionIn.pcrSelections[in.pcrSelectionIn.count-1].hash = TPM_ALG_SHA512;
 		}
+        else if (strcmp(argv[i],"sha3-256") == 0) {
+		    in.pcrSelectionIn.pcrSelections[in.pcrSelectionIn.count-1].hash = TPM_ALG_SHA3_256;
+        }
+        else if (strcmp(argv[i],"sha3-384") == 0) {
+		    in.pcrSelectionIn.pcrSelections[in.pcrSelectionIn.count-1].hash = TPM_ALG_SHA3_384;
+        }
+        else if (strcmp(argv[i],"sha3-512") == 0) {
+		    in.pcrSelectionIn.pcrSelections[in.pcrSelectionIn.count-1].hash = TPM_ALG_SHA3_512;
+        }
 		else {
 		    printf("Bad parameter %s for -halg\n", argv[i]);
 		    printUsage();
@@ -145,6 +154,15 @@ int main(int argc, char *argv[])
 		else if (strcmp(argv[i],"sha512") == 0) {
 		    ahalg = TPM_ALG_SHA512;
 		}
+        else if (strcmp(argv[i],"sha3-256") == 0) {
+            ahalg = TPM_ALG_SHA3_256;
+        }
+        else if (strcmp(argv[i],"sha3-384") == 0) {
+            ahalg = TPM_ALG_SHA3_384;
+        }
+        else if (strcmp(argv[i],"sha3-512") == 0) {
+            ahalg = TPM_ALG_SHA3_512;
+        }
 		else {
 		    printf("Bad parameter %s for -ahalg\n", argv[i]);
 		    printUsage();
@@ -416,10 +434,10 @@ static void printUsage(void)
     printf("Runs TPM2_PCR_Read\n");
     printf("\n");
     printf("\t-ha\tpcr handle\n");
-    printf("\t-halg\t(sha1, sha256, sha384, sha512) (default sha256)\n");
+    printf("\t-halg\t(sha1, sha256, sha384, sha512, sha3-256, sha3-384, sha3-512) (default sha256)\n");
     printf("\t\t-halg may be specified more than once\n");
     printf("\t[-of\tdata file for first algorithm specified, in binary]\n");
-    printf("\t[-ahalg\tfor session audit digest (sha1, sha256, sha384, sha512) (default sha256)]\n");
+    printf("\t[-ahalg\tfor session audit digest (sha1, sha256, sha384, sha512, sha3-256, sha3-384, sha3-512) (default sha256)]\n");
     printf("\t[-iosad\tfile for session audit digest testing]\n");
     printf("\t[-ns\tno space, no text, no newlines\n");
     printf("\t\tUsed for scripting policy construction\n");

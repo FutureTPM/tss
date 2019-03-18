@@ -260,6 +260,15 @@ int main(int argc, char *argv[]) {
                 }
                 else if (strcmp(argv[i],"sha512") == 0) {
                     halg = TPM_ALG_SHA512;
+                }
+                else if (strcmp(argv[i],"sha3-256") == 0) {
+                    halg = TPM_ALG_SHA3_256;
+                }
+                else if (strcmp(argv[i],"sha3-384") == 0) {
+                    halg = TPM_ALG_SHA3_384;
+                }
+                else if (strcmp(argv[i],"sha3-512") == 0) {
+                    halg = TPM_ALG_SHA3_512;
                 } else {
                     printf("Bad parameter %s for -halg\n", argv[i]);
                     printUsage();
@@ -282,6 +291,15 @@ int main(int argc, char *argv[]) {
                 }
                 else if (strcmp(argv[i],"sha512") == 0) {
                     nalg = TPM_ALG_SHA512;
+                }
+                else if (strcmp(argv[i],"sha3-256") == 0) {
+                    nalg = TPM_ALG_SHA3_256;
+                }
+                else if (strcmp(argv[i],"sha3-384") == 0) {
+                    nalg = TPM_ALG_SHA3_384;
+                }
+                else if (strcmp(argv[i],"sha3-512") == 0) {
+                    nalg = TPM_ALG_SHA3_512;
                 }
                 else {
                     printf("Bad parameter %s for -nalg\n", argv[i]);
