@@ -45,15 +45,14 @@ int main(int argc, char *argv[])
 	static LDAA_SignCommit2_Out   out;
 	TPMI_DH_OBJECT      	keyHandle = 0;
 	const char          	*keyPassword = NULL;
-	const char          	*hostBNTTFilename = NULL;
 	const char          	*commitFilename = NULL;
 	const char          	*peFilename = NULL;
 	const char          	*pbsnFilename = NULL;
     const char              *bsn = NULL;
     unsigned int            bsn_len = 0;
     unsigned char           sid;
-    unsigned char           offset;
     unsigned char           sign_state_sel = 255;
+    UINT32                  seed = 0;
 	TPMI_SH_AUTH_SESSION        sessionHandle0 = TPM_RS_PW;
 	unsigned int                sessionAttributes0 = 0;
 	TPMI_SH_AUTH_SESSION        sessionHandle1 = TPM_RH_NULL;
@@ -77,6 +76,16 @@ int main(int argc, char *argv[])
 				printUsage();
 			}
 		}
+		else if (strcmp(argv[i], "-seed") == 0) {
+			i++;
+			if (i < argc) {
+				sscanf(argv[i], "%x", &seed);
+			}
+			else {
+				printf("Missing parameter for -seed\n");
+				printUsage();
+			}
+		}
 		else if (strcmp(argv[i], "-sid") == 0) {
 			i++;
 			if (i < argc) {
@@ -84,16 +93,6 @@ int main(int argc, char *argv[])
 			}
 			else {
 				printf("-sid option needs a value\n");
-				printUsage();
-			}
-		}
-		else if (strcmp(argv[i], "-offset") == 0) {
-			i++;
-			if (i < argc) {
-				sscanf(argv[i], "%hhd", &offset);
-			}
-			else {
-				printf("-offset option needs a value\n");
 				printUsage();
 			}
 		}
@@ -145,16 +144,6 @@ int main(int argc, char *argv[])
 			}
 			else {
 				printf("-ipbsn option needs a value\n");
-				printUsage();
-			}
-		}
-		else if (strcmp(argv[i], "-ibntt") == 0) {
-			i++;
-			if (i < argc) {
-                hostBNTTFilename = argv[i];
-			}
-			else {
-				printf("-ibntt option needs a value\n");
 				printUsage();
 			}
 		}
@@ -266,14 +255,14 @@ int main(int argc, char *argv[])
 		printf("Missing basename polynomial parameter -ipbsn\n");
 		printUsage();
     }
-    if (hostBNTTFilename == NULL) {
-		printf("Missing host NTT B matrix parameter -ibntt\n");
+    if (seed == 0) {
+		printf("Missing seed parameter -seed\n");
 		printUsage();
     }
 	if (rc == 0) {
 		in.key_handle = keyHandle;
         in.sid = sid;
-        in.offset = offset;
+        in.seed = seed;
         in.sign_state_sel = sign_state_sel;
         memmove(in.bsn.t.buffer, bsn, bsn_len);
         in.bsn.t.size = bsn_len;
@@ -295,15 +284,6 @@ int main(int argc, char *argv[])
         printf("pbsn size = %d\n", in.pbsn.t.size);
 	} else {
         in.pbsn.t.size = 0;
-    }
-
-	if ((rc == 0) && (hostBNTTFilename != NULL)) {
-		rc = TSS_File_Read2B(&in.issuer_bntt.b,
-			sizeof(in.issuer_bntt.t.buffer),
-			hostBNTTFilename);
-        printf("hostBNTT size = %d\n", in.issuer_bntt.t.size);
-	} else {
-        in.issuer_bntt.t.size = 0;
     }
 
 	/* Start a TSS context */
@@ -373,7 +353,7 @@ static void printUsage(void)
 	printf("\t-bsn Basename\n");
 	printf("\t-comm Commit to process [1-3]\n");
 	printf("\t-sign Signature to base the commit on [0-7]\n");
-	printf("\t-ibntt Host NTT B matrix\n");
+	printf("\t-seed Seed used to generate Host NTT B matrix\n");
 	printf("\t-ipbsn File of basename polynomial\n");
 	printf("\t-ipe File of error polynomial\n");
 	printf("\t-ocomm Output file of the commit\n");

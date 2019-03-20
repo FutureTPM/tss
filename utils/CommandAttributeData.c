@@ -446,22 +446,6 @@ const TPMA_CC_TSS    s_ccAttr [] = {
     {{0x0193, 0, 0, 0, 0, 1, 0, 0, 0}},       // TPM_CC_EncryptDecrypt2
 #endif
 
-#if (PAD_LIST || CC_Vendor_TCG_Test)
-    {{0x0000, 0, 0, 0, 0, 0, 0, 1, 0}},     // TPM_CC_Vendor_TCG_Test
-#endif
-
-#if (PAD_LIST || CC_NTC2_PreConfig)
-    {{0x20000211, 0, 1, 0, 0, 0, 0, 1, 0}}, // TPM_CC_NTC2_PreConfig
-#endif
-
-#if (PAD_LIST || CC_NTC2_LockPreConfig)
-    {{0x20000212, 0, 1, 0, 0, 0, 0, 1, 0}}, // TPM_CC_NTC2_LockPreConfig
-#endif
-
-#if (PAD_LIST || CC_NTC2_GetConfig)
-    {{0x20000213, 0, 1, 0, 0, 0, 0, 1, 0}}, // TPM_CC_NTC2_GetConfig
-#endif
-
 /*****************************************************************************/
 /*                              NewHope Mods                                 */
 /*****************************************************************************/
@@ -485,14 +469,6 @@ const TPMA_CC_TSS    s_ccAttr [] = {
 #if (PAD_LIST || CC_KYBER_Dec)
     {{0x019B, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_KYBER_Dec
 #endif
-
-#if (PAD_LIST || CC_KYBER_Encrypt)
-    {{0x01A5, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_KYBER_Encrypt
-#endif
-
-#if (PAD_LIST || CC_KYBER_Decrypt)
-    {{0x01A6, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_KYBER_Decrypt
-#endif
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
@@ -501,36 +477,60 @@ const TPMA_CC_TSS    s_ccAttr [] = {
 /*                                 LDAA Mods                                 */
 /*****************************************************************************/
 #if (PAD_LIST || CC_LDAA_Join)
-    {{0x019E, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_LDAA_Join
+    {{0x019C, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_LDAA_Join
 #endif
 
 #if (PAD_LIST || CC_LDAA_SignCommit1)
-    {{0x019F, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_LDAA_SignCommit1
+    {{0x019D, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_LDAA_SignCommit1
 #endif
 
 #if (PAD_LIST  || CC_LDAA_CommitTokenLink)
-    {{0x01A0, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_LDAA_CommitTokenLink
+    {{0x019E, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_LDAA_CommitTokenLink
 #endif
 
 #if (PAD_LIST  || CC_LDAA_SignProof)
-    {{0x01A1, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_LDAA_SignProof
+    {{0x019F, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_LDAA_SignProof
 #endif
 
 #if (PAD_LIST  || CC_LDAA_SignProceed)
-    {{0x01A2, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_LDAA_SignProceed
+    {{0x01A0, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_LDAA_SignProceed
 #endif
 
 #if (PAD_LIST || CC_LDAA_SignCommit2)
-    {{0x01A3, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_LDAA_SignCommit2
+    {{0x01A1, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_LDAA_SignCommit2
 #endif
 
 #if (PAD_LIST || CC_LDAA_SignCommit3)
-    {{0x01A4, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_LDAA_SignCommit3
+    {{0x01A2, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_LDAA_SignCommit3
 #endif
-
 /*****************************************************************************/
 /*                                 LDAA Mods                                 */
 /*****************************************************************************/
+
+#if (PAD_LIST || CC_KYBER_Encrypt)
+    {{0x01A3, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_KYBER_Encrypt
+#endif
+
+#if (PAD_LIST || CC_KYBER_Decrypt)
+    {{0x01A4, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_KYBER_Decrypt
+#endif
+
+#if (PAD_LIST || CC_Vendor_TCG_Test)
+    {{0x0000, 0, 0, 0, 0, 0, 0, 1, 0}},     // TPM_CC_Vendor_TCG_Test
+#endif
+
+#if (PAD_LIST || CC_NTC2_PreConfig)
+    {{0x20000211, 0, 1, 0, 0, 0, 0, 1, 0}}, // TPM_CC_NTC2_PreConfig
+#endif
+
+#if (PAD_LIST || CC_NTC2_LockPreConfig)
+    {{0x20000212, 0, 1, 0, 0, 0, 0, 1, 0}}, // TPM_CC_NTC2_LockPreConfig
+#endif
+
+#if (PAD_LIST || CC_NTC2_GetConfig)
+    {{0x20000213, 0, 1, 0, 0, 0, 0, 1, 0}}, // TPM_CC_NTC2_GetConfig
+#endif
+
 
     {{0x0000, 0, 0, 0, 0, 0, 0, 0, 0}},     // kg - terminator?
 };
@@ -1028,14 +1028,6 @@ const COMMAND_ATTRIBUTES    s_commandAttributes [] = {
     (COMMAND_ATTRIBUTES)(CC_KYBER_Dec                  *  // 0x019B
 			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
 #endif
-#if (PAD_LIST || CC_KYBER_Encrypt)
-    (COMMAND_ATTRIBUTES)(CC_KYBER_Encrypt              *  // 0x01A5
-			 (IS_IMPLEMENTED+DECRYPT_2+ENCRYPT_2)),
-#endif
-#if (PAD_LIST || CC_KYBER_Decrypt)
-    (COMMAND_ATTRIBUTES)(CC_KYBER_Decrypt              *  // 0x01A6
-			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
-#endif
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
@@ -1044,36 +1036,44 @@ const COMMAND_ATTRIBUTES    s_commandAttributes [] = {
 /*                                 LDAA Mods                                 */
 /*****************************************************************************/
 #if (PAD_LIST || CC_LDAA_Join)
-    (COMMAND_ATTRIBUTES)(CC_LDAA_Join                  *  // 0x019E
+    (COMMAND_ATTRIBUTES)(CC_LDAA_Join                  *  // 0x019C
 			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
 #endif
 #if (PAD_LIST || CC_LDAA_SignCommit1)
-    (COMMAND_ATTRIBUTES)(CC_LDAA_SignCommit1           *  // 0x019F
+    (COMMAND_ATTRIBUTES)(CC_LDAA_SignCommit1           *  // 0x019D
 			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
 #endif
 #if (PAD_LIST  || CC_LDAA_CommitTokenLink)
-    (COMMAND_ATTRIBUTES)(CC_LDAA_CommitTokenLink       *  // 0x01A0
+    (COMMAND_ATTRIBUTES)(CC_LDAA_CommitTokenLink       *  // 0x019E
 			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
 #endif
 #if (PAD_LIST  || CC_LDAA_SignProof)
-    (COMMAND_ATTRIBUTES)(CC_LDAA_SignProof             *  // 0x01A1
+    (COMMAND_ATTRIBUTES)(CC_LDAA_SignProof             *  // 0x019F
 			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
 #endif
 #if (PAD_LIST  || CC_LDAA_SignProceed)
-    (COMMAND_ATTRIBUTES)(CC_LDAA_SignProceed           *  // 0x01A2
+    (COMMAND_ATTRIBUTES)(CC_LDAA_SignProceed           *  // 0x01A0
 			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
 #endif
 #if (PAD_LIST || CC_LDAA_SignCommit2)
-    (COMMAND_ATTRIBUTES)(CC_LDAA_SignCommit2           *  // 0x01A3
+    (COMMAND_ATTRIBUTES)(CC_LDAA_SignCommit2           *  // 0x01A1
 			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
 #endif
 #if (PAD_LIST || CC_LDAA_SignCommit3)
-    (COMMAND_ATTRIBUTES)(CC_LDAA_SignCommit3           *  // 0x01A4
+    (COMMAND_ATTRIBUTES)(CC_LDAA_SignCommit3           *  // 0x01A2
 			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
 #endif
 /*****************************************************************************/
 /*                                 LDAA Mods                                 */
 /*****************************************************************************/
+#if (PAD_LIST || CC_KYBER_Encrypt)
+    (COMMAND_ATTRIBUTES)(CC_KYBER_Encrypt              *  // 0x01A3
+			 (IS_IMPLEMENTED+DECRYPT_2+ENCRYPT_2)),
+#endif
+#if (PAD_LIST || CC_KYBER_Decrypt)
+    (COMMAND_ATTRIBUTES)(CC_KYBER_Decrypt              *  // 0x01A4
+			 (IS_IMPLEMENTED+DECRYPT_2+HANDLE_1_USER+ENCRYPT_2)),
+#endif
 
 #if (PAD_LIST || CC_Vendor_TCG_Test)
     (COMMAND_ATTRIBUTES)(CC_Vendor_TCG_Test            *  // 0x0000

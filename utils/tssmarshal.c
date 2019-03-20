@@ -8830,9 +8830,6 @@ TSS_LDAA_SignCommit1_In_Marshalu(const LDAA_SignCommit1_In *source, UINT32 *writ
 		rc = TSS_TPM2B_LDAA_ISSUER_ATNTT_Marshalu(&source->issuer_at_ntt, written, buffer, size);
 	}
 	if (rc == TPM_RC_SUCCESS) {
-		rc = TSS_TPM2B_LDAA_ISSUER_BNTT_Marshalu(&source->issuer_bntt, written, buffer, size);
-	}
-	if (rc == TPM_RC_SUCCESS) {
 		rc = TSS_UINT8_Marshalu(&source->sign_state_sel, written, buffer, size);
 	}
 	if (rc == TPM_RC_SUCCESS) {
@@ -8840,6 +8837,9 @@ TSS_LDAA_SignCommit1_In_Marshalu(const LDAA_SignCommit1_In *source, UINT32 *writ
 	}
 	if (rc == TPM_RC_SUCCESS) {
 		rc = TSS_TPM2B_LDAA_PBSN_Marshalu(&source->pbsn, written, buffer, size);
+	}
+	if (rc == TPM_RC_SUCCESS) {
+		rc = TSS_UINT32_Marshalu(&source->seed, written, buffer, size);
 	}
 	return rc;
 }
@@ -8883,9 +8883,6 @@ TSS_LDAA_SignCommit2_In_Marshalu(const LDAA_SignCommit2_In *source, UINT32 *writ
 		rc = TSS_TPM2B_LDAA_BASENAME_Marshalu(&source->bsn, written, buffer, size);
 	}
 	if (rc == TPM_RC_SUCCESS) {
-		rc = TSS_TPM2B_LDAA_ISSUER_BNTT_Marshalu(&source->issuer_bntt, written, buffer, size);
-	}
-	if (rc == TPM_RC_SUCCESS) {
 		rc = TSS_UINT8_Marshalu(&source->sign_state_sel, written, buffer, size);
 	}
 	if (rc == TPM_RC_SUCCESS) {
@@ -8895,7 +8892,7 @@ TSS_LDAA_SignCommit2_In_Marshalu(const LDAA_SignCommit2_In *source, UINT32 *writ
 		rc = TSS_TPM2B_LDAA_PBSN_Marshalu(&source->pbsn, written, buffer, size);
 	}
 	if (rc == TPM_RC_SUCCESS) {
-		rc = TSS_UINT8_Marshalu(&source->offset, written, buffer, size);
+		rc = TSS_UINT32_Marshalu(&source->seed, written, buffer, size);
 	}
 	return rc;
 }
@@ -8939,9 +8936,6 @@ TSS_LDAA_SignCommit3_In_Marshalu(const LDAA_SignCommit3_In *source, UINT32 *writ
 		rc = TSS_TPM2B_LDAA_BASENAME_Marshalu(&source->bsn, written, buffer, size);
 	}
 	if (rc == TPM_RC_SUCCESS) {
-		rc = TSS_TPM2B_LDAA_ISSUER_BNTT_Marshalu(&source->issuer_bntt, written, buffer, size);
-	}
-	if (rc == TPM_RC_SUCCESS) {
 		rc = TSS_UINT8_Marshalu(&source->sign_state_sel, written, buffer, size);
 	}
 	if (rc == TPM_RC_SUCCESS) {
@@ -8951,7 +8945,7 @@ TSS_LDAA_SignCommit3_In_Marshalu(const LDAA_SignCommit3_In *source, UINT32 *writ
 		rc = TSS_TPM2B_LDAA_PBSN_Marshalu(&source->pbsn, written, buffer, size);
 	}
 	if (rc == TPM_RC_SUCCESS) {
-		rc = TSS_UINT8_Marshalu(&source->offset, written, buffer, size);
+		rc = TSS_UINT32_Marshalu(&source->seed, written, buffer, size);
 	}
 	return rc;
 }

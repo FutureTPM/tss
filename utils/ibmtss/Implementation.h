@@ -1476,13 +1476,13 @@ typedef  UINT32             TPM_CC;
 #   define CC_KYBER_Encrypt NO
 #endif
 #if CC_KYBER_Encrypt == YES
-#define TPM_CC_KYBER_Encrypt                  (TPM_CC)(0x000001A5)
+#define TPM_CC_KYBER_Encrypt                  (TPM_CC)(0x000001A3)
 #endif
 #ifndef CC_KYBER_Decrypt
 #   define CC_KYBER_Decrypt NO
 #endif
 #if CC_KYBER_Decrypt == YES
-#define TPM_CC_KYBER_Decrypt                  (TPM_CC)(0x000001A6)
+#define TPM_CC_KYBER_Decrypt                  (TPM_CC)(0x000001A4)
 #endif
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
@@ -1495,50 +1495,50 @@ typedef  UINT32             TPM_CC;
 #   define CC_LDAA_Join NO
 #endif
 #if CC_LDAA_Join == YES
-#define TPM_CC_LDAA_Join                      (TPM_CC)(0x0000019E)
+#define TPM_CC_LDAA_Join                      (TPM_CC)(0x0000019C)
 #endif
 #ifndef CC_LDAA_SignCommit1
 #   define CC_LDAA_SignCommit1 NO
 #endif
 #if CC_LDAA_SignCommit1 == YES
-#define TPM_CC_LDAA_SignCommit1               (TPM_CC)(0x0000019F)
+#define TPM_CC_LDAA_SignCommit1               (TPM_CC)(0x0000019D)
 #endif
 #ifndef CC_LDAA_CommitTokenLink
 #   define CC_LDAA_CommitTokenLink NO
 #endif
 #if CC_LDAA_CommitTokenLink == YES
-#define TPM_CC_LDAA_CommitTokenLink           (TPM_CC)(0x000001A0)
+#define TPM_CC_LDAA_CommitTokenLink           (TPM_CC)(0x0000019E)
 #endif
 #ifndef CC_LDAA_SignProof
 #   define CC_LDAA_SignProof NO
 #endif
 #if CC_LDAA_SignProof == YES
-#define TPM_CC_LDAA_SignProof                 (TPM_CC)(0x000001A1)
+#define TPM_CC_LDAA_SignProof                 (TPM_CC)(0x0000019F)
 #endif
 #ifndef CC_LDAA_SignProceed
 #   define CC_LDAA_SignProceed NO
 #endif
 #if CC_LDAA_SignProceed == YES
-#define TPM_CC_LDAA_SignProceed               (TPM_CC)(0x000001A2)
+#define TPM_CC_LDAA_SignProceed               (TPM_CC)(0x000001A0)
 #endif
 #ifndef CC_LDAA_SignCommit2
 #   define CC_LDAA_SignCommit2 NO
 #endif
 #if CC_LDAA_SignCommit2 == YES
-#define TPM_CC_LDAA_SignCommit2               (TPM_CC)(0x000001A3)
+#define TPM_CC_LDAA_SignCommit2               (TPM_CC)(0x000001A1)
 #endif
 #ifndef CC_LDAA_SignCommit3
 #   define CC_LDAA_SignCommit3 NO
 #endif
 #if CC_LDAA_SignCommit3 == YES
-#define TPM_CC_LDAA_SignCommit3               (TPM_CC)(0x000001A4)
+#define TPM_CC_LDAA_SignCommit3               (TPM_CC)(0x000001A2)
 #endif
 /*****************************************************************************/
 /*                                 LDAA Mods                                 */
 /*****************************************************************************/
 
 /* Compile variable. May increase based on implementation. */
-#define  TPM_CC_LAST				(TPM_CC)(0x000001A6)
+#define  TPM_CC_LAST				(TPM_CC)(0x000001A4)
 
 #ifndef CC_Vendor_TCG_Test
 #   define CC_Vendor_TCG_Test NO
