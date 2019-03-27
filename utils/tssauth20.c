@@ -1095,7 +1095,8 @@ TPM_RC TSS_GetRspAuths(TSS_AUTH_CONTEXT *tssAuthContext, ...)
     return rc;
 }
 
-/* TSS_GetCommandDecryptParam() returns the size and pointer to the first marshaled TPM2B */
+/* TSS_GetCommandDecryptParam() returns the size and pointer to the first
+ * marshaled TPM2B */
 
 TPM_RC TSS_GetCommandDecryptParam(TSS_AUTH_CONTEXT *tssAuthContext,
 				  uint32_t *decryptParamSize,
@@ -1111,14 +1112,14 @@ TPM_RC TSS_GetCommandDecryptParam(TSS_AUTH_CONTEXT *tssAuthContext,
     }
     /* extract contents of the first TPM2B */
     if (rc == 0) {
-	*decryptParamSize = ntohs(*(uint16_t *)cpBuffer);
-	*decryptParamBuffer = cpBuffer + sizeof(uint16_t);
+	*decryptParamSize = ntohl(*(uint32_t *)cpBuffer);
+	*decryptParamBuffer = cpBuffer + sizeof(uint32_t);
     }
     /* sanity range check */
     if (rc == 0) {
 	if (((*decryptParamBuffer + *decryptParamSize) >
 	     (tssAuthContext->commandBuffer + tssAuthContext->commandSize)) ||
-	    ((*decryptParamSize + sizeof(uint16_t) > tssAuthContext->cpBufferSize))) {
+	    ((*decryptParamSize + sizeof(uint32_t) > tssAuthContext->cpBufferSize))) {
 	    if (tssVerbose) printf("TSS_GetCommandDecryptParam: Malformed decrypt parameter "
 				   "size %u cpBufferSize %u commandSize %u\n",
 				   *decryptParamSize, tssAuthContext->cpBufferSize,
@@ -1286,14 +1287,14 @@ TPM_RC TSS_GetResponseEncryptParam(TSS_AUTH_CONTEXT *tssAuthContext,
     }
     /* extract contents of the first TPM2B */
     if (rc == 0) {
-	*encryptParamSize = ntohs(*(uint16_t *)rpBuffer);
-	*encryptParamBuffer = rpBuffer + sizeof(uint16_t);
+	*encryptParamSize = ntohl(*(uint32_t *)rpBuffer);
+	*encryptParamBuffer = rpBuffer + sizeof(uint32_t);
     }
     /* sanity range check */
     if (rc == 0) {
 	if (((*encryptParamBuffer + *encryptParamSize) >
 	     (tssAuthContext->responseBuffer + tssAuthContext->responseSize)) ||
-	    ((*encryptParamSize + sizeof(uint16_t) > rpBufferSize))) {
+	    ((*encryptParamSize + sizeof(uint32_t) > rpBufferSize))) {
 	    if (tssVerbose) printf("TSS_GetResponseEncryptParam: Malformed encrypt parameter "
 				   "size %u rpBufferSize %u responseSize %u\n",
 				   *encryptParamSize, rpBufferSize,

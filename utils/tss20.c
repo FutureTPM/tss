@@ -3067,7 +3067,7 @@ static TPM_RC TSS_Command_Decrypt(TSS_AUTH_CONTEXT *tssAuthContext,
 	    tpmCommandIndex = CommandCodeToCommandIndex(commandCode);
 	    /* can this be a decrypt command (this is size of TPM2B size, not size of parameter) */
 	    decryptSize = getDecryptSize(tpmCommandIndex);
-	    if (decryptSize != 2) {		/* only handle TPM2B */
+	    if (decryptSize != 4) {		/* only handle TPM2B */
 		printf("TSS_Command_Decrypt: Error, command cannot be encrypted\n");
 		rc = TSS_RC_NO_DECRYPT_PARAMETER;
 	    }
