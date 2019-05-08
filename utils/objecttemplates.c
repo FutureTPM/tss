@@ -279,9 +279,9 @@ TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
                 publicArea->parameters.dilithiumDetail.mode = dilithium_mode;
                 break;
               case TYPE_SI:
-                publicArea->parameters.dilithiumDetail.scheme.scheme = TPM_ALG_NULL;
+                publicArea->parameters.dilithiumDetail.scheme.scheme = TPM_ALG_DILITHIUM;
                 publicArea->parameters.dilithiumDetail.scheme.details.anySig.hashAlg = 0;
-                publicArea->parameters.dilithiumDetail.mode = TPM_DILITHIUM_MODE_2;
+                publicArea->parameters.dilithiumDetail.mode = TPM_DILITHIUM_MODE_3;
             }
 #ifdef TPM_ALG_NEW_HOPE
         } else if (algPublic == TPM_ALG_NEWHOPE) {
@@ -342,7 +342,7 @@ TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
             switch (keyType) {
               case TYPE_DEN:
               case TYPE_DEO:
-                publicArea->parameters.kyberDetail.scheme.scheme = TPM_ALG_KYBER;
+                publicArea->parameters.kyberDetail.scheme.scheme = TPM_ALG_NULL;
                 publicArea->parameters.kyberDetail.scheme.details.dilithium.hashAlg = halg;
                 publicArea->parameters.kyberDetail.security = kyber_k;
                 break;
