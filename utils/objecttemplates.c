@@ -80,8 +80,8 @@ TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
 			  const char *policyFilename,	/* binary policy, NULL means empty */
               TPMI_DILITHIUM_MODE dilithium_mode, // Dilithium mode to be used
               TPMI_KYBER_SECURITY kyber_k, // Kyber security profile
-              TPM2B_LDAA_ISSUER_AT *ldaa_issuer_at) // LDAA Polynomial matrix given by the issuer to the TPM
-{
+              TPM2B_LDAA_ISSUER_AT *ldaa_issuer_at, // LDAA Polynomial matrix given by the issuer to the TPM
+              TPMI_LDAA_SECURITY_MODE ldaa_mode) {
     TPM_RC			rc = 0;
 
     if (rc == 0) {
@@ -323,6 +323,7 @@ TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
                         ldaa_issuer_at->t.buffer, ldaa_issuer_at->t.size);
                 publicArea->parameters.ldaaDetail.issuer_at.t.size =
                     ldaa_issuer_at->t.size;
+                publicArea->parameters.ldaaDetail.security = ldaa_mode;
                 break;
             }
         } else { /* algPublic == TPM_ALG_KYBER */
@@ -610,10 +611,11 @@ void printUsageTemplate(void)
     printf("\t-kyber\n");
     printf("\t\tk=[2-4]\n");
     printf("\t-dilithium\n");
-    printf("\t\tmode=[0-3]\n");
+    printf("\t\tmode=[1-4]\n");
     printf("\t-newhope NewHopeKey\n");
     printf("\t-qtesla qTeslaKey\n");
     printf("\t-ldaa [IssuerAtFile]\n");
+    printf("\t\tmode=[weak, medium, high]\n");
     printf("\t-ecc curve\n");
     printf("\t\tbnp256\n");
     printf("\t\tnistp256\n");

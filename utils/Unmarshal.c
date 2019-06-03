@@ -4464,6 +4464,9 @@ TSS_TPMS_LDAA_PARMS_Unmarshalu(TPMS_LDAA_PARMS *target, BYTE **buffer, uint32_t 
     if (rc == TPM_RC_SUCCESS) {
 	rc = TSS_TPM2B_LDAA_ISSUER_AT_Unmarshalu(&target->issuer_at, buffer, size);
     }
+    if (rc == TPM_RC_SUCCESS) {
+	rc = TSS_UINT8_Unmarshalu(&target->security, buffer, size);
+    }
     return rc;
 }
 /*****************************************************************************/

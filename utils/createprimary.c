@@ -80,6 +80,7 @@ int main(int argc, char *argv[])
     TPMI_ECC_CURVE		curveID = TPM_ECC_NONE;
     TPMI_DILITHIUM_MODE	dilithium_mode = TPM_DILITHIUM_MODE_NONE;
     TPMI_KYBER_SECURITY	kyber_k = TPM_KYBER_SECURITY_NONE;
+    TPMI_LDAA_SECURITY_MODE	ldaa_mode = TPM_LDAA_SECURITY_MODE_NONE;
     const char			*policyFilename = NULL;
     const char			*publicKeyFilename = NULL;
     const char			*pemFilename = NULL;
@@ -185,6 +186,21 @@ int main(int argc, char *argv[])
             printf("-ldaa option needs a value\n");
             printUsage();
 	    }
+        if (i < argc) {
+            if (strcmp(argv[i],"mode=weak") == 0) {
+                ldaa_mode = TPM_LDAA_SECURITY_MODE_WEAK;
+            } else if (strcmp(argv[i],"mode=medium") == 0) {
+                ldaa_mode = TPM_LDAA_SECURITY_MODE_MEDIUM;
+            } else if (strcmp(argv[i],"mode=high") == 0) {
+                ldaa_mode = TPM_LDAA_SECURITY_MODE_HIGH;
+            } else {
+                printf("Bad parameter %s for -ldaa\n", argv[i]);
+                printUsage();
+            }
+        } else {
+            printf("-ldaa option needs a security value\n");
+            printUsage();
+        }
 	}
 	else if (strcmp(argv[i], "-kyber") == 0) {
 	    algPublic = TPM_ALG_KYBER;
@@ -209,14 +225,14 @@ int main(int argc, char *argv[])
 	    algPublic = TPM_ALG_DILITHIUM;
 	    i++;
 	    if (i < argc) {
-            if (strcmp(argv[i],"mode=0") == 0) {
-                dilithium_mode = TPM_DILITHIUM_MODE_0;
-            } else if (strcmp(argv[i],"mode=1") == 0) {
+            if (strcmp(argv[i],"mode=1") == 0) {
                 dilithium_mode = TPM_DILITHIUM_MODE_1;
             } else if (strcmp(argv[i],"mode=2") == 0) {
                 dilithium_mode = TPM_DILITHIUM_MODE_2;
             } else if (strcmp(argv[i],"mode=3") == 0) {
                 dilithium_mode = TPM_DILITHIUM_MODE_3;
+            } else if (strcmp(argv[i],"mode=4") == 0) {
+                dilithium_mode = TPM_DILITHIUM_MODE_4;
             } else {
                 printf("Bad parameter %s for -dilithium\n", argv[i]);
                 printUsage();
@@ -675,7 +691,7 @@ int main(int argc, char *argv[])
 				    addObjectAttributes, deleteObjectAttributes,
 				    keyType, algPublic, curveID, nalg, halg,
 				    policyFilename, dilithium_mode, kyber_k,
-                    &ldaa_issuer_at);
+                    &ldaa_issuer_at, ldaa_mode);
 	    break;
 	  case TYPE_DES:
 	    rc = symmetricCipherTemplate(&in.inPublic.publicArea,

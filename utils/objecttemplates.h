@@ -70,7 +70,8 @@ extern "C" {
 			      const char *policyFilename,
                   TPMI_DILITHIUM_MODE dilithium_mode,
                   TPMI_KYBER_SECURITY kyber_k,
-                  TPM2B_LDAA_ISSUER_AT *ldaa_issuer_at);
+                  TPM2B_LDAA_ISSUER_AT *ldaa_issuer_at,
+                  TPMI_LDAA_SECURITY_MODE ldaa_mode);
     TPM_RC symmetricCipherTemplate(TPMT_PUBLIC *publicArea,
 				   TPMA_OBJECT addObjectAttributes,
 				   TPMA_OBJECT deleteObjectAttributes,

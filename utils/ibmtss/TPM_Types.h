@@ -159,6 +159,7 @@ typedef UINT16 TPM_ECC_CURVE;
 
 typedef UINT8  TPM_DILITHIUM_MODE;
 typedef UINT8  TPM_KYBER_SECURITY;
+typedef UINT8  TPM_LDAA_SECURITY_MODE;
 
 /* Table 16 - Definition of (UINT32) TPM_RC Constants (Actions) <OUT> */
 
@@ -2526,6 +2527,8 @@ typedef TPM_DILITHIUM_MODE TPMI_DILITHIUM_MODE;
 
 typedef TPM_KYBER_SECURITY TPMI_KYBER_SECURITY;
 
+typedef TPM_LDAA_SECURITY_MODE TPMI_LDAA_SECURITY_MODE;
+
 /* Table 165 - Definition of (TPMT_SIG_SCHEME) {ECC} TPMT_ECC_SCHEME Structure */
 
 typedef struct {
@@ -2761,6 +2764,7 @@ typedef struct {
     TPMT_SYM_DEF_OBJECT  symmetric;
     TPMT_LDAA_SCHEME     scheme;
     TPM2B_LDAA_ISSUER_AT issuer_at;
+    TPMI_LDAA_SECURITY_MODE security;
 } TPMS_LDAA_PARMS;
 /*****************************************************************************/
 /*                                LDAA Mods                                  */

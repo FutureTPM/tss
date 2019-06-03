@@ -550,7 +550,6 @@ static void printUsage(void)
     printf("\t[-kyber\t]\n");
     printf("\t[-dilithium\t]\n");
     printf("\t[-newhope\t]\n");
-    printf("\t[-dilithium\t]\n");
     printf("\n");
     printf("\t-ipu\tTPM2B_PUBLIC public key file name\n");
     printf("\t-ipem\tPEM format public key file name\n");

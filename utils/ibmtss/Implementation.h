@@ -607,6 +607,11 @@
 #if defined ALG_LDAA && ALG_LDAA == YES
 #define TPM_ALG_LDAA                    (TPM_ALG_ID)(ALG_LDAA_VALUE)
 #endif   // ALG_LDAA
+
+#define  TPM_LDAA_SECURITY_MODE_NONE    (TPM_LDAA_SECURITY_MODE)(0x00)
+#define  TPM_LDAA_SECURITY_MODE_WEAK    (TPM_LDAA_SECURITY_MODE)(0x01)
+#define  TPM_LDAA_SECURITY_MODE_MEDIUM  (TPM_LDAA_SECURITY_MODE)(0x02)
+#define  TPM_LDAA_SECURITY_MODE_HIGH    (TPM_LDAA_SECURITY_MODE)(0x03)
 /*****************************************************************************/
 /*                               LDAA Mods                                   */
 /*****************************************************************************/

@@ -5969,6 +5969,9 @@ TSS_TPMS_LDAA_PARMS_Marshalu(const TPMS_LDAA_PARMS *source, UINT32 *written, BYT
     if (rc == 0) {
 	rc = TSS_TPM2B_LDAA_ISSUER_AT_Marshalu(&source->issuer_at, written, buffer, size);
     }
+    if (rc == 0) {
+	rc = TSS_UINT8_Marshalu(&source->security, written, buffer, size);
+    }
     return rc;
 }
 /*****************************************************************************/
