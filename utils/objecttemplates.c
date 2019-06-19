@@ -279,8 +279,8 @@ TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
                 publicArea->parameters.dilithiumDetail.mode = dilithium_mode;
                 break;
               case TYPE_SI:
-                publicArea->parameters.dilithiumDetail.scheme.scheme = TPM_ALG_DILITHIUM;
-                publicArea->parameters.dilithiumDetail.scheme.details.anySig.hashAlg = 0;
+                publicArea->parameters.dilithiumDetail.scheme.scheme = TPM_ALG_NULL;
+                //publicArea->parameters.dilithiumDetail.scheme.details.anySig.hashAlg = 0;
                 publicArea->parameters.dilithiumDetail.mode = TPM_DILITHIUM_MODE_3;
             }
 #ifdef TPM_ALG_NEW_HOPE
