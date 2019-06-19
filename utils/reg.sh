@@ -514,7 +514,7 @@ main ()
 	((I++))
     fi
     if [ "$1" == "-a" ] || [ "$1" == "-31" ]; then
-    	./regtests/testldaa.sh
+    	#./regtests/testldaa.sh
     	RC=$?
 	if [ $RC -ne 0 ]; then
 	    exit 255
