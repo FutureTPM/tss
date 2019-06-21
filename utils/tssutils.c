@@ -54,7 +54,7 @@
 #include <ibmtss/tsserror.h>
 #include <ibmtss/tssprint.h>
 
-#define TSS_ALLOC_MAX  0x8080000  /* 128M bytes */
+#define TSS_ALLOC_MAX  0x20000000  /* 512MiB */
 
 extern int tssVerbose;
 extern int tssVverbose;
