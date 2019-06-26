@@ -34,7 +34,7 @@
 
 static void printUsage(void);
 
-int verbose = TRUE;
+int verbose = FALSE;
 
 int main(int argc, char *argv[])
 {
@@ -46,6 +46,7 @@ int main(int argc, char *argv[])
 	TPMI_DH_OBJECT      	keyHandle = 0;
 	const char          	*keyPassword = NULL;
 	const char          	*nymFilename = NULL;
+	const char          	*publickeyFilename = NULL;
     const char              *bsn_I = NULL;
     unsigned int            bsn_I_len = 0;
     unsigned char           sid, jsid;
@@ -110,6 +111,16 @@ int main(int argc, char *argv[])
 			}
 			else {
 				printf("-onym option needs a value\n");
+				printUsage();
+			}
+		}
+		else if (strcmp(argv[i], "-out") == 0) {
+			i++;
+			if (i < argc) {
+                publickeyFilename = argv[i];
+			}
+			else {
+				printf("-out option needs a value\n");
 				printUsage();
 			}
 		}
@@ -241,6 +252,11 @@ int main(int argc, char *argv[])
 		rc = TSS_File_WriteStructure(&out.nym,
 			(MarshalFunction_t)TSS_TPM2B_LDAA_NYM_Marshalu,
 			nymFilename);
+	}
+	if ((rc == 0) && (nymFilename != NULL)) {
+		rc = TSS_File_WriteStructure(&out.public_key,
+			(MarshalFunction_t)TSS_TPM2B_LDAA_PUBLIC_KEY_Marshalu,
+			publickeyFilename);
 	}
 
 	if (rc == 0) {

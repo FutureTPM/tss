@@ -34,7 +34,7 @@
 
 static void printUsage(void);
 
-int verbose = TRUE;
+int verbose = FALSE;
 
 int main(int argc, char *argv[])
 {
