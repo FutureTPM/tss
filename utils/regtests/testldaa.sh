@@ -30,7 +30,7 @@ echo ""
 # to guarantee that the results returned are correct
 
 echo "LDAA Create Key"
-${PREFIX}create -hp 80000000 -dau -ldaa test_keys/issuer_at.bin -kt f -kt p -opr ldaa_priv.bin -opu ldaa_pub.bin -pwdp sto -pwdk ldaa > run.out
+${PREFIX}create -hp 80000000 -dau -ldaa test_keys/issuer_at.bin mode=medium -kt f -kt p -opr ldaa_priv.bin -opu ldaa_pub.bin -pwdp sto -pwdk ldaa > run.out
 checkSuccess $?
 
 echo ""
