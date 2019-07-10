@@ -50,15 +50,15 @@ ${PREFIX}startauthsession -se h > run.out
 checkSuccess $?
 
 echo "Create a storage key under the primary key - continue true"
-${PREFIX}create -hp 80000000 -st -kt f -kt p -pwdp sto -pwdk sto -se0 02000000 1 > run.out
+${PREFIX}create -kyber k=2 -hp 80000000 -st -kt f -kt p -pwdp sto -pwdk sto -se0 02000000 1 > run.out
 checkSuccess $?
 
 echo "Create a storage key under the primary key - continue false"
-${PREFIX}create -hp 80000000 -st -kt f -kt p -pwdp sto -pwdk sto -se0 02000000 0 > run.out
+${PREFIX}create -kyber k=3 -hp 80000000 -st -kt f -kt p -pwdp sto -pwdk sto -se0 02000000 0 > run.out
 checkSuccess $?
 
 echo "Create a storage key under the primary key - should fail"
-${PREFIX}create -hp 80000000 -st -kt f -kt p -pwdp sto -pwdk sto -se0 02000000 0 > run.out
+${PREFIX}create -kyber k=4 -hp 80000000 -st -kt f -kt p -pwdp sto -pwdk sto -se0 02000000 0 > run.out
 checkFailure $?
 
 echo ""

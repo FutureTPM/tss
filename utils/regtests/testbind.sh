@@ -54,11 +54,11 @@ ${PREFIX}startauthsession -se h -bi 80000000 -pwdb sto > run.out
 checkSuccess $?
 
 echo "Create storage key using that bind session, same object 80000000"
-${PREFIX}create -hp 80000000 -st -kt f -kt p -pwdp sto -pwdk 222 -se0 02000000 1 > run.out
+${PREFIX}create -kyber k=3 -hp 80000000 -st -kt f -kt p -pwdp sto -pwdk 222 -se0 02000000 1 > run.out
 checkSuccess $?
 
 echo "Create storage key using that bind session, same object 80000000, wrong password does not matter"
-${PREFIX}create -hp 80000000 -st -kt f -kt p -pwdp xxx -pwdk 222 -se0 02000000 0 > run.out
+${PREFIX}create -kyber k=4 -hp 80000000 -st -kt f -kt p -pwdp xxx -pwdk 222 -se0 02000000 0 > run.out
 checkSuccess $?
 
 echo "Create second primary key with different password 000 and Name"

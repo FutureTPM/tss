@@ -169,6 +169,9 @@ int main(int argc, char *argv[])
 		else if (strcmp(argv[i],"ecc") == 0) {
 		    useRsa = 0;
 		}
+		else if (strcmp(argv[i],"dilithium") == 0) {
+		    useRsa = 2;
+		}
 		else {
 		    printf("Bad parameter %s for -salg\n", argv[i]);
 		    printUsage();
@@ -299,7 +302,7 @@ int main(int argc, char *argv[])
 	/* Handle of key that will perform certifying */
 	in.objectHandle = objectHandle;
 	in.signHandle = signHandle;
-	if (useRsa) {
+	if (useRsa == 1) {
 	    /* Table 145 - Definition of TPMT_SIG_SCHEME Structure */
 	    in.inScheme.scheme = TPM_ALG_RSASSA;
 	    /* Table 144 - Definition of TPMU_SIG_SCHEME Union <IN/OUT, S> */
@@ -307,6 +310,10 @@ int main(int argc, char *argv[])
 	    /* Table 135 - Definition of TPMS_SCHEME_HASH Structure */
 	    in.inScheme.details.rsassa.hashAlg = halg;
 	}
+    else if (useRsa == 2) {
+	    in.inScheme.scheme = TPM_ALG_DILITHIUM;
+	    in.inScheme.details.dilithium.hashAlg = halg;
+    }
 	else {	/* ecc */
 	    in.inScheme.scheme = TPM_ALG_ECDSA;
 	    in.inScheme.details.ecdsa.hashAlg = halg;
@@ -407,7 +414,7 @@ static void printUsage(void)
     printf("\t-hk\tcertifying key handle\n");
     printf("\t[-pwdk\tpassword for key (default empty)]\n");
     printf("\t[-halg\t(sha1, sha256, sha384 sha512, sha3-256, sha3-384 sha3-512) (default sha256)]\n");
-    printf("\t[-salg\tsignature algorithm (rsa, ecc) (default rsa)]\n");
+    printf("\t[-salg\tsignature algorithm (rsa, ecc, dilithium) (default rsa)]\n");
     printf("\t[-qd\tqualifying data file name]\n");
     printf("\t[-os\tsignature file name (default do not save)]\n");
     printf("\t[-oa\tattestation output file name (default do not save)]\n");

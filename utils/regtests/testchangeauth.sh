@@ -87,6 +87,42 @@ do
 	${PREFIX}flushcontext -ha 02000000 > run.out
 	checkSuccess $?
 
+	echo "Load the dilithium signing key under the primary key"
+	${PREFIX}load -hp 80000000 -ipr signdilpriv.bin -ipu signdilpub.bin -pwdp sto > run.out
+	checkSuccess $?
+
+	echo "Start an HMAC session ${BIND}"
+	${PREFIX}startauthsession -se h ${BIND} > run.out
+	checkSuccess $?
+
+	echo "Object change auth, change password to xxx ${SESS}"
+	${PREFIX}objectchangeauth -ho 80000001 -pwdo sig -pwdn xxx -hp 80000000 -opr tmppriv.bin ${SESS} > run.out
+	checkSuccess $?
+
+	echo "Load the signing key with the changed auth ${SESS}"
+	${PREFIX}load -hp 80000000 -ipr tmppriv.bin -ipu signdilpub.bin -pwdp sto ${SESS} > run.out
+	checkSuccess $?
+
+	echo "Sign a digest with the original key ${SESS}"
+	${PREFIX}sign -dilithium -hk 80000001 -halg sha1 -if policies/aaa -os sig.bin -pwdk sig ${SESS} > run.out
+	checkSuccess $?
+
+	echo "Sign a digest with the changed key"
+	${PREFIX}sign -dilithium -hk 80000002 -halg sha1 -if policies/aaa -os sig.bin -pwdk xxx > run.out
+	checkSuccess $?
+
+	echo "Flush the key"
+	${PREFIX}flushcontext -ha 80000001 > run.out
+	checkSuccess $?
+
+	echo "Flush the key"
+	${PREFIX}flushcontext -ha 80000002 > run.out
+	checkSuccess $?
+
+	echo "Flush the auth session"
+	${PREFIX}flushcontext -ha 02000000 > run.out
+	checkSuccess $?
+
     done
 done
 

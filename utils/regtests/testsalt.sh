@@ -45,7 +45,7 @@ echo ""
 echo "Salt Session - Load"
 echo ""
 
-for ASY in "-rsa" "-ecc nistp256"
+for ASY in "-kyber k=4" "-rsa" "-ecc nistp256"
 do
     for HALG in ${ITERATE_ALGS}
     do
@@ -141,7 +141,7 @@ for HALG in ${ITERATE_ALGS}
 do
 
     echo "Create a primary storage key - $HALG"
-    ${PREFIX}createprimary -nalg $HALG -hi p > run.out
+    ${PREFIX}createprimary -kyber k=2 -nalg $HALG -hi p > run.out
     checkSuccess $?
 
     echo "Start a salted HMAC auth session"

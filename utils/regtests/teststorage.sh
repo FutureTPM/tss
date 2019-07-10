@@ -45,6 +45,62 @@
 # storage key at 80000001 password sto
 
 echo ""
+echo "Kyber Storage key"
+echo ""
+
+echo "Load Kyber the storage key 80000001 under the primary key 80000000"
+${PREFIX}load -hp 80000000 -ipr storekyberpriv.bin -ipu storekyberpub.bin -pwdp sto > run.out
+checkSuccess $?
+
+echo "Start an HMAC auth session"
+${PREFIX}startauthsession -se h > run.out
+checkSuccess $?
+
+for NALG in ${ITERATE_ALGS}
+do
+
+    for SESS in "" "-se0 02000000 1"
+    do
+
+	echo "Create an unrestricted signing key under the Kyber storage key 80000001 ${NALG} ${SESS}"
+	${PREFIX}create -dilithium mode=4 -hp 80000001 -si -kt f -kt p -opr tmppriv.bin -opu tmppub.bin -pwdp sto -pwdk 111 -nalg ${NALG} ${SESS} > run.out
+	checkSuccess $?
+
+	echo "Load the signing key 80000002 under the storage key 80000001 ${SESS}"
+	${PREFIX}load -hp 80000001 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto ${SESS} > run.out
+	checkSuccess $?
+
+	echo "Read the signing key 80000002 public area"
+	${PREFIX}readpublic -ho 80000002 -opu tmppub2.bin > run.out
+	checkSuccess $?
+
+	echo "Flush the signing key 80000002"
+	${PREFIX}flushcontext -ha 80000002 > run.out
+	checkSuccess $?
+
+	echo "Load external, storage key public part 80000002 ${NALG}"
+	${PREFIX}loadexternal -halg sha256 -nalg ${NALG} -ipu storepub.bin > run.out
+	checkSuccess $?
+
+	echo "Flush the public key 80000002"
+	${PREFIX}flushcontext -ha 80000002 > run.out
+	checkSuccess $?
+
+	echo "Load external, signing key public part 80000002 ${NALG}"
+	${PREFIX}loadexternal -halg sha256 -nalg ${NALG} -ipu tmppub2.bin > run.out
+	checkSuccess $?
+
+	echo "Flush the public key 80000002"
+	${PREFIX}flushcontext -ha 80000002 > run.out
+	checkSuccess $?
+    done
+done
+
+echo "Flush the Kyber storage key 80000001"
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+echo ""
 echo "RSA Storage key"
 echo ""
 

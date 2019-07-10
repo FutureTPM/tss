@@ -135,6 +135,46 @@ ${PREFIX}flushcontext -ha 80000001 > run.out
 checkSuccess $?
 
 echo ""
+echo "CreateLoaded Child Key Kyber"
+echo ""
+
+echo "CreateLoaded Kyber child storage key at 80000001, parent 80000000"
+${PREFIX}createloaded -kyber k=2 -hp 80000000 -st -kt f -kt p -pwdp sto -pwdk ppp -opu tmpppub.bin -opr tmpppriv.bin > run.out
+checkSuccess $?
+
+echo "Create a Dilithiumsigning key under the child storage key 80000001"
+${PREFIX}create -dilithium mode=3 -hp 80000001 -si -opr tmppriv.bin -opu tmppub.bin -pwdp ppp > run.out
+checkSuccess $?
+
+echo "Load the signing key at 80000002 under the child storage key 80000001"
+${PREFIX}load -hp 80000001 -ipr tmppriv.bin -ipu tmppub.bin -pwdp ppp > run.out
+checkSuccess $?
+
+echo "Flush the child storage key 80000002"
+${PREFIX}flushcontext -ha 80000002 > run.out
+checkSuccess $?
+
+echo "Flush the child signing key 80000001"
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+echo "Reload the createloaded child storage key at 80000001, parent 80000000"
+${PREFIX}load -hp 80000000 -ipr tmpppriv.bin -ipu tmpppub.bin -pwdp sto > run.out
+checkSuccess $?
+
+echo "Reload the child signing key at 80000002 under the child storage key 80000001"
+${PREFIX}load -hp 80000001 -ipr tmppriv.bin -ipu tmppub.bin -pwdp ppp > run.out
+checkSuccess $?
+
+echo "Flush the child storage key 80000002 "
+${PREFIX}flushcontext -ha 80000002 > run.out
+checkSuccess $?
+
+echo "Flush the child signing key 80000001 "
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+echo ""
 echo "CreateLoaded Derived Key"
 echo ""
 
