@@ -42,10 +42,10 @@
 #################################################################################
 
 echo ""
-echo "Primary key - CreatePrimary"
+echo "Primary key - CreatePrimary RSA"
 echo ""
 
-echo "Create a primary storage key"
+echo "Create a primary RSA storage key"
 ${PREFIX}createprimary -hi p -pwdk sto > run.out
 checkSuccess $?
 
@@ -74,10 +74,10 @@ ${PREFIX}load -hp 80000001 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
 checkFailure $?
 
 echo ""
-echo "Primary key - CreatePrimary with no unique field"
+echo "Primary key - RSA CreatePrimary with no unique field"
 echo ""
 
-# no unique 
+# no unique
 
 echo "Create a primary storage key with no unique field"
 ${PREFIX}createprimary -hi p -pwdk sto > run.out
@@ -119,7 +119,7 @@ ${PREFIX}flushcontext -ha 80000001 > run.out
 checkSuccess $?
 
 echo ""
-echo "Primary key - CreatePrimary with unique field"
+echo "Primary key - RSA CreatePrimary with unique field"
 echo ""
 
 # unique
@@ -173,3 +173,134 @@ rm -f empty.bin
 
 # ${PREFIX}getcapability  -cap 1 -pr 80000000
 
+echo ""
+echo "Primary key - CreatePrimary Kyber"
+echo ""
+
+echo "Create a primary Kyber storage key"
+${PREFIX}createprimary -kyber k=3 -hi p -pwdk sto > run.out
+checkSuccess $?
+
+echo "Read the public part"
+${PREFIX}readpublic -ho 80000001 > run.out
+checkSuccess $?
+
+echo "Create a Kyber storage key under the primary key"
+${PREFIX}create -kyber k=2 -hp 80000001 -st -kt f -kt p -opr tmppriv.bin -opu tmppub.bin -pwdp sto -pwdk sto > run.out
+checkSuccess $?
+
+echo "Load the Kyber storage key under the primary key"
+${PREFIX}load -hp 80000001 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
+checkSuccess $?
+
+echo "Flush the Kyber storage key"
+${PREFIX}flushcontext -ha 80000002 > run.out
+checkSuccess $?
+
+echo "Flush the Kyber primary storage key"
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+echo "Load the Kyber storage key under the primary key - should fail"
+${PREFIX}load -hp 80000001 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
+checkFailure $?
+
+echo ""
+echo "Primary key - CreatePrimary with no unique field"
+echo ""
+
+# no unique
+
+echo "Create a Kyber primary storage key with no unique field"
+${PREFIX}createprimary -kyber k=3 -hi p -pwdk sto > run.out
+checkSuccess $?
+
+echo "Create a Kyber storage key under the primary key"
+${PREFIX}create -kyber k=2 -hp 80000001 -st -kt f -kt p -opr tmppriv.bin -opu tmppub.bin -pwdp sto -pwdk sto > run.out
+checkSuccess $?
+
+echo "Load the Kyber storage key under the primary key"
+${PREFIX}load -hp 80000001 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
+checkSuccess $?
+
+echo "Flush the Kyber storage key"
+${PREFIX}flushcontext -ha 80000002 > run.out
+checkSuccess $?
+
+echo "Flush the Kyber primary storage key"
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+# empty unique
+
+echo "Create a Kyber primary storage key with empty unique field"
+touch empty.bin
+${PREFIX}createprimary -kyber k=3 -hi p -pwdk sto -iu empty.bin > run.out
+checkSuccess $?
+
+echo "Load the original Kyber storage key under the primary key with empty unique field"
+${PREFIX}load -hp 80000001 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
+checkSuccess $?
+
+echo "Flush the Kyber storage key"
+${PREFIX}flushcontext -ha 80000002 > run.out
+checkSuccess $?
+
+echo "Flush the Kyber primary storage key"
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+echo ""
+echo "Primary key - Kyber CreatePrimary with unique field"
+echo ""
+
+# unique
+
+echo "Create a Kyber primary storage key with unique field"
+touch empty.bin
+${PREFIX}createprimary -kyber k=3 -hi p -pwdk sto -iu policies/aaa > run.out
+checkSuccess $?
+
+echo "Load the original Kyber storage key under the primary key - should fail"
+${PREFIX}load -hp 80000001 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
+checkFailure $?
+
+echo "Create a Kyber storage key under the primary key"
+${PREFIX}create -kyber k=4 -hp 80000001 -st -kt f -kt p -opr tmppriv.bin -opu tmppub.bin -pwdp sto -pwdk sto > run.out
+checkSuccess $?
+
+echo "Load the Kyber storage key under the primary key"
+${PREFIX}load -hp 80000001 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
+checkSuccess $?
+
+echo "Flush the Kyber storage key"
+${PREFIX}flushcontext -ha 80000002 > run.out
+checkSuccess $?
+
+echo "Flush the Kyber primary storage key"
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+# same unique
+
+echo "Create a Kyber primary storage key with same unique field"
+${PREFIX}createprimary -kyber k=3 -hi p -pwdk sto -iu policies/aaa > run.out
+checkSuccess $?
+
+echo "Load the previous Kyber storage key under the primary key"
+${PREFIX}load -hp 80000001 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
+checkSuccess $?
+
+echo "Flush the storage key"
+${PREFIX}flushcontext -ha 80000002 > run.out
+checkSuccess $?
+
+echo "Flush the primary storage key"
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+# cleanup
+
+rm -f empty.bin
+
+# ${PREFIX}getcapability  -cap 1 -pr 80000000
