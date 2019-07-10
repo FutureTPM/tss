@@ -670,6 +670,9 @@ static TPM_RC TSS_HashToString(char *str, uint8_t *digest);
 static TPM_RC TSS_RSA_Salt(TPM2B_DIGEST 		*salt,
 			   TPM2B_ENCRYPTED_SECRET	*encryptedSalt,
 			   TPMT_PUBLIC			*publicArea);
+static TPM_RC TSS_Kyber_Salt(TPM2B_DIGEST 		*salt,
+			   TPM2B_ENCRYPTED_SECRET	*encryptedSalt,
+			   TPMT_PUBLIC			*publicArea);
 #endif
 extern int tssVerbose;
 extern int tssVverbose;
@@ -3820,6 +3823,13 @@ static TPM_RC TSS_PR_StartAuthSession(TSS_CONTEXT *tssContext,
 	/* generate the salt and encrypted salt based on the asymmetric key type */
 	if (rc == 0) {
 	    switch (bPublic.publicArea.type) {
+#ifndef TPM_TSS_NOKYBER
+	      case TPM_ALG_KYBER:
+		rc = TSS_Kyber_Salt(&extra->salt,
+                &in->encryptedSalt,
+                &bPublic.publicArea);
+		break;
+#endif	/* TPM_TSS_NOKYBER */
 #ifndef TPM_TSS_NOECC
 	      case TPM_ALG_ECC:
 		rc = TSS_ECC_Salt(&extra->salt,
@@ -3921,6 +3931,67 @@ static TPM_RC TSS_RSA_Salt(TPM2B_DIGEST 		*salt,
     if (rc == 0) {
 	encryptedSalt->t.size = publicArea->unique.rsa.t.size;
 	if (tssVverbose) TSS_PrintAll("TSS_RSA_Salt: RSA encrypted salt",
+				      encryptedSalt->t.secret,
+				      encryptedSalt->t.size);
+    }
+    return rc;
+}
+
+/* TSS_Kyber_Salt() returns both the plaintext and excrypted salt, based on the
+ * salt key bPublic. */
+
+static TPM_RC TSS_Kyber_Salt(TPM2B_DIGEST 		*salt,
+			   TPM2B_ENCRYPTED_SECRET	*encryptedSalt,
+			   TPMT_PUBLIC			*publicArea)
+{
+    TPM_RC		rc = 0;
+
+    if (rc == 0) {
+	{
+	    /* error conditions when true */
+	    int b1 = publicArea->type != TPM_ALG_KYBER;
+	    int b2 = publicArea->objectAttributes.val & TPMA_OBJECT_SIGN;
+	    int b3 = !(publicArea->objectAttributes.val & TPMA_OBJECT_DECRYPT);
+	    /* TSS support checks */
+	    if (b1 || b2 || b3) {
+		if (tssVerbose)
+		    printf("TSS_Kyber_Salt: public key attributes not supported\n");
+		rc = TSS_RC_BAD_SALT_KEY;
+	    }
+	}
+    }
+    if (rc == 0) {
+	if (tssVverbose) TSS_PrintAll("TSS_Kyber_Salt: public key",
+				      publicArea->unique.kyber.t.buffer,
+				      publicArea->unique.kyber.t.size);
+    }
+    /* generate a salt */
+    if (rc == 0) {
+	salt->t.size = TSS_GetDigestSize(publicArea->nameAlg);
+	if (tssVverbose) printf("TSS_Kyber_Salt: "
+				"Hash algorithm %04x Salt size %u\n",
+				publicArea->nameAlg, salt->t.size);
+	/* place the salt in extra so that it can be retrieved by post processor */
+	rc = TSS_RandBytes((uint8_t *)&salt->t.buffer, salt->t.size);
+    /* Zero remainder of buffer */
+    memset((uint8_t *)&salt->t.buffer + salt->t.size, 0,
+            sizeof(salt->t.buffer) - salt->t.size);
+    }
+    if (rc == 0) {
+	if (tssVverbose) TSS_PrintAll("TSS_Kyber_Salt: salt",
+				      (uint8_t *)&salt->t.buffer,
+				      salt->t.size);
+    }
+    /* encrypt the salt */
+    if (rc == 0) {
+	/* encrypt the salt with the tpmKey public key */
+	rc = TSS_KyberEncrypt(encryptedSalt,   /* encrypted data */
+				  publicArea,  /* public key */
+				  salt /* decrypted data */
+				  );
+    }
+    if (rc == 0) {
+	if (tssVverbose) TSS_PrintAll("TSS_Kyber_Salt: Kyber encrypted salt",
 				      encryptedSalt->t.secret,
 				      encryptedSalt->t.size);
     }

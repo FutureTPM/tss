@@ -56,8 +56,8 @@ echo ""
 echo "Initialize Regression Test Keys"
 echo ""
 
-echo "Create a platform primary RSA storage key"
-${PREFIX}createprimary -hi p -pwdk sto -tk pritk.bin -ch prich.bin > run.out
+echo "Create a platform primary Kyber storage key (k=4)"
+${PREFIX}createprimary -kyber k=4 -hi p -pwdk sto -tk pritk.bin -ch prich.bin > run.out
 checkSuccess $?
 
 echo "Create an RSA storage key under the primary key"

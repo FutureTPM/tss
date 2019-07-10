@@ -57,7 +57,7 @@ ${PREFIX}load -hp 80000000 -ipr signpriv.bin -ipu signpub.bin -pwdp sto > run.ou
 checkSuccess $?
 
 for MODE0 in xor aes
-do 
+do
 
     for MODE1 in xor aes
     do
@@ -89,7 +89,7 @@ do
 	    done
 
 	    # two auth
-		
+
 	    for ((i = 0 ; i < 9; i++))
 	    do
 
@@ -225,9 +225,9 @@ checkSuccess $?
 
 
 # policycccertify.txt 0000016c00000148
-# policymaker -if policies/policycccertify.txt -of policies/policycccertify.bin -v -pr 
-# 04 8e 9a 3a ce 08 58 3f 79 f3 44 ff 78 5b be a9 
-# f0 7a c7 fa 33 25 b3 d4 9a 21 dd 51 94 c6 58 50 
+# policymaker -if policies/policycccertify.txt -of policies/policycccertify.bin -v -pr
+# 04 8e 9a 3a ce 08 58 3f 79 f3 44 ff 78 5b be a9
+# f0 7a c7 fa 33 25 b3 d4 9a 21 dd 51 94 c6 58 50
 
 echo ""
 echo "Salt encrypt and decrypt policy sessions"

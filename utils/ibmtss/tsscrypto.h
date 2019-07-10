@@ -92,7 +92,7 @@ extern "C" {
 					  const unsigned char *from, uint32_t fLen,
 					  const unsigned char *p,
 					  int plen,
-					  TPMI_ALG_HASH halg);	
+					  TPMI_ALG_HASH halg);
     LIB_EXPORT
     TPM_RC TSS_RSAPublicEncrypt(unsigned char* encrypt_data,
 				size_t encrypt_data_size,
@@ -111,6 +111,16 @@ extern "C" {
 				      uint32_t nbytes,
 				      const unsigned char *earr,   	/* public exponent */
 				      uint32_t ebytes);
+
+    LIB_EXPORT
+    TPM_RC TSS_KyberEncrypt(
+                // OUT: The encrypted data
+                TPM2B_ENCRYPTED_SECRET *cOut,
+                // IN: Public Key.
+                TPMT_PUBLIC            *kyberKey,
+                // IN: the data to encrypt
+                TPM2B_DIGEST           *dIn
+                );
 
     TPM_RC TSS_ECC_Salt(TPM2B_DIGEST 		*salt,
 			TPM2B_ENCRYPTED_SECRET	*encryptedSalt,

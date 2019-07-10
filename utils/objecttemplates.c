@@ -350,7 +350,7 @@ TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
               case TYPE_ST:
                 publicArea->parameters.kyberDetail.scheme.scheme = TPM_ALG_NULL;
                 publicArea->parameters.kyberDetail.scheme.details.anySig.hashAlg = 0;
-                publicArea->parameters.kyberDetail.security = TPM_KYBER_SECURITY_3;
+                publicArea->parameters.kyberDetail.security = kyber_k;
                 break;
             }
         }

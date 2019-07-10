@@ -62,7 +62,7 @@ ${PREFIX}startauthsession -se h > run.out
 checkSuccess $?
 
 echo "Save the session context"
-${PREFIX}contextsave -ha 02000001 -of tmp.bin > run.out 
+${PREFIX}contextsave -ha 02000001 -of tmp.bin > run.out
 checkSuccess $?
 
 echo "Load the signing key"
@@ -70,7 +70,7 @@ ${PREFIX}load -hp 80000000 -ipr signpriv.bin -ipu signpub.bin -pwdp sto > run.ou
 checkSuccess $?
 
 echo "Context save the signing key"
-${PREFIX}contextsave -ha 80000001 -of tmpsk.bin > run.out 
+${PREFIX}contextsave -ha 80000001 -of tmpsk.bin > run.out
 checkSuccess $?
 
 echo "Define index with write stclear, read stclear"
@@ -114,7 +114,7 @@ diff tmp1.bin tmp2.bin > run.out
 checkSuccess $?
 
 echo "Context load the signing key"
-${PREFIX}contextload -if tmpsk.bin > run.out 
+${PREFIX}contextload -if tmpsk.bin > run.out
 checkSuccess $?
 
 echo "Signing Key Self Certify"
@@ -134,7 +134,7 @@ ${PREFIX}load -hp 80000000 -ipr signpriv.bin -ipu signpub.bin -pwdp sto > run.ou
 checkFailure $?
 
 echo "Create a platform primary storage key"
-${PREFIX}createprimary -hi p -pwdk sto > run.out
+${PREFIX}createprimary -kyber k=4 -hi p -pwdk sto > run.out
 checkSuccess $?
 
 echo "Signing Key Self Certify - should fail, signing key missing"
@@ -178,7 +178,7 @@ ${PREFIX}load -hp 80000000 -ipr signpriv.bin -ipu signpub.bin -pwdp sto > run.ou
 checkSuccess $?
 
 echo "Context save the signing key"
-${PREFIX}contextsave -ha 80000001 -of tmpsk.bin > run.out 
+${PREFIX}contextsave -ha 80000001 -of tmpsk.bin > run.out
 checkSuccess $?
 
 echo "Start a session"
@@ -210,7 +210,7 @@ ${PREFIX}flushcontext -ha 02000000 > run.out
 checkSuccess $?
 
 echo "Context load the signing key"
-${PREFIX}contextload -if tmpsk.bin > run.out 
+${PREFIX}contextload -if tmpsk.bin > run.out
 checkSuccess $?
 
 echo "PCR 0 Read"
@@ -234,7 +234,7 @@ ${PREFIX}nvundefinespace -hi p -ha 01000000 > run.out
 checkSuccess $?
 
 echo "Recreate a platform primary storage key"
-${PREFIX}createprimary -hi p -pwdk sto > run.out
+${PREFIX}createprimary -kyber k=4 -hi p -pwdk sto > run.out
 checkSuccess $?
 
 echo ""
@@ -266,10 +266,10 @@ ${PREFIX}contextload -if tmp.bin > run.out
 checkFailure $?
 
 echo "Recreate a platform primary storage key"
-${PREFIX}createprimary -hi p -pwdk sto > run.out
+${PREFIX}createprimary -kyber k=4 -hi p -pwdk sto > run.out
 checkSuccess $?
 
-# cleanup 
+# cleanup
 
 # shutdown removes the session
 rm h02000000.bin

@@ -202,6 +202,24 @@ ntc2lib.o:	$(TSS_HEADERS) ntc2lib.c
 		$(CC) $(CCFLAGS) $(CCLFLAGS) ntc2lib.c
 tssntc.o:	$(TSS_HEADERS) tssntc.c
 		$(CC) $(CCFLAGS) $(CCLFLAGS) tssntc.c
+fips202.o: $(TSS_HEADERS) fips202.c
+		$(CC) $(CCFLAGS) $(CCLFLAGS) fips202.c
+kyber-cbd.o: $(TSS_HEADERS) kyber-cbd.c
+		$(CC) $(CCFLAGS) $(CCLFLAGS) kyber-cbd.c
+kyber-indcpa.o: $(TSS_HEADERS) kyber-indcpa.c
+		$(CC) $(CCFLAGS) $(CCLFLAGS) kyber-indcpa.c
+kyber-ntt.o: $(TSS_HEADERS) kyber-ntt.c
+		$(CC) $(CCFLAGS) $(CCLFLAGS) kyber-ntt.c
+kyber-poly.o: $(TSS_HEADERS) kyber-poly.c
+		$(CC) $(CCFLAGS) $(CCLFLAGS) kyber-poly.c
+kyber-polyvec.o: $(TSS_HEADERS) kyber-polyvec.c
+		$(CC) $(CCFLAGS) $(CCLFLAGS) kyber-polyvec.c
+kyber-precomp.o: $(TSS_HEADERS) kyber-precomp.c
+		$(CC) $(CCFLAGS) $(CCLFLAGS) kyber-precomp.c
+kyber-reduce.o: $(TSS_HEADERS) kyber-reduce.c
+		$(CC) $(CCFLAGS) $(CCLFLAGS) kyber-reduce.c
+kyber-verify.o: $(TSS_HEADERS) kyber-verify.c
+		$(CC) $(CCFLAGS) $(CCLFLAGS) kyber-verify.c
 
 # TPM 2.0
 

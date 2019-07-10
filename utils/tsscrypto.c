@@ -66,6 +66,11 @@
 #include <ibmtss/tsscryptoh.h>
 #include <ibmtss/tsscrypto.h>
 
+#ifndef TPM_TSS_NOKYBER
+#include "kyber-indcpa.h"
+#include "kyber-params.h"
+#endif
+
 extern int tssVverbose;
 extern int tssVerbose;
 
@@ -460,6 +465,180 @@ TPM_RC TSS_RSAPublicEncrypt(unsigned char *encrypt_data,    /* encrypted data */
     free(padded_data);                  /* @2 */
     return rc;
 }
+
+#ifndef TPM_TSS_NOKYBER
+
+typedef struct {
+    uint64_t k;
+    uint64_t eta;
+    uint64_t publickeybytes;
+    uint64_t secretkeybytes;
+    uint64_t polyveccompressedbytes;
+    uint64_t indcpa_secretkeybytes;
+    uint64_t indcpa_publickeybytes;
+    uint64_t ciphertextbytes;
+} KyberParams;
+
+static KyberParams generate_kyber_params(TPM_KYBER_SECURITY kyber_k) {
+    KyberParams params;
+    uint64_t kyber_polyvecbytes = 0;
+
+    params.k = kyber_k;
+    kyber_polyvecbytes            = kyber_k * KYBER_POLYBYTES;
+    params.polyveccompressedbytes = kyber_k * 352;
+
+    params.indcpa_publickeybytes = params.polyveccompressedbytes +
+        KYBER_SYMBYTES;
+    params.indcpa_secretkeybytes = kyber_polyvecbytes;
+
+    params.publickeybytes =  params.indcpa_publickeybytes;
+    params.secretkeybytes =  params.indcpa_secretkeybytes +
+        params.indcpa_publickeybytes + 2*KYBER_SYMBYTES;
+    params.ciphertextbytes = params.polyveccompressedbytes +
+        KYBER_POLYCOMPRESSEDBYTES;
+
+    switch (kyber_k) {
+        case TPM_KYBER_SECURITY_2:
+            params.eta = 5; /* Kyber512 */
+            break;
+        case TPM_KYBER_SECURITY_3:
+            params.eta = 4; /* Kyber768 */
+            break;
+        case TPM_KYBER_SECURITY_4:
+            params.eta = 3; /* Kyber1024 */
+            break;
+        default:
+            break;
+    }
+
+    return params;
+}
+
+static TPM_RC
+CryptKyberEncapsulate(
+            // IN: The object structure which contains the public key used in
+            // the encapsulation.
+		    TPMT_PUBLIC             *publicArea,
+            // OUT: the shared key
+            TPM2B_KYBER_SHARED_KEY  *ss,
+            // OUT: the cipher text
+            TPM2B_KYBER_CIPHER_TEXT *ct
+		 )
+{
+    TPM_RC               retVal     = TPM_RC_SUCCESS;
+    KyberParams params;
+    /* Will contain key, coins */
+    unsigned char  kr[2*KYBER_SYMBYTES];
+    unsigned char buf[2*KYBER_SYMBYTES];
+
+    EVP_MD_CTX *mdctx = EVP_MD_CTX_new();
+    if (mdctx == NULL) {
+        return -1;
+    }
+
+    if (publicArea == NULL || ss == NULL || ct == NULL)
+        return -1;
+
+    if (publicArea->parameters.kyberDetail.security != 2
+            && publicArea->parameters.kyberDetail.security != 3
+            && publicArea->parameters.kyberDetail.security != 4)
+        return -1;
+
+    // Parameter Generation
+    params = generate_kyber_params(publicArea->parameters.kyberDetail.security);
+
+    // Create secret data from RNG
+    TSS_RandBytes(buf, KYBER_SYMBYTES);
+
+    /* Don't release system RNG output */
+    // TODO: Error checking
+    EVP_DigestInit_ex(mdctx, EVP_sha3_256(), NULL);
+    EVP_DigestUpdate(mdctx, buf, KYBER_SYMBYTES);
+    EVP_DigestFinal_ex(mdctx, buf, NULL);
+
+    /* Multitarget countermeasure for coins + contributory KEM */
+    // TODO: Error checking
+    EVP_DigestInit_ex(mdctx, EVP_sha3_256(), NULL);
+    EVP_DigestUpdate(mdctx, publicArea->unique.kyber.t.buffer, params.publickeybytes);
+    EVP_DigestFinal_ex(mdctx, buf+KYBER_SYMBYTES, NULL);
+
+    // TODO: Error checking
+    EVP_DigestInit_ex(mdctx, EVP_sha3_512(), NULL);
+    EVP_DigestUpdate(mdctx, buf, 2*KYBER_SYMBYTES);
+    EVP_DigestFinal_ex(mdctx, kr, NULL);
+
+    /* coins are in kr+KYBER_SYMBYTES */
+    indcpa_enc(ct->t.buffer, buf,
+            publicArea->unique.kyber.t.buffer,
+            kr+KYBER_SYMBYTES, params.k,
+            params.polyveccompressedbytes, params.eta);
+
+    /* overwrite coins in kr with H(c) */
+    // TODO: Error checking
+    EVP_DigestInit_ex(mdctx, EVP_sha3_256(), NULL);
+    EVP_DigestUpdate(mdctx, ct->t.buffer, params.ciphertextbytes);
+    EVP_DigestFinal_ex(mdctx, kr+KYBER_SYMBYTES, NULL);
+
+    /* hash concatenation of pre-k and H(c) to k */
+    // TODO: Error checking
+    EVP_DigestInit_ex(mdctx, EVP_sha3_256(), NULL);
+    EVP_DigestUpdate(mdctx, kr, 2*KYBER_SYMBYTES);
+    EVP_DigestFinal_ex(mdctx, ss->t.buffer, NULL);
+
+    EVP_MD_CTX_free(mdctx);
+
+    ss->t.size = 32;
+    ct->t.size = params.ciphertextbytes;
+
+    return retVal;
+}
+
+TPM_RC
+TSS_KyberEncrypt(
+            // OUT: The encrypted data
+            TPM2B_ENCRYPTED_SECRET *cOut,
+            // IN: Public Key.
+		    TPMT_PUBLIC            *kyberKey,
+            // IN: the data to encrypt
+            TPM2B_DIGEST           *dIn
+		 )
+{
+    TPM_RC result = TPM_RC_SUCCESS;
+    TPM2B_KYBER_SHARED_KEY ss;
+    TPM2B_KYBER_CIPHER_TEXT ct;
+
+    if (result == TPM_RC_SUCCESS) {
+        result = CryptKyberEncapsulate(kyberKey, &ss, &ct);
+
+        memcpy(cOut->t.secret, ct.t.buffer, ct.t.size);
+        cOut->t.size = ct.t.size;
+    }
+
+    if (result == TPM_RC_SUCCESS) {
+        int tmplen, outlen;
+        EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
+        EVP_EncryptInit_ex(ctx, EVP_aes_256_cfb(), NULL, ss.t.buffer, NULL);
+
+        if (!EVP_EncryptUpdate(ctx, (uint8_t *)&cOut->t.secret + cOut->t.size,
+                    &outlen, (uint8_t *)&dIn->t.buffer, dIn->t.size)) {
+            EVP_CIPHER_CTX_free(ctx);
+            return 1;
+        }
+
+        if (!EVP_EncryptFinal_ex(ctx, (uint8_t *)&cOut->t.secret + cOut->t.size + outlen,
+                    &tmplen)) {
+            EVP_CIPHER_CTX_free(ctx);
+            return 1;
+        }
+
+        EVP_CIPHER_CTX_free(ctx);
+
+        cOut->t.size += tmplen + outlen;
+    }
+
+    return result;
+}
+#endif
 
 #ifndef TPM_TSS_NOECC
 

@@ -2650,11 +2650,8 @@ typedef union {
 #ifdef TPM_ALG_ECC
     BYTE	ecc[sizeof(TPMS_ECC_POINT)];		/* TPM_ALG_ECC */
 #endif
-#ifdef TPM_ALG_DILITHIUM
-    BYTE	dilithium[MAX_DILITHIUM_SECRET_KEY_SIZE];		/* TPM_ALG_DILITHIUM */
-#endif
 #ifdef TPM_ALG_KYBER
-    BYTE	kyber[MAX_KYBER_SHARED_KEY_SIZE];		/* TPM_ALG_KYBER */
+    BYTE    kyber[MAX_KYBER_CIPHER_TEXT_SIZE + MAX_DIGEST_BUFFER]; /* TPM_ALG_KYBER */
 #endif
 #ifdef TPM_ALG_NEWHOPE
 	BYTE	newhope[sizeof(TPM2B_NEWHOPE_CIPHER)];

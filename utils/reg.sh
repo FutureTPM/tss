@@ -228,7 +228,7 @@ cleanup()
 initprimary()
 {
     echo "Create a platform primary storage key"
-    ${PREFIX}createprimary -hi p -pwdk sto -tk pritk.bin -ch prich.bin > run.out
+    ${PREFIX}createprimary -kyber k=4 -hi p -pwdk sto -tk pritk.bin -ch prich.bin > run.out
     checkSuccess $?
 }
 
