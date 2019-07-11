@@ -108,10 +108,6 @@ echo "Load RSA the storage key 80000001 under the primary key 80000000"
 ${PREFIX}load -hp 80000000 -ipr storepriv.bin -ipu storepub.bin -pwdp sto > run.out
 checkSuccess $?
 
-echo "Start an HMAC auth session"
-${PREFIX}startauthsession -se h > run.out
-checkSuccess $?
-
 for NALG in ${ITERATE_ALGS}
 do
 

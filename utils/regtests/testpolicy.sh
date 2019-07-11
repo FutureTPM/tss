@@ -130,6 +130,96 @@ echo "Quote - policy, should fail"
 ${PREFIX}quote -hp 0 -hk 80000001 -os sig.bin -se0 03000000 1 > run.out
 checkFailure $?
 
+echo "Flush the session"
+${PREFIX}flushcontext -ha 03000000 > run.out
+checkSuccess $?
+
+echo "Flush the signing key"
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+echo ""
+echo "Policy Command Code Dilithium"
+echo ""
+
+echo "Create a signing key under the primary key - policy command code - sign"
+${PREFIX}create -dilithium mode=4 -hp 80000000 -si -kt f -kt p -opr tmppriv.bin -opu tmppub.bin -pwdp sto -pwdk sig -pol policies/policyccsign.bin > run.out
+checkSuccess $?
+
+echo "Load the signing key under the primary key"
+${PREFIX}load -hp 80000000 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
+checkSuccess $?
+
+echo "Sign a digest"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -pwdk sig > run.out
+checkSuccess $?
+
+# sign with correct policy command code
+# cc69 18b2 2627 3b08 f5bd 406d 7f10 cf16
+# 0f0a 7d13 dfd8 3b77 70cc bcd1 aa80 d811
+
+echo "Start a policy session"
+${PREFIX}startauthsession -se p > run.out
+checkSuccess $?
+
+echo "Sign a digest - policy, should fail"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 1 > run.out
+checkFailure $?
+
+echo "Policy command code - sign"
+${PREFIX}policycommandcode -ha 03000000 -cc 15d > run.out
+checkSuccess $?
+
+echo "Policy get digest - should be cc69 ..."
+${PREFIX}policygetdigest -ha 03000000 > run.out
+checkSuccess $?
+
+echo "Sign a digest - policy and wrong password"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 1 -pwdk xxx > run.out
+checkSuccess $?
+
+echo "Sign a digest - policy, should fail, session used "
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 1 > run.out
+checkFailure $?
+
+# quote with bad policy or bad command
+
+# echo "Start a policy session"
+# ${PREFIX}startauthsession -se p > run.out
+# checkSuccess $?
+
+echo "Policy command code - sign"
+${PREFIX}policycommandcode -ha 03000000 -cc 15d > run.out
+checkSuccess $?
+
+echo "Quote - PWAP"
+${PREFIX}quote -salg dilithium -hp 0 -hk 80000001 -os sig.bin -pwdk sig > run.out
+checkSuccess $?
+
+echo "Quote - policy, should fail"
+${PREFIX}quote -salg dilithium -hp 0 -hk 80000001 -os sig.bin -se0 03000000 1 > run.out
+checkFailure $?
+
+echo "Policy restart, set back to zero"
+${PREFIX}policyrestart -ha 03000000 > run.out
+checkSuccess $?
+
+# echo "Flush the session"
+# ${PREFIX}flushcontext -ha 03000000 > run.out
+# checkSuccess $?
+
+# echo "Start a policy session"
+# ${PREFIX}startauthsession -se p > run.out
+# checkSuccess $?
+
+echo "Policy command code - quote"
+${PREFIX}policycommandcode -ha 03000000 -cc 158 > run.out
+checkSuccess $?
+
+echo "Quote - policy, should fail"
+${PREFIX}quote -salg dilithium -hp 0 -hk 80000001 -os sig.bin -se0 03000000 1 > run.out
+checkFailure $?
+
 # echo "Flush the session"
 # ${PREFIX}flushcontext -ha 03000000 > run.out
 # checkSuccess $?
@@ -207,6 +297,71 @@ ${PREFIX}flushcontext -ha 80000001 > run.out
 checkSuccess $?
 
 echo ""
+echo "Policy Command Code and Policy Password / Authvalue Dilithium"
+echo ""
+
+echo "Create a signing key under the primary key - policy command code - sign, auth"
+${PREFIX}create -dilithium mode=3 -hp 80000000 -si -kt f -kt p -opr tmppriv.bin -opu tmppub.bin -pwdp sto -pwdk sig -pol policies/policyccsign-auth.bin > run.out
+checkSuccess $?
+
+echo "Load the signing key under the primary key"
+${PREFIX}load -hp 80000000 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
+checkSuccess $?
+
+# policypassword
+
+echo "Start a policy session"
+${PREFIX}startauthsession -se p > run.out
+checkSuccess $?
+
+echo "Sign a digest - policy, should fail"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 1 > run.out
+checkFailure $?
+
+echo "Policy command code - sign"
+${PREFIX}policycommandcode -ha 03000000 -cc 15d > run.out
+checkSuccess $?
+
+echo "Sign a digest - policy, should fail"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 1 > run.out
+checkFailure $?
+
+echo "Policy password"
+${PREFIX}policypassword -ha 03000000 > run.out
+checkSuccess $?
+
+echo "Sign a digest - policy, no password should fail"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 1 > run.out
+checkFailure $?
+
+echo "Sign a digest - policy, password"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 1 -pwdk sig > run.out
+checkSuccess $?
+
+# policyauthvalue
+
+echo "Policy command code - sign"
+${PREFIX}policycommandcode -ha 03000000 -cc 15d > run.out
+checkSuccess $?
+
+echo "Policy authvalue"
+${PREFIX}policyauthvalue -ha 03000000 > run.out
+checkSuccess $?
+
+echo "Sign a digest - policy, no password should fail"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 1 > run.out
+checkFailure $?
+
+echo "Sign a digest - policy, password"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 0 -pwdk sig > run.out
+checkSuccess $?
+
+echo "Flush the signing key"
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+
+echo ""
 echo "Policy Password and Policy Authvalue flags"
 echo ""
 
@@ -256,6 +411,68 @@ do
 
     echo "Sign a digest - policy and wrong password"
     ${PREFIX}sign -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 1 -pwdk xxx > run.out
+    checkSuccess $?
+
+    echo "Flush signing key"
+    ${PREFIX}flushcontext -ha 80000001 > run.out
+    checkSuccess $?
+
+    echo "Flush policy session"
+    ${PREFIX}flushcontext -ha 03000000 > run.out
+    checkSuccess $?
+
+done
+
+echo ""
+echo "Policy Password and Policy Authvalue flags Dilithium"
+echo ""
+
+for COMMAND in policypassword policyauthvalue
+
+do
+
+    echo "Create a signing key under the primary key - policy command code - sign, auth"
+    ${PREFIX}create -dilithium mode=2 -hp 80000000 -si -kt f -kt p -opr tmppriv.bin -opu tmppub.bin -pwdp sto -pwdk sig -pol policies/policyccsign-auth.bin > run.out
+    checkSuccess $?
+
+    echo "Load the signing key under the primary key"
+    ${PREFIX}load -hp 80000000 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
+    checkSuccess $?
+
+    echo "Start a policy session"
+    ${PREFIX}startauthsession -se p > run.out
+    checkSuccess $?
+
+    echo "Policy command code - sign"
+    ${PREFIX}policycommandcode -ha 03000000 -cc 15d > run.out
+    checkSuccess $?
+
+    echo "Policy ${COMMAND}"
+    ${PREFIX}${COMMAND} -ha 03000000 > run.out
+    checkSuccess $?
+
+    echo "Sign a digest - policy, password"
+    ${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 1 -pwdk sig > run.out
+    checkSuccess $?
+
+    echo "Flush signing key"
+    ${PREFIX}flushcontext -ha 80000001 > run.out
+    checkSuccess $?
+
+    echo "Create a signing key under the primary key - policy command code - sign"
+    ${PREFIX}create -dilithium mode=4 -hp 80000000 -si -kt f -kt p -opr tmppriv.bin -opu tmppub.bin -pwdp sto -pwdk sig -pol policies/policyccsign.bin > run.out
+    checkSuccess $?
+
+    echo "Load the signing key under the primary key"
+    ${PREFIX}load -hp 80000000 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
+    checkSuccess $?
+
+    echo "Policy command code - sign"
+    ${PREFIX}policycommandcode -ha 03000000 -cc 15d > run.out
+    checkSuccess $?
+
+    echo "Sign a digest - policy and wrong password"
+    ${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 1 -pwdk xxx > run.out
     checkSuccess $?
 
     echo "Flush signing key"
@@ -526,6 +743,92 @@ ${PREFIX}flushcontext -ha 80000001 > run.out
 checkSuccess $?
 
 echo ""
+echo "Policy Secret with Platform Auth Dilithium"
+echo ""
+
+# 4000000c platform
+# 80000000 primary key
+# 80000001 signing key with policy
+# 03000000 policy session
+# 02000001 hmac session
+
+echo "Change platform hierarchy auth"
+${PREFIX}hierarchychangeauth -hi p -pwdn ppp > run.out
+checkSuccess $?
+
+echo "Create a signing key under the primary key - policy secret using platform auth"
+${PREFIX}create -dilithium mode=3 -hp 80000000 -si -kt f -kt p -opr tmppriv.bin -opu tmppub.bin -pwdp sto -pwdk sig -pol policies/policysecretp.bin > run.out
+checkSuccess $?
+
+echo "Load the signing key under the primary key"
+${PREFIX}load -hp 80000000 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
+checkSuccess $?
+
+echo "Start a policy session"
+${PREFIX}startauthsession -se p -on noncetpm.bin > run.out
+checkSuccess $?
+
+echo "Sign a digest - policy, should fail"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 0 > run.out
+checkFailure $?
+
+echo "Policy Secret with PWAP session, create a ticket"
+${PREFIX}policysecret -ha 4000000c -hs 03000000 -pwde ppp -in noncetpm.bin -exp -200 -tk tkt.bin -to to.bin > run.out
+checkSuccess $?
+
+echo "Sign a digest - policy secret"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 0 > run.out
+checkSuccess $?
+
+echo "Start a policy session"
+${PREFIX}startauthsession -se p -on noncetpm.bin > run.out
+checkSuccess $?
+
+echo "Policy Secret using primary key, create a ticket"
+${PREFIX}policysecret -ha 4000000c -hs 03000000 -pwde ppp -in noncetpm.bin -exp -200 -tk tkt.bin -to to.bin > run.out
+checkSuccess $?
+
+echo "Sign a digest - policy secret"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 0 > run.out
+checkSuccess $?
+
+echo "Start a policy session"
+${PREFIX}startauthsession -se p > run.out
+checkSuccess $?
+
+echo "Policy ticket"
+${PREFIX}policyticket -ha 03000000 -to to.bin -hi p -tk tkt.bin > run.out
+checkSuccess $?
+
+echo "Sign a digest - policy ticket"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 0 > run.out
+checkSuccess $?
+
+echo "Start a policy session"
+${PREFIX}startauthsession -se p -on noncetpm.bin > run.out
+checkSuccess $?
+
+echo "Start an HMAC session"
+${PREFIX}startauthsession -se h > run.out
+checkSuccess $?
+
+echo "Policy Secret with HMAC session"
+${PREFIX}policysecret -ha 4000000c -hs 03000000 -pwde ppp -se0 02000001 0 > run.out
+checkSuccess $?
+
+echo "Sign a digest - policy secret"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 0 > run.out
+checkSuccess $?
+
+echo "Change platform hierarchy auth back to null"
+${PREFIX}hierarchychangeauth -hi p -pwda ppp > run.out
+checkSuccess $?
+
+echo "Flush the signing key"
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+echo ""
 echo "Policy Secret with NV Auth"
 echo ""
 
@@ -564,6 +867,55 @@ checkSuccess $?
 
 echo "Sign a digest - policy secret"
 ${PREFIX}sign -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 0 > run.out
+checkSuccess $?
+
+echo "Flush the signing key"
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+echo "NV Undefine Space 0100000"
+${PREFIX}nvundefinespace -hi p -ha 01000000 > run.out
+checkSuccess $?
+
+echo ""
+echo "Policy Secret with NV Auth Dilithium"
+echo ""
+
+# Name is
+# 00 0b e0 65 10 81 c2 fc da 30 69 93 da 43 d1 de
+# 5b 24 be 42 6e 2d 61 90 7b 42 83 54 69 13 6c 97
+# 68 1f
+
+# Policy is
+# c6 93 f9 b0 ef 1a b7 1e ca ae 00 af 1f 0b f4 88
+# 37 9e ab 16 c1 f8 0d 9f f9 6d 90 41 4e 2f c6 b3
+
+echo "NV Define Space 0100000"
+${PREFIX}nvdefinespace -hi p -ha 01000000 -pwdn nnn -sz 16 -pwdn nnn > run.out
+checkSuccess $?
+
+echo "Create a signing key under the primary key - policy secret NV auth"
+${PREFIX}create -dilithium mode=2 -hp 80000000 -si -kt f -kt p -opr tmppriv.bin -opu tmppub.bin -pwdp sto -pwdk sig -pol policies/policysecretnv.bin > run.out
+checkSuccess $?
+
+echo "Load the signing key under the primary key"
+${PREFIX}load -hp 80000000 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
+checkSuccess $?
+
+echo "Start a policy session"
+${PREFIX}startauthsession -se p -on noncetpm.bin > run.out
+checkSuccess $?
+
+echo "Sign a digest - policy, should fail"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 0 > run.out
+checkFailure $?
+
+echo "Policy Secret with PWAP session"
+${PREFIX}policysecret -ha 01000000 -hs 03000000 -pwde nnn -in noncetpm.bin > run.out
+checkSuccess $?
+
+echo "Sign a digest - policy secret"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 0 > run.out
 checkSuccess $?
 
 echo "Flush the signing key"
@@ -1856,6 +2208,106 @@ checkSuccess $?
 
 echo "Quote with policy OR"
 ${PREFIX}quote -hp 0 -hk 80000001 -se0 03000000 1 > run.out
+checkSuccess $?
+
+echo "Policy Command code - gettime 7a 3e bd aa"
+${PREFIX}policycommandcode -ha 03000000 -cc 0000014c > run.out
+checkSuccess $?
+
+echo "Policy OR, gettime not an AND term - should fail"
+${PREFIX}policyor -ha 03000000 -if policies/policyccsign.bin -if policies/policyccquote.bin > run.out
+checkFailure $?
+
+echo "Flush policy session"
+${PREFIX}flushcontext -ha 03000000 > run.out
+checkSuccess $?
+
+echo "Flush signing key"
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+echo ""
+echo "PolicyOR Dilithium"
+echo ""
+
+echo "Create an unrestricted signing key, policy command code sign or quote"
+${PREFIX}create -dilithium mode=3 -hp 80000000 -si -kt f -kt p -opr tmppriv.bin -opu tmppub.bin -pwdp sto -pwdk sig -pol policies/policyor.bin > run.out
+checkSuccess $?
+
+echo "Load the signing key"
+${PREFIX}load -hp 80000000 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
+checkSuccess $?
+
+echo "Start policy session"
+${PREFIX}startauthsession -se p > run.out
+checkSuccess $?
+
+echo "Policy get digest"
+${PREFIX}policygetdigest -ha 03000000 > run.out
+checkSuccess $?
+
+echo "Sign a digest - should fail"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 1 > run.out
+checkFailure $?
+
+echo "Quote - should fail"
+${PREFIX}quote -salg dilithium -hp 0 -hk 80000001 -se0 03000000 1 > run.out
+checkFailure $?
+
+echo "Get time - should fail, policy not set"
+${PREFIX}gettime -hk 80000001 -qd policies/aaa -se1 03000000 1 > run.out
+checkFailure $?
+
+echo "Policy OR - should fail"
+${PREFIX}policyor -ha 03000000 -if policies/policyccsign.bin -if policies/policyccquote.bin > run.out
+checkFailure $?
+
+echo "Policy Command code - sign"
+${PREFIX}policycommandcode -ha 03000000 -cc 0000015d > run.out
+checkSuccess $?
+
+echo "Policy get digest, should be cc 69 18 b2"
+${PREFIX}policygetdigest -ha 03000000 > run.out
+checkSuccess $?
+
+echo "Policy OR"
+${PREFIX}policyor -ha 03000000 -if policies/policyccsign.bin -if policies/policyccquote.bin > run.out
+checkSuccess $?
+
+echo "Policy get digest, should be 6b fe c2 3a"
+${PREFIX}policygetdigest -ha 03000000 > run.out
+checkSuccess $?
+
+echo "Sign with policy OR"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 1 > run.out
+checkSuccess $?
+
+echo "Policy Command code - sign"
+${PREFIX}policycommandcode -ha 03000000 -cc 0000015d > run.out
+checkSuccess $?
+
+echo "Policy OR"
+${PREFIX}policyor -ha 03000000 -if policies/policyccsign.bin -if policies/policyccquote.bin > run.out
+checkSuccess $?
+
+echo "Quote - should fail, wrong command code"
+${PREFIX}quote -salg dilithium -hp 0 -hk 80000001 -se0 03000000 1 > run.out
+checkFailure $?
+
+echo "Policy restart, set back to zero"
+${PREFIX}policyrestart -ha 03000000 > run.out
+checkSuccess $?
+
+echo "Policy Command code - quote, digest a0 39 ca d5"
+${PREFIX}policycommandcode -ha 03000000 -cc 00000158 > run.out
+checkSuccess $?
+
+echo "Policy OR, digest 6b fe c2 3a"
+${PREFIX}policyor -ha 03000000 -if policies/policyccsign.bin -if policies/policyccquote.bin > run.out
+checkSuccess $?
+
+echo "Quote with policy OR"
+${PREFIX}quote -salg dilithium -hp 0 -hk 80000001 -se0 03000000 1 > run.out
 checkSuccess $?
 
 echo "Policy Command code - gettime 7a 3e bd aa"

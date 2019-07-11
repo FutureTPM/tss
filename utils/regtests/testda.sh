@@ -150,3 +150,113 @@ ${PREFIX}flushcontext -ha 80000001 > run.out
 checkSuccess $?
 
 # ${PREFIX}getcapability -cap 1 -pr 80000000
+
+echo ""
+echo "DA Logic QR"
+echo ""
+
+echo "Create an signing key with DA protection"
+${PREFIX}create -dilithium mode=4 -hp 80000000 -si -kt f -kt p -opr tmppriv.bin -opu tmppub.bin -pwdp sto -pwdk sig -da > run.out
+checkSuccess $?
+
+echo "Load the signing key"
+${PREFIX}load -hp 80000000 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
+checkSuccess $?
+
+echo "Set DA recovery time to 0, disables DA"
+${PREFIX}dictionaryattackparameters -nrt 0 > run.out
+checkSuccess $?
+
+echo "Sign a digest with bad password - should fail"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -pwdk xxx > run.out
+checkFailure $?
+
+echo "Sign a digest with good password, no lockout"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -pwdk sig > run.out
+checkSuccess $?
+
+echo "Set DA recovery time to 120 sec, enables DA"
+${PREFIX}dictionaryattackparameters -nrt 120 > run.out
+checkSuccess $?
+
+echo "Sign a digest with bad password - should fail"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -pwdk xxx > run.out
+checkFailure $?
+
+echo "Sign a digest with good password, lockout - should fail"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -pwdk sig > run.out
+checkFailure $?
+
+echo "Reset DA lock"
+${PREFIX}dictionaryattacklockreset > run.out
+checkSuccess $?
+
+echo "Sign a digest with good password"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -pwdk sig > run.out
+checkSuccess $?
+
+echo "Set DA recovery time to 120 sec, enables DA, max tries 2"
+${PREFIX}dictionaryattackparameters -nrt 120 -nmt 2 > run.out
+checkSuccess $?
+
+echo "Sign a digest with bad password - should fail"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -pwdk xxx > run.out
+checkFailure $?
+
+echo "Sign a digest with good password, no lockout yet"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -pwdk sig > run.out
+checkSuccess $?
+
+echo "Sign a digest with bad password - should fail"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -pwdk xxx > run.out
+checkFailure $?
+
+echo "Sign a digest with good password, lockout - should fail"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -pwdk sig > run.out
+checkFailure $?
+
+echo "Reset DA lock"
+${PREFIX}dictionaryattacklockreset > run.out
+checkSuccess $?
+
+echo "Sign a digest with good password, no lockout"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -pwdk sig > run.out
+checkSuccess $?
+
+echo "Set DA recovery time to 0, disables DA"
+${PREFIX}dictionaryattackparameters -nrt 0 > run.out
+checkSuccess $?
+
+echo ""
+echo "Lockout Auth"
+echo ""
+
+echo "Change lockout auth"
+${PREFIX}hierarchychangeauth -hi l -pwdn lll > run.out
+checkSuccess $?
+
+echo "Reset DA lock with good password"
+${PREFIX}dictionaryattacklockreset -pwd lll > run.out
+checkSuccess $?
+
+echo "Set DA recovery time to 0 with good password"
+${PREFIX}dictionaryattackparameters -nrt 0 -pwd lll > run.out
+checkSuccess $?
+
+echo "Clear lockout auth"
+${PREFIX}hierarchychangeauth -hi l -pwda lll > run.out
+checkSuccess $?
+
+echo "Set DA recovery time to 0"
+${PREFIX}dictionaryattackparameters -nrt 0 > run.out
+checkSuccess $?
+
+echo "Reset DA lock"
+${PREFIX}dictionaryattacklockreset > run.out
+checkSuccess $?
+
+echo "Flush signing key"
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+# ${PREFIX}getcapability -cap 1 -pr 80000000

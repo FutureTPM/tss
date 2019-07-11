@@ -154,6 +154,98 @@ ${PREFIX}flushcontext -ha 80000001 > run.out
 checkSuccess $?
 
 echo ""
+echo "Policy Authorize NV Dilithium"
+echo ""
+
+echo "Start a policy session 03000000"
+${PREFIX}startauthsession -se p > run.out
+checkSuccess $?
+
+echo "Create a signing key, policyauthnv"
+${PREFIX}create -dilithium mode=2 -hp 80000000 -si -opr tmppriv.bin -opu tmppub.bin -pwdp sto -pwdk sig -pol policies/policyauthorizenv.bin > run.out
+checkSuccess $?
+
+echo "Load the signing key under the primary key"
+${PREFIX}load -hp 80000000 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
+checkSuccess $?
+
+echo "NV Define Space"
+${PREFIX}nvdefinespace -hi o -ha 01000000 -sz 50 > run.out
+checkSuccess $?
+
+echo "NV not written, policyauthorizenv - should fail"
+${PREFIX}policyauthorizenv -ha 01000000 -hs 03000000 > run.out
+checkFailure $?
+
+echo "Write algorithm ID into NV index 01000000"
+${PREFIX}nvwrite -ha 01000000 -off 0 -if policies/sha256.bin > run.out
+checkSuccess $?
+
+echo "Write policy command code sign into NV index 01000000"
+${PREFIX}nvwrite -ha 01000000 -off 2 -if policies/policyccsign.bin > run.out
+checkSuccess $?
+
+echo "Policy command code - sign"
+${PREFIX}policycommandcode -ha 03000000 -cc 15d > run.out
+checkSuccess $?
+
+echo "Policy get digest - should be cc 69 ..."
+${PREFIX}policygetdigest -ha 03000000 > run.out
+checkSuccess $?
+
+echo "Policy Authorize NV against 01000000"
+${PREFIX}policyauthorizenv -ha 01000000 -hs 03000000 > run.out
+checkSuccess $?
+
+echo "Policy get digest - should be 66 1f ..."
+${PREFIX}policygetdigest -ha 03000000 > run.out
+checkSuccess $?
+
+echo "Sign a digest - policy and wrong password"
+${PREFIX}sign -dilithium -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 1 -pwdk xxx > run.out
+checkSuccess $?
+
+echo "Policy restart, set back to zero"
+${PREFIX}policyrestart -ha 03000000 > run.out
+checkSuccess $?
+
+echo "Policy command code - sign"
+${PREFIX}policycommandcode -ha 03000000 -cc 15d > run.out
+checkSuccess $?
+
+echo "Policy Authorize NV against 01000000"
+${PREFIX}policyauthorizenv -ha 01000000 -hs 03000000 > run.out
+checkSuccess $?
+
+echo "Quote - policy, should fail"
+${PREFIX}quote -salg dilithium -hp 0 -hk 80000001 -os sig.bin -se0 03000000 1 > run.out
+checkFailure $?
+
+echo "Policy restart, set back to zero"
+${PREFIX}policyrestart -ha 03000000 > run.out
+checkSuccess $?
+
+echo "Policy command code - quote"
+${PREFIX}policycommandcode -ha 03000000 -cc 158 > run.out
+checkSuccess $?
+
+echo "Policy Authorize NV against 01000000 - should fail"
+${PREFIX}policyauthorizenv -ha 01000000 -hs 03000000 > run.out
+checkFailure $?
+
+echo "NV Undefine Space"
+${PREFIX}nvundefinespace -hi o -ha 01000000 > run.out
+checkSuccess $?
+
+echo "Flush the policy session 03000000"
+${PREFIX}flushcontext -ha 03000000 > run.out
+checkSuccess $?
+
+echo "Flush the signing key 80000001 "
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+echo ""
 echo "Policy Template"
 echo ""
 

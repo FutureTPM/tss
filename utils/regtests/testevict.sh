@@ -93,6 +93,58 @@ echo "Sign a digest with the transient key - should fail"
 ${PREFIX}sign -hk 80000001 -halg sha1 -if policies/aaa -os sig.bin -pwdk sig > run.out
 checkFailure $?
 
+echo ""
+echo "Evict Control Dilithium"
+echo ""
+
+echo "Create an unrestricted signing key"
+${PREFIX}create -dilithium mode=4 -hp 80000000 -si -kt f -kt p -opr tmppriv.bin -opu tmppub.bin -pwdp sto -pwdk sig > run.out
+checkSuccess $?
+
+echo "Load the signing key"
+${PREFIX}load -hp 80000000 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
+checkSuccess $?
+
+echo "Make the signing key persistent"
+${PREFIX}evictcontrol -ho 80000001 -hp 81800000 -hi p > run.out
+checkSuccess $?
+
+echo "Sign a digest with the transient key"
+${PREFIX}sign -dilithium -hk 80000001 -halg sha1 -if policies/aaa -os sig.bin -pwdk sig > run.out
+checkSuccess $?
+
+echo "Sign a digest with the persistent key"
+${PREFIX}sign -dilithium -hk 81800000 -halg sha1 -if policies/aaa -os sig.bin -pwdk sig > run.out
+checkSuccess $?
+
+echo "Flush the transient key"
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+echo "Flush the persistent key - should fail"
+${PREFIX}flushcontext -ha 81800000 > run.out
+checkFailure $?
+
+echo "Sign a digest with the transient key- should fail"
+${PREFIX}sign -dilithium -hk 80000001 -halg sha1 -if policies/aaa -os sig.bin -pwdk sig > run.out
+checkFailure $?
+
+echo "Sign a digest with the persistent key"
+${PREFIX}sign -dilithium -hk 81800000 -halg sha1 -if policies/aaa -os sig.bin -pwdk sig > run.out
+checkSuccess $?
+
+echo "Flush the persistent key"
+${PREFIX}evictcontrol -ho 81800000 -hp 81800000 -hi p > run.out
+checkSuccess $?
+
+echo "Sign a digest with the persistent key - should fail"
+${PREFIX}sign -dilithium -hk 81800000 -halg sha1 -if policies/aaa -os sig.bin -pwdk sig > run.out
+checkFailure $?
+
+echo "Sign a digest with the transient key - should fail"
+${PREFIX}sign -dilithium -hk 80000001 -halg sha1 -if policies/aaa -os sig.bin -pwdk sig > run.out
+checkFailure $?
+
 # ${PREFIX}getcapability  -cap 1 -pr 80000000
 # ${PREFIX}getcapability  -cap 1 -pr 81000000
 # ${PREFIX}getcapability  -cap 1 -pr 02000000

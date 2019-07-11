@@ -45,8 +45,8 @@
 # storage key 80000001
 # signing key 80000002
 # policy session 03000000
-# e5 87 c1 1a b5 0f 9d 87 30 f7 21 e3 fe a4 2b 46 
-# c0 45 5b 24 6f 96 ae e8 5d 18 eb 3b e6 4d 66 6a 
+# e5 87 c1 1a b5 0f 9d 87 30 f7 21 e3 fe a4 2b 46
+# c0 45 5b 24 6f 96 ae e8 5d 18 eb 3b e6 4d 66 6a
 
 echo ""
 echo "Credential"
@@ -62,6 +62,54 @@ checkSuccess $?
 
 echo "Create a restricted signing key under the primary key"
 ${PREFIX}create -hp 80000000 -sir -kt f -kt p -opr tmprpriv.bin -opu tmprpub.bin -pwdp sto -pwdk sig -pol policies/policyccactivate.bin > run.out
+checkSuccess $?
+
+echo "Load the signing key under the primary key, 80000002"
+${PREFIX}load -hp 80000000 -ipr tmprpriv.bin -ipu tmprpub.bin -pwdp sto > run.out
+checkSuccess $?
+
+echo "Encrypt the credential using makecredential"
+${PREFIX}makecredential -ha 80000001 -icred tmpcredin.bin -in h80000002.bin -ocred tmpcredenc.bin -os tmpsecret.bin > run.out
+checkSuccess $?
+
+echo "Start a policy session"
+${PREFIX}startauthsession -se p > run.out
+checkSuccess $?
+
+echo "Policy command code - activatecredential"
+${PREFIX}policycommandcode -ha 03000000 -cc 00000147 > run.out
+checkSuccess $?
+
+echo "Activate credential"
+${PREFIX}activatecredential -ha 80000002 -hk 80000001 -icred tmpcredenc.bin -is tmpsecret.bin -pwdk sto -ocred tmpcreddec.bin -se0 03000000 0 > run.out
+checkSuccess $?
+
+echo "Check the decrypted result"
+diff tmpcredin.bin tmpcreddec.bin > run.out
+checkSuccess $?
+
+echo "Flush the storage key"
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+echo "Flush the signing key"
+${PREFIX}flushcontext -ha 80000002 > run.out
+checkSuccess $?
+
+echo ""
+echo "Credential QR"
+echo ""
+
+echo "Use a random number as the credential input"
+${PREFIX}getrandom -by 32 -of tmpcredin.bin > run.out
+checkSuccess $?
+
+echo "Load the storage key under the primary key, 80000001"
+${PREFIX}load -hp 80000000 -ipr storekyberpriv.bin -ipu storekyberpub.bin -pwdp sto > run.out
+checkSuccess $?
+
+echo "Create a restricted signing key under the primary key"
+${PREFIX}create -dilithium mode=2 -hp 80000000 -sir -kt f -kt p -opr tmprpriv.bin -opu tmprpub.bin -pwdp sto -pwdk sig -pol policies/policyccactivate.bin > run.out
 checkSuccess $?
 
 echo "Load the signing key under the primary key, 80000002"

@@ -253,3 +253,77 @@ rm -f tmp1.bin
 # ${PREFIX}getcapability -cap 1 -pr 80000000
 # ${PREFIX}getcapability -cap 1 -pr 02000000
 
+echo ""
+echo "Sign with ticket Dilithium"
+echo ""
+
+echo "Load the signing key under the primary key"
+${PREFIX}load -hp 80000000 -ipr signdilrpriv.bin -ipu signdilrpub.bin -pwdp sto > run.out
+checkSuccess $?
+
+echo "Hash and create ticket"
+${PREFIX}hash -hi p -halg sha256 -if msg.bin -oh sig.bin -tk tkt.bin > run.out
+checkSuccess $?
+
+echo "Sign a digest with a restricted signing key and no ticket - should fail"
+${PREFIX}sign -dilithium -hk 80000001 -halg sha256 -if msg.bin -os sig.bin -pwdk sig > run.out
+checkFailure $?
+
+echo "Sign a digest with a restricted signing key and ticket"
+${PREFIX}sign -dilithium -hk 80000001 -halg sha256 -if msg.bin -tk tkt.bin -os sig.bin -pwdk sig > run.out
+checkSuccess $?
+
+echo "Hash and create null ticket, msg with TPM_GENERATED"
+${PREFIX}hash -hi p -halg sha256 -if policies/msgtpmgen.bin -oh sig.bin -tk tkt.bin > run.out
+checkSuccess $?
+
+echo "Sign a digest with a restricted signing key and ticket - should fail"
+${PREFIX}sign -dilithium -hk 80000001 -halg sha256 -if msg.bin -tk tkt.bin -os sig.bin -pwdk sig > run.out
+checkFailure $?
+
+echo "Hash sequence start"
+${PREFIX}hashsequencestart -halg sha256 -pwda aaa > run.out
+checkSuccess $?
+
+echo "Hash sequence update "
+${PREFIX}sequenceupdate -hs 80000002 -pwds aaa -if msg.bin > run.out
+checkSuccess $?
+
+echo "Hash sequence complete"
+${PREFIX}sequencecomplete -hi p -hs 80000002 -pwds aaa -of tmp.bin -tk tkt.bin > run.out
+checkSuccess $?
+
+echo "Sign a digest with a restricted signing key and no ticket - should fail"
+${PREFIX}sign -dilithium -hk 80000001 -halg sha256 -if msg.bin -os sig.bin -pwdk sig > run.out
+checkFailure $?
+
+echo "Sign a digest with a restricted signing key and ticket"
+${PREFIX}sign -dilithium -hk 80000001 -halg sha256 -if msg.bin -tk tkt.bin -os sig.bin -pwdk sig > run.out
+checkSuccess $?
+
+echo "Hash sequence start"
+${PREFIX}hashsequencestart -halg sha256 -pwda aaa -halg sha256 > run.out
+checkSuccess $?
+
+echo "Hash sequence update, msg with TPM_GENERATED"
+${PREFIX}sequenceupdate -hs 80000002 -pwds aaa -if policies/msgtpmgen.bin > run.out
+checkSuccess $?
+
+echo "Hash sequence complete"
+${PREFIX}sequencecomplete -hi p -hs 80000002 -pwds aaa -of tmp.bin -tk tkt.bin > run.out
+checkSuccess $?
+
+echo "Sign a digest with a restricted signing key and ticket - should fail"
+${PREFIX}sign -dilithium -hk 80000001 -halg sha256 -if msg.bin -tk tkt.bin -os sig.bin -pwdk sig > run.out
+checkFailure $?
+
+echo "Flush the signing key"
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+rm -f tmp.bin
+rm -f tmp1.bin
+
+# ${PREFIX}getcapability -cap 1 -pr 80000000
+# ${PREFIX}getcapability -cap 1 -pr 02000000
+
