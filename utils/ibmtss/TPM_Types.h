@@ -1355,7 +1355,6 @@ typedef union {
     BYTE	shake128 [SHAKE128_DIGEST_SIZE];	/* TPM_ALG_SHAKE128 */
     BYTE	shake256 [SHAKE256_DIGEST_SIZE];	/* TPM_ALG_SHAKE256 */
     BYTE	tssmax [1024];			/* to make union size larger */
-
 } TPMU_HA;
 
 /* legacy, better to use (sizeof(TPMU_HA) */
