@@ -253,7 +253,7 @@ int main(int argc, char *argv[])
 			(MarshalFunction_t)TSS_TPM2B_LDAA_NYM_Marshalu,
 			nymFilename);
 	}
-	if ((rc == 0) && (nymFilename != NULL)) {
+	if ((rc == 0) && (publickeyFilename != NULL)) {
 		rc = TSS_File_WriteStructure(&out.public_key,
 			(MarshalFunction_t)TSS_TPM2B_LDAA_PUBLIC_KEY_Marshalu,
 			publickeyFilename);
