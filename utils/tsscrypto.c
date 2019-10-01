@@ -473,7 +473,9 @@ typedef struct {
     uint64_t eta;
     uint64_t publickeybytes;
     uint64_t secretkeybytes;
+    uint64_t polycompressedbytes;
     uint64_t polyveccompressedbytes;
+    uint64_t polyvecbytes;
     uint64_t indcpa_secretkeybytes;
     uint64_t indcpa_publickeybytes;
     uint64_t ciphertextbytes;
@@ -481,35 +483,33 @@ typedef struct {
 
 static KyberParams generate_kyber_params(TPM_KYBER_SECURITY kyber_k) {
     KyberParams params;
-    uint64_t kyber_polyvecbytes = 0;
-
-    params.k = kyber_k;
-    kyber_polyvecbytes            = kyber_k * KYBER_POLYBYTES;
-    params.polyveccompressedbytes = kyber_k * 352;
-
-    params.indcpa_publickeybytes = params.polyveccompressedbytes +
-        KYBER_SYMBYTES;
-    params.indcpa_secretkeybytes = kyber_polyvecbytes;
-
-    params.publickeybytes =  params.indcpa_publickeybytes;
-    params.secretkeybytes =  params.indcpa_secretkeybytes +
-        params.indcpa_publickeybytes + 2*KYBER_SYMBYTES;
-    params.ciphertextbytes = params.polyveccompressedbytes +
-        KYBER_POLYCOMPRESSEDBYTES;
+    params.polyvecbytes = kyber_k * KYBER_POLYBYTES;
 
     switch (kyber_k) {
         case TPM_KYBER_SECURITY_2:
-            params.eta = 5; /* Kyber512 */
+            params.polycompressedbytes = 96;
+            params.polyveccompressedbytes = kyber_k * 320;
             break;
         case TPM_KYBER_SECURITY_3:
-            params.eta = 4; /* Kyber768 */
+            params.polycompressedbytes = 128;
+            params.polyveccompressedbytes = kyber_k * 320;
             break;
         case TPM_KYBER_SECURITY_4:
-            params.eta = 3; /* Kyber1024 */
+            params.polycompressedbytes = 160;
+            params.polyveccompressedbytes = kyber_k * 352;
             break;
         default:
             break;
     }
+
+    params.k = kyber_k;
+    params.indcpa_publickeybytes = params.polyvecbytes + KYBER_SYMBYTES;
+    params.indcpa_secretkeybytes = params.polyvecbytes;
+
+    params.publickeybytes =  params.indcpa_publickeybytes;
+    params.secretkeybytes =  params.indcpa_secretkeybytes + params.indcpa_publickeybytes + 2*KYBER_SYMBYTES;
+    params.ciphertextbytes = params.polyveccompressedbytes + params.polycompressedbytes;
+    params.eta = 2;
 
     return params;
 }
@@ -571,7 +571,8 @@ CryptKyberEncapsulate(
     indcpa_enc(ct->t.buffer, buf,
             publicArea->unique.kyber.t.buffer,
             kr+KYBER_SYMBYTES, params.k,
-            params.polyveccompressedbytes, params.eta);
+            params.polyveccompressedbytes, params.eta, params.polyvecbytes,
+            params.polycompressedbytes);
 
     /* overwrite coins in kr with H(c) */
     // TODO: Error checking
@@ -581,9 +582,9 @@ CryptKyberEncapsulate(
 
     /* hash concatenation of pre-k and H(c) to k */
     // TODO: Error checking
-    EVP_DigestInit_ex(mdctx, EVP_sha3_256(), NULL);
+    EVP_DigestInit_ex(mdctx, EVP_shake256(), NULL);
     EVP_DigestUpdate(mdctx, kr, 2*KYBER_SYMBYTES);
-    EVP_DigestFinal_ex(mdctx, ss->t.buffer, NULL);
+    EVP_DigestFinalXOF(mdctx, ss->t.buffer, 32);
 
     EVP_MD_CTX_free(mdctx);
 

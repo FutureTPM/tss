@@ -63,6 +63,7 @@ ALL += 	$(LIBTSS)				\
 
 TSS_HEADERS += 					\
 		kyber-cbd.h 			\
+		kyber-rng.h 			\
 		kyber-indcpa.h 			\
 		kyber-ntt.h 			\
 		kyber-params.h 			\
@@ -99,9 +100,10 @@ TSS_OBJS += 	tss.o			\
 		kyber-cbd.o \
 		kyber-indcpa.o \
 		kyber-ntt.o \
+		kyber-rng.o \
+		kyber-symmetric-fips202.o \
 		kyber-poly.o \
 		kyber-polyvec.o \
-		kyber-precomp.o \
 		kyber-reduce.o \
 		kyber-verify.o    \
 		tssproperties.o		\
