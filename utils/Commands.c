@@ -2661,3 +2661,41 @@ LDAA_SignProceed_In_Unmarshal(LDAA_SignProceed_In *target, BYTE **buffer, uint32
 /*                                 LDAA Mods                                 */
 /*****************************************************************************/
 
+/*****************************************************************************/
+/*                                NTTRU Mods                                 */
+/*****************************************************************************/
+TPM_RC
+NTTRU_Encapsulate_In_Unmarshal(NTTRU_Encapsulate_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+    buffer = buffer;
+    size = size;
+
+    if (rc == TPM_RC_SUCCESS) {
+        target->key_handle = handles[0];
+    }
+    return rc;
+}
+
+TPM_RC
+NTTRU_Decapsulate_In_Unmarshal(NTTRU_Decapsulate_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[])
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+    buffer = buffer;
+    size = size;
+
+    if (rc == TPM_RC_SUCCESS) {
+        target->key_handle = handles[0];
+    }
+
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPM2B_NTTRU_CIPHER_TEXT_Unmarshalu(&target->cipher_text, buffer, size);
+        if (rc != TPM_RC_SUCCESS) {
+            rc += RC_NTTRU_Decapsulate_cipher_text;
+        }
+    }
+    return rc;
+}
+/*****************************************************************************/
+/*                                NTTRU Mods                                 */
+/*****************************************************************************/

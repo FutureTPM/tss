@@ -498,6 +498,30 @@ extern "C" {
     /*****************************************************************************/
 
     /*****************************************************************************/
+    /*                                NTTRU Mods                                 */
+    /*****************************************************************************/
+    LIB_EXPORT TPM_RC
+    TSS_TPM2B_NTTRU_PUBLIC_KEY_Unmarshalu(TPM2B_NTTRU_PUBLIC_KEY *target, BYTE **buffer, uint32_t *size);
+    LIB_EXPORT TPM_RC
+    TSS_TPM2B_NTTRU_SECRET_KEY_Unmarshalu(TPM2B_NTTRU_SECRET_KEY *target, BYTE **buffer, uint32_t *size);
+    LIB_EXPORT TPM_RC
+    TSS_TPM2B_NTTRU_SHARED_KEY_Unmarshalu(TPM2B_NTTRU_SHARED_KEY *target, BYTE **buffer, uint32_t *size);
+    LIB_EXPORT TPM_RC
+    TSS_TPM2B_NTTRU_CIPHER_TEXT_Unmarshalu(TPM2B_NTTRU_CIPHER_TEXT *target, BYTE **buffer, uint32_t *size);
+
+    LIB_EXPORT TPM_RC
+    TSS_TPMI_ALG_NTTRU_SCHEME_Unmarshalu(TPMI_ALG_NTTRU_SCHEME *target, BYTE **buffer, uint32_t *size, BOOL allowNull);
+    LIB_EXPORT TPM_RC
+    TSS_TPMT_NTTRU_SCHEME_Unmarshalu(TPMT_NTTRU_SCHEME *target, BYTE **buffer, uint32_t *size, BOOL allowNull);
+    LIB_EXPORT TPM_RC
+    TSS_TPMS_NTTRU_PARMS_Unmarshalu(TPMS_NTTRU_PARMS *target, BYTE **buffer, uint32_t *size);
+    LIB_EXPORT TPM_RC
+    TSS_TPMS_ENC_SCHEME_NTTRU_Unmarshalu(TPMS_ENC_SCHEME_NTTRU *target, BYTE **buffer, uint32_t *size);
+    /*****************************************************************************/
+    /*                                NTTRU Mods                                 */
+    /*****************************************************************************/
+
+    /*****************************************************************************/
     /*                             Dilithium Mods                                */
     /*****************************************************************************/
     TPM_RC

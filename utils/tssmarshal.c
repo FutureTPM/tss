@@ -4842,6 +4842,16 @@ TSS_TPMS_ENC_SCHEME_KYBER_Marshalu(const TPMS_ENC_SCHEME_KYBER *source, UINT32 *
     }
     return rc;
 }
+
+TPM_RC
+TSS_TPMS_ENC_SCHEME_NTTRU_Marshalu(const TPMS_ENC_SCHEME_NTTRU *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+	rc = TSS_TPMS_SCHEME_HASH_Marshalu(source, written, buffer, size);
+    }
+    return rc;
+}
 /* Table 146 - Definition of Types for {RSA} Encryption Schemes */
 
 TPM_RC
@@ -5069,6 +5079,13 @@ TSS_TPMU_ASYM_SCHEME_Marshalu(const TPMU_ASYM_SCHEME  *source, UINT32 *written, 
         }
         break;
 #endif
+#ifdef TPM_ALG_NTTRU
+      case TPM_ALG_NTTRU:
+        if (rc == 0) {
+            rc = TSS_TPMS_ENC_SCHEME_NTTRU_Marshalu(&source->nttru, written, buffer, size);
+        }
+        break;
+#endif
 #ifdef TPM_ALG_NEWHOPE
 	  case TPM_ALG_NEWHOPE:
         break;
@@ -5178,6 +5195,22 @@ TSS_TPMI_ALG_KYBER_SCHEME_Marshalu(const TPMI_ALG_KYBER_SCHEME *source, UINT32 *
 /*****************************************************************************/
 
 /*****************************************************************************/
+/*                                NTTRU Mods                                 */
+/*****************************************************************************/
+TPM_RC
+TSS_TPMI_ALG_NTTRU_SCHEME_Marshalu(const TPMI_ALG_NTTRU_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+	rc = TSS_TPM_ALG_ID_Marshalu(source, written, buffer, size);
+    }
+    return rc;
+}
+/*****************************************************************************/
+/*                                NTTRU Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
 /*                                LDAA Mods                                  */
 /*****************************************************************************/
 TPM_RC
@@ -5254,6 +5287,25 @@ TSS_TPMT_KYBER_SCHEME_Marshalu(const TPMT_KYBER_SCHEME *source, UINT32 *written,
 }
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                                NTTRU Mods                                 */
+/*****************************************************************************/
+TPM_RC
+TSS_TPMT_NTTRU_SCHEME_Marshalu(const TPMT_NTTRU_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+	rc = TSS_TPMI_ALG_NTTRU_SCHEME_Marshalu(&source->scheme, written, buffer, size);
+    }
+    if (rc == 0) {
+	rc = TSS_TPMU_ASYM_SCHEME_Marshalu(&source->details, written, buffer, size, source->scheme);
+    }
+    return rc;
+}
+/*****************************************************************************/
+/*                                NTTRU Mods                                 */
 /*****************************************************************************/
 
 /*****************************************************************************/
@@ -5779,6 +5831,13 @@ TSS_TPMU_PUBLIC_ID_Marshalu(const TPMU_PUBLIC_ID *source, UINT32 *written, BYTE 
         }
         break;
 #endif
+#ifdef TPM_ALG_NTTRU
+      case TPM_ALG_NTTRU:
+        if (rc == 0) {
+            rc = TSS_TPM2B_NTTRU_PUBLIC_KEY_Marshalu(&source->nttru, written, buffer, size);
+        }
+        break;
+#endif
 #ifdef TPM_ALG_LDAA
       case TPM_ALG_LDAA:
         if (rc == 0) {
@@ -5954,6 +6013,25 @@ TSS_TPMS_KYBER_PARMS_Marshalu(const TPMS_KYBER_PARMS *source, UINT32 *written, B
 /*****************************************************************************/
 
 /*****************************************************************************/
+/*                                NTTRU Mods                                 */
+/*****************************************************************************/
+TPM_RC
+TSS_TPMS_NTTRU_PARMS_Marshalu(const TPMS_NTTRU_PARMS *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+	rc = TSS_TPMT_SYM_DEF_OBJECT_Marshalu(&source->symmetric, written, buffer, size);
+    }
+    if (rc == 0) {
+	rc = TSS_TPMT_NTTRU_SCHEME_Marshalu(&source->scheme, written, buffer, size);
+    }
+    return rc;
+}
+/*****************************************************************************/
+/*                                Kyber Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
 /*                                 LDAA Mods                                 */
 /*****************************************************************************/
 TPM_RC
@@ -6038,6 +6116,13 @@ TSS_TPMU_PUBLIC_PARMS_Marshalu(const TPMU_PUBLIC_PARMS *source, UINT32 *written,
       case TPM_ALG_KYBER:
         if (rc == 0) {
             rc = TSS_TPMS_KYBER_PARMS_Marshalu(&source->kyberDetail, written, buffer, size);
+        }
+        break;
+#endif
+#ifdef TPM_ALG_NTTRU
+      case TPM_ALG_NTTRU:
+        if (rc == 0) {
+            rc = TSS_TPMS_NTTRU_PARMS_Marshalu(&source->nttruDetail, written, buffer, size);
         }
         break;
 #endif
@@ -6208,6 +6293,13 @@ TSS_TPMU_SENSITIVE_COMPOSITE_Marshalu(const TPMU_SENSITIVE_COMPOSITE *source, UI
       case TPM_ALG_KYBER:
         if (rc == 0) {
             rc = TSS_TPM2B_KYBER_SECRET_KEY_Marshalu(&source->kyber, written, buffer, size);
+        }
+        break;
+#endif
+#ifdef TPM_ALG_NTTRU
+      case TPM_ALG_NTTRU:
+        if (rc == 0) {
+            rc = TSS_TPM2B_NTTRU_SECRET_KEY_Marshalu(&source->nttru, written, buffer, size);
         }
         break;
 #endif
@@ -6532,6 +6624,52 @@ TSS_TPM2B_KYBER_ENCRYPT_Marshalu(const TPM2B_KYBER_ENCRYPT *source, UINT32 *writ
 }
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                                NTTRU Mods                                 */
+/*****************************************************************************/
+TPM_RC
+TSS_TPM2B_NTTRU_PUBLIC_KEY_Marshalu(const TPM2B_NTTRU_PUBLIC_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+	rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+    }
+    return rc;
+}
+
+TPM_RC
+TSS_TPM2B_NTTRU_SECRET_KEY_Marshalu(const TPM2B_NTTRU_SECRET_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+	rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+    }
+    return rc;
+}
+
+TPM_RC
+TSS_TPM2B_NTTRU_CIPHER_TEXT_Marshalu(const TPM2B_NTTRU_CIPHER_TEXT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+	rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+    }
+    return rc;
+}
+
+TPM_RC
+TSS_TPM2B_NTTRU_SHARED_KEY_Marshalu(const TPM2B_NTTRU_SHARED_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = 0;
+    if (rc == 0) {
+	rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+    }
+    return rc;
+}
+/*****************************************************************************/
+/*                                NTTRU Mods                                 */
 /*****************************************************************************/
 
 /*****************************************************************************/
@@ -8703,6 +8841,72 @@ TSS_Kyber_Decrypt_In_Marshalu(Kyber_Decrypt_In *source, UINT32 *written,
 }
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                                NTTRU Mods                                 */
+/*****************************************************************************/
+TPM_RC
+TSS_NTTRU_Encapsulate_In_Marshalu(NTTRU_Encapsulate_In *source, UINT32 *written,
+        BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPMI_DH_OBJECT_Marshalu(&source->key_handle, written, buffer, size);
+    }
+    return rc;
+}
+
+TPM_RC
+TSS_NTTRU_Encapsulate_Out_Unmarshalu(NTTRU_Encapsulate_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+    uint32_t parameterSize = 0;
+    if (rc == TPM_RC_SUCCESS) {
+        if (tag == TPM_ST_SESSIONS) {
+            rc = TSS_UINT32_Unmarshalu(&parameterSize, buffer, size);
+        }
+    }
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPM2B_NTTRU_SHARED_KEY_Unmarshalu(&target->shared_key, buffer, size);
+    }
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPM2B_NTTRU_CIPHER_TEXT_Unmarshalu(&target->cipher_text, buffer, size);
+    }
+    return rc;
+}
+
+TPM_RC
+TSS_NTTRU_Decapsulate_Out_Unmarshalu(NTTRU_Decapsulate_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+    uint32_t parameterSize = 0;
+    if (rc == TPM_RC_SUCCESS) {
+        if (tag == TPM_ST_SESSIONS) {
+            rc = TSS_UINT32_Unmarshalu(&parameterSize, buffer, size);
+        }
+    }
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPM2B_NTTRU_SHARED_KEY_Unmarshalu(&target->shared_key, buffer, size);
+    }
+    return rc;
+}
+
+TPM_RC
+TSS_NTTRU_Decapsulate_In_Marshalu(NTTRU_Decapsulate_In *source, UINT32 *written,
+        BYTE **buffer, uint32_t *size)
+{
+    TPM_RC rc = TPM_RC_SUCCESS;
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPMI_DH_OBJECT_Marshalu(&source->key_handle, written, buffer, size);
+    }
+    if (rc == TPM_RC_SUCCESS) {
+        rc = TSS_TPM2B_NTTRU_CIPHER_TEXT_Marshalu(&source->cipher_text, written, buffer, size);
+    }
+    return rc;
+}
+/*****************************************************************************/
+/*                                NTTRU Mods                                 */
 /*****************************************************************************/
 
 /*****************************************************************************/

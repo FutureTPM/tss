@@ -526,6 +526,10 @@ newhope_dec:		ibmtss/tss.h newhope_dec.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) newhope_dec.o $(LNALIBS) -o newhope_dec
 newhope_enc:		ibmtss/tss.h newhope_enc.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) newhope_enc.o $(LNALIBS) -o newhope_enc
+nttru_dec:		ibmtss/tss.h nttru_dec.o $(LIBTSS) $(LIBTSSUTILS)
+			$(CC) $(LNFLAGS) $(LNAFLAGS) nttru_dec.o $(LNALIBS) -o nttru_dec
+nttru_enc:		ibmtss/tss.h nttru_enc.o $(LIBTSS) $(LIBTSSUTILS)
+			$(CC) $(LNFLAGS) $(LNAFLAGS) nttru_enc.o $(LNALIBS) -o nttru_enc
 ldaa_join:		ibmtss/tss.h ldaa_join.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) ldaa_join.o $(LNALIBS) -o ldaa_join
 ldaa_committokenlink:		ibmtss/tss.h ldaa_committokenlink.o $(LIBTSS) $(LIBTSSUTILS)

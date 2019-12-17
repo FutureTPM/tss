@@ -199,6 +199,9 @@ int main(int argc, char *argv[])
 	else if (strcmp(argv[i], "-kyber") == 0) {
 	    algPublic = TPM_ALG_KYBER;
 	}
+	else if (strcmp(argv[i], "-nttru") == 0) {
+	    algPublic = TPM_ALG_NTTRU;
+	}
 	else if (strcmp(argv[i], "-dilithium") == 0) {
 	    algPublic = TPM_ALG_DILITHIUM;
 	}
@@ -548,6 +551,7 @@ static void printUsage(void)
     printf("\t[-rsa\t(default)]\n");
     printf("\t[-ecc\t]\n");
     printf("\t[-kyber\t]\n");
+    printf("\t[-nttru\t]\n");
     printf("\t[-dilithium\t]\n");
     printf("\t[-newhope\t]\n");
     printf("\n");
@@ -561,7 +565,7 @@ static void printUsage(void)
     printf("\t\trsassa\n");
     printf("\t\trsapss\n");
     printf("\t[-st\tstorage (default NULL scheme)]\n");
-    printf("\t[-den\tdecryption, (unrestricted, RSA, EC and Kyber NULL scheme)\n");
+    printf("\t[-den\tdecryption, (unrestricted, RSA, EC, NTTRU and Kyber NULL scheme)\n");
     printf("\t[-ns\tadditionally print Name in hex ascii on one line]\n");
     printf("\t\tUseful to paste into policy\n");
     printf("\n");

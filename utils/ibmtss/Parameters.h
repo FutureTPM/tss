@@ -191,6 +191,16 @@
 /*****************************************************************************/
 
 /*****************************************************************************/
+/*                                NTTRU Mods                                 */
+/*****************************************************************************/
+#include "NTTRU_Enc_fp.h"
+#include "NTTRU_Dec_fp.h"
+/*****************************************************************************/
+/*                                NTTRU Mods                                 */
+/*****************************************************************************/
+
+
+/*****************************************************************************/
 /*                                 LDAA Mods                                 */
 /*****************************************************************************/
 #include "LDaa_Join_fp.h"
@@ -324,6 +334,10 @@ typedef union {
     LDAA_SignCommit3_In           LDAA_SignCommit3;
     LDAA_SignProof_In             LDAA_SignProof;
     // LDAA Mods
+    // NTTRU Mods
+    NTTRU_Encapsulate_In          NTTRU_Encapsulate;
+    NTTRU_Decapsulate_In          NTTRU_Decapsulate;
+    // NTTRU Mods
 } COMMAND_PARAMETERS;
 
 typedef union
@@ -394,6 +408,10 @@ typedef union
     LDAA_SignCommit3_Out           LDAA_SignCommit2;
     LDAA_SignProof_Out             LDAA_SignProof;
     // LDAA Mods
+    // NTTRU Mods
+    NTTRU_Encapsulate_Out          NTTRU_Encapsulate;
+    NTTRU_Decapsulate_Out          NTTRU_Decapsulate;
+    // NTTRU Mods
 } RESPONSE_PARAMETERS;
 
 #endif

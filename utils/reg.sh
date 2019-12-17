@@ -109,6 +109,7 @@ printUsage ()
     echo "-29 Credential"
     echo "-30 Kyber"
     echo "-31 LDAA"
+    echo "-32 NTTRU"
     echo "-35 Shutdown (only run for simulator)"
     echo "-40 Tests under development (not part of all)"
     echo ""
@@ -515,6 +516,14 @@ main ()
     fi
     if [ "$1" == "-a" ] || [ "$1" == "-31" ]; then
     	#./regtests/testldaa.sh
+    	RC=$?
+	if [ $RC -ne 0 ]; then
+	    exit 255
+	fi
+	((I++))
+    fi
+    if [ "$1" == "-a" ] || [ "$1" == "-32" ]; then
+    	./regtests/testnttru.sh
     	RC=$?
 	if [ $RC -ne 0 ]; then
 	    exit 255

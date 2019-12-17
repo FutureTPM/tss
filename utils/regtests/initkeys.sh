@@ -72,6 +72,10 @@ echo "Create a Kyber storage key under the primary key"
 ${PREFIX}create -hp 80000000 -kyber k=2 -st -kt f -kt p -opr storekyberpriv.bin -opu storekyberpub.bin -pwdp sto -pwdk sto > run.out
 checkSuccess $?
 
+echo "Create a NTTRU storage key under the primary key"
+${PREFIX}create -hp 80000000 -nttru -st -kt f -kt p -opr storenttrupriv.bin -opu storenttrupub.bin -pwdp sto -pwdk sto > run.out
+checkSuccess $?
+
 echo "Create an unrestricted RSA signing key under the primary key"
 ${PREFIX}create -hp 80000000 -si -kt f -kt p -opr signpriv.bin -opu signpub.bin -opem signpub.pem -pwdp sto -pwdk sig > run.out
 checkSuccess $?
@@ -98,6 +102,10 @@ checkSuccess $?
 
 echo "Create a Kyber decryption key under the primary key"
 ${PREFIX}create -hp 80000000 -kyber k=2 -den -kt f -kt p -opr derkyberpriv.bin -opu derkyberpub.bin -pwdp sto -pwdk dec > run.out
+checkSuccess $?
+
+echo "Create a NTTRU decryption key under the primary key"
+${PREFIX}create -hp 80000000 -nttru -den -kt f -kt p -opr dernttrupriv.bin -opu dernttrupub.bin -pwdp sto -pwdk dec > run.out
 checkSuccess $?
 
 echo "Create a symmetric cipher key under the primary key"

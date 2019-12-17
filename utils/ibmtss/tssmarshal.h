@@ -177,6 +177,15 @@
 /*****************************************************************************/
 
 /*****************************************************************************/
+/*                                NTTRU Mods                                 */
+/*****************************************************************************/
+#include "NTTRU_Enc_fp.h"
+#include "NTTRU_Dec_fp.h"
+/*****************************************************************************/
+/*                                NTTRU Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
 /*                              NewHope Mods                                 */
 /*****************************************************************************/
 #include "Newhope_fp.h"
@@ -463,6 +472,40 @@ extern "C" {
     TSS_TPMT_KYBER_SCHEME_Marshalu(const TPMT_KYBER_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     /*****************************************************************************/
     /*                                Kyber Mods                                 */
+    /*****************************************************************************/
+
+    /*****************************************************************************/
+    /*                                NTTRU Mods                                 */
+    /*****************************************************************************/
+    TPM_RC
+    TSS_TPM2B_NTTRU_PUBLIC_KEY_Marshalu(const TPM2B_NTTRU_PUBLIC_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_NTTRU_SECRET_KEY_Marshalu(const TPM2B_NTTRU_SECRET_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_NTTRU_CIPHER_TEXT_Marshalu(const TPM2B_NTTRU_CIPHER_TEXT *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_NTTRU_SHARED_KEY_Marshalu(const TPM2B_NTTRU_SHARED_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+
+    TPM_RC
+    TSS_NTTRU_Encapsulate_In_Marshalu(NTTRU_Encapsulate_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_NTTRU_Encapsulate_Out_Unmarshalu(NTTRU_Encapsulate_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+
+    TPM_RC
+    TSS_NTTRU_Decapsulate_Out_Unmarshalu(NTTRU_Decapsulate_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_NTTRU_Decapsulate_In_Marshalu(NTTRU_Decapsulate_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+
+    TPM_RC
+    TSS_TPMS_NTTRU_PARMS_Marshalu(const TPMS_NTTRU_PARMS *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPMS_ENC_SCHEME_NTTRU_Marshalu(const TPMS_ENC_SCHEME_NTTRU *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPMI_ALG_NTTRU_SCHEME_Marshalu(const TPMI_ALG_NTTRU_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPMT_NTTRU_SCHEME_Marshalu(const TPMT_NTTRU_SCHEME *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    /*****************************************************************************/
+    /*                                NTTRU Mods                                 */
     /*****************************************************************************/
 
     /*****************************************************************************/

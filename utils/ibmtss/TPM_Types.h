@@ -1602,6 +1602,54 @@ typedef union {
 /*****************************************************************************/
 
 /*****************************************************************************/
+/*                                NTTRU Mods                                 */
+/*****************************************************************************/
+#define NTTRU_SEEDBYTES 32
+#define NTTRU_SHAREDKEYBYTES  32
+#define NTTRU_N 768
+#define NTTRU_Q 7681
+#define NTTRU_LOGQ 13
+#define NTTRU_ROOT_UNITY 20
+#define NTTRU_PUBLICKEYBYTES (NTTRU_LOGQ*NTTRU_N/8)
+#define NTTRU_SECRETKEYBYTES (NTTRU_LOGQ*NTTRU_N/8 + NTTRU_PUBLICKEYBYTES)
+#define NTTRU_CIPHERTEXTBYTES (NTTRU_LOGQ*NTTRU_N/8)
+
+typedef union {
+    struct {
+	UINT32                  size;
+	BYTE                    buffer[NTTRU_CIPHERTEXTBYTES];
+    }            t;
+    TPM2B        b;
+} TPM2B_NTTRU_CIPHER_TEXT;
+
+typedef union {
+    struct {
+	UINT32                  size;
+	BYTE                    buffer[NTTRU_PUBLICKEYBYTES];
+    }            t;
+    TPM2B        b;
+} TPM2B_NTTRU_PUBLIC_KEY;
+
+typedef union {
+    struct {
+	UINT32                  size;
+	BYTE                    buffer[NTTRU_SECRETKEYBYTES];
+    }            t;
+    TPM2B        b;
+} TPM2B_NTTRU_SECRET_KEY;
+
+typedef union {
+    struct {
+	UINT32                  size;
+	BYTE                    buffer[NTTRU_SHAREDKEYBYTES];
+    }            t;
+    TPM2B        b;
+} TPM2B_NTTRU_SHARED_KEY;
+/*****************************************************************************/
+/*                                NTTRU Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
 /*                              NewHope Mods                                 */
 /*****************************************************************************/
 #define MAX_NEWHOPE_PRIVATE_KEY_BYTES  1888
@@ -2345,6 +2393,7 @@ typedef TPMS_SCHEME_HASH	TPMS_ENC_SCHEME_OAEP; 	/* schemes that only need a hash
 typedef TPMS_EMPTY		TPMS_ENC_SCHEME_RSAES;	/* schemes that need nothing */
 
 typedef TPMS_SCHEME_HASH	TPMS_ENC_SCHEME_KYBER; 	/* schemes that only need a hash */
+typedef  TPMS_SCHEME_HASH    TPMS_ENC_SCHEME_NTTRU;
 
 /* Table 146 - Definition of Types for {ECC} ECC Key Exchange */
 
@@ -2428,6 +2477,9 @@ typedef union {
 #ifdef TPM_ALG_KYBER
     TPMS_ENC_SCHEME_KYBER	kyber;		     /* TPM_ALG_KYBER */
 #endif
+#ifdef 	TPM_ALG_NTTRU
+    TPMS_ENC_SCHEME_NTTRU        nttru;
+#endif   // ALG_NTTRU
     TPMS_SCHEME_HASH		anySig;
 } TPMU_ASYM_SCHEME;
 
@@ -2706,6 +2758,9 @@ typedef union {
 #ifdef TPM_ALG_KYBER
     TPM2B_KYBER_PUBLIC_KEY kyber;		/* TPM_ALG_KYBER */
 #endif
+#ifdef 	TPM_ALG_NTTRU
+    TPM2B_NTTRU_PUBLIC_KEY  nttru;
+#endif   // ALG_NTTRU
 #ifdef TPM_ALG_RSA
     TPM2B_PUBLIC_KEY_RSA	rsa;		/* TPM_ALG_RSA */
 #endif
@@ -2803,6 +2858,23 @@ typedef struct {
 /*****************************************************************************/
 
 /*****************************************************************************/
+/*                               NTTRU Mods                                  */
+/*****************************************************************************/
+typedef  TPM_ALG_ID         TPMI_ALG_NTTRU_SCHEME;
+typedef struct {
+    TPMI_ALG_NTTRU_SCHEME scheme;
+    TPMU_ASYM_SCHEME      details;
+} TPMT_NTTRU_SCHEME;
+
+typedef struct {
+    TPMT_SYM_DEF_OBJECT symmetric;
+    TPMT_NTTRU_SCHEME   scheme;
+} TPMS_NTTRU_PARMS;
+/*****************************************************************************/
+/*                               NTTRU Mods                                  */
+/*****************************************************************************/
+
+/*****************************************************************************/
 /*                              NewHope Mods                                 */
 /*****************************************************************************/
 typedef TPM_ALG_ID          TPMI_ALG_NEWHOPE_SCHEME;
@@ -2870,6 +2942,9 @@ typedef union {
 #ifdef TPM_ALG_KYBER
     TPMS_KYBER_PARMS	    kyberDetail;	/* TPM_ALG_KYBER */
 #endif
+#ifdef 	TPM_ALG_NTTRU
+    TPMS_NTTRU_PARMS        nttruDetail;
+#endif   // ALG_NTTRU
 #ifdef TPM_ALG_RSA
     TPMS_RSA_PARMS		    rsaDetail;		/* TPM_ALG_RSA */
 #endif
@@ -2932,6 +3007,9 @@ typedef union {
 #ifdef TPM_ALG_KYBER
     TPM2B_KYBER_SECRET_KEY	    kyber;
 #endif
+#ifdef TPM_ALG_NTTRU
+    TPM2B_NTTRU_SECRET_KEY           nttru;
+#endif   // ALG_NTTRU
 #ifdef TPM_ALG_RSA
     TPM2B_PRIVATE_KEY_RSA		rsa;	/* TPM_ALG_RSA a prime factor of the public key */
 #endif

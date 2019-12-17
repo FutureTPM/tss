@@ -164,6 +164,9 @@ int main(int argc, char *argv[])
 	else if (strcmp(argv[i], "-rsa") == 0) {
 	    algPublic = TPM_ALG_RSA;
     }
+	else if (strcmp(argv[i], "-nttru") == 0) {
+	    algPublic = TPM_ALG_NTTRU;
+    }
     else if (strcmp(argv[i], "-ldaa") == 0) {
         algPublic = TPM_ALG_LDAA;
         i++;

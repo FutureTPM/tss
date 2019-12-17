@@ -326,7 +326,7 @@ TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
                 publicArea->parameters.ldaaDetail.security = ldaa_mode;
                 break;
             }
-        } else { /* algPublic == TPM_ALG_KYBER */
+        } else if (algPublic == TPM_ALG_KYBER) { /* algPublic == TPM_ALG_KYBER */
             switch (keyType) {
               case TYPE_DEN:
               case TYPE_DEO:
@@ -344,13 +344,38 @@ TPM_RC asymPublicTemplate(TPMT_PUBLIC *publicArea,	/* output */
               case TYPE_DEN:
               case TYPE_DEO:
                 publicArea->parameters.kyberDetail.scheme.scheme = TPM_ALG_NULL;
-                publicArea->parameters.kyberDetail.scheme.details.dilithium.hashAlg = halg;
+                publicArea->parameters.kyberDetail.scheme.details.kyber.hashAlg = halg;
                 publicArea->parameters.kyberDetail.security = kyber_k;
                 break;
               case TYPE_ST:
                 publicArea->parameters.kyberDetail.scheme.scheme = TPM_ALG_NULL;
                 publicArea->parameters.kyberDetail.scheme.details.anySig.hashAlg = 0;
                 publicArea->parameters.kyberDetail.security = kyber_k;
+                break;
+            }
+        } else { /* algPublic == TPM_ALG_NTTRU */
+            switch (keyType) {
+              case TYPE_DEN:
+              case TYPE_DEO:
+                /* Non-storage keys must have TPM_ALG_NULL for the symmetric algorithm */
+                publicArea->parameters.nttruDetail.symmetric.algorithm = TPM_ALG_NULL;
+                break;
+              case TYPE_ST:
+                publicArea->parameters.nttruDetail.symmetric.algorithm = TPM_ALG_AES;
+                publicArea->parameters.nttruDetail.symmetric.keyBits.aes = 128;
+                publicArea->parameters.nttruDetail.symmetric.mode.aes = TPM_ALG_CFB;
+                break;
+            }
+
+            switch (keyType) {
+              case TYPE_DEN:
+              case TYPE_DEO:
+                publicArea->parameters.nttruDetail.scheme.scheme = TPM_ALG_NULL;
+                publicArea->parameters.nttruDetail.scheme.details.nttru.hashAlg = halg;
+                break;
+              case TYPE_ST:
+                publicArea->parameters.nttruDetail.scheme.scheme = TPM_ALG_NULL;
+                publicArea->parameters.nttruDetail.scheme.details.anySig.hashAlg = 0;
                 break;
             }
         }
@@ -612,6 +637,7 @@ void printUsageTemplate(void)
     printf("\t\tk=[2-4]\n");
     printf("\t-dilithium\n");
     printf("\t\tmode=[1-4]\n");
+    printf("\t-nttru NTTRU key\n");
     printf("\t-newhope NewHopeKey\n");
     printf("\t-qtesla qTeslaKey\n");
     printf("\t-ldaa [IssuerAtFile]\n");

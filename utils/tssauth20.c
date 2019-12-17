@@ -651,6 +651,22 @@ static const MARSHAL_TABLE marshalTable [] = {
 /*****************************************************************************/
 
 /*****************************************************************************/
+/*                                NTTRU Mods                                 */
+/*****************************************************************************/
+    {TPM_CC_NTTRU_Enc, "TPM2_NTTRU_Enc",
+     (MarshalInFunction_t)TSS_NTTRU_Encapsulate_In_Marshalu,
+     (UnmarshalOutFunction_t)TSS_NTTRU_Encapsulate_Out_Unmarshalu,
+     (UnmarshalInFunction_t)NTTRU_Encapsulate_In_Unmarshal},
+
+    {TPM_CC_NTTRU_Dec, "TPM2_NTTRU_Dec",
+     (MarshalInFunction_t)TSS_NTTRU_Decapsulate_In_Marshalu,
+     (UnmarshalOutFunction_t)TSS_NTTRU_Decapsulate_Out_Unmarshalu,
+     (UnmarshalInFunction_t)NTTRU_Decapsulate_In_Unmarshal},
+/*****************************************************************************/
+/*                                NTTRU Mods                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
 /*                                 LDAA Mods                                 */
 /*****************************************************************************/
     {TPM_CC_LDAA_Join, "TPM2_LDAA_Join",
