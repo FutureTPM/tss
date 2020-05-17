@@ -469,6 +469,7 @@ const TPMA_CC_TSS    s_ccAttr [] = {
 #if (PAD_LIST || CC_KYBER_Dec)
     {{0x019B, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_KYBER_Dec
 #endif
+
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
@@ -525,6 +526,15 @@ const TPMA_CC_TSS    s_ccAttr [] = {
 #if (PAD_LIST || CC_NTTRU_Dec)
     {{0x01A6, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_NTTRU_Dec
 #endif
+
+#if (PAD_LIST || CC_NTTRU_Encrypt)
+    {{0x01A7, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_NTTRU_Encrypt
+#endif
+
+#if (PAD_LIST || CC_NTTRU_Decrypt)
+    {{0x01A8, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_NTTRU_Decrypt
+#endif
+
 /*****************************************************************************/
 /*                                NTTRU Mods                                 */
 /*****************************************************************************/
@@ -1100,6 +1110,15 @@ const COMMAND_ATTRIBUTES    s_commandAttributes [] = {
     (COMMAND_ATTRIBUTES)(CC_NTTRU_Dec                  *  // 0x01A6
 			 (IS_IMPLEMENTED+DECRYPT_4+HANDLE_1_USER+ENCRYPT_4)),
 #endif
+#if (PAD_LIST || CC_NTTRU_Encrypt)
+    (COMMAND_ATTRIBUTES)(CC_NTTRU_Encrypt              *  // 0x01A7
+                         (IS_IMPLEMENTED+DECRYPT_4+ENCRYPT_4)),
+#endif
+#if (PAD_LIST || CC_NTTRU_Decrypt)
+    (COMMAND_ATTRIBUTES)(CC_NTTRU_Decrypt              *  // 0x01A8
+                         (IS_IMPLEMENTED+DECRYPT_4+HANDLE_1_USER+ENCRYPT_4)),
+#endif
+
 /*****************************************************************************/
 /*                                NTTRU Mods                                 */
 /*****************************************************************************/

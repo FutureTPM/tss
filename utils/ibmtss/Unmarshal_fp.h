@@ -508,6 +508,8 @@ extern "C" {
     TSS_TPM2B_NTTRU_SHARED_KEY_Unmarshalu(TPM2B_NTTRU_SHARED_KEY *target, BYTE **buffer, uint32_t *size);
     LIB_EXPORT TPM_RC
     TSS_TPM2B_NTTRU_CIPHER_TEXT_Unmarshalu(TPM2B_NTTRU_CIPHER_TEXT *target, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_NTTRU_ENCRYPT_Unmarshalu(TPM2B_NTTRU_ENCRYPT *target, BYTE **buffer, uint32_t *size);
 
     LIB_EXPORT TPM_RC
     TSS_TPMI_ALG_NTTRU_SCHEME_Unmarshalu(TPMI_ALG_NTTRU_SCHEME *target, BYTE **buffer, uint32_t *size, BOOL allowNull);

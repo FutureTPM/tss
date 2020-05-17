@@ -193,6 +193,8 @@
 /*****************************************************************************/
 #include <ibmtss/NTTRU_Enc_fp.h>
 #include <ibmtss/NTTRU_Dec_fp.h>
+#include <ibmtss/NTTRU_Encrypt_fp.h>
+#include <ibmtss/NTTRU_Decrypt_fp.h>
 /*****************************************************************************/
 /*                                NTTRU Mods                                 */
 /*****************************************************************************/
@@ -560,6 +562,10 @@ TPM_RC
 NTTRU_Encapsulate_In_Unmarshal(NTTRU_Encapsulate_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 TPM_RC
 NTTRU_Decapsulate_In_Unmarshal(NTTRU_Decapsulate_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
+TPM_RC
+NTTRU_Encrypt_In_Unmarshal(NTTRU_Encrypt_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
+TPM_RC
+NTTRU_Decrypt_In_Unmarshal(NTTRU_Decrypt_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 /*****************************************************************************/
 /*                                NTTRU Mods                                 */
 /*****************************************************************************/

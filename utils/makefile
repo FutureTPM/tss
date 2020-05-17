@@ -530,6 +530,10 @@ nttru_dec:		ibmtss/tss.h nttru_dec.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) nttru_dec.o $(LNALIBS) -o nttru_dec
 nttru_enc:		ibmtss/tss.h nttru_enc.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) nttru_enc.o $(LNALIBS) -o nttru_enc
+nttrudecrypt:		ibmtss/tss.h nttrudecrypt.o $(LIBTSS) $(LIBTSSUTILS)
+			$(CC) $(LNFLAGS) $(LNAFLAGS) nttrudecrypt.o $(LNALIBS) -o nttrudecrypt
+nttruencrypt:		ibmtss/tss.h nttruencrypt.o $(LIBTSS) $(LIBTSSUTILS)
+			$(CC) $(LNFLAGS) $(LNAFLAGS) nttruencrypt.o $(LNALIBS) -o nttruencrypt
 ldaa_join:		ibmtss/tss.h ldaa_join.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) ldaa_join.o $(LNALIBS) -o ldaa_join
 ldaa_committokenlink:		ibmtss/tss.h ldaa_committokenlink.o $(LIBTSS) $(LIBTSSUTILS)

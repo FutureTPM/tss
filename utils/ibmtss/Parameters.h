@@ -195,6 +195,8 @@
 /*****************************************************************************/
 #include "NTTRU_Enc_fp.h"
 #include "NTTRU_Dec_fp.h"
+#include "NTTRU_Encrypt_fp.h"
+#include "NTTRU_Decrypt_fp.h"
 /*****************************************************************************/
 /*                                NTTRU Mods                                 */
 /*****************************************************************************/
@@ -337,6 +339,8 @@ typedef union {
     // NTTRU Mods
     NTTRU_Encapsulate_In          NTTRU_Encapsulate;
     NTTRU_Decapsulate_In          NTTRU_Decapsulate;
+    NTTRU_Encrypt_In              NTTRU_Encrypt;
+    NTTRU_Decrypt_In              NTTRU_Decrypt;
     // NTTRU Mods
 } COMMAND_PARAMETERS;
 

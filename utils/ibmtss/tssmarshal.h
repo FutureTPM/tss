@@ -181,6 +181,8 @@
 /*****************************************************************************/
 #include "NTTRU_Enc_fp.h"
 #include "NTTRU_Dec_fp.h"
+#include "NTTRU_Encrypt_fp.h"
+#include "NTTRU_Decrypt_fp.h"
 /*****************************************************************************/
 /*                                NTTRU Mods                                 */
 /*****************************************************************************/
@@ -485,6 +487,8 @@ extern "C" {
     TSS_TPM2B_NTTRU_CIPHER_TEXT_Marshalu(const TPM2B_NTTRU_CIPHER_TEXT *source, UINT32 *written, BYTE **buffer, uint32_t *size);
     TPM_RC
     TSS_TPM2B_NTTRU_SHARED_KEY_Marshalu(const TPM2B_NTTRU_SHARED_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_NTTRU_ENCRYPT_Marshalu(const TPM2B_NTTRU_ENCRYPT *source, UINT32 *written, BYTE **buffer, uint32_t *size);
 
     TPM_RC
     TSS_NTTRU_Encapsulate_In_Marshalu(NTTRU_Encapsulate_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
@@ -495,6 +499,16 @@ extern "C" {
     TSS_NTTRU_Decapsulate_Out_Unmarshalu(NTTRU_Decapsulate_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
     TPM_RC
     TSS_NTTRU_Decapsulate_In_Marshalu(NTTRU_Decapsulate_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+
+    TPM_RC
+    TSS_NTTRU_Encrypt_In_Marshalu(NTTRU_Encrypt_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_NTTRU_Encrypt_Out_Unmarshalu(NTTRU_Encrypt_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+
+    TPM_RC
+    TSS_NTTRU_Decrypt_Out_Unmarshalu(NTTRU_Decrypt_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_NTTRU_Decrypt_In_Marshalu(NTTRU_Decrypt_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
 
     TPM_RC
     TSS_TPMS_NTTRU_PARMS_Marshalu(const TPMS_NTTRU_PARMS *source, UINT32 *written, BYTE **buffer, uint32_t *size);

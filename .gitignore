@@ -145,3 +145,8 @@ utils/ldaa_signcommit3
 utils/ldaa_signcommit3.o
 utils/kyberdecrypt
 utils/kyberencrypt
+/utils/GPATH
+/utils/GRTAGS
+/utils/GTAGS
+/utils/nttrudecrypt
+/utils/nttruencrypt

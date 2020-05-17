@@ -662,6 +662,16 @@ static const MARSHAL_TABLE marshalTable [] = {
      (MarshalInFunction_t)TSS_NTTRU_Decapsulate_In_Marshalu,
      (UnmarshalOutFunction_t)TSS_NTTRU_Decapsulate_Out_Unmarshalu,
      (UnmarshalInFunction_t)NTTRU_Decapsulate_In_Unmarshal},
+
+    {TPM_CC_NTTRU_Encrypt, "TPM2_NTTRU_Encrypt",
+     (MarshalInFunction_t)TSS_NTTRU_Encrypt_In_Marshalu,
+     (UnmarshalOutFunction_t)TSS_NTTRU_Encrypt_Out_Unmarshalu,
+     (UnmarshalInFunction_t)NTTRU_Encrypt_In_Unmarshal},
+
+    {TPM_CC_NTTRU_Decrypt, "TPM2_NTTRU_Decrypt",
+     (MarshalInFunction_t)TSS_NTTRU_Decrypt_In_Marshalu,
+     (UnmarshalOutFunction_t)TSS_NTTRU_Decrypt_Out_Unmarshalu,
+     (UnmarshalInFunction_t)NTTRU_Decrypt_In_Unmarshal},
 /*****************************************************************************/
 /*                                NTTRU Mods                                 */
 /*****************************************************************************/

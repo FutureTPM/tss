@@ -47,6 +47,18 @@ echo "Verify the shared key result"
 diff shared_key_1.bin shared_key_2.bin > run.out
 checkSuccess $?
 
+echo ""
+echo "NTTRU Encryption and Decryption"
+echo ""
+
+echo "NTTRU encrypt with the encryption key"
+${PREFIX}nttruencrypt -hk 80000001 -id policies/aaa -oe enc.bin > run.out
+checkSuccess $?
+
+echo "NTTRU decrypt with the decryption key"
+${PREFIX}nttrudecrypt -hk 80000001 -ie enc.bin -od dec.bin -pwdk dec > run.out
+checkSuccess $?
+
 # Clean
 rm cipher_text.bin
 rm shared_key_1.bin shared_key_2.bin

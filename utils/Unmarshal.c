@@ -5214,6 +5214,17 @@ TSS_TPM2B_NTTRU_CIPHER_TEXT_Unmarshalu(TPM2B_NTTRU_CIPHER_TEXT *target, BYTE **b
     }
     return rc;
 }
+
+TPM_RC
+TSS_TPM2B_NTTRU_ENCRYPT_Unmarshalu(TPM2B_NTTRU_ENCRYPT *target, BYTE **buffer, uint32_t *size)
+{
+  TPM_RC rc = TPM_RC_SUCCESS;
+
+  if (rc == TPM_RC_SUCCESS) {
+    rc = TSS_TPM2B_Unmarshalu(&target->b, sizeof(target->t.buffer), buffer, size);
+  }
+  return rc;
+}
 /*****************************************************************************/
 /*                                NTTRU Mods                                 */
 /*****************************************************************************/

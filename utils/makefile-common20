@@ -160,6 +160,8 @@ ALL += 	activatecredential$(EXE)		\
 	nttru_enc$(EXE)				\
 	kyberencrypt$(EXE)			\
 	kyberdecrypt$(EXE)			\
+    nttruencrypt$(EXE)			\
+	nttrudecrypt$(EXE)			\
 	newhope_dec$(EXE)		    \
 	newhope_enc$(EXE)		    \
 	ldaa_join$(EXE)				\

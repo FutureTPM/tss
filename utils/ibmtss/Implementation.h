@@ -405,6 +405,8 @@
 /*****************************************************************************/
 #define CC_NTTRU_Enc                      (CC_YES*ALG_NTTRU)
 #define CC_NTTRU_Dec                      (CC_YES*ALG_NTTRU)
+#define CC_NTTRU_Encrypt                  (CC_YES*ALG_NTTRU)
+#define CC_NTTRU_Decrypt                  (CC_YES*ALG_NTTRU)
 /*****************************************************************************/
 /*                                NTTRU Mods                                 */
 /*****************************************************************************/
@@ -1536,6 +1538,18 @@ typedef  UINT32             TPM_CC;
 #if CC_NTTRU_Dec == YES
 #define TPM_CC_NTTRU_Dec                      (TPM_CC)(0x000001A6)
 #endif
+#ifndef CC_NTTRU_Encrypt
+#   define CC_NTTRU_Encrypt NO
+#endif
+#if CC_NTTRU_Encrypt == YES
+#define TPM_CC_NTTRU_Encrypt                  (TPM_CC)(0x000001A7)
+#endif
+#ifndef CC_NTTRU_Decrypt
+#   define CC_NTTRU_Decrypt NO
+#endif
+#if CC_NTTRU_Decrypt == YES
+#define TPM_CC_NTTRU_Decrypt                  (TPM_CC)(0x000001A8)
+#endif
 /*****************************************************************************/
 /*                                NTTRU Mods                                 */
 /*****************************************************************************/
@@ -1590,7 +1604,7 @@ typedef  UINT32             TPM_CC;
 /*****************************************************************************/
 
 /* Compile variable. May increase based on implementation. */
-#define  TPM_CC_LAST				(TPM_CC)(0x000001A6)
+#define  TPM_CC_LAST				(TPM_CC)(0x000001A8)
 
 #ifndef CC_Vendor_TCG_Test
 #   define CC_Vendor_TCG_Test NO
@@ -1759,6 +1773,8 @@ typedef  UINT32             TPM_CC;
 					  + (ADD_FILL || CC_KYBER_Decrypt)              /* 0x000001A6 */ \
 					  + (ADD_FILL || CC_NTTRU_Enc)                  /* 0x0000019A */ \
 					  + (ADD_FILL || CC_NTTRU_Dec)                  /* 0x0000019B */ \
+                      + (ADD_FILL || CC_NTTRU_Encrypt)              /* 0x0000019C */ \
+                      + (ADD_FILL || CC_NTTRU_Decrypt)              /* 0x0000019D */ \
 					  )
 
 #define VENDOR_COMMAND_ARRAY_SIZE   ( 0				\
