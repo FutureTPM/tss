@@ -37,20 +37,20 @@ int verbose = FALSE;
 
 int main(int argc, char *argv[])
 {
-    TPM_RC			rc = 0;
-    int				i;    /* argc iterator */
+    TPM_RC			    rc = 0;
+    int				    i;                         /* argc iterator */
     TSS_CONTEXT			*tssContext = NULL;
-    NTTRU_Encrypt_In 		in;
-    NTTRU_Encrypt_Out 		out;
+    NTTRU_Encrypt_In 	in;
+    NTTRU_Encrypt_Out 	out;
     TPMI_DH_OBJECT		keyHandle = 0;
     const char			*decryptFilename = NULL;
     const char			*encryptFilename = NULL;
 
     uint32_t			written = 0;
-    size_t 			length = 0;
-    uint8_t			*buffer = NULL;	/* for the free */
+    size_t 			    length = 0;
+    uint8_t			    *buffer = NULL;            /* for the free */
 
-    setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
+    setvbuf(stdout, 0, _IONBF, 0);                 /* output may be going through pipe to log file */
     TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "1");
 
     /* command line argument defaults */
