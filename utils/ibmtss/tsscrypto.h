@@ -122,6 +122,16 @@ extern "C" {
                 TPM2B_DIGEST           *dIn
                 );
 
+   LIB_EXPORT
+   TPM_RC TSS_NTTRUEncrypt(
+                // OUT: The encrypted data
+                TPM2B_ENCRYPTED_SECRET *cOut,
+                // IN: Public Key.
+                TPMT_PUBLIC            *NTTRUKey,
+                // IN: the data to encrypt
+                TPM2B_DIGEST           *dIn
+                );
+
     TPM_RC TSS_ECC_Salt(TPM2B_DIGEST 		*salt,
 			TPM2B_ENCRYPTED_SECRET	*encryptedSalt,
 			TPMT_PUBLIC		*publicArea);

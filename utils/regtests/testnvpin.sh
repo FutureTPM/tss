@@ -525,7 +525,7 @@ ${PREFIX}flushcontext -ha 03000000 > run.out > run.out
 checkSuccess $?
 
 echo "Recreate the primary key"
-${PREFIX}createprimary -kyber k=4 -hi p -pwdk sto > run.out
+${PREFIX}createprimary -nttru -hi p -pwdk sto > run.out
 checkSuccess $?
 
 echo ""

@@ -215,7 +215,7 @@ ${PREFIX}create -hp 80000000 -si -kt f -kt p -opr tmppriv.bin -opu tmppub.bin -p
 checkSuccess $?
 
 echo ""
-echo "Salt encrypt and decrypt HMAC sessions"
+echo "Salt encrypt and decrypt HMAC sessions (1)"
 echo ""
 
 echo "Load the signing key under the primary key"
@@ -426,7 +426,7 @@ ${PREFIX}create -dilithium mode=3 -hp 80000000 -si -kt f -kt p -opr tmppriv.bin 
 checkSuccess $?
 
 echo ""
-echo "Salt encrypt and decrypt HMAC sessions"
+echo "Salt encrypt and decrypt HMAC sessions (2)"
 echo ""
 
 echo "Load the signing key under the primary key"

@@ -56,6 +56,7 @@ CCFLAGS += 	-DTPM_POSIX
 
 CCLFLAGS += 	-I. 		\
 		-fPIC		\
+		-march=native	\
 		-DTPM_TPM20	\
 		-DTPM_TPM12
 
@@ -220,6 +221,20 @@ kyber-reduce.o: $(TSS_HEADERS) kyber-reduce.c
 		$(CC) $(CCFLAGS) $(CCLFLAGS) kyber-reduce.c
 kyber-verify.o: $(TSS_HEADERS) kyber-verify.c
 		$(CC) $(CCFLAGS) $(CCLFLAGS) kyber-verify.c
+nttru.o: $(TSS_HEADERS) nttru.c
+		$(CC) $(CCFLAGS) $(CCLFLAGS) nttru.c
+nttru-aes256ctr.o: $(TSS_HEADERS) nttru-aes256ctr.c
+		$(CC) $(CCFLAGS) $(CCLFLAGS) nttru-aes256ctr.c
+nttru-fq.o: $(TSS_HEADERS) nttru-fq.c
+		$(CC) $(CCFLAGS) $(CCLFLAGS) nttru-fq.c
+nttru-kem.o: $(TSS_HEADERS) nttru-kem.c
+		$(CC) $(CCFLAGS) $(CCLFLAGS) nttru-kem.c
+nttru-ntt.o: $(TSS_HEADERS) nttru-ntt.c
+		$(CC) $(CCFLAGS) $(CCLFLAGS) nttru-ntt.c
+nttru-poly.o: $(TSS_HEADERS) nttru-poly.c
+		$(CC) $(CCFLAGS) $(CCLFLAGS) nttru-poly.c
+nttru-rng.o: $(TSS_HEADERS) nttru-rng.c
+		$(CC) $(CCFLAGS) $(CCLFLAGS) nttru-rng.c
 
 # TPM 2.0
 

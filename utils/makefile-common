@@ -61,63 +61,76 @@ ALL += 	$(LIBTSS)				\
 
 # TSS shared library headers
 
-TSS_HEADERS += 					\
-		kyber-cbd.h 			\
-		kyber-rng.h 			\
-		kyber-indcpa.h 			\
-		kyber-ntt.h 			\
-		kyber-params.h 			\
-		kyber-poly.h 			\
-		kyber-polyvec.h 		\
-		kyber-reduce.h 			\
-		kyber-verify.h 			\
-		fips202.h 			\
-		tssauth.h 			\
-		tssccattributes.h 		\
-		tssdev.h  			\
-		tsssocket.h  			\
-		ibmtss/tss.h			\
-		ibmtss/tsscryptoh.h		\
-		ibmtss/tsscrypto.h		\
-		ibmtss/tsserror.h		\
-		ibmtss/tssfile.h		\
-		ibmtss/tssmarshal.h		\
-		ibmtss/tssprint.h		\
+TSS_HEADERS +=						\
+		kyber-cbd.h					\
+		kyber-rng.h					\
+		kyber-indcpa.h				\
+		kyber-ntt.h					\
+		kyber-params.h				\
+		kyber-poly.h				\
+		kyber-polyvec.h				\
+		kyber-reduce.h				\
+		kyber-verify.h				\
+        nttru.h						\
+        nttru-crypto-stream.h		\
+        nttru-fq.h					\
+        nttru-kem.h					\
+        nttru-ntt.h					\
+        nttru-params.h				\
+        nttru-poly.h				\
+        nttru-rng.h					\
+		fips202.h					\
+		tssauth.h					\
+		tssccattributes.h			\
+		tssdev.h					\
+		tsssocket.h					\
+		ibmtss/tss.h				\
+		ibmtss/tsscryptoh.h			\
+		ibmtss/tsscrypto.h			\
+		ibmtss/tsserror.h			\
+		ibmtss/tssfile.h			\
+		ibmtss/tssmarshal.h			\
+		ibmtss/tssprint.h			\
 		ibmtss/tssprintcmd.h		\
-		tssproperties.h			\
+		tssproperties.h				\
 		ibmtss/tsstransmit.h		\
 		ibmtss/tssresponsecode.h	\
-		ibmtss/tssutils.h		\
+		ibmtss/tssutils.h			\
 		ibmtss/Unmarshal_fp.h		\
-		ibmtss/ldaa-parms.h		\
+		ibmtss/ldaa-parms.h			\
 		ibmtss/ldaa-structs.h		\
 		ibmtss/Implementation.h
 
 # TSS shared library object files
 
-TSS_OBJS += 	tss.o			\
-		fips202.o \
-		kyber-cbd.o \
-		kyber-indcpa.o \
-		kyber-ntt.o \
-		kyber-rng.o \
-		kyber-symmetric-fips202.o \
-		kyber-poly.o \
-		kyber-polyvec.o \
-		kyber-reduce.o \
-		kyber-verify.o    \
-		tssproperties.o		\
-		tssmarshal.o		\
-		tssauth.o 		\
-		tssutils.o 		\
-		tsssocket.o 		\
-		tssdev.o 		\
-		tsstransmit.o 		\
-		tssresponsecode.o 	\
-		tssccattributes.o	\
-		tssprint.o		\
-		Unmarshal.o 		\
+TSS_OBJS += 	tss.o				\
+		fips202.o					\
+		kyber-cbd.o					\
+		kyber-indcpa.o				\
+		kyber-ntt.o					\
+		kyber-rng.o					\
+		kyber-symmetric-fips202.o	\
+		kyber-poly.o				\
+		kyber-polyvec.o				\
+		kyber-reduce.o				\
+		kyber-verify.o				\
+        nttru.o						\
+		nttru-aes256ctr.o			\
+        nttru-fq.o					\
+        nttru-kem.o					\
+        nttru-ntt.o					\
+        nttru-poly.o				\
+        nttru-rng.o					\
+		tssproperties.o				\
+		tssmarshal.o				\
+		tssauth.o					\
+		tssutils.o					\
+		tsssocket.o					\
+		tssdev.o					\
+		tsstransmit.o				\
+		tssresponsecode.o			\
+		tssccattributes.o			\
+		tssprint.o					\
+		Unmarshal.o					\
 		CommandAttributeData.o
-
-#		tssprintcmd.o		\
-
+#		tssprintcmd.o	\

@@ -2712,6 +2712,9 @@ typedef union {
 #ifdef TPM_ALG_KYBER
     BYTE    kyber[MAX_KYBER_CIPHER_TEXT_SIZE + MAX_DIGEST_BUFFER]; /* TPM_ALG_KYBER */
 #endif
+#ifdef TPM_ALG_NTTRU
+  BYTE    nttru[NTTRU_CIPHERTEXTBYTES + MAX_DIGEST_BUFFER]; /* TPM_ALG_NTTRU */
+#endif
 #ifdef TPM_ALG_NEWHOPE
 	BYTE	newhope[sizeof(TPM2B_NEWHOPE_CIPHER)];
 #endif // TPM_ALG_NEWHOPE

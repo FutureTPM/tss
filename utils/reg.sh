@@ -229,7 +229,7 @@ cleanup()
 initprimary()
 {
     echo "Create a platform primary storage key"
-    ${PREFIX}createprimary -kyber k=4 -hi p -pwdk sto -tk pritk.bin -ch prich.bin > run.out
+    ${PREFIX}createprimary -nttru -hi p -pwdk sto -tk pritk.bin -ch prich.bin > run.out
     checkSuccess $?
 }
 
@@ -256,7 +256,7 @@ main ()
 	# the MS simulator needs power up and startup
 	if [ -z ${TPM_INTERFACE_TYPE} ] || [ ${TPM_INTERFACE_TYPE} == "socsim" ];  then
 	    if [ -z ${TPM_SERVER_TYPE} ] || [ ${TPM_SERVER_TYPE} == "mssim" ]; then
-		./regtests/inittpm.sh
+    		./regtests/inittpm.sh
 	    fi
 	fi
     	RC=$?

@@ -415,6 +415,8 @@ typedef union
     // NTTRU Mods
     NTTRU_Encapsulate_Out          NTTRU_Encapsulate;
     NTTRU_Decapsulate_Out          NTTRU_Decapsulate;
+    NTTRU_Encrypt_Out              NTTRU_Encrypt;
+    NTTRU_Decrypt_Out              NTTRU_Decrypt;
     // NTTRU Mods
 } RESPONSE_PARAMETERS;
 

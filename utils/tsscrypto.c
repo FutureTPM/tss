@@ -71,6 +71,12 @@
 #include "kyber-params.h"
 #endif
 
+#ifndef TPM_TSS_NONTTRU
+#include "nttru-kem.h"
+#include "nttru-params.h"
+#include "nttru-ntt.h"
+#endif
+
 extern int tssVverbose;
 extern int tssVerbose;
 
@@ -101,6 +107,9 @@ TPM_RC TSS_Crypto_Init(void)
 
     ERR_load_crypto_strings ();
     OpenSSL_add_all_algorithms();
+#ifndef TPM_TSS_NONTTRU
+    nttru_init_ntt();
+#endif
 #if 0
     irc = FIPS_mode_set(1);
     if (irc == 0) {
@@ -610,6 +619,81 @@ TSS_KyberEncrypt(
 
     if (result == TPM_RC_SUCCESS) {
         result = CryptKyberEncapsulate(kyberKey, &ss, &ct);
+
+        memcpy(cOut->t.secret, ct.t.buffer, ct.t.size);
+        cOut->t.size = ct.t.size;
+    }
+
+    if (result == TPM_RC_SUCCESS) {
+        int tmplen, outlen;
+        EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
+        EVP_EncryptInit_ex(ctx, EVP_aes_256_cfb(), NULL, ss.t.buffer, NULL);
+
+        if (!EVP_EncryptUpdate(ctx, (uint8_t *)&cOut->t.secret + cOut->t.size,
+                    &outlen, (uint8_t *)&dIn->t.buffer, dIn->t.size)) {
+            EVP_CIPHER_CTX_free(ctx);
+            return 1;
+        }
+
+        if (!EVP_EncryptFinal_ex(ctx, (uint8_t *)&cOut->t.secret + cOut->t.size + outlen,
+                    &tmplen)) {
+            EVP_CIPHER_CTX_free(ctx);
+            return 1;
+        }
+
+        EVP_CIPHER_CTX_free(ctx);
+
+        cOut->t.size += tmplen + outlen;
+    }
+
+    return result;
+}
+#endif
+
+#ifndef TPM_TSS_NONTTRU
+
+static TPM_RC
+CryptNTTRUEncapsulate(
+            // IN: The object structure which contains the public key used in
+            // the encapsulation.
+		    TPMT_PUBLIC             *publicArea,
+            // OUT: the shared key
+            TPM2B_NTTRU_SHARED_KEY  *ss,
+            // OUT: the cipher text
+            TPM2B_NTTRU_CIPHER_TEXT *ct
+		 )
+{
+    TPM_RC               retVal     = TPM_RC_SUCCESS;
+
+    if (publicArea == NULL || ss == NULL || ct == NULL)
+        return -1;
+
+    nttru_crypto_kem_enc(ct->t.buffer,
+                         ss->t.buffer,
+                         publicArea->unique.nttru.t.buffer);
+
+    ss->t.size = NTTRU_SHAREDKEYBYTES;
+    ct->t.size = NTTRU_CIPHERTEXTBYTES;
+
+   return retVal;
+}
+
+TPM_RC
+TSS_NTTRUEncrypt(
+            // OUT: The encrypted data
+            TPM2B_ENCRYPTED_SECRET *cOut,
+            // IN: Public Key.
+		    TPMT_PUBLIC            *NTTRUKey,
+            // IN: the data to encrypt
+            TPM2B_DIGEST           *dIn
+		 )
+{
+    TPM_RC result = TPM_RC_SUCCESS;
+    TPM2B_NTTRU_SHARED_KEY ss;
+    TPM2B_NTTRU_CIPHER_TEXT ct;
+
+    if (result == TPM_RC_SUCCESS) {
+        result = CryptNTTRUEncapsulate(NTTRUKey, &ss, &ct);
 
         memcpy(cOut->t.secret, ct.t.buffer, ct.t.size);
         cOut->t.size = ct.t.size;

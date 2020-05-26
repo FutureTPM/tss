@@ -45,7 +45,7 @@ echo ""
 echo "Salt Session - Load"
 echo ""
 
-for ASY in "-kyber k=4" "-rsa" "-ecc nistp256"
+for ASY in "-nttru" "-kyber k=4" "-nttru" "-rsa" "-ecc nistp256"
 do
     for HALG in ${ITERATE_ALGS}
     do
@@ -61,7 +61,7 @@ do
 	echo "Load the ${ASY} storage key 80000001 under the primary key"
 	${PREFIX}load -hp 80000000 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
 	checkSuccess $?
-
+    exit
 	echo "Start a ${ASY} salted HMAC auth session"
 	${PREFIX}startauthsession -se h -hs 80000001 > run.out
 	checkSuccess $?
