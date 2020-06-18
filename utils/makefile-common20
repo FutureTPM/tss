@@ -154,10 +154,6 @@ ALL += 	activatecredential$(EXE)		\
 	createekcert$(EXE)			\
 	tpm2pem$(EXE)				\
 	tpmpublic2eccpoint$(EXE)    \
-	kyber_dec$(EXE)				\
-	kyber_enc$(EXE)				\
-	nttru_dec$(EXE)				\
-	nttru_enc$(EXE)				\
 	kyberencrypt$(EXE)			\
 	kyberdecrypt$(EXE)			\
     nttruencrypt$(EXE)			\
@@ -171,6 +167,8 @@ ALL += 	activatecredential$(EXE)		\
 	ldaa_signcommit2$(EXE)   	\
 	ldaa_signcommit3$(EXE)   	\
 	ldaa_signproof$(EXE)   	\
+    encapsulate$(EXE)   	\
+    decapsulate$(EXE)   	\
 
 ALL	+= 					\
 	ntc2getconfig$(EXE)			\

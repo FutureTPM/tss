@@ -6626,6 +6626,46 @@ TSS_TPM2B_KYBER_ENCRYPT_Marshalu(const TPM2B_KYBER_ENCRYPT *source, UINT32 *writ
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
 
+TPM_RC
+TSS_TPM2B_ENC_CIPHER_TEXT_Marshalu(const TPM2B_ENC_CIPHER_TEXT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+  TPM_RC rc = 0;
+  if (rc == 0) {
+	rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+  }
+  return rc;
+}
+
+TPM_RC
+TSS_TPM2B_ENC_SHARED_KEY_Marshalu(const TPM2B_ENC_SHARED_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+  TPM_RC rc = 0;
+  if (rc == 0) {
+	rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+  }
+  return rc;
+}
+
+TPM_RC
+TSS_TPM2B_DEC_CIPHER_TEXT_Marshalu(const TPM2B_DEC_CIPHER_TEXT *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+  TPM_RC rc = 0;
+  if (rc == 0) {
+	rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+  }
+  return rc;
+}
+
+TPM_RC
+TSS_TPM2B_DEC_SHARED_KEY_Marshalu(const TPM2B_DEC_SHARED_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size)
+{
+  TPM_RC rc = 0;
+  if (rc == 0) {
+	rc = TSS_TPM2B_Marshalu(&source->b, written, buffer, size);
+  }
+  return rc;
+}
+
 /*****************************************************************************/
 /*                                NTTRU Mods                                 */
 /*****************************************************************************/
@@ -8729,35 +8769,6 @@ TSS_NV_Certify_Out_Unmarshal(NV_Certify_Out *target, TPM_ST tag, BYTE **buffer, 
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
-TPM_RC
-TSS_Kyber_Encapsulate_In_Marshalu(Kyber_Encapsulate_In *source, UINT32 *written,
-        BYTE **buffer, uint32_t *size)
-{
-    TPM_RC rc = TPM_RC_SUCCESS;
-    if (rc == TPM_RC_SUCCESS) {
-        rc = TSS_TPMI_DH_OBJECT_Marshalu(&source->key_handle, written, buffer, size);
-    }
-    return rc;
-}
-
-TPM_RC
-TSS_Kyber_Encapsulate_Out_Unmarshalu(Kyber_Encapsulate_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
-{
-    TPM_RC rc = TPM_RC_SUCCESS;
-    uint32_t parameterSize = 0;
-    if (rc == TPM_RC_SUCCESS) {
-        if (tag == TPM_ST_SESSIONS) {
-            rc = TSS_UINT32_Unmarshalu(&parameterSize, buffer, size);
-        }
-    }
-    if (rc == TPM_RC_SUCCESS) {
-        rc = TSS_TPM2B_KYBER_SHARED_KEY_Unmarshalu(&target->shared_key, buffer, size);
-    }
-    if (rc == TPM_RC_SUCCESS) {
-        rc = TSS_TPM2B_KYBER_CIPHER_TEXT_Unmarshalu(&target->cipher_text, buffer, size);
-    }
-    return rc;
-}
 
 TPM_RC
 TSS_Kyber_Decapsulate_Out_Unmarshalu(Kyber_Decapsulate_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
@@ -8851,69 +8862,70 @@ TSS_Kyber_Decrypt_In_Marshalu(Kyber_Decrypt_In *source, UINT32 *written,
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
+// encapsulate
+TPM_RC
+TSS_Encapsulate_In_Marshalu(Encapsulate_In *source, UINT32 *written,
+                            BYTE **buffer, uint32_t *size)
+{
+  TPM_RC rc = TPM_RC_SUCCESS;
+  if (rc == TPM_RC_SUCCESS) {
+    rc = TSS_TPMI_DH_OBJECT_Marshalu(&source->key_handle, written, buffer, size);
+  }
+  return rc;
+}
 
+TPM_RC
+TSS_Encapsulate_Out_Unmarshalu(Encapsulate_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
+{
+  TPM_RC rc = TPM_RC_SUCCESS;
+  uint32_t parameterSize = 0;
+  if (rc == TPM_RC_SUCCESS) {
+    if (tag == TPM_ST_SESSIONS) {
+      rc = TSS_UINT32_Unmarshalu(&parameterSize, buffer, size);
+    }
+  }
+  if (rc == TPM_RC_SUCCESS) {
+    rc = TSS_TPM2B_ENC_SHARED_KEY_Unmarshalu(&target->shared_key, buffer, size);
+  }
+  if (rc == TPM_RC_SUCCESS) {
+    rc = TSS_TPM2B_ENC_CIPHER_TEXT_Unmarshalu(&target->cipher_text, buffer, size);
+  }
+  return rc;
+}
+
+// decapsulate
+TPM_RC
+TSS_Decapsulate_Out_Unmarshalu(Decapsulate_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
+{
+  TPM_RC rc = TPM_RC_SUCCESS;
+  uint32_t parameterSize = 0;
+  if (rc == TPM_RC_SUCCESS) {
+    if (tag == TPM_ST_SESSIONS) {
+      rc = TSS_UINT32_Unmarshalu(&parameterSize, buffer, size);
+    }
+  }
+  if (rc == TPM_RC_SUCCESS) {
+    rc = TSS_TPM2B_DEC_SHARED_KEY_Unmarshalu(&target->shared_key, buffer, size);
+  }
+  return rc;
+}
+
+TPM_RC
+TSS_Decapsulate_In_Marshalu(Decapsulate_In *source, UINT32 *written,
+                                  BYTE **buffer, uint32_t *size)
+{
+  TPM_RC rc = TPM_RC_SUCCESS;
+  if (rc == TPM_RC_SUCCESS) {
+    rc = TSS_TPMI_DH_OBJECT_Marshalu(&source->key_handle, written, buffer, size);
+  }
+  if (rc == TPM_RC_SUCCESS) {
+    rc = TSS_TPM2B_DEC_CIPHER_TEXT_Marshalu(&source->cipher_text, written, buffer, size);
+  }
+  return rc;
+}
 /*****************************************************************************/
 /*                                NTTRU Mods                                 */
 /*****************************************************************************/
-TPM_RC
-TSS_NTTRU_Encapsulate_In_Marshalu(NTTRU_Encapsulate_In *source, UINT32 *written,
-        BYTE **buffer, uint32_t *size)
-{
-    TPM_RC rc = TPM_RC_SUCCESS;
-    if (rc == TPM_RC_SUCCESS) {
-        rc = TSS_TPMI_DH_OBJECT_Marshalu(&source->key_handle, written, buffer, size);
-    }
-    return rc;
-}
-
-TPM_RC
-TSS_NTTRU_Encapsulate_Out_Unmarshalu(NTTRU_Encapsulate_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
-{
-    TPM_RC rc = TPM_RC_SUCCESS;
-    uint32_t parameterSize = 0;
-    if (rc == TPM_RC_SUCCESS) {
-        if (tag == TPM_ST_SESSIONS) {
-            rc = TSS_UINT32_Unmarshalu(&parameterSize, buffer, size);
-        }
-    }
-    if (rc == TPM_RC_SUCCESS) {
-        rc = TSS_TPM2B_NTTRU_SHARED_KEY_Unmarshalu(&target->shared_key, buffer, size);
-    }
-    if (rc == TPM_RC_SUCCESS) {
-        rc = TSS_TPM2B_NTTRU_CIPHER_TEXT_Unmarshalu(&target->cipher_text, buffer, size);
-    }
-    return rc;
-}
-
-TPM_RC
-TSS_NTTRU_Decapsulate_Out_Unmarshalu(NTTRU_Decapsulate_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size)
-{
-    TPM_RC rc = TPM_RC_SUCCESS;
-    uint32_t parameterSize = 0;
-    if (rc == TPM_RC_SUCCESS) {
-        if (tag == TPM_ST_SESSIONS) {
-            rc = TSS_UINT32_Unmarshalu(&parameterSize, buffer, size);
-        }
-    }
-    if (rc == TPM_RC_SUCCESS) {
-        rc = TSS_TPM2B_NTTRU_SHARED_KEY_Unmarshalu(&target->shared_key, buffer, size);
-    }
-    return rc;
-}
-
-TPM_RC
-TSS_NTTRU_Decapsulate_In_Marshalu(NTTRU_Decapsulate_In *source, UINT32 *written,
-        BYTE **buffer, uint32_t *size)
-{
-    TPM_RC rc = TPM_RC_SUCCESS;
-    if (rc == TPM_RC_SUCCESS) {
-        rc = TSS_TPMI_DH_OBJECT_Marshalu(&source->key_handle, written, buffer, size);
-    }
-    if (rc == TPM_RC_SUCCESS) {
-        rc = TSS_TPM2B_NTTRU_CIPHER_TEXT_Marshalu(&source->cipher_text, written, buffer, size);
-    }
-    return rc;
-}
 TPM_RC
 TSS_NTTRU_Encrypt_In_Marshalu(NTTRU_Encrypt_In *source, UINT32 *written,
         BYTE **buffer, uint32_t *size)

@@ -627,16 +627,6 @@ static const MARSHAL_TABLE marshalTable [] = {
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
-    {TPM_CC_KYBER_Enc, "TPM2_KYBER_Enc",
-     (MarshalInFunction_t)TSS_Kyber_Encapsulate_In_Marshalu,
-     (UnmarshalOutFunction_t)TSS_Kyber_Encapsulate_Out_Unmarshalu,
-     (UnmarshalInFunction_t)Kyber_Encapsulate_In_Unmarshal},
-
-    {TPM_CC_KYBER_Dec, "TPM2_KYBER_Dec",
-     (MarshalInFunction_t)TSS_Kyber_Decapsulate_In_Marshalu,
-     (UnmarshalOutFunction_t)TSS_Kyber_Decapsulate_Out_Unmarshalu,
-     (UnmarshalInFunction_t)Kyber_Decapsulate_In_Unmarshal},
-
     {TPM_CC_KYBER_Encrypt, "TPM2_KYBER_Encrypt",
      (MarshalInFunction_t)TSS_Kyber_Encrypt_In_Marshalu,
      (UnmarshalOutFunction_t)TSS_Kyber_Encrypt_Out_Unmarshalu,
@@ -650,18 +640,19 @@ static const MARSHAL_TABLE marshalTable [] = {
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
 
+    {TPM_CC_Enc, "TPM2_Enc",
+     (MarshalInFunction_t)TSS_Encapsulate_In_Marshalu,
+     (UnmarshalOutFunction_t)TSS_Encapsulate_Out_Unmarshalu,
+     (UnmarshalInFunction_t)Encapsulate_In_Unmarshal},
+
+    {TPM_CC_Dec, "TPM2_Dec",
+     (MarshalInFunction_t)TSS_Decapsulate_In_Marshalu,
+     (UnmarshalOutFunction_t)TSS_Decapsulate_Out_Unmarshalu,
+     (UnmarshalInFunction_t)Decapsulate_In_Unmarshal},
+
 /*****************************************************************************/
 /*                                NTTRU Mods                                 */
 /*****************************************************************************/
-    {TPM_CC_NTTRU_Enc, "TPM2_NTTRU_Enc",
-     (MarshalInFunction_t)TSS_NTTRU_Encapsulate_In_Marshalu,
-     (UnmarshalOutFunction_t)TSS_NTTRU_Encapsulate_Out_Unmarshalu,
-     (UnmarshalInFunction_t)NTTRU_Encapsulate_In_Unmarshal},
-
-    {TPM_CC_NTTRU_Dec, "TPM2_NTTRU_Dec",
-     (MarshalInFunction_t)TSS_NTTRU_Decapsulate_In_Marshalu,
-     (UnmarshalOutFunction_t)TSS_NTTRU_Decapsulate_Out_Unmarshalu,
-     (UnmarshalInFunction_t)NTTRU_Decapsulate_In_Unmarshal},
 
     {TPM_CC_NTTRU_Encrypt, "TPM2_NTTRU_Encrypt",
      (MarshalInFunction_t)TSS_NTTRU_Encrypt_In_Marshalu,

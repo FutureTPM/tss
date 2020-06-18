@@ -496,6 +496,16 @@ extern "C" {
     /*****************************************************************************/
     /*                                Kyber Mods                                 */
     /*****************************************************************************/
+    // encapsulation
+    LIB_EXPORT TPM_RC
+    TSS_TPM2B_ENC_SHARED_KEY_Unmarshalu(TPM2B_ENC_SHARED_KEY *target, BYTE **buffer, uint32_t *size);
+    LIB_EXPORT TPM_RC
+    TSS_TPM2B_ENC_CIPHER_TEXT_Unmarshalu(TPM2B_ENC_CIPHER_TEXT *target, BYTE **buffer, uint32_t *size);
+    // decapsulation
+    LIB_EXPORT TPM_RC
+    TSS_TPM2B_DEC_SHARED_KEY_Unmarshalu(TPM2B_DEC_SHARED_KEY *target, BYTE **buffer, uint32_t *size);
+    LIB_EXPORT TPM_RC
+    TSS_TPM2B_DEC_CIPHER_TEXT_Unmarshalu(TPM2B_DEC_CIPHER_TEXT *target, BYTE **buffer, uint32_t *size);
 
     /*****************************************************************************/
     /*                                NTTRU Mods                                 */

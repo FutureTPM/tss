@@ -392,19 +392,20 @@
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
-#define CC_KYBER_Enc                      (CC_YES*ALG_KYBER)
-#define CC_KYBER_Dec                      (CC_YES*ALG_KYBER)
 #define CC_KYBER_Encrypt                  (CC_YES*ALG_KYBER)
 #define CC_KYBER_Decrypt                  (CC_YES*ALG_KYBER)
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
 
+// encapsulate
+#define CC_Enc                            (CC_YES && ALG_YES)
+// decapsulate
+#define CC_Dec                            (CC_YES && ALG_YES)
+
 /*****************************************************************************/
 /*                                NTTRU Mods                                 */
 /*****************************************************************************/
-#define CC_NTTRU_Enc                      (CC_YES*ALG_NTTRU)
-#define CC_NTTRU_Dec                      (CC_YES*ALG_NTTRU)
 #define CC_NTTRU_Encrypt                  (CC_YES*ALG_NTTRU)
 #define CC_NTTRU_Decrypt                  (CC_YES*ALG_NTTRU)
 /*****************************************************************************/
@@ -1495,18 +1496,6 @@ typedef  UINT32             TPM_CC;
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
-#ifndef CC_KYBER_Enc
-#   define CC_KYBER_Enc NO
-#endif
-#if CC_KYBER_Enc == YES
-#define TPM_CC_KYBER_Enc                      (TPM_CC)(0x0000019A)
-#endif
-#ifndef CC_KYBER_Dec
-#   define CC_KYBER_Dec NO
-#endif
-#if CC_KYBER_Dec == YES
-#define TPM_CC_KYBER_Dec                      (TPM_CC)(0x0000019B)
-#endif
 #ifndef CC_KYBER_Encrypt
 #   define CC_KYBER_Encrypt NO
 #endif
@@ -1523,21 +1512,24 @@ typedef  UINT32             TPM_CC;
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
 
+#ifndef CC_Enc
+#   define CC_Enc NO
+#endif
+#if CC_Enc == YES
+#define TPM_CC_Enc                            (TPM_CC)(0x000001A5)
+#endif
+
+#ifndef CC_Dec
+#   define CC_Dec NO
+#endif
+#if CC_Dec == YES
+#define TPM_CC_Dec                            (TPM_CC)(0x000001A6)
+#endif
+
 /*****************************************************************************/
 /*                                NTTRU Mods                                 */
 /*****************************************************************************/
-#ifndef CC_NTTRU_Enc
-#   define CC_NTTRU_Enc NO
-#endif
-#if CC_NTTRU_Enc == YES
-#define TPM_CC_NTTRU_Enc                      (TPM_CC)(0x000001A5)
-#endif
-#ifndef CC_NTTRU_Dec
-#   define CC_NTTRU_Dec NO
-#endif
-#if CC_NTTRU_Dec == YES
-#define TPM_CC_NTTRU_Dec                      (TPM_CC)(0x000001A6)
-#endif
+
 #ifndef CC_NTTRU_Encrypt
 #   define CC_NTTRU_Encrypt NO
 #endif
@@ -1761,18 +1753,16 @@ typedef  UINT32             TPM_CC;
 					  + (ADD_FILL || CC_EncryptDecrypt2)            /* 0x00000193 */ \
 					  + (ADD_FILL || CC_NEWHOPE_Dec)                /* 0x00000198 */ \
 					  + (ADD_FILL || CC_NEWHOPE_Enc)                /* 0x00000199 */ \
-					  + (ADD_FILL || CC_KYBER_Enc)                  /* 0x0000019A */ \
-					  + (ADD_FILL || CC_KYBER_Dec)                  /* 0x0000019B */ \
-					  + (ADD_FILL || CC_LDAA_Join)                  /* 0x0000019E */ \
-					  + (ADD_FILL || CC_LDAA_SignCommit1)           /* 0x0000019F */ \
-					  + (ADD_FILL || CC_LDAA_CommitTokenLink)       /* 0x000001A0 */ \
-					  + (ADD_FILL || CC_LDAA_SignProof)             /* 0x000001A1 */ \
-					  + (ADD_FILL || CC_LDAA_SignCommit2)           /* 0x000001A3 */ \
-					  + (ADD_FILL || CC_LDAA_SignCommit3)           /* 0x000001A4 */ \
-					  + (ADD_FILL || CC_KYBER_Encrypt)              /* 0x000001A5 */ \
-					  + (ADD_FILL || CC_KYBER_Decrypt)              /* 0x000001A6 */ \
-					  + (ADD_FILL || CC_NTTRU_Enc)                  /* 0x0000019A */ \
-					  + (ADD_FILL || CC_NTTRU_Dec)                  /* 0x0000019B */ \
+					  + (ADD_FILL || CC_LDAA_Join)                  /* 0x0000019C */ \
+					  + (ADD_FILL || CC_LDAA_SignCommit1)           /* 0x0000019D */ \
+					  + (ADD_FILL || CC_LDAA_CommitTokenLink)       /* 0x0000019E */ \
+					  + (ADD_FILL || CC_LDAA_SignProof)             /* 0x0000019F */ \
+					  + (ADD_FILL || CC_LDAA_SignCommit2)           /* 0x000001A1 */ \
+					  + (ADD_FILL || CC_LDAA_SignCommit3)           /* 0x000001A2 */ \
+					  + (ADD_FILL || CC_KYBER_Encrypt)              /* 0x000001A3 */ \
+					  + (ADD_FILL || CC_KYBER_Decrypt)              /* 0x000001A4 */ \
+					  + (ADD_FILL || CC_Enc)                        /* 0x000001A5 */ \
+					  + (ADD_FILL || CC_Dec)                        /* 0x000001A6 */ \
                       + (ADD_FILL || CC_NTTRU_Encrypt)              /* 0x0000019C */ \
                       + (ADD_FILL || CC_NTTRU_Decrypt)              /* 0x0000019D */ \
 					  )

@@ -36,11 +36,11 @@ ${PREFIX}load -hp 80000000 -ipr dernttrupriv.bin -ipu dernttrupub.bin -pwdp sto 
 checkSuccess $?
 
 echo "NTTRU encapsulate with the public key"
-${PREFIX}nttru_enc -hk 80000001 -c cipher_text.bin -ss shared_key_1.bin > run.out
+${PREFIX}encapsulate -hk 80000001 -c cipher_text.bin -ss shared_key_1.bin > run.out
 checkSuccess $?
 
 echo "NTTRU decapsulate with the secret key"
-${PREFIX}nttru_dec -hk 80000001 -c cipher_text.bin -ss shared_key_2.bin -pwdk dec > run.out
+${PREFIX}decapsulate -hk 80000001 -c cipher_text.bin -ss shared_key_2.bin -pwdk dec > run.out
 checkSuccess $?
 
 echo "Verify the shared key result"
@@ -93,7 +93,7 @@ ${PREFIX}loadexternal -nttru -den -ipu static_bob_pub.bin > run.out
 checkSuccess $?
 
 echo "Encapsulate shared key to Bob"
-${PREFIX}nttru_enc -hk 80000001 -c alice_cipher_text_3.bin -ss shared_key_3.bin > run.out
+${PREFIX}encapsulate -hk 80000001 -c alice_cipher_text_3.bin -ss shared_key_3.bin > run.out
 checkSuccess $?
 
 echo "Alice completed the first phase of the KEX!"
@@ -122,15 +122,15 @@ ${PREFIX}loadexternal -nttru -den -ipu static_alice_pub.bin > run.out
 checkSuccess $?
 
 echo "Encapsulate first secret using alice's ephemeral key"
-${PREFIX}nttru_enc -hk 80000002 -c bob_cipher_text_1.bin -ss tmp_bob_ss_1.bin > run.out
+${PREFIX}encapsulate -hk 80000002 -c bob_cipher_text_1.bin -ss tmp_bob_ss_1.bin > run.out
 checkSuccess $?
 
 echo "Encapsulate second secret using alice's ephemeral key"
-${PREFIX}nttru_enc -hk 80000003 -c bob_cipher_text_2.bin -ss tmp_bob_ss_2.bin > run.out
+${PREFIX}encapsulate -hk 80000003 -c bob_cipher_text_2.bin -ss tmp_bob_ss_2.bin > run.out
 checkSuccess $?
 
 echo "Decapsulate third secret using bob's static key"
-${PREFIX}nttru_dec -hk 80000001 -c alice_cipher_text_3.bin -ss tmp_bob_ss_3.bin -pwdk bob_dec > run.out
+${PREFIX}decapsulate -hk 80000001 -c alice_cipher_text_3.bin -ss tmp_bob_ss_3.bin -pwdk bob_dec > run.out
 checkSuccess $?
 
 echo "Cat all shared secrets and hash them"
@@ -174,11 +174,11 @@ ${PREFIX}load -hp 80000000 -ipu ephemeral_pub.bin -ipr ephemeral_priv.bin -pwdp 
 checkSuccess $?
 
 echo "Decapsulate first secret using alice's ephemeral key"
-${PREFIX}nttru_dec -hk 80000002 -pwdk eph -c bob_cipher_text_1.bin -ss tmp_alice_ss_1.bin > run.out
+${PREFIX}decapsulate -hk 80000002 -pwdk eph -c bob_cipher_text_1.bin -ss tmp_alice_ss_1.bin > run.out
 checkSuccess $?
 
 echo "Decapsulate second secret using alice's static key"
-${PREFIX}nttru_dec -hk 80000001 -pwdk alice_dec -c bob_cipher_text_2.bin -ss tmp_alice_ss_2.bin > run.out
+${PREFIX}decapsulate -hk 80000001 -pwdk alice_dec -c bob_cipher_text_2.bin -ss tmp_alice_ss_2.bin > run.out
 checkSuccess $?
 
 echo "Cat all shared secrets and hash them"
@@ -231,7 +231,7 @@ ${PREFIX}loadexternal -nttru -den -ipu static_bob_pub_uake.bin > run.out
 checkSuccess $?
 
 echo "Encapsulate shared key to Bob"
-${PREFIX}nttru_enc -hk 80000001 -c alice_cipher_text_3.bin -ss shared_key_3.bin > run.out
+${PREFIX}encapsulate -hk 80000001 -c alice_cipher_text_3.bin -ss shared_key_3.bin > run.out
 checkSuccess $?
 
 echo "Alice completed the first phase of the KEX!"
@@ -255,11 +255,11 @@ ${PREFIX}loadexternal -nttru -den -ipu ephemeral_pub_uake.bin > run.out
 checkSuccess $?
 
 echo "Encapsulate first secret using alice's ephemeral key"
-${PREFIX}nttru_enc -hk 80000002 -c bob_cipher_text_1.bin -ss tmp_bob_ss_1.bin > run.out
+${PREFIX}encapsulate -hk 80000002 -c bob_cipher_text_1.bin -ss tmp_bob_ss_1.bin > run.out
 checkSuccess $?
 
 echo "Decapsulate second secret using bob's static key"
-${PREFIX}nttru_dec -hk 80000001 -c alice_cipher_text_3.bin -ss tmp_bob_ss_3.bin -pwdk bob_dec > run.out
+${PREFIX}decapsulate -hk 80000001 -c alice_cipher_text_3.bin -ss tmp_bob_ss_3.bin -pwdk bob_dec > run.out
 checkSuccess $?
 
 echo "Cat all shared secrets and hash them"
@@ -294,7 +294,7 @@ ${PREFIX}load -hp 80000000 -ipu ephemeral_pub_uake.bin -ipr ephemeral_priv_uake.
 checkSuccess $?
 
 echo "Decapsulate first secret using alice's ephemeral key"
-${PREFIX}nttru_dec -hk 80000001 -pwdk eph -c bob_cipher_text_1.bin -ss tmp_alice_ss_1.bin > run.out
+${PREFIX}decapsulate -hk 80000001 -pwdk eph -c bob_cipher_text_1.bin -ss tmp_alice_ss_1.bin > run.out
 checkSuccess $?
 
 echo "Cat all shared secrets and hash them"

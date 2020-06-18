@@ -175,6 +175,9 @@
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
+// encapsulation/decapsulation
+#include "Enc_fp.h"
+#include "Dec_fp.h"
 
 /*****************************************************************************/
 /*                                NTTRU Mods                                 */
@@ -475,6 +478,26 @@ extern "C" {
     /*****************************************************************************/
     /*                                Kyber Mods                                 */
     /*****************************************************************************/
+
+    // encapsulation
+    TPM_RC
+    TSS_Encapsulate_In_Marshalu(Encapsulate_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_Encapsulate_Out_Unmarshalu(Encapsulate_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_ENC_CIPHER_TEXT_Marshalu(const TPM2B_ENC_CIPHER_TEXT *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_ENC_SHARED_KEY_Marshalu(const TPM2B_ENC_SHARED_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+
+    // decapsulation
+    TPM_RC
+    TSS_Decapsulate_In_Marshalu(Decapsulate_In *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_Decapsulate_Out_Unmarshalu(Decapsulate_Out *target, TPM_ST tag, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_DEC_CIPHER_TEXT_Marshalu(const TPM2B_DEC_CIPHER_TEXT *source, UINT32 *written, BYTE **buffer, uint32_t *size);
+    TPM_RC
+    TSS_TPM2B_DEC_SHARED_KEY_Marshalu(const TPM2B_DEC_SHARED_KEY *source, UINT32 *written, BYTE **buffer, uint32_t *size);
 
     /*****************************************************************************/
     /*                                NTTRU Mods                                 */

@@ -189,7 +189,8 @@
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
-
+#include "Enc_fp.h"
+#include "Dec_fp.h"
 /*****************************************************************************/
 /*                                NTTRU Mods                                 */
 /*****************************************************************************/
@@ -322,8 +323,6 @@ typedef union {
     VerifySignature_In            VerifySignature;
     ZGen_2Phase_In                ZGen_2Phase;
     // Kyber Mods
-    Kyber_Encapsulate_In          Kyber_Encapsulate;
-    Kyber_Decapsulate_In          Kyber_Decapsulate;
     Kyber_Encrypt_In              Kyber_Encrypt;
     Kyber_Decrypt_In              Kyber_Decrypt;
     // Kyber Mods
@@ -336,9 +335,9 @@ typedef union {
     LDAA_SignCommit3_In           LDAA_SignCommit3;
     LDAA_SignProof_In             LDAA_SignProof;
     // LDAA Mods
+    Encapsulate_In                Encapsulate;
+    Decapsulate_In                Decapsulate;
     // NTTRU Mods
-    NTTRU_Encapsulate_In          NTTRU_Encapsulate;
-    NTTRU_Decapsulate_In          NTTRU_Decapsulate;
     NTTRU_Encrypt_In              NTTRU_Encrypt;
     NTTRU_Decrypt_In              NTTRU_Decrypt;
     // NTTRU Mods
@@ -399,8 +398,6 @@ typedef union
     VerifySignature_Out            VerifySignature;
     ZGen_2Phase_Out                ZGen_2Phase;
     // Kyber Mods
-    Kyber_Encapsulate_Out          Kyber_Encapsulate;
-    Kyber_Decapsulate_Out          Kyber_Decapsulate;
     Kyber_Encrypt_Out              Kyber_Encrypt;
     Kyber_Decrypt_Out              Kyber_Decrypt;
     // Kyber Mods
@@ -413,8 +410,7 @@ typedef union
     LDAA_SignProof_Out             LDAA_SignProof;
     // LDAA Mods
     // NTTRU Mods
-    NTTRU_Encapsulate_Out          NTTRU_Encapsulate;
-    NTTRU_Decapsulate_Out          NTTRU_Decapsulate;
+    Decapsulate_Out                Decapsulate;
     NTTRU_Encrypt_Out              NTTRU_Encrypt;
     NTTRU_Decrypt_Out              NTTRU_Decrypt;
     // NTTRU Mods

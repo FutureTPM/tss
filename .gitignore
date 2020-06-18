@@ -151,3 +151,5 @@ utils/nttru_dec
 /utils/nttrudecrypt
 /utils/nttruencrypt
 
+utils/encapsulate
+utils/decapsulate

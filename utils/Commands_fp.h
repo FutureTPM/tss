@@ -187,7 +187,8 @@
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
-
+#include <ibmtss/Enc_fp.h>
+#include <ibmtss/Dec_fp.h>
 /*****************************************************************************/
 /*                                NTTRU Mods                                 */
 /*****************************************************************************/
@@ -554,6 +555,11 @@ Kyber_Decrypt_In_Unmarshal(Kyber_Decrypt_In *target, BYTE **buffer, uint32_t *si
 /*****************************************************************************/
 /*                                Kyber Mods                                 */
 /*****************************************************************************/
+
+TPM_RC
+Encapsulate_In_Unmarshal(Encapsulate_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
+TPM_RC
+Decapsulate_In_Unmarshal(Decapsulate_In *target, BYTE **buffer, uint32_t *size, TPM_HANDLE handles[]);
 
 /*****************************************************************************/
 /*                                NTTRU Mods                                 */

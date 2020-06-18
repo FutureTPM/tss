@@ -529,10 +529,6 @@ ntc2preconfig:		ntc2preconfig.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) ntc2preconfig.o $(LNALIBS) -o ntc2preconfig
 ntc2lockconfig:		ntc2lockconfig.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) ntc2lockconfig.o $(LNALIBS) -o ntc2lockconfig
-kyber_dec:		ibmtss/tss.h kyber_dec.o $(LIBTSS) $(LIBTSSUTILS)
-			$(CC) $(LNFLAGS) $(LNAFLAGS) kyber_dec.o $(LNALIBS) -o kyber_dec
-kyber_enc:		ibmtss/tss.h kyber_enc.o $(LIBTSS) $(LIBTSSUTILS)
-			$(CC) $(LNFLAGS) $(LNAFLAGS) kyber_enc.o $(LNALIBS) -o kyber_enc
 kyberdecrypt:		ibmtss/tss.h kyberdecrypt.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) kyberdecrypt.o $(LNALIBS) -o kyberdecrypt
 kyberencrypt:		ibmtss/tss.h kyberencrypt.o $(LIBTSS) $(LIBTSSUTILS)
@@ -541,10 +537,6 @@ newhope_dec:		ibmtss/tss.h newhope_dec.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) newhope_dec.o $(LNALIBS) -o newhope_dec
 newhope_enc:		ibmtss/tss.h newhope_enc.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) newhope_enc.o $(LNALIBS) -o newhope_enc
-nttru_dec:		ibmtss/tss.h nttru_dec.o $(LIBTSS) $(LIBTSSUTILS)
-			$(CC) $(LNFLAGS) $(LNAFLAGS) nttru_dec.o $(LNALIBS) -o nttru_dec
-nttru_enc:		ibmtss/tss.h nttru_enc.o $(LIBTSS) $(LIBTSSUTILS)
-			$(CC) $(LNFLAGS) $(LNAFLAGS) nttru_enc.o $(LNALIBS) -o nttru_enc
 nttrudecrypt:		ibmtss/tss.h nttrudecrypt.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) nttrudecrypt.o $(LNALIBS) -o nttrudecrypt
 nttruencrypt:		ibmtss/tss.h nttruencrypt.o $(LIBTSS) $(LIBTSSUTILS)
@@ -563,6 +555,10 @@ ldaa_signcommit3:		ibmtss/tss.h ldaa_signcommit3.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) ldaa_signcommit3.o $(LNALIBS) -o ldaa_signcommit3
 ldaa_signproof:		ibmtss/tss.h ldaa_signproof.o $(LIBTSS) $(LIBTSSUTILS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) ldaa_signproof.o $(LNALIBS) -o ldaa_signproof
+encapsulate:		ibmtss/tss.h encapsulate.o $(LIBTSS) $(LIBTSSUTILS)
+			$(CC) $(LNFLAGS) $(LNAFLAGS) encapsulate.o $(LNALIBS) -o encapsulate
+decapsulate:		ibmtss/tss.h decapsulate.o $(LIBTSS) $(LIBTSSUTILS)
+			$(CC) $(LNFLAGS) $(LNAFLAGS) decapsulate.o $(LNALIBS) -o decapsulate
 
 # for applications, not for TSS library
 

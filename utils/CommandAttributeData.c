@@ -460,21 +460,6 @@ const TPMA_CC_TSS    s_ccAttr [] = {
 /*****************************************************************************/
 
 /*****************************************************************************/
-/*                                Kyber Mods                                 */
-/*****************************************************************************/
-#if (PAD_LIST || CC_KYBER_Enc)
-    {{0x019A, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_KYBER_Enc
-#endif
-
-#if (PAD_LIST || CC_KYBER_Dec)
-    {{0x019B, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_KYBER_Dec
-#endif
-
-/*****************************************************************************/
-/*                                Kyber Mods                                 */
-/*****************************************************************************/
-
-/*****************************************************************************/
 /*                                 LDAA Mods                                 */
 /*****************************************************************************/
 #if (PAD_LIST || CC_LDAA_Join)
@@ -516,16 +501,18 @@ const TPMA_CC_TSS    s_ccAttr [] = {
     {{0x01A4, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_KYBER_Decrypt
 #endif
 
+// encapsulate
+#if (PAD_LIST || CC_Enc)
+    {{0x01A5, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_Enc
+#endif
+// decapsulate
+#if (PAD_LIST || CC_Dec)
+    {{0x01A6, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_Dec
+#endif
+
 /*****************************************************************************/
 /*                                NTTRU Mods                                 */
 /*****************************************************************************/
-#if (PAD_LIST || CC_NTTRU_Enc)
-    {{0x01A5, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_NTTRU_Enc
-#endif
-
-#if (PAD_LIST || CC_NTTRU_Dec)
-    {{0x01A6, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_NTTRU_Dec
-#endif
 
 #if (PAD_LIST || CC_NTTRU_Encrypt)
     {{0x01A7, 0, 0, 0, 0, 1, 0, 0, 0}},     // TPM_CC_NTTRU_Encrypt
@@ -1042,21 +1029,6 @@ const COMMAND_ATTRIBUTES    s_commandAttributes [] = {
 /*****************************************************************************/
 
 /*****************************************************************************/
-/*                                Kyber Mods                                 */
-/*****************************************************************************/
-#if (PAD_LIST || CC_KYBER_Enc)
-    (COMMAND_ATTRIBUTES)(CC_KYBER_Enc                  *  // 0x019A
-			 (IS_IMPLEMENTED+DECRYPT_4+ENCRYPT_4)),
-#endif
-#if (PAD_LIST || CC_KYBER_Dec)
-    (COMMAND_ATTRIBUTES)(CC_KYBER_Dec                  *  // 0x019B
-			 (IS_IMPLEMENTED+DECRYPT_4+HANDLE_1_USER+ENCRYPT_4)),
-#endif
-/*****************************************************************************/
-/*                                Kyber Mods                                 */
-/*****************************************************************************/
-
-/*****************************************************************************/
 /*                                 LDAA Mods                                 */
 /*****************************************************************************/
 #if (PAD_LIST || CC_LDAA_Join)
@@ -1099,17 +1071,22 @@ const COMMAND_ATTRIBUTES    s_commandAttributes [] = {
 			 (IS_IMPLEMENTED+DECRYPT_4+HANDLE_1_USER+ENCRYPT_4)),
 #endif
 
+// encapsulate
+#if (PAD_LIST || CC_Enc)
+    (COMMAND_ATTRIBUTES)(CC_Enc                  *  // 0x01A5
+                         (IS_IMPLEMENTED+DECRYPT_4+ENCRYPT_4)),
+#endif
+// decapsulate
+#if (PAD_LIST || CC_Dec)
+    (COMMAND_ATTRIBUTES)(CC_Dec                  *  // 0x01A6
+                         (IS_IMPLEMENTED+DECRYPT_4+HANDLE_1_USER+ENCRYPT_4)),
+#endif
+
 /*****************************************************************************/
 /*                                NTTRU Mods                                 */
 /*****************************************************************************/
-#if (PAD_LIST || CC_NTTRU_Enc)
-    (COMMAND_ATTRIBUTES)(CC_NTTRU_Enc                  *  // 0x01A5
-			 (IS_IMPLEMENTED+DECRYPT_4+ENCRYPT_4)),
-#endif
-#if (PAD_LIST || CC_NTTRU_Dec)
-    (COMMAND_ATTRIBUTES)(CC_NTTRU_Dec                  *  // 0x01A6
-			 (IS_IMPLEMENTED+DECRYPT_4+HANDLE_1_USER+ENCRYPT_4)),
-#endif
+
+
 #if (PAD_LIST || CC_NTTRU_Encrypt)
     (COMMAND_ATTRIBUTES)(CC_NTTRU_Encrypt              *  // 0x01A7
                          (IS_IMPLEMENTED+DECRYPT_4+ENCRYPT_4)),

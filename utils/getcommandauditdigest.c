@@ -323,6 +323,7 @@ int main(int argc, char *argv[])
 			 sessionHandle1, signPassword, sessionAttributes1,
 			 sessionHandle2, NULL, sessionAttributes2,
 			 TPM_RH_NULL, NULL, 0);
+    printf("return code %d", rc);
     }
     {
 	TPM_RC rc1 = TSS_Delete(tssContext);
