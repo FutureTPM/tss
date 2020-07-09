@@ -57,6 +57,7 @@ CCFLAGS += 	-DTPM_POSIX
 CCLFLAGS += 	-I. 		\
 		-fPIC		\
 		-march=native	\
+		-fcommon \
 		-DTPM_TPM20	\
 		-DTPM_TPM12
 
