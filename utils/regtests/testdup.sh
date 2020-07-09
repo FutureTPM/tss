@@ -77,86 +77,86 @@ do
 
     for ENC in "" "-salg aes -ik tmprnd.bin"
     do
-	for HALG in ${ITERATE_ALGS}
-	do
+	    for HALG in ${ITERATE_ALGS}
+	    do
 
-	    echo "Create a signing key K2 under the primary key, with policy"
-	    ${PREFIX}create -hp 80000000 -si -opr tmppriv.bin -opu tmppub.bin -pwdp sto -pwdk sig -pol policies/policyccduplicate.bin > run.out
-	    checkSuccess $?
+	        echo "Create a signing key K2 under the primary key, with policy"
+	        ${PREFIX}create -hp 80000000 -si -opr tmppriv.bin -opu tmppub.bin -pwdp sto -pwdk sig -pol policies/policyccduplicate.bin > run.out
+	        checkSuccess $?
 
-	    echo "Load the ${ALG} storage key K1 80000001"
-	    ${PREFIX}load -hp 80000000 -ipr store${ALG}priv.bin -ipu store${ALG}pub.bin -pwdp sto > run.out
-	    checkSuccess $?
+	        echo "Load the ${ALG} storage key K1 80000001"
+	        ${PREFIX}load -hp 80000000 -ipr store${ALG}priv.bin -ipu store${ALG}pub.bin -pwdp sto > run.out
+	        checkSuccess $?
 
-	    echo "Load the signing key K2 80000002"
-	    ${PREFIX}load -hp 80000000 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
-	    checkSuccess $?
+	        echo "Load the signing key K2 80000002"
+	        ${PREFIX}load -hp 80000000 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
+	        checkSuccess $?
 
-	    echo "Sign a digest, $HALG"
-	    ${PREFIX}sign -hk 80000002 -halg $HALG -if policies/aaa -os tmpsig.bin -pwdk sig > run.out
-	    checkSuccess $?
+	        echo "Sign a digest, $HALG"
+	        ${PREFIX}sign -hk 80000002 -halg $HALG -if policies/aaa -os tmpsig.bin -pwdk sig > run.out
+	        checkSuccess $?
 
-	    echo "Verify the signature, $HALG"
-	    ${PREFIX}verifysignature -hk 80000002 -halg $HALG -if policies/aaa -is tmpsig.bin > run.out
-	    checkSuccess $?
+	        echo "Verify the signature, $HALG"
+	        ${PREFIX}verifysignature -hk 80000002 -halg $HALG -if policies/aaa -is tmpsig.bin > run.out
+	        checkSuccess $?
 
-	    echo "Start a policy session"
-	    ${PREFIX}startauthsession -se p > run.out
-	    checkSuccess $?
+	        echo "Start a policy session"
+	        ${PREFIX}startauthsession -se p > run.out
+	        checkSuccess $?
 
-	    echo "Policy command code, duplicate"
-	    ${PREFIX}policycommandcode -ha 03000000 -cc 14b > run.out
-	    checkSuccess $?
+	        echo "Policy command code, duplicate"
+	        ${PREFIX}policycommandcode -ha 03000000 -cc 14b > run.out
+	        checkSuccess $?
 
-	    echo "Get policy digest"
-	    ${PREFIX}policygetdigest -ha 03000000 > run.out
-	    checkSuccess $?
+	        echo "Get policy digest"
+	        ${PREFIX}policygetdigest -ha 03000000 > run.out
+	        checkSuccess $?
 
-	    echo "Get random AES encryption key"
-	    ${PREFIX}getrandom -by 16 -of tmprnd.bin > run.out
-	    checkSuccess $?
+	        echo "Get random AES encryption key"
+	        ${PREFIX}getrandom -by 16 -of tmprnd.bin > run.out
+	        checkSuccess $?
 
-	    echo "Duplicate K2 under ${ALG} K1, ${ENC}"
-	    ${PREFIX}duplicate -ho 80000002 -pwdo sig -hp 80000001 -od tmpdup.bin -oss tmpss.bin ${ENC} -se0 03000000 1 > run.out
-	    checkSuccess $?
+	        echo "Duplicate K2 under ${ALG} K1, ${ENC}"
+	        ${PREFIX}duplicate -ho 80000002 -pwdo sig -hp 80000001 -od tmpdup.bin -oss tmpss.bin ${ENC} -se0 03000000 1 > run.out
+	        checkSuccess $?
 
-	    echo "Flush the original K2 to free object slot for import"
-	    ${PREFIX}flushcontext -ha 80000002 > run.out
-	    checkSuccess $?
+	        echo "Flush the original K2 to free object slot for import"
+	        ${PREFIX}flushcontext -ha 80000002 > run.out
+	        checkSuccess $?
 
-	    echo "Import K2 under ${ALG} K1, ${ENC}"
-	    ${PREFIX}import -hp 80000001 -pwdp sto -ipu tmppub.bin -id tmpdup.bin -iss tmpss.bin ${ENC} -opr tmppriv.bin > run.out
-	    checkSuccess $?
+	        echo "Import K2 under ${ALG} K1, ${ENC}"
+	        ${PREFIX}import -hp 80000001 -pwdp sto -ipu tmppub.bin -id tmpdup.bin -iss tmpss.bin ${ENC} -opr tmppriv.bin > run.out
+	        checkSuccess $?
 
-	    echo "Sign under K2, $HALG - should fail"
-	    ${PREFIX}sign -hk 80000002 -halg $HALG -if policies/aaa -os tmpsig.bin -pwdk sig > run.out
-	    checkFailure $?
+	        echo "Sign under K2, $HALG - should fail"
+	        ${PREFIX}sign -hk 80000002 -halg $HALG -if policies/aaa -os tmpsig.bin -pwdk sig > run.out
+	        checkFailure $?
 
-	    echo "Load the duplicated signing key K2"
-	    ${PREFIX}load -hp 80000001 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
-	    checkSuccess $?
+	        echo "Load the duplicated signing key K2"
+	        ${PREFIX}load -hp 80000001 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
+	        checkSuccess $?
 
-	    echo "Sign using duplicated K2, $HALG"
-	    ${PREFIX}sign -hk 80000002 -halg $HALG -if policies/aaa -os tmpsig.bin -pwdk sig > run.out
-	    checkSuccess $?
+	        echo "Sign using duplicated K2, $HALG"
+	        ${PREFIX}sign -hk 80000002 -halg $HALG -if policies/aaa -os tmpsig.bin -pwdk sig > run.out
+	        checkSuccess $?
 
-	    echo "Verify the signature, $HALG"
-	    ${PREFIX}verifysignature -hk 80000002 -halg $HALG -if policies/aaa -is tmpsig.bin > run.out
-	    checkSuccess $?
+	        echo "Verify the signature, $HALG"
+	        ${PREFIX}verifysignature -hk 80000002 -halg $HALG -if policies/aaa -is tmpsig.bin > run.out
+	        checkSuccess $?
 
-	    echo "Flush the duplicated K2"
-	    ${PREFIX}flushcontext -ha 80000002 > run.out
-	    checkSuccess $?
+	        echo "Flush the duplicated K2"
+	        ${PREFIX}flushcontext -ha 80000002 > run.out
+	        checkSuccess $?
 
-	    echo "Flush the parent K1"
-	    ${PREFIX}flushcontext -ha 80000001 > run.out
-	    checkSuccess $?
+	        echo "Flush the parent K1"
+	        ${PREFIX}flushcontext -ha 80000001 > run.out
+	        checkSuccess $?
 
-	    echo "Flush the session"
-	    ${PREFIX}flushcontext -ha 03000000 > run.out
-	    checkSuccess $?
+	        echo "Flush the session"
+	        ${PREFIX}flushcontext -ha 03000000 > run.out
+	        checkSuccess $?
 
-	done
+	    done
     done
 done
 
@@ -276,30 +276,30 @@ do
     for HALG in ${ITERATE_ALGS}
     do
 
-	for PARENT in 80000000 80000001
-	do
+	    for PARENT in 80000000 80000001
+	    do
 
-		echo "Import the signing key under the parent key ${PARENT} ${HALG}"
-		${PREFIX}importpem -hp ${PARENT} -pwdp sto -ipem tmpprivkey.pem -pwdk rrrr -opu tmppub.bin -opr tmppriv.bin -halg ${HALG} > run.out
-		checkSuccess $?
+		    echo "Import the signing key under the parent key ${PARENT} ${HALG}"
+		    ${PREFIX}importpem -hp ${PARENT} -pwdp sto -ipem tmpprivkey.pem -pwdk rrrr -opu tmppub.bin -opr tmppriv.bin -halg ${HALG} > run.out
+		    checkSuccess $?
 
-		echo "Load the TPM signing key"
-		${PREFIX}load -hp ${PARENT} -pwdp sto -ipu tmppub.bin -ipr tmppriv.bin > run.out
-		checkSuccess $?
+		    echo "Load the TPM signing key"
+		    ${PREFIX}load -hp ${PARENT} -pwdp sto -ipu tmppub.bin -ipr tmppriv.bin > run.out
+		    checkSuccess $?
 
-		echo "Sign the message ${HALG} ${SESS}"
-		${PREFIX}sign -hk 80000002 -pwdk rrrr -if policies/aaa -os tmpsig.bin -halg ${HALG} ${SESS} > run.out
-		checkSuccess $?
+		    echo "Sign the message ${HALG} ${SESS}"
+		    ${PREFIX}sign -hk 80000002 -pwdk rrrr -if policies/aaa -os tmpsig.bin -halg ${HALG} ${SESS} > run.out
+		    checkSuccess $?
 
-		echo "Verify the signature ${HALG}"
-		${PREFIX}verifysignature -hk 80000002 -if policies/aaa -is tmpsig.bin -halg ${HALG} > run.out
-		checkSuccess $?
+		    echo "Verify the signature ${HALG}"
+		    ${PREFIX}verifysignature -hk 80000002 -if policies/aaa -is tmpsig.bin -halg ${HALG} > run.out
+		    checkSuccess $?
 
-		echo "Flush the signing key"
-		${PREFIX}flushcontext -ha 80000002 > run.out
-		checkSuccess $?
+		    echo "Flush the signing key"
+		    ${PREFIX}flushcontext -ha 80000002 > run.out
+		    checkSuccess $?
 
-	done
+	    done
     done
 done
 
@@ -324,30 +324,30 @@ do
     for HALG in ${ITERATE_ALGS}
     do
 
-	for PARENT in 80000000 80000001
-	do
+	    for PARENT in 80000000 80000001
+	    do
 
-		echo "Import the signing key under the parent key ${PARENT} ${HALG}"
-		${PREFIX}importpem -hp ${PARENT} -pwdp sto -ipem tmpprivkey.pem -pwdk rrrr -opu tmppub.bin -opr tmppriv.bin -halg ${HALG} > run.out
-		checkSuccess $?
+		    echo "Import the signing key under the parent key ${PARENT} ${HALG}"
+		    ${PREFIX}importpem -hp ${PARENT} -pwdp sto -ipem tmpprivkey.pem -pwdk rrrr -opu tmppub.bin -opr tmppriv.bin -halg ${HALG} > run.out
+		    checkSuccess $?
 
-		echo "Load the TPM signing key"
-		${PREFIX}load -hp ${PARENT} -pwdp sto -ipu tmppub.bin -ipr tmppriv.bin > run.out
-		checkSuccess $?
+		    echo "Load the TPM signing key"
+		    ${PREFIX}load -hp ${PARENT} -pwdp sto -ipu tmppub.bin -ipr tmppriv.bin > run.out
+		    checkSuccess $?
 
-		echo "Sign the message ${HALG} ${SESS}"
-		${PREFIX}sign -hk 80000002 -pwdk rrrr -if policies/aaa -os tmpsig.bin -halg ${HALG} ${SESS} > run.out
-		checkSuccess $?
+		    echo "Sign the message ${HALG} ${SESS}"
+		    ${PREFIX}sign -hk 80000002 -pwdk rrrr -if policies/aaa -os tmpsig.bin -halg ${HALG} ${SESS} > run.out
+		    checkSuccess $?
 
-		echo "Verify the signature ${HALG}"
-		${PREFIX}verifysignature -hk 80000002 -if policies/aaa -is tmpsig.bin -halg ${HALG} > run.out
-		checkSuccess $?
+		    echo "Verify the signature ${HALG}"
+		    ${PREFIX}verifysignature -hk 80000002 -if policies/aaa -is tmpsig.bin -halg ${HALG} > run.out
+		    checkSuccess $?
 
-		echo "Flush the signing key"
-		${PREFIX}flushcontext -ha 80000002 > run.out
-		checkSuccess $?
+		    echo "Flush the signing key"
+		    ${PREFIX}flushcontext -ha 80000002 > run.out
+		    checkSuccess $?
 
-	done
+	    done
     done
 done
 
@@ -372,30 +372,30 @@ do
     for HALG in ${ITERATE_ALGS}
     do
 
-	for PARENT in 80000000 80000001
-	do
+	    for PARENT in 80000000 80000001
+	    do
 
-		echo "Import the signing key under the parent key ${PARENT} ${HALG}"
-		${PREFIX}importpem -hp ${PARENT} -pwdp sto -ipem tmpprivkey.pem -pwdk rrrr -opu tmppub.bin -opr tmppriv.bin -halg ${HALG} > run.out
-		checkSuccess $?
+		    echo "Import the signing key under the parent key ${PARENT} ${HALG}"
+		    ${PREFIX}importpem -hp ${PARENT} -pwdp sto -ipem tmpprivkey.pem -pwdk rrrr -opu tmppub.bin -opr tmppriv.bin -halg ${HALG} > run.out
+		    checkSuccess $?
 
-		echo "Load the TPM signing key"
-		${PREFIX}load -hp ${PARENT} -pwdp sto -ipu tmppub.bin -ipr tmppriv.bin > run.out
-		checkSuccess $?
+		    echo "Load the TPM signing key"
+		    ${PREFIX}load -hp ${PARENT} -pwdp sto -ipu tmppub.bin -ipr tmppriv.bin > run.out
+		    checkSuccess $?
 
-		echo "Sign the message ${HALG} ${SESS}"
-		${PREFIX}sign -hk 80000002 -pwdk rrrr -if policies/aaa -os tmpsig.bin -halg ${HALG} ${SESS} > run.out
-		checkSuccess $?
+		    echo "Sign the message ${HALG} ${SESS}"
+		    ${PREFIX}sign -hk 80000002 -pwdk rrrr -if policies/aaa -os tmpsig.bin -halg ${HALG} ${SESS} > run.out
+		    checkSuccess $?
 
-		echo "Verify the signature ${HALG}"
-		${PREFIX}verifysignature -hk 80000002 -if policies/aaa -is tmpsig.bin -halg ${HALG} > run.out
-		checkSuccess $?
+		    echo "Verify the signature ${HALG}"
+		    ${PREFIX}verifysignature -hk 80000002 -if policies/aaa -is tmpsig.bin -halg ${HALG} > run.out
+		    checkSuccess $?
 
-		echo "Flush the signing key"
-		${PREFIX}flushcontext -ha 80000002 > run.out
-		checkSuccess $?
+		    echo "Flush the signing key"
+		    ${PREFIX}flushcontext -ha 80000002 > run.out
+		    checkSuccess $?
 
-	done
+	    done
     done
 done
 
@@ -427,30 +427,30 @@ do
     for HALG in ${ITERATE_ALGS}
     do
 
-	for PARENT in 80000000 80000001
-	do
+	    for PARENT in 80000000 80000001
+	    do
 
-	    echo "Import the signing key under the parent key ${PARENT} ${HALG}"
-	    ${PREFIX}importpem -hp ${PARENT} -pwdp sto -ipem tmpecprivkey.pem -ecc -pwdk rrrr -opu tmppub.bin -opr tmppriv.bin -halg ${HALG} > run.out
-	    checkSuccess $?
+	        echo "Import the signing key under the parent key ${PARENT} ${HALG}"
+	        ${PREFIX}importpem -hp ${PARENT} -pwdp sto -ipem tmpecprivkey.pem -ecc -pwdk rrrr -opu tmppub.bin -opr tmppriv.bin -halg ${HALG} > run.out
+	        checkSuccess $?
 
-	    echo "Load the TPM signing key"
-	    ${PREFIX}load -hp ${PARENT} -pwdp sto -ipu tmppub.bin -ipr tmppriv.bin > run.out
-	    checkSuccess $?
+	        echo "Load the TPM signing key"
+	        ${PREFIX}load -hp ${PARENT} -pwdp sto -ipu tmppub.bin -ipr tmppriv.bin > run.out
+	        checkSuccess $?
 
-	    echo "Sign the message ${HALG} ${SESS}"
-	    ${PREFIX}sign -hk 80000002 -ecc -pwdk rrrr -if policies/aaa -os tmpsig.bin -halg ${HALG} ${SESS} > run.out
-	    checkSuccess $?
+	        echo "Sign the message ${HALG} ${SESS}"
+	        ${PREFIX}sign -hk 80000002 -ecc -pwdk rrrr -if policies/aaa -os tmpsig.bin -halg ${HALG} ${SESS} > run.out
+	        checkSuccess $?
 
-	    echo "Verify the signature ${HALG}"
-	    ${PREFIX}verifysignature -hk 80000002 -ecc -if policies/aaa -is tmpsig.bin -halg ${HALG} > run.out
-	    checkSuccess $?
+	        echo "Verify the signature ${HALG}"
+	        ${PREFIX}verifysignature -hk 80000002 -ecc -if policies/aaa -is tmpsig.bin -halg ${HALG} > run.out
+	        checkSuccess $?
 
-	    echo "Flush the signing key"
-	    ${PREFIX}flushcontext -ha 80000002 > run.out
-	    checkSuccess $?
+	        echo "Flush the signing key"
+	        ${PREFIX}flushcontext -ha 80000002 > run.out
+	        checkSuccess $?
 
-	done
+	    done
     done
 done
 
@@ -475,30 +475,30 @@ do
     for HALG in ${ITERATE_ALGS}
     do
 
-	for PARENT in 80000000 80000001
-	do
+	    for PARENT in 80000000 80000001
+	    do
 
-	    echo "Import the signing key under the parent key ${PARENT} ${HALG}"
-	    ${PREFIX}importpem -hp ${PARENT} -pwdp sto -ipem tmpecprivkey.pem -ecc -pwdk rrrr -opu tmppub.bin -opr tmppriv.bin -halg ${HALG} > run.out
-	    checkSuccess $?
+	        echo "Import the signing key under the parent key ${PARENT} ${HALG}"
+	        ${PREFIX}importpem -hp ${PARENT} -pwdp sto -ipem tmpecprivkey.pem -ecc -pwdk rrrr -opu tmppub.bin -opr tmppriv.bin -halg ${HALG} > run.out
+	        checkSuccess $?
 
-	    echo "Load the TPM signing key"
-	    ${PREFIX}load -hp ${PARENT} -pwdp sto -ipu tmppub.bin -ipr tmppriv.bin > run.out
-	    checkSuccess $?
+	        echo "Load the TPM signing key"
+	        ${PREFIX}load -hp ${PARENT} -pwdp sto -ipu tmppub.bin -ipr tmppriv.bin > run.out
+	        checkSuccess $?
 
-	    echo "Sign the message ${HALG} ${SESS}"
-	    ${PREFIX}sign -hk 80000002 -ecc -pwdk rrrr -if policies/aaa -os tmpsig.bin -halg ${HALG} ${SESS} > run.out
-	    checkSuccess $?
+	        echo "Sign the message ${HALG} ${SESS}"
+	        ${PREFIX}sign -hk 80000002 -ecc -pwdk rrrr -if policies/aaa -os tmpsig.bin -halg ${HALG} ${SESS} > run.out
+	        checkSuccess $?
 
-	    echo "Verify the signature ${HALG}"
-	    ${PREFIX}verifysignature -hk 80000002 -ecc -if policies/aaa -is tmpsig.bin -halg ${HALG} > run.out
-	    checkSuccess $?
+	        echo "Verify the signature ${HALG}"
+	        ${PREFIX}verifysignature -hk 80000002 -ecc -if policies/aaa -is tmpsig.bin -halg ${HALG} > run.out
+	        checkSuccess $?
 
-	    echo "Flush the signing key"
-	    ${PREFIX}flushcontext -ha 80000002 > run.out
-	    checkSuccess $?
+	        echo "Flush the signing key"
+	        ${PREFIX}flushcontext -ha 80000002 > run.out
+	        checkSuccess $?
 
-	done
+	    done
     done
 done
 
@@ -523,30 +523,30 @@ do
     for HALG in ${ITERATE_ALGS}
     do
 
-	for PARENT in 80000000 80000001
-	do
+	    for PARENT in 80000000 80000001
+	    do
 
-	    echo "Import the signing key under the parent key ${PARENT} ${HALG}"
-	    ${PREFIX}importpem -hp ${PARENT} -pwdp sto -ipem tmpecprivkey.pem -ecc -pwdk rrrr -opu tmppub.bin -opr tmppriv.bin -halg ${HALG} > run.out
-	    checkSuccess $?
+	        echo "Import the signing key under the parent key ${PARENT} ${HALG}"
+	        ${PREFIX}importpem -hp ${PARENT} -pwdp sto -ipem tmpecprivkey.pem -ecc -pwdk rrrr -opu tmppub.bin -opr tmppriv.bin -halg ${HALG} > run.out
+	        checkSuccess $?
 
-	    echo "Load the TPM signing key"
-	    ${PREFIX}load -hp ${PARENT} -pwdp sto -ipu tmppub.bin -ipr tmppriv.bin > run.out
-	    checkSuccess $?
+	        echo "Load the TPM signing key"
+	        ${PREFIX}load -hp ${PARENT} -pwdp sto -ipu tmppub.bin -ipr tmppriv.bin > run.out
+	        checkSuccess $?
 
-	    echo "Sign the message ${HALG} ${SESS}"
-	    ${PREFIX}sign -hk 80000002 -ecc -pwdk rrrr -if policies/aaa -os tmpsig.bin -halg ${HALG} ${SESS} > run.out
-	    checkSuccess $?
+	        echo "Sign the message ${HALG} ${SESS}"
+	        ${PREFIX}sign -hk 80000002 -ecc -pwdk rrrr -if policies/aaa -os tmpsig.bin -halg ${HALG} ${SESS} > run.out
+	        checkSuccess $?
 
-	    echo "Verify the signature ${HALG}"
-	    ${PREFIX}verifysignature -hk 80000002 -ecc -if policies/aaa -is tmpsig.bin -halg ${HALG} > run.out
-	    checkSuccess $?
+	        echo "Verify the signature ${HALG}"
+	        ${PREFIX}verifysignature -hk 80000002 -ecc -if policies/aaa -is tmpsig.bin -halg ${HALG} > run.out
+	        checkSuccess $?
 
-	    echo "Flush the signing key"
-	    ${PREFIX}flushcontext -ha 80000002 > run.out
-	    checkSuccess $?
+	        echo "Flush the signing key"
+	        ${PREFIX}flushcontext -ha 80000002 > run.out
+	        checkSuccess $?
 
-	done
+	    done
     done
 done
 
@@ -570,104 +570,120 @@ echo ""
 
 # at TPM 1, duplicate object to K1 outer wrapper, AES wrapper
 
-echo "Create a storage key K2"
-${PREFIX}create -hp 80000000 -st -kt f -kt p -opr tmpk2priv.bin -opu tmpk2pub.bin -pwdp sto -pwdk k2 > run.out
-checkSuccess $?
+for ALG in "" "ecc" "kyber" "nttru"
+do
+    echo "ALG: $ALG"
 
-echo "Load the storage key K1 80000001 public key "
-${PREFIX}loadexternal -hi p -ipu storepub.bin > run.out
-checkSuccess $?
+    echo "Create a storage key K2 under ${ALG}"
+    if [ "${ALG}" = "" ]
+    then
+        ${PREFIX}create -hp 80000000 -st -kt f -kt p -opr tmpk2${ALG}priv.bin -opu tmpk2${ALG}pub.bin -pwdp sto -pwdk k2 > run.out
+    elif [ "${ALG}" = "kyber" ]
+    then
+        ${PREFIX}create -hp 80000000 -${ALG} k=4 -st -kt f -kt p -opr tmpk2${ALG}priv.bin -opu tmpk2${ALG}pub.bin -pwdp sto -pwdk k2 > run.out
+    elif [ "${ALG}" = "ecc" ]
+    then
+        ${PREFIX}create -hp 80000000 -${ALG} nistp384 -st -kt f -kt p -opr tmpk2${ALG}priv.bin -opu tmpk2${ALG}pub.bin -pwdp sto -pwdk k2 > run.out
+    else
+        ${PREFIX}create -hp 80000000 -${ALG} -st -kt f -kt p -opr tmpk2${ALG}priv.bin -opu tmpk2${ALG}pub.bin -pwdp sto -pwdk k2 > run.out
+    fi
+    checkSuccess $?
 
-echo "Create a signing key O1 with policy"
-${PREFIX}create -hp 80000000 -si -opr tmpsignpriv.bin -opu tmpsignpub.bin -pwdp sto -pwdk sig -pol policies/policyccduplicate.bin > run.out
-checkSuccess $?
+    echo "Load the storage key K1 80000001 public key "
+    ${PREFIX}loadexternal -hi p -ipu store${ALG}pub.bin > run.out
+    checkSuccess $?
 
-echo "Load the signing key O1 80000002 under the primary key"
-${PREFIX}load -hp 80000000 -ipr tmpsignpriv.bin -ipu tmpsignpub.bin -pwdp sto > run.out
-checkSuccess $?
+    echo "Create a signing key O1 with policy"
+    ${PREFIX}create -hp 80000000 -si -opr tmpsignpriv.bin -opu tmpsignpub.bin -pwdp sto -pwdk sig -pol policies/policyccduplicate.bin > run.out
+    checkSuccess $?
 
-echo "Save the signing key O1 name"
-cp ${TPM_DATA_DIR}/h80000002.bin tmpo1name.bin
+    echo "Load the signing key O1 80000002 under the primary key"
+    ${PREFIX}load -hp 80000000 -ipr tmpsignpriv.bin -ipu tmpsignpub.bin -pwdp sto > run.out
+    checkSuccess $?
 
-echo "Start a policy session"
-${PREFIX}startauthsession -se p > run.out
-checkSuccess $?
+    echo "Save the signing key O1 name"
+    cp ${TPM_DATA_DIR}/h80000002.bin tmpo1name.bin
 
-echo "Policy command code, duplicate"
-${PREFIX}policycommandcode -ha 03000000 -cc 14b > run.out
-checkSuccess $?
+    echo "Start a policy session"
+    ${PREFIX}startauthsession -se p > run.out
+    checkSuccess $?
 
-echo "Get random AES encryption key"
-${PREFIX}getrandom -by 16 -of tmprnd.bin > run.out
-checkSuccess $?
+    echo "Policy command code, duplicate"
+    ${PREFIX}policycommandcode -ha 03000000 -cc 14b > run.out
+    checkSuccess $?
 
-echo "Duplicate O1 80000002 under K1 80000001 outer wrapper, using AES inner wrapper"
-${PREFIX}duplicate -ho 80000002 -pwdo sig -hp 80000001 -ik tmprnd.bin -od tmpdup.bin -oss tmpss.bin -salg aes -se0 03000000 1 > run.out
-checkSuccess $?
+    echo "Get random AES encryption key"
+    ${PREFIX}getrandom -by 16 -of tmprnd.bin > run.out
+    checkSuccess $?
 
-echo "Flush signing key O1 80000002"
-${PREFIX}flushcontext -ha 80000002 > run.out
-checkSuccess $?
+    echo "Duplicate O1 80000002 under ${ALG} K1 80000001 outer wrapper, using AES inner wrapper"
+    ${PREFIX}duplicate -ho 80000002 -pwdo sig -hp 80000001 -ik tmprnd.bin -od tmpdup.bin -oss tmpss.bin -salg aes -se0 03000000 1 > run.out
+    checkSuccess $?
 
-echo "Flush storage key K1 80000001 public key"
-${PREFIX}flushcontext -ha 80000001 > run.out
-checkSuccess $?
+    echo "Flush signing key O1 80000002"
+    ${PREFIX}flushcontext -ha 80000002 > run.out
+    checkSuccess $?
 
-echo "Flush the policy session"
-${PREFIX}flushcontext -ha 03000000 > run.out
-checkSuccess $?
+    echo "Flush storage key K1 80000001 public key"
+    ${PREFIX}flushcontext -ha 80000001 > run.out
+    checkSuccess $?
 
-# at TPM 2
+    echo "Flush the policy session"
+    ${PREFIX}flushcontext -ha 03000000 > run.out
+    checkSuccess $?
 
-echo "Load storage key K1 80000001 public and private key"
-${PREFIX}load -hp 80000000 -ipr storepriv.bin -ipu storepub.bin -pwdp sto > run.out
-checkSuccess $?
+    # at TPM 2
 
-echo "Load storage key K2 80000002 public key"
-${PREFIX}loadexternal -hi p -ipu tmpk2pub.bin > run.out
-checkSuccess $?
+    echo "Load storage key K1 80000001 public and private key"
+    ${PREFIX}load -hp 80000000 -ipr store${ALG}priv.bin -ipu store${ALG}pub.bin -pwdp sto > run.out
+    checkSuccess $?
 
-echo "Rewrap O1 from K1 80000001 to K2 80000002 "
-${PREFIX}rewrap -ho 80000001 -hn 80000002 -pwdo sto -id tmpdup.bin -in tmpo1name.bin -iss tmpss.bin -od tmpdup.bin -oss tmpss.bin > run.out
-checkSuccess $?
+    echo "Load storage key K2 80000002 public key"
+    ${PREFIX}loadexternal -hi p -ipu tmpk2${ALG}pub.bin > run.out
+    checkSuccess $?
 
-echo "Flush old key K1 80000001"
-${PREFIX}flushcontext -ha 80000002 > run.out
-checkSuccess $?
+    echo "Rewrap O1 from K1 80000001 to K2 80000002 "
+    ${PREFIX}rewrap -ho 80000001 -hn 80000002 -pwdo sto -id tmpdup.bin -in tmpo1name.bin -iss tmpss.bin -od tmpdup.bin -oss tmpss.bin > run.out
+    checkSuccess $?
 
-echo "Flush new key K2 80000002 public key"
-${PREFIX}flushcontext -ha 80000001 > run.out
-checkSuccess $?
+    echo "Flush old key K1 80000001"
+    ${PREFIX}flushcontext -ha 80000002 > run.out
+    checkSuccess $?
 
-# at TPM 3
+    echo "Flush new key K2 80000002 public key"
+    ${PREFIX}flushcontext -ha 80000001 > run.out
+    checkSuccess $?
 
-echo "Load storage key K2 80000001 public key"
-${PREFIX}load -hp 80000000 -ipr tmpk2priv.bin -ipu tmpk2pub.bin -pwdp sto > run.out
-checkSuccess $?
+    # at TPM 3
 
-echo "Import rewraped O1 to K2"
-${PREFIX}import -hp 80000001 -pwdp k2 -ipu tmpsignpub.bin -id tmpdup.bin -iss tmpss.bin -salg aes -ik tmprnd.bin -opr tmpsignpriv3.bin #> run.out
-checkSuccess $?
+    echo "Load storage key K2 80000001 public key"
+    ${PREFIX}load -hp 80000000 -ipr tmpk2${ALG}priv.bin -ipu tmpk2${ALG}pub.bin -pwdp sto > run.out
+    checkSuccess $?
 
-echo "Load the imported signing key O1 80000002 under K2 80000001"
-${PREFIX}load -hp 80000001 -ipr tmpsignpriv3.bin -ipu tmpsignpub.bin -pwdp k2 > run.out
-checkSuccess $?
+    echo "Import rewraped O1 to K2"
+    ${PREFIX}import -hp 80000001 -pwdp k2 -ipu tmpsignpub.bin -id tmpdup.bin -iss tmpss.bin -salg aes -ik tmprnd.bin -opr tmpsignpriv3.bin #> run.out
+    checkSuccess $?
 
-echo "Sign using duplicated K2"
-${PREFIX}sign -hk 80000002  -if policies/aaa -os tmpsig.bin -pwdk sig > run.out
-checkSuccess $?
+    echo "Load the imported signing key O1 80000002 under K2 80000001"
+    ${PREFIX}load -hp 80000001 -ipr tmpsignpriv3.bin -ipu tmpsignpub.bin -pwdp k2 > run.out
+    checkSuccess $?
 
-echo "Verify the signature"
-${PREFIX}verifysignature -hk 80000002 -if policies/aaa -is tmpsig.bin > run.out
-checkSuccess $?
+    echo "Sign using duplicated K2"
+    ${PREFIX}sign -hk 80000002  -if policies/aaa -os tmpsig.bin -pwdk sig > run.out
+    checkSuccess $?
 
-echo "Flush storage key K2 80000001"
-${PREFIX}flushcontext -ha 80000002 > run.out
-checkSuccess $?
+    echo "Verify the signature"
+    ${PREFIX}verifysignature -hk 80000002 -if policies/aaa -is tmpsig.bin > run.out
+    checkSuccess $?
 
-echo "Flush signing key O1 80000002"
-${PREFIX}flushcontext -ha 80000001 > run.out
-checkSuccess $?
+    echo "Flush storage key K2 80000001"
+    ${PREFIX}flushcontext -ha 80000002 > run.out
+    checkSuccess $?
+
+    echo "Flush signing key O1 80000002"
+    ${PREFIX}flushcontext -ha 80000001 > run.out
+    checkSuccess $?
+done
 
 echo ""
 echo "Duplicate Primary Sealed AES from Source to Target EK"
@@ -699,16 +715,16 @@ do
     ${PREFIX}flushcontext -ha 80000001 > run.out
     checkSuccess $?
 
-# Here, target would send the EK PEM public key to the source
+    # Here, target would send the EK PEM public key to the source
 
-# The real source would
-#
-# 1 - walk the EK X509 certificate chain.  I have to add that sample code to createEK or make a new utility.
-# 2 - use openssl to convert the X509 EK certificate the the PEM public key file
-#
-# for now, the source trusts the target EK PEM public key
+    # The real source would
+    #
+    # 1 - walk the EK X509 certificate chain.  I have to add that sample code to createEK or make a new utility.
+    # 2 - use openssl to convert the X509 EK certificate the the PEM public key file
+    #
+    # for now, the source trusts the target EK PEM public key
 
-# Source
+    # Source
 
     echo "Source: Create an AES 256 bit key"
     ${PREFIX}getrandom -by 32 -ns -of tmpaeskeysrc.bin > run.out
@@ -746,16 +762,16 @@ do
     ${PREFIX}flushcontext -ha 80000002 > run.out
     checkSuccess $?
 
-# Transmit the sealed AEK key wrapped with the target EK back to the target
-# tmpsdbdup.bin private part wrapped in EK public key, via symmetric seed
-# tmpsdbpub.bin public part
-# tmpss.bin symmetric seed, encrypted with EK public key
+    # Transmit the sealed AEK key wrapped with the target EK back to the target
+    # tmpsdbdup.bin private part wrapped in EK public key, via symmetric seed
+    # tmpsdbpub.bin public part
+    # tmpss.bin symmetric seed, encrypted with EK public key
 
-# Target
+    # Target
 
-# NOTE This assumes that the endorsement hierarchy password is Empty.
-# This may be a bad assumption if an attacker can get access and
-# change it.
+    # NOTE This assumes that the endorsement hierarchy password is Empty.
+    # This may be a bad assumption if an attacker can get access and
+    # change it.
 
     echo "Target: Recreate the -${ALG} EK at 80000001"
     ${PREFIX}createek -alg ${ALG} -cp -noflush > run.out
@@ -797,7 +813,7 @@ do
     ${PREFIX}unseal -ha 80000002 -of tmpaeskeytgt.bin > run.out
     checkSuccess $?
 
-# A real target would not have access to tmpaeskeysrc.bin for the compare
+    # A real target would not have access to tmpaeskeysrc.bin for the compare
 
     echo "Target: Verify the unsealed result, same at source, for debug"
     diff tmpaeskeytgt.bin tmpaeskeysrc.bin > run.out
