@@ -71,8 +71,10 @@ echo ""
 #	import to K1
 # signing key        K2 80000002
 
-for ALG in "" "ecc"
+for ALG in "" "ecc" "kyber" "nttru"
 do
+    echo "ALG: $ALG"
+
     for ENC in "" "-salg aes -ik tmprnd.bin"
     do
 	for HALG in ${ITERATE_ALGS}
@@ -159,7 +161,7 @@ do
 done
 
 echo ""
-echo "Duplicate Primary Key"
+echo "Duplicate Primary Key (RSA)"
 echo ""
 
 echo "Create a platform primary signing key K2 80000001"
@@ -207,7 +209,55 @@ ${PREFIX}flushcontext -ha 03000000 > run.out
 checkSuccess $?
 
 echo ""
-echo "Import PEM RSA signing key under RSA and ECC storage key"
+echo "Duplicate Primary Key (Dilithium)"
+echo ""
+
+echo "Create a platform primary signing key K2 80000001"
+${PREFIX}createprimary -dilithium mode=3 -hi p -si -kt nf -kt np -pol policies/policyccduplicate.bin -opu tmppub.bin > run.out
+checkSuccess $?
+
+echo "Sign a digest"
+${PREFIX}sign -dilithium -hk 80000001 -if policies/aaa > run.out
+checkSuccess $?
+
+echo "Start a policy session 03000000"
+${PREFIX}startauthsession -se p > run.out
+checkSuccess $?
+
+echo "Policy command code, duplicate"
+${PREFIX}policycommandcode -ha 03000000 -cc 14b > run.out
+checkSuccess $?
+
+echo "Duplicate K2 under storage key"
+${PREFIX}duplicate -ho 80000001 -hp 80000000 -od tmpdup.bin -oss tmpss.bin -se0 03000000 1 > run.out
+checkSuccess $?
+
+echo "Import K2 under storage key"
+${PREFIX}import -hp 80000000 -pwdp sto -ipu tmppub.bin -id tmpdup.bin -iss tmpss.bin -opr tmppriv.bin > run.out
+checkSuccess $?
+
+echo "Load the duplicated signing key K2 80000002"
+${PREFIX}load -hp 80000000 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
+checkSuccess $?
+
+echo "Sign a digest"
+${PREFIX}sign -dilithium -hk 80000002 -if policies/aaa > run.out
+checkSuccess $?
+
+echo "Flush the primary key 8000001"
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+echo "Flush the duplicated key 80000002 "
+${PREFIX}flushcontext -ha 80000002 > run.out
+checkSuccess $?
+
+echo "Flush the session 03000000 "
+${PREFIX}flushcontext -ha 03000000 > run.out
+checkSuccess $?
+
+echo ""
+echo "Import PEM RSA signing key under RSA, ECC, Kyber and NTTRU storage key"
 echo ""
 
 echo "generate the signing key with openssl"
@@ -253,12 +303,124 @@ do
     done
 done
 
+echo "Flush the ECC storage key"
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+echo "Flush the auth session"
+${PREFIX}flushcontext -ha 02000000 > run.out
+checkSuccess $?
+
+echo "load the Kyber storage key"
+${PREFIX}load -hp 80000000 -pwdp sto -ipr storekyberpriv.bin -ipu storekyberpub.bin > run.out
+checkSuccess $?
+
+echo "Start an HMAC auth session"
+${PREFIX}startauthsession -se h > run.out
+checkSuccess $?
+
+for SESS in "" "-se0 02000000 1"
+do
+    for HALG in ${ITERATE_ALGS}
+    do
+
+	for PARENT in 80000000 80000001
+	do
+
+		echo "Import the signing key under the parent key ${PARENT} ${HALG}"
+		${PREFIX}importpem -hp ${PARENT} -pwdp sto -ipem tmpprivkey.pem -pwdk rrrr -opu tmppub.bin -opr tmppriv.bin -halg ${HALG} > run.out
+		checkSuccess $?
+
+		echo "Load the TPM signing key"
+		${PREFIX}load -hp ${PARENT} -pwdp sto -ipu tmppub.bin -ipr tmppriv.bin > run.out
+		checkSuccess $?
+
+		echo "Sign the message ${HALG} ${SESS}"
+		${PREFIX}sign -hk 80000002 -pwdk rrrr -if policies/aaa -os tmpsig.bin -halg ${HALG} ${SESS} > run.out
+		checkSuccess $?
+
+		echo "Verify the signature ${HALG}"
+		${PREFIX}verifysignature -hk 80000002 -if policies/aaa -is tmpsig.bin -halg ${HALG} > run.out
+		checkSuccess $?
+
+		echo "Flush the signing key"
+		${PREFIX}flushcontext -ha 80000002 > run.out
+		checkSuccess $?
+
+	done
+    done
+done
+
+echo "Flush the Kyber storage key"
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+echo "Flush the auth session"
+${PREFIX}flushcontext -ha 02000000 > run.out
+checkSuccess $?
+
+echo "load the NTTRU storage key"
+${PREFIX}load -hp 80000000 -pwdp sto -ipr storenttrupriv.bin -ipu storenttrupub.bin > run.out
+checkSuccess $?
+
+echo "Start an HMAC auth session"
+${PREFIX}startauthsession -se h > run.out
+checkSuccess $?
+
+for SESS in "" "-se0 02000000 1"
+do
+    for HALG in ${ITERATE_ALGS}
+    do
+
+	for PARENT in 80000000 80000001
+	do
+
+		echo "Import the signing key under the parent key ${PARENT} ${HALG}"
+		${PREFIX}importpem -hp ${PARENT} -pwdp sto -ipem tmpprivkey.pem -pwdk rrrr -opu tmppub.bin -opr tmppriv.bin -halg ${HALG} > run.out
+		checkSuccess $?
+
+		echo "Load the TPM signing key"
+		${PREFIX}load -hp ${PARENT} -pwdp sto -ipu tmppub.bin -ipr tmppriv.bin > run.out
+		checkSuccess $?
+
+		echo "Sign the message ${HALG} ${SESS}"
+		${PREFIX}sign -hk 80000002 -pwdk rrrr -if policies/aaa -os tmpsig.bin -halg ${HALG} ${SESS} > run.out
+		checkSuccess $?
+
+		echo "Verify the signature ${HALG}"
+		${PREFIX}verifysignature -hk 80000002 -if policies/aaa -is tmpsig.bin -halg ${HALG} > run.out
+		checkSuccess $?
+
+		echo "Flush the signing key"
+		${PREFIX}flushcontext -ha 80000002 > run.out
+		checkSuccess $?
+
+	done
+    done
+done
+
+echo "Flush the NTTRU storage key"
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+echo "Flush the auth session"
+${PREFIX}flushcontext -ha 02000000 > run.out
+checkSuccess $?
+
 echo ""
-echo "Import PEM EC signing key under RSA and ECC storage key"
+echo "Import PEM EC signing key under RSA, ECC, Kyber and NTTRU storage key"
 echo ""
 
 echo "generate the signing key with openssl"
 openssl ecparam -name prime256v1 -genkey -noout | openssl pkey -aes256 -passout pass:rrrr -text > tmpecprivkey.pem
+
+echo "load the ECC storage key"
+${PREFIX}load -hp 80000000 -pwdp sto -ipr storeeccpriv.bin -ipu storeeccpub.bin > run.out
+checkSuccess $?
+
+echo "Start an HMAC auth session"
+${PREFIX}startauthsession -se h > run.out
+checkSuccess $?
 
 for SESS in "" "-se0 02000000 1"
 do
@@ -293,6 +455,102 @@ do
 done
 
 echo "Flush the ECC storage key"
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+echo "Flush the auth session"
+${PREFIX}flushcontext -ha 02000000 > run.out
+checkSuccess $?
+
+echo "load the Kyber storage key"
+${PREFIX}load -hp 80000000 -pwdp sto -ipr storekyberpriv.bin -ipu storekyberpub.bin > run.out
+checkSuccess $?
+
+echo "Start an HMAC auth session"
+${PREFIX}startauthsession -se h > run.out
+checkSuccess $?
+
+for SESS in "" "-se0 02000000 1"
+do
+    for HALG in ${ITERATE_ALGS}
+    do
+
+	for PARENT in 80000000 80000001
+	do
+
+	    echo "Import the signing key under the parent key ${PARENT} ${HALG}"
+	    ${PREFIX}importpem -hp ${PARENT} -pwdp sto -ipem tmpecprivkey.pem -ecc -pwdk rrrr -opu tmppub.bin -opr tmppriv.bin -halg ${HALG} > run.out
+	    checkSuccess $?
+
+	    echo "Load the TPM signing key"
+	    ${PREFIX}load -hp ${PARENT} -pwdp sto -ipu tmppub.bin -ipr tmppriv.bin > run.out
+	    checkSuccess $?
+
+	    echo "Sign the message ${HALG} ${SESS}"
+	    ${PREFIX}sign -hk 80000002 -ecc -pwdk rrrr -if policies/aaa -os tmpsig.bin -halg ${HALG} ${SESS} > run.out
+	    checkSuccess $?
+
+	    echo "Verify the signature ${HALG}"
+	    ${PREFIX}verifysignature -hk 80000002 -ecc -if policies/aaa -is tmpsig.bin -halg ${HALG} > run.out
+	    checkSuccess $?
+
+	    echo "Flush the signing key"
+	    ${PREFIX}flushcontext -ha 80000002 > run.out
+	    checkSuccess $?
+
+	done
+    done
+done
+
+echo "Flush the Kyber storage key"
+${PREFIX}flushcontext -ha 80000001 > run.out
+checkSuccess $?
+
+echo "Flush the auth session"
+${PREFIX}flushcontext -ha 02000000 > run.out
+checkSuccess $?
+
+echo "load the NTTRU storage key"
+${PREFIX}load -hp 80000000 -pwdp sto -ipr storenttrupriv.bin -ipu storenttrupub.bin > run.out
+checkSuccess $?
+
+echo "Start an HMAC auth session"
+${PREFIX}startauthsession -se h > run.out
+checkSuccess $?
+
+for SESS in "" "-se0 02000000 1"
+do
+    for HALG in ${ITERATE_ALGS}
+    do
+
+	for PARENT in 80000000 80000001
+	do
+
+	    echo "Import the signing key under the parent key ${PARENT} ${HALG}"
+	    ${PREFIX}importpem -hp ${PARENT} -pwdp sto -ipem tmpecprivkey.pem -ecc -pwdk rrrr -opu tmppub.bin -opr tmppriv.bin -halg ${HALG} > run.out
+	    checkSuccess $?
+
+	    echo "Load the TPM signing key"
+	    ${PREFIX}load -hp ${PARENT} -pwdp sto -ipu tmppub.bin -ipr tmppriv.bin > run.out
+	    checkSuccess $?
+
+	    echo "Sign the message ${HALG} ${SESS}"
+	    ${PREFIX}sign -hk 80000002 -ecc -pwdk rrrr -if policies/aaa -os tmpsig.bin -halg ${HALG} ${SESS} > run.out
+	    checkSuccess $?
+
+	    echo "Verify the signature ${HALG}"
+	    ${PREFIX}verifysignature -hk 80000002 -ecc -if policies/aaa -is tmpsig.bin -halg ${HALG} > run.out
+	    checkSuccess $?
+
+	    echo "Flush the signing key"
+	    ${PREFIX}flushcontext -ha 80000002 > run.out
+	    checkSuccess $?
+
+	done
+    done
+done
+
+echo "Flush the NTTRU storage key"
 ${PREFIX}flushcontext -ha 80000001 > run.out
 checkSuccess $?
 
