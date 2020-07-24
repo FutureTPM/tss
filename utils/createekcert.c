@@ -92,6 +92,7 @@ int main(int argc, char *argv[])
     int			noFlush = FALSE;
     const char		*certificateFilename = NULL;
     TPMI_RH_NV_INDEX	ekCertIndex = EK_CERT_RSA_INDEX;
+    TPM_KYBER_SECURITY	kyber_k = TPM_KYBER_SECURITY_3;
     /* the CA for endorsement key certificates */
     const char 		*caKeyFileName = NULL;
     const char 		*caKeyPassword = "";
@@ -126,6 +127,15 @@ int main(int argc, char *argv[])
 	"EK EC CA"		,
 	NULL	
     };
+    char *rootIssuerEntriesKyber[] = {
+	"US"			,
+	"NY"			,
+	"Yorktown"		,
+	"IBM"			,
+	NULL			,
+	"EK Kyber CA"		,
+	NULL
+    };
     /* default RSA */
     char 		**issuerEntries = rootIssuerEntriesRsa;
     size_t		issuerEntriesSize = sizeof(rootIssuerEntriesRsa)/sizeof(char *);
@@ -155,6 +165,9 @@ int main(int argc, char *argv[])
 		else if (strcmp(argv[i],"ecc") == 0) {
 		    ekCertIndex = EK_CERT_EC_INDEX;
 		}
+		else if (strcmp(argv[i],"kyber") == 0) {
+		    ekCertIndex = EK_CERT_KYBER_INDEX;
+		}
 		else {
 		    printf("Bad parameter %s for -alg\n", argv[i]);
 		    printUsage();
@@ -174,6 +187,10 @@ int main(int argc, char *argv[])
 		}
 		else if (strcmp(argv[i],"ec") == 0) {
 		    issuerEntries = rootIssuerEntriesEc;
+		    issuerEntriesSize = sizeof(rootIssuerEntriesEc)/sizeof(char *);
+		}
+		else if (strcmp(argv[i],"kyber") == 0) {
+		    issuerEntries = rootIssuerEntriesKyber;
 		    issuerEntriesSize = sizeof(rootIssuerEntriesEc)/sizeof(char *);
 		}
 		else {
@@ -227,6 +244,11 @@ int main(int argc, char *argv[])
 	    verbose = 1;
 	    vverbose = 1;
 	}
+	else if (strcmp(argv[i],"-kyber_security") == 0) {
+	    i++;
+	    if (i < argc)
+		kyber_k = atoi(argv[i]);
+	}
 	else {
  	    printf("\n%s is not a valid option\n", argv[i]);
 	    printUsage();
@@ -250,10 +272,11 @@ int main(int argc, char *argv[])
 	TPM_HANDLE keyHandle;
 	rc = processCreatePrimary(tssContext,
 				  &keyHandle,
-				  ekCertIndex,		/* RSA or EC */
+				  ekCertIndex,		/* RSA, EC ot Kyber */
 				  NULL, 0,		/* EK nonce, can be NULL */
 				  NULL,			/* template */
 				  &tpmtPublicOut,	/* primary key */
+				  kyber_k,		/* Kyber security */
 				  noFlush,
 				  verbose);		/* print errors */
     }
@@ -475,6 +498,7 @@ static void printUsage(void)
     printf("\t[-capwd\t\tCA PEM key password (default empty)]\n");
     printf("\t[-caalg\t\tCA key algorithm (rsa or ec) (default rsa)]\n");
     printf("\t[-alg\t\t(rsa or ecc certificate) (default rsa)]\n");
+    printf("\t[-kyber_security <level>\tKyber security level (default 3)]\n");
     printf("\t[-noflush\tdo not flush the primary key]\n");
     printf("\t[-of\t\tDER certificate output file name]\n");
     printf("\n");

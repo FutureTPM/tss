@@ -87,6 +87,7 @@ static void printUsage(void);
 
 #define AlgRSA			1
 #define AlgEC			2
+#define AlgKYBER		3
 
 int verbose = FALSE;
 
@@ -114,7 +115,9 @@ int main(int argc, char *argv[])
     int				modulusBytes;
     unsigned int 		noFlush = 0;		/* default flush after validation */
     TPM_HANDLE 			keyHandle;		/* primary key handle */
-    
+    TPM_KYBER_SECURITY		kyber_k = TPM_KYBER_SECURITY_3;
+    TPM_KYBER_SECURITY		kyber_k_cert = TPM_KYBER_SECURITY_NONE;
+
     setvbuf(stdout, 0, _IONBF, 0);      /* output may be going through pipe to log file */
     TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "1");
 
@@ -165,6 +168,12 @@ int main(int argc, char *argv[])
 		    ekNonceIndex = EK_NONCE_EC_INDEX;
 		    ekTemplateIndex = EK_TEMPLATE_EC_INDEX;
 		}
+		else if (strcmp(argv[i],"kyber") == 0) {
+		    algType = AlgKYBER;
+		    ekCertIndex = EK_CERT_KYBER_INDEX;
+		    ekNonceIndex = EK_NONCE_KYBER_INDEX;
+		    ekTemplateIndex = EK_TEMPLATE_KYBER_INDEX;
+		}
 		else {
 		    printf("Bad parameter %s for -alg\n", argv[i]);
 		    printUsage();
@@ -184,6 +193,11 @@ int main(int argc, char *argv[])
 	else if (strcmp(argv[i],"-v") == 0) {
 	    verbose = TRUE;
 	    TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "2");
+	}
+	else if (strcmp(argv[i],"-kyber_security") == 0) {
+	    i++;
+	    if (i < argc)
+		kyber_k = atoi(argv[i]);
 	}
 	else {
  	    printf("\n%s is not a valid option\n", argv[i]);
@@ -224,13 +238,14 @@ int main(int argc, char *argv[])
 	    rc = processEKCertificate(tssContext,
 				      &ekCertificate,			/* freed @2 */
 				      &modulusBin, &modulusBytes,	/* freed @3 */
+				      &kyber_k_cert,
 				      ekCertIndex,
 				      TRUE);		/* print the EK certificate */
 	    break;
 	  case CreateprimaryType:
 	    rc = processPrimary(tssContext, &keyHandle,
 				ekCertIndex, ekNonceIndex, ekTemplateIndex,
-				noFlush, TRUE);
+				kyber_k, noFlush, TRUE);
 	    break;
 	}
     }
@@ -282,6 +297,7 @@ static void printUsage(void)
     printf("\t-ce\tprint EK certificate \n");
     printf("\t-cp\tCreatePrimary using the EK template and EK nonce.\n");
     printf("\t\tValidate the EK against the EK certificate\n");
+    printf("\t[-kyber_security <level>\tKyber security level (default 3)]\n");
     printf("\t[-noflush\tDo not flush the primary key after validation]\n");
     printf("\t[-root\tfilename - validate EK certificate against the root]\n");
     printf("\t\tfilename contains a list of PEM format CA root certificate\n"

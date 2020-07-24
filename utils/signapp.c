@@ -208,7 +208,7 @@ int main(int argc, char *argv[])
 	rc = processPrimary(tssContext,
 			    &ekKeyHandle,
 			    EK_CERT_RSA_INDEX, EK_NONCE_RSA_INDEX, EK_TEMPLATE_RSA_INDEX,
-			    TRUE, verbose);		/* do not flush */
+			    TRUE, TPM_KYBER_SECURITY_NONE, verbose);		/* do not flush */
 	if (verbose) printf("INFO: Primary EK handle %08x\n", ekKeyHandle);
     }
     /* start a policy session */

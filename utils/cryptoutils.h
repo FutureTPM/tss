@@ -35,12 +35,14 @@
 /* THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT		*/
 /* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE	*/
 /* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		*/
+#include <openssl/kyber.h>
 /********************************************************************************/
 
 #ifndef CRYPTUTILS_H
 #define CRYPTUTILS_H
 
 #include <openssl/pem.h>
+#include <openssl/kyber.h>
 
 #include <ibmtss/tss.h>
 
@@ -210,7 +212,26 @@ extern "C" {
 		      const EC_KEY *ecKey);
     
  #endif	/* TPM_TSS_NOECC */
-
+    TPM_RC convertDilithiumPublicToEvpPubKey(EVP_PKEY **evpPubkey,
+			const TPM2B_DILITHIUM_PUBLIC_KEY *tpm2bDilithium,
+			TPMI_DILITHIUM_MODE dilithium_mode);
+    TPM_RC convertKyberPublicToEvpPubKey(EVP_PKEY **evpPubkey,
+			const TPM2B_KYBER_PUBLIC_KEY *tpm2bKyber,
+			TPM_KYBER_SECURITY kyber_k);
+    TPM_RC convertKyberKeyToPublicKeyBin(int *modulusBytes,
+					 uint8_t **modulusBin,
+					 TPM_KYBER_SECURITY *kyber_k,
+					 const Kyber *kyberKey);
+    TPM_RC convertKyberPublicKeyBinToPublic(TPM2B_PUBLIC 	*objectPublic,
+					    int			keyType,
+					    TPMI_ALG_HASH 	nalg,
+					    TPM_KYBER_SECURITY	kyber_k,
+				            int 		modulusBytes,
+					    uint8_t 		*modulusBin);
+    TPM_RC convertKyberKeyToPublic(TPM2B_PUBLIC 	*objectPublic,
+				   int			keyType,
+				   TPMI_ALG_HASH 	nalg,
+				   Kyber 		*kyberKey);
 #ifdef __cplusplus
 }
 #endif

@@ -56,6 +56,10 @@
 #define EK_NONCE_EC_INDEX 	0x01c0000b
 #define EK_TEMPLATE_EC_INDEX 	0x01c0000c
 
+#define EK_CERT_KYBER_INDEX 	0x01c0000d
+#define EK_NONCE_KYBER_INDEX 	0x01c0000e
+#define EK_TEMPLATE_KYBER_INDEX 0x01c0000f
+
 #define MAX_ROOTS		100	/* 100 should be more than enough */
 
 #ifdef __cplusplus
@@ -77,6 +81,7 @@ extern "C" {
 			    TPMI_RH_NV_INDEX nvIndex);
     void getRsaTemplate(TPMT_PUBLIC *tpmtPublic);
     void getEccTemplate(TPMT_PUBLIC *tpmtPublic);
+    void getKyberTemplate(TPMT_PUBLIC *tpmtPublic, TPM_KYBER_SECURITY kyber_k);
     TPM_RC getIndexX509Certificate(TSS_CONTEXT *tssContext,
 				   X509 **certificate,
 				   TPMI_RH_NV_INDEX nvIndex);
@@ -114,6 +119,7 @@ extern "C" {
 				X509 **ekCertificate,
 				uint8_t **modulusBin,
 				int *modulusBytes,
+				TPM_KYBER_SECURITY *kyber_k,
 				TPMI_RH_NV_INDEX ekCertIndex,
 				int print);
     TPM_RC convertX509ToDer(uint32_t *certLength,
@@ -138,6 +144,7 @@ extern "C" {
 				 X509 *x509);
     TPM_RC convertCertificatePubKey(uint8_t **modulusBin,
 				    int *modulusBytes,
+				    TPM_KYBER_SECURITY *kyber_k,
 				    X509 *ekCertificate,
 				    TPMI_RH_NV_INDEX ekCertIndex,
 				    int print);
@@ -182,6 +189,12 @@ extern "C" {
     TPM_RC addCertKeyEcc(X509 *x509Certificate,
 			 const TPMS_ECC_POINT *tpmsEccPoint);
 #endif	/* TPM_TSS_NOECC */
+    TPM_RC addCertKeyDilithium(X509 *x509Certificate,
+		     const TPM2B_DILITHIUM_PUBLIC_KEY *tpm2bDilithium,
+		     TPMI_DILITHIUM_MODE dilithium_mode);
+    TPM_RC addCertKeyKyber(X509 *x509Certificate,
+		       const TPM2B_KYBER_PUBLIC_KEY *tpm2bKyber,
+		       TPM_KYBER_SECURITY kyber_k);
     TPM_RC addCertSignatureRoot(X509 *x509Certificate,
 				const char *caKeyFileName,
 				const char *caKeyPassword);
@@ -199,18 +212,21 @@ extern "C" {
 				uint16_t nonceSize,
 				TPMT_PUBLIC *tpmtPublicIn,
 				TPMT_PUBLIC *tpmtPublicOut,
+				TPM_KYBER_SECURITY kyber_k,
 				unsigned int noFlush,
 				int print);
     TPM_RC processValidatePrimary(uint8_t *publicKeyBin,
 				  int publicKeyBytes,
 				  TPMT_PUBLIC *tpmtPublic,
 				  TPMI_RH_NV_INDEX ekCertIndex,
+				  TPM_KYBER_SECURITY kyber_k,
 				  int print);
     TPM_RC processPrimary(TSS_CONTEXT *tssContext,
 			  TPM_HANDLE *keyHandle,
 			  TPMI_RH_NV_INDEX ekCertIndex,
 			  TPMI_RH_NV_INDEX ekNonceIndex,
 			  TPMI_RH_NV_INDEX ekTemplateIndex,
+			  TPM_KYBER_SECURITY kyber_k,
 			  unsigned int noFlush,
 			  int print);
 
