@@ -358,6 +358,27 @@ void getKyberTemplate(TPMT_PUBLIC *tpmtPublic, TPM_KYBER_SECURITY kyber_k)
     return;
 }
 
+void getNTTRUTemplate(TPMT_PUBLIC *tpmtPublic)
+{
+    tpmtPublic->type = TPM_ALG_NTTRU;
+    tpmtPublic->nameAlg = TPM_ALG_SHA256;
+    tpmtPublic->objectAttributes.val = TPMA_OBJECT_FIXEDTPM |
+				       TPMA_OBJECT_FIXEDPARENT |
+				       TPMA_OBJECT_SENSITIVEDATAORIGIN |
+				       TPMA_OBJECT_ADMINWITHPOLICY |
+				       TPMA_OBJECT_RESTRICTED |
+				       TPMA_OBJECT_DECRYPT;
+    tpmtPublic->authPolicy.t.size = sizeof(iwgPolicy);
+    memcpy(tpmtPublic->authPolicy.t.buffer, iwgPolicy, sizeof(iwgPolicy));
+    tpmtPublic->parameters.nttruDetail.symmetric.algorithm = TPM_ALG_AES;
+    tpmtPublic->parameters.nttruDetail.symmetric.keyBits.aes = 128;
+    tpmtPublic->parameters.nttruDetail.symmetric.mode.aes = TPM_ALG_CFB;
+    tpmtPublic->parameters.nttruDetail.scheme.scheme = TPM_ALG_NULL;
+    tpmtPublic->parameters.nttruDetail.scheme.details.anySig.hashAlg = 0;
+    tpmtPublic->unique.nttru.t.size = 0;
+    return;
+}
+
 /* getIndexX509Certificate() reads the X509 certificate from the nvIndex and converts the DER
    (binary) to OpenSSL X509 format
 
@@ -1031,6 +1052,7 @@ TPM_RC convertCertificatePubKey(uint8_t **modulusBin,	/* freed by caller */
 		  }
 		  break;
 #endif	/* TPM_TSS_NOECC */
+#ifndef TPM_TSS_NOKYBER
 	      case EK_CERT_KYBER_INDEX:
 		  {
 		      Kyber *kyberKey = NULL;
@@ -1065,6 +1087,42 @@ TPM_RC convertCertificatePubKey(uint8_t **modulusBin,	/* freed by caller */
 		      kyber_free(kyberKey);   		/* @3 */
 		  }
 		  break;
+#endif          /* TPM_TSS_NOKYBER */
+#ifndef TPM_TSS_NONTTRU
+	      case EK_CERT_NTTRU_INDEX:
+		  {
+		      NTTRU *nttruKey = NULL;
+
+		      /* check that the public key algorithm matches the ekCertIndex algorithm */
+		      if (rc == 0) {
+			  if (pkeyType != EVP_PKEY_NTTRU) {
+			      printf("convertCertificatePubKey: "
+				     "Public key from X509 certificate is not NTTRU\n");
+			      rc = TPM_RC_INTEGRITY;
+			  }
+		      }
+		      /* convert the public key to OpenSSL structure */
+		      if (rc == 0) {
+			  nttruKey = EVP_PKEY_get1_NTTRU(pkey);		/* freed @3 */
+			  if (nttruKey == NULL) {
+			      printf("convertCertificatePubKey: Could not extract NTTRU public key "
+				     "from X509 certificate\n");
+			      rc = TPM_RC_INTEGRITY;
+			  }
+		      }
+		      if (rc == 0) {
+			  rc = convertNTTRUKeyToPublicKeyBin(modulusBytes,
+                                                 modulusBin,	/* freed by caller */
+                                                 nttruKey);
+		      }
+		      if (rc == 0) {
+			  if (print) TSS_PrintAll("Certificate public key:",
+						  *modulusBin, *modulusBytes);
+		      }
+		      nttru_free(nttruKey);   		/* @3 */
+		  }
+		  break;
+#endif          /* TPM_TSS_NONTTRU */
 	      default:
 		printf("convertCertificatePubKey: "
 		       "ekCertIndex %08x (asymmetric algorithm) not supported\n", ekCertIndex);
@@ -1400,13 +1458,13 @@ TPM_RC convertX509ToString(char **x509String,	/* freed by caller */
    time, the mapping from key to nid is done once and used repeatedly.  */
 
 CertificateName certificateName[] = {
-    { "countryName",			NID_undef},	/* 0 */
-    { "stateOrProvinceName",		NID_undef},	/* 1 */
-    { "localityName",			NID_undef},	/* 2 */
-    { "organizationName",		NID_undef},	/* 3 */
-    { "organizationalUnitName",		NID_undef},	/* 4 */
-    { "commonName",			NID_undef},	/* 5 */
-    { "emailAddress",			NID_undef},	/* 6 */
+    { "countryName",			NID_undef}, /* 0 */
+    { "stateOrProvinceName",		NID_undef}, /* 1 */
+    { "localityName",			NID_undef}, /* 2 */
+    { "organizationName",		NID_undef}, /* 3 */
+    { "organizationalUnitName",		NID_undef}, /* 4 */
+    { "commonName",			NID_undef}, /* 5 */
+    { "emailAddress",			NID_undef}, /* 6 */
 };
 
 TPM_RC calculateNid(void)
@@ -1415,8 +1473,8 @@ TPM_RC calculateNid(void)
     size_t 	i;
 
     for (i=0 ; (i < sizeof(certificateName)/sizeof(CertificateName)) && (rc == 0) ; i++) {
-	certificateName[i].nid = OBJ_txt2nid(certificateName[i].key);	/* look up the NID for the
-									   field */
+      certificateName[i].nid = OBJ_txt2nid(certificateName[i].key);	/* look up the NID for the
+                                                                       field */
 	if (certificateName[i].nid == NID_undef) {
 	    printf("calculateNid: Error finding nid for %s\n", certificateName[i].key);
 	    rc = TSS_RC_X509_ERROR;
@@ -1479,6 +1537,10 @@ TPM_RC createCertificate(char **x509CertString,		/* freed by caller */
 	    publicKeyLength = tpmtPublic->unique.kyber.t.size;
 	    publicKey = tpmtPublic->unique.kyber.t.buffer;
 	}
+    else if (tpmtPublic->type == TPM_ALG_NTTRU) {
+      publicKeyLength = tpmtPublic->unique.nttru.t.size;
+      publicKey = tpmtPublic->unique.nttru.t.buffer;
+	}
 	else {
 	    printf("createCertificate: public key algorithm %04x not supported\n",
 		   tpmtPublic->type);
@@ -1519,8 +1581,11 @@ TPM_RC createCertificate(char **x509CertString,		/* freed by caller */
 	    break;
 	  case TPM_ALG_KYBER:
 	    rc = addCertKeyKyber(x509Certificate, &tpmtPublic->unique.kyber,
-				 tpmtPublic->parameters.dilithiumDetail.mode);
+				 tpmtPublic->parameters.kyberDetail.security);
 	    break;
+      case TPM_ALG_NTTRU:
+        rc = addCertKeyNTTRU(x509Certificate, &tpmtPublic->unique.nttru);
+        break;
 	  default:
 	    printf("createCertificate: public key algorithm %04x not supported\n",
 		   tpmtPublic->type);
@@ -1856,6 +1921,10 @@ TPM_RC addCertKeyDilithium(X509 *x509Certificate,
     return rc;
 }
 
+#ifndef TPM_TSS_NOKYBER
+/* addCertKeyKyber() adds the TPM KYBER public key (the key to be certified) to the openssl X509
+   certificate
+*/
 TPM_RC addCertKeyKyber(X509 *x509Certificate,
 		       const TPM2B_KYBER_PUBLIC_KEY *tpm2bKyber,
 		       TPM_KYBER_SECURITY kyber_k)	/* key to be certified */
@@ -1885,6 +1954,40 @@ TPM_RC addCertKeyKyber(X509 *x509Certificate,
     }
     return rc;
 }
+#endif
+
+#ifndef TPM_TSS_NONTTRU
+/* addCertKeyNTTRU() adds the TPM NTTRU public key (the key to be certified) to the openssl X509
+   certificate
+*/
+TPM_RC addCertKeyNTTRU(X509 *x509Certificate,
+		       const TPM2B_NTTRU_PUBLIC_KEY *tpm2bNTTRU)	/* key to be certified */
+{
+    TPM_RC 		rc = 0;		/* general return code */
+    int			irc;		/* integer return code */
+    EVP_PKEY 		*evpPubkey = NULL;	/* EVP format public key to be certified */
+
+    if (verbose) printf("addCertKeyNTTRU: add public key to certificate\n");
+    /* convert from TPM key data format to openSSL RSA type */
+    if (rc == 0) {
+	rc = convertNTTRUPublicToEvpPubKey(&evpPubkey,	/* freed @1 */
+					   tpm2bNTTRU);
+    }
+    /* add the public key to the certificate */
+    if (rc == 0) {
+	irc = X509_set_pubkey(x509Certificate, evpPubkey);
+	if (irc != 1) {
+	    printf("addCertKeyNTTRU: Error adding public key to certificate\n");
+	    rc = TSS_RC_X509_ERROR;
+	}
+    }
+    /* cleanup */
+    if (evpPubkey != NULL) {
+	EVP_PKEY_free(evpPubkey);	/* @1 */
+    }
+    return rc;
+}
+#endif
 
 /* addCertSignatureRoot() uses the openSSL root key to sign the X509 certificate.
 
@@ -2050,7 +2153,7 @@ TPM_RC processCreatePrimary(TSS_CONTEXT *tssContext,
     /* construct the template from the NV template and nonce */
     if ((rc == 0) && (nonce != NULL)) {
 	inCreatePrimary.inPublic.publicArea = *tpmtPublicIn;
-	if (ekCertIndex == EK_CERT_RSA_INDEX) {			/* RSA primary key */
+	if (ekCertIndex == EK_CERT_RSA_INDEX) {			         /* RSA primary key */
 	    /* unique field is 256 bytes */
 	    inCreatePrimary.inPublic.publicArea.unique.rsa.t.size = 256;
 	    /* first part is nonce */
@@ -2059,7 +2162,7 @@ TPM_RC processCreatePrimary(TSS_CONTEXT *tssContext,
 	    memset(inCreatePrimary.inPublic.publicArea.unique.rsa.t.buffer + nonceSize, 0,
 		   256 - nonceSize);
 	}
-	else if (ekCertIndex == EK_CERT_RSA_INDEX) {		/* EC primary key */
+	else if (ekCertIndex == EK_CERT_EC_INDEX) {		        /* EC primary key */
 	    /* unique field is X and Y points */
 	    /* X gets nonce and pad */
 	    inCreatePrimary.inPublic.publicArea.unique.ecc.x.t.size = 32;
@@ -2069,8 +2172,10 @@ TPM_RC processCreatePrimary(TSS_CONTEXT *tssContext,
 	    /* Y gets zeros */
 	    inCreatePrimary.inPublic.publicArea.unique.ecc.y.t.size = 32;
 	    memset(inCreatePrimary.inPublic.publicArea.unique.ecc.y.t.buffer, 0, 32);
-	} else {						/* Kyber primary key */
+	} else if (ekCertIndex == EK_CERT_KYBER_INDEX) {		/* KYBER primary key */
 	    inCreatePrimary.inPublic.publicArea.unique.kyber.t.size = 0;
+	}else {                                                 /* NTTRU primary key */
+      inCreatePrimary.inPublic.publicArea.unique.nttru.t.size = 0;
 	}
     }
     /* construct the template from the default IWG template */
@@ -2081,9 +2186,11 @@ TPM_RC processCreatePrimary(TSS_CONTEXT *tssContext,
 	else if (ekCertIndex == EK_CERT_EC_INDEX) {		/* EC primary key */
 	    getEccTemplate(&inCreatePrimary.inPublic.publicArea);
 	}
-	else {
+	else if (ekCertIndex == EK_CERT_KYBER_INDEX) { /* KYBER primary key */
 	    getKyberTemplate(&inCreatePrimary.inPublic.publicArea, kyber_k);
-	}
+	} else {
+        getNTTRUTemplate(&inCreatePrimary.inPublic.publicArea);
+    }
     }
     /* call TSS to execute the command */
     if (rc == 0) {
@@ -2134,24 +2241,28 @@ TPM_RC processCreatePrimary(TSS_CONTEXT *tssContext,
     }
     /* trace the public key */
     if (rc == 0) {
-	if (ekCertIndex == EK_CERT_RSA_INDEX) {
+      if (ekCertIndex == EK_CERT_RSA_INDEX) {
 	    if (print) TSS_PrintAll("createprimary: RSA public key",
-				    outCreatePrimary.outPublic.publicArea.unique.rsa.t.buffer,
-				    outCreatePrimary.outPublic.publicArea.unique.rsa.t.size);
-	}
-	if (ekCertIndex == EK_CERT_EC_INDEX) {
+                                outCreatePrimary.outPublic.publicArea.unique.rsa.t.buffer,
+                                outCreatePrimary.outPublic.publicArea.unique.rsa.t.size);
+      }
+      if (ekCertIndex == EK_CERT_EC_INDEX) {
 	    if (print) TSS_PrintAll("createprimary: ECC public key x",
-				    outCreatePrimary.outPublic.publicArea.unique.ecc.x.t.buffer,
-				    outCreatePrimary.outPublic.publicArea.unique.ecc.x.t.size);
+                                outCreatePrimary.outPublic.publicArea.unique.ecc.x.t.buffer,
+                                outCreatePrimary.outPublic.publicArea.unique.ecc.x.t.size);
 	    if (print) TSS_PrintAll("createprimary: ECC public key y",
-				    outCreatePrimary.outPublic.publicArea.unique.ecc.y.t.buffer,
-				    outCreatePrimary.outPublic.publicArea.unique.ecc.y.t.size);
-	}
-	else {
+                                outCreatePrimary.outPublic.publicArea.unique.ecc.y.t.buffer,
+                                outCreatePrimary.outPublic.publicArea.unique.ecc.y.t.size);
+      }
+      if (ekCertIndex == EK_CERT_KYBER_INDEX) {
 	    if (print) TSS_PrintAll("createprimary: Kyber public key",
-				    outCreatePrimary.outPublic.publicArea.unique.kyber.t.buffer,
-				    outCreatePrimary.outPublic.publicArea.unique.kyber.t.size);
-	}
+                                outCreatePrimary.outPublic.publicArea.unique.kyber.t.buffer,
+                                outCreatePrimary.outPublic.publicArea.unique.kyber.t.size);
+      } else {
+        if (print) TSS_PrintAll("createprimary: NTTRU public key",
+                                outCreatePrimary.outPublic.publicArea.unique.nttru.t.buffer,
+                                outCreatePrimary.outPublic.publicArea.unique.nttru.t.size);
+      }
     }
     return rc;
 }
@@ -2193,7 +2304,7 @@ TPM_RC processValidatePrimary(uint8_t *publicKeyBin,		/* from certificate */
 	    }
 	}
     }
-    else if (ekCertIndex == EK_CERT_RSA_INDEX) {
+    else if (ekCertIndex == EK_CERT_EC_INDEX) {
 	int irc;
 	/* ECC has X and Y points */
 	/* compression algorithm is the extra byte at the beginning of the certificate */
@@ -2235,7 +2346,7 @@ TPM_RC processValidatePrimary(uint8_t *publicKeyBin,		/* from certificate */
 	    }
 	}
     }
-    else {
+    else if (ekCertIndex == EK_CERT_KYBER_INDEX) {
 	int irc;
 	if (rc == 0) {
 	    if (tpmtPublic->unique.kyber.t.size != (UINT32)publicKeyBytes) {
@@ -2259,6 +2370,27 @@ TPM_RC processValidatePrimary(uint8_t *publicKeyBin,		/* from certificate */
 		rc = TPM_RC_INTEGRITY;
 	    }
 	}
+    } else {
+      int irc;
+      if (rc == 0) {
+	    if (tpmtPublic->unique.nttru.t.size != (UINT32)publicKeyBytes) {
+          printf("processValidatePrimary: "
+                 "X509 certificate key length %u does not match output of createprimary %u\n",
+                 publicKeyBytes,
+                 tpmtPublic->unique.nttru.t.size);
+          rc = TPM_RC_INTEGRITY;
+	    }
+      }
+      if (rc == 0) {
+	    irc = memcmp(publicKeyBin,
+                     tpmtPublic->unique.nttru.t.buffer,
+                     publicKeyBytes);
+	    if (irc != 0) {
+          printf("processValidatePrimary: "
+                 "Public key from X509 certificate does not match output of createprimary\n");
+          rc = TPM_RC_INTEGRITY;
+	    }
+      }
     }
     if (rc == 0) {
 	if (print) printf("processValidatePrimary: "

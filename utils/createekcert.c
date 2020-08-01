@@ -127,13 +127,13 @@ int main(int argc, char *argv[])
 	"EK EC CA"		,
 	NULL	
     };
-    char *rootIssuerEntriesKyber[] = {
+    char *rootIssuerEntriesDilithium[] = {
 	"US"			,
 	"NY"			,
 	"Yorktown"		,
 	"IBM"			,
 	NULL			,
-	"EK Kyber CA"		,
+	"EK Dilithium CA"		,
 	NULL
     };
     /* default RSA */
@@ -167,6 +167,25 @@ int main(int argc, char *argv[])
 		}
 		else if (strcmp(argv[i],"kyber") == 0) {
 		    ekCertIndex = EK_CERT_KYBER_INDEX;
+            i++;
+            if (i < argc) {
+              if (strcmp(argv[i],"k=2") == 0) {
+                kyber_k = TPM_KYBER_SECURITY_2;
+              } else if (strcmp(argv[i],"k=3") == 0) {
+                kyber_k = TPM_KYBER_SECURITY_3;
+              } else if (strcmp(argv[i],"k=4") == 0) {
+                kyber_k = TPM_KYBER_SECURITY_4;
+              } else {
+                printf("Bad parameter %s for -kyber\n", argv[i]);
+                printUsage();
+              }
+            } else {
+              printf("-kyber option needs a value\n");
+              printUsage();
+            }
+		}
+		else if (strcmp(argv[i],"nttru") == 0) {
+          ekCertIndex = EK_CERT_NTTRU_INDEX;
 		}
 		else {
 		    printf("Bad parameter %s for -alg\n", argv[i]);
@@ -189,9 +208,9 @@ int main(int argc, char *argv[])
 		    issuerEntries = rootIssuerEntriesEc;
 		    issuerEntriesSize = sizeof(rootIssuerEntriesEc)/sizeof(char *);
 		}
-		else if (strcmp(argv[i],"kyber") == 0) {
-		    issuerEntries = rootIssuerEntriesKyber;
-		    issuerEntriesSize = sizeof(rootIssuerEntriesEc)/sizeof(char *);
+		else if (strcmp(argv[i],"dilithium") == 0) {
+		    issuerEntries = rootIssuerEntriesDilithium;
+		    issuerEntriesSize = sizeof(rootIssuerEntriesDilithium)/sizeof(char *);
 		}
 		else {
 		    printf("Bad parameter %s for -caalg\n", argv[i]);
@@ -243,13 +262,7 @@ int main(int argc, char *argv[])
 	    TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "2");	/* trace entire TSS */
 	    verbose = 1;
 	    vverbose = 1;
-	}
-	else if (strcmp(argv[i],"-kyber_security") == 0) {
-	    i++;
-	    if (i < argc)
-		kyber_k = atoi(argv[i]);
-	}
-	else {
+	} else {
  	    printf("\n%s is not a valid option\n", argv[i]);
 	    printUsage();
 	}
@@ -490,15 +503,13 @@ static void printUsage(void)
     printf("Provisions an EK certificate, using the default IWG template\n");
     printf("E.g.,\n");
     printf("\n");
-    printf("Usage: createekcert -alg rsa -cakey cakey.pem    -capwd rrrr -v\n");
-    printf("or:    createekcert -alg ecc -cakey cakeyecc.pem -capwd rrrr -caalg ec -v\n");
+    printf("Usage: createekcert -alg {rsa||ecc||kyber||nttru }   -cakey cakey.pem -capwd rrrr -calg {rsa||ec||dilithium}\n");
     printf("\n");
     printf("\t[-pwdp\t\tplatform hierarchy password (default empty)]\n");
     printf("\t-cakey\t\tCA PEM key file name\n");
     printf("\t[-capwd\t\tCA PEM key password (default empty)]\n");
     printf("\t[-caalg\t\tCA key algorithm (rsa or ec) (default rsa)]\n");
     printf("\t[-alg\t\t(rsa or ecc certificate) (default rsa)]\n");
-    printf("\t[-kyber_security <level>\tKyber security level (default 3)]\n");
     printf("\t[-noflush\tdo not flush the primary key]\n");
     printf("\t[-of\t\tDER certificate output file name]\n");
     printf("\n");

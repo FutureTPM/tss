@@ -696,150 +696,312 @@ echo ""
 
 # Target
 
-for ALG in "rsa" "ecc"
+for ALG in "nttru" "kyber" "rsa" "ecc"
 do
+    if [ "${ALG}" = "kyber" ]
+    then
+        for k in 2 3 4
+        do
+            for CAALG in "dilithium" "ec" "rsa"
+            do
+                echo "ALG: $ALG MODE k=${k} CAALG: $CAALG"
 
-    echo "Target: Provision a target ${ALG} EK certificate"
-    ${PREFIX}createekcert -alg ${ALG} -cakey cakey.pem -capwd rrrr > run.out
-    checkSuccess $?
+                echo "Target: Provision a target ${ALG} EK certificate"
+                ${PREFIX}createekcert -alg ${ALG} k=$k -cakey cakey${CAALG}.pem -capwd rrrr -caalg ${CAALG} > run.out
+                checkSuccess $?
 
-    echo "Target: Recreate the ${ALG} EK at 80000001"
-    ${PREFIX}createek -alg ${ALG} -cp -noflush > run.out
-    checkSuccess $?
+                echo "Target: Recreate the ${ALG} EK at 80000001"
+                ${PREFIX}createek -alg ${ALG} k=$k -cp -noflush > run.out
+                checkSuccess $?
 
-    echo "Target: Convert the EK public key to PEM format for transmission to source"
-    ${PREFIX}readpublic -ho 80000001 -opem tmpekpub.pem > run.out
-    checkSuccess $?
+                echo "Target: Convert the EK public key to PEM format for transmission to source"
+                ${PREFIX}readpublic -ho 80000001 -opem tmpekpub.pem > run.out
+                checkSuccess $?
 
-    echo "Target: Flush the EK"
-    ${PREFIX}flushcontext -ha 80000001 > run.out
-    checkSuccess $?
+                echo "Target: Flush the EK"
+                ${PREFIX}flushcontext -ha 80000001 > run.out
+                checkSuccess $?
 
-    # Here, target would send the EK PEM public key to the source
+                # Here, target would send the EK PEM public key to the source
 
-    # The real source would
-    #
-    # 1 - walk the EK X509 certificate chain.  I have to add that sample code to createEK or make a new utility.
-    # 2 - use openssl to convert the X509 EK certificate the the PEM public key file
-    #
-    # for now, the source trusts the target EK PEM public key
+                # The real source would
+                #
+                # 1 - walk the EK X509 certificate chain.  I have to add that sample code to createEK or make a new utility.
+                # 2 - use openssl to convert the X509 EK certificate the the PEM public key file
+                #
+                # for now, the source trusts the target EK PEM public key
 
-    # Source
+                # Source
 
-    echo "Source: Create an AES 256 bit key"
-    ${PREFIX}getrandom -by 32 -ns -of tmpaeskeysrc.bin > run.out
-    checkSuccess $?
+                echo "Source: Create an AES 256 bit key"
+                ${PREFIX}getrandom -by 32 -ns -of tmpaeskeysrc.bin > run.out
+                checkSuccess $?
 
-    echo "Source: Create primary duplicable sealed AES key 80000001"
-    ${PREFIX}createprimary -bl -kt nf -kt np -if tmpaeskeysrc.bin -pol policies/policyccduplicate.bin -opu tmpsdbpub.bin > run.out
-    checkSuccess $?
+                echo "Source: Create primary duplicable sealed AES key 80000001"
+                ${PREFIX}createprimary -bl -kt nf -kt np -if tmpaeskeysrc.bin -pol policies/policyccduplicate.bin -opu tmpsdbpub.bin > run.out
+                checkSuccess $?
 
-    echo "Source: Load the target ${ALG} EK public key as a storage key 80000002"
-    ${PREFIX}loadexternal -${ALG} -st -ipem tmpekpub.pem > run.out
-    checkSuccess $?
+                echo "Source: Load the target ${ALG} EK public key as a storage key 80000002"
+                ${PREFIX}loadexternal -${ALG} -st -ipem tmpekpub.pem > run.out
+                checkSuccess $?
 
-    echo "Source: Start a policy session, duplicate needs a policy 03000000"
-    ${PREFIX}startauthsession -se p > run.out
-    checkSuccess $?
+                echo "Source: Start a policy session, duplicate needs a policy 03000000"
+                ${PREFIX}startauthsession -se p > run.out
+                checkSuccess $?
 
-    echo "Source: Policy command code, duplicate"
-    ${PREFIX}policycommandcode -ha 03000000 -cc 14b > run.out
-    checkSuccess $?
+                echo "Source: Policy command code, duplicate"
+                ${PREFIX}policycommandcode -ha 03000000 -cc 14b > run.out
+                checkSuccess $?
 
-    echo "Source: Read policy digest, for debug"
-    ${PREFIX}policygetdigest -ha 03000000 > run.out
-    checkSuccess $?
+                echo "Source: Read policy digest, for debug"
+                ${PREFIX}policygetdigest -ha 03000000 > run.out
+                checkSuccess $?
 
-    echo "Source: Wrap the sealed AES key with the target EK public key"
-    ${PREFIX}duplicate -ho 80000001 -hp 80000002 -od tmpsdbdup.bin -oss tmpss.bin -se0 03000000 0 > run.out
-    checkSuccess $?
+                echo "Source: Wrap the sealed AES key with the target EK public key"
+                ${PREFIX}duplicate -ho 80000001 -hp 80000002 -od tmpsdbdup.bin -oss tmpss.bin -se0 03000000 0 > run.out
+                checkSuccess $?
 
-    echo "Source: Flush the sealed AES key 80000001"
-    ${PREFIX}flushcontext -ha 80000001 > run.out
-    checkSuccess $?
+                echo "Source: Flush the sealed AES key 80000001"
+                ${PREFIX}flushcontext -ha 80000001 > run.out
+                checkSuccess $?
 
-    echo "Source: Flush the EK public key 80000002"
-    ${PREFIX}flushcontext -ha 80000002 > run.out
-    checkSuccess $?
+                echo "Source: Flush the EK public key 80000002"
+                ${PREFIX}flushcontext -ha 80000002 > run.out
+                checkSuccess $?
 
-    # Transmit the sealed AEK key wrapped with the target EK back to the target
-    # tmpsdbdup.bin private part wrapped in EK public key, via symmetric seed
-    # tmpsdbpub.bin public part
-    # tmpss.bin symmetric seed, encrypted with EK public key
+                # Transmit the sealed AEK key wrapped with the target EK back to the target
+                # tmpsdbdup.bin private part wrapped in EK public key, via symmetric seed
+                # tmpsdbpub.bin public part
+                # tmpss.bin symmetric seed, encrypted with EK public key
 
-    # Target
+                # Target
 
-    # NOTE This assumes that the endorsement hierarchy password is Empty.
-    # This may be a bad assumption if an attacker can get access and
-    # change it.
+                # NOTE This assumes that the endorsement hierarchy password is Empty.
+                # This may be a bad assumption if an attacker can get access and
+                # change it.
 
-    echo "Target: Recreate the -${ALG} EK at 80000001"
-    ${PREFIX}createek -alg ${ALG} -cp -noflush > run.out
-    checkSuccess $?
+                echo "Target: Recreate the -${ALG} EK at 80000001"
+                ${PREFIX}createek -alg ${ALG} k=$k -cp -noflush > run.out
+                checkSuccess $?
 
-    echo "Target: Start a policy session, EK use needs a policy"
-    ${PREFIX}startauthsession -se p > run.out
-    checkSuccess $?
+                echo "Target: Start a policy session, EK use needs a policy"
+                ${PREFIX}startauthsession -se p > run.out
+                checkSuccess $?
 
-    echo "Target: Policy Secret with PWAP session and (Empty) endorsement auth"
-    ${PREFIX}policysecret -ha 4000000b -hs 03000000 -pwde "" > run.out
-    checkSuccess $?
+                echo "Target: Policy Secret with PWAP session and (Empty) endorsement auth"
+                ${PREFIX}policysecret -ha 4000000b -hs 03000000 -pwde "" > run.out
+                checkSuccess $?
 
-    echo "Target: Read policy digest for debug"
-    ${PREFIX}policygetdigest -ha 03000000 > run.out
-    checkSuccess $?
+                echo "Target: Read policy digest for debug"
+                ${PREFIX}policygetdigest -ha 03000000 > run.out
+                checkSuccess $?
 
-    echo "Target: Import the sealed AES key under the EK storage key"
-    ${PREFIX}import -hp 80000001 -ipu tmpsdbpub.bin -id tmpsdbdup.bin -iss tmpss.bin -opr tmpsdbpriv.bin -se0 03000000 1 > run.out
-    checkSuccess $?
+                echo "Target: Import the sealed AES key under the EK storage key"
+                ${PREFIX}import -hp 80000001 -ipu tmpsdbpub.bin -id tmpsdbdup.bin -iss tmpss.bin -opr tmpsdbpriv.bin -se0 03000000 1 > run.out
+                checkSuccess $?
 
-    echo "Target: Restart the policy session"
-    ${PREFIX}policyrestart -ha 03000000 > run.out
-    checkSuccess $?
+                echo "Target: Restart the policy session"
+                ${PREFIX}policyrestart -ha 03000000 > run.out
+                checkSuccess $?
 
-    echo "Target: Policy Secret with PWAP session and (Empty) endorsement auth"
-    ${PREFIX}policysecret -ha 4000000b -hs 03000000 -pwde "" > run.out
-    checkSuccess $?
+                echo "Target: Policy Secret with PWAP session and (Empty) endorsement auth"
+                ${PREFIX}policysecret -ha 4000000b -hs 03000000 -pwde "" > run.out
+                checkSuccess $?
 
-    echo "Target: Read policy digest for debug"
-    ${PREFIX}policygetdigest -ha 03000000 > run.out
-    checkSuccess $?
+                echo "Target: Read policy digest for debug"
+                ${PREFIX}policygetdigest -ha 03000000 > run.out
+                checkSuccess $?
 
-    echo "Target: Load the sealed AES key under the EK storage key"
-    ${PREFIX}load -hp 80000001 -ipu tmpsdbpub.bin -ipr tmpsdbpriv.bin -se0 03000000 1 > run.out
-    checkSuccess $?
+                echo "Target: Load the sealed AES key under the EK storage key"
+                ${PREFIX}load -hp 80000001 -ipu tmpsdbpub.bin -ipr tmpsdbpriv.bin -se0 03000000 1 > run.out
+                checkSuccess $?
 
-    echo "Target: Unseal the AES key"
-    ${PREFIX}unseal -ha 80000002 -of tmpaeskeytgt.bin > run.out
-    checkSuccess $?
+                echo "Target: Unseal the AES key"
+                ${PREFIX}unseal -ha 80000002 -of tmpaeskeytgt.bin > run.out
+                checkSuccess $?
 
-    # A real target would not have access to tmpaeskeysrc.bin for the compare
+                # A real target would not have access to tmpaeskeysrc.bin for the compare
 
-    echo "Target: Verify the unsealed result, same at source, for debug"
-    diff tmpaeskeytgt.bin tmpaeskeysrc.bin > run.out
-    checkSuccess $?
+                echo "Target: Verify the unsealed result, same at source, for debug"
+                diff tmpaeskeytgt.bin tmpaeskeysrc.bin > run.out
+                checkSuccess $?
 
-    echo "Flush the EK"
-    ${PREFIX}flushcontext -ha 80000001 > run.out
-    checkSuccess $?
+                echo "Flush the EK"
+                ${PREFIX}flushcontext -ha 80000001 > run.out
+                checkSuccess $?
 
-    echo "Flush the sealed AES key"
-    ${PREFIX}flushcontext -ha 80000002 > run.out
-    checkSuccess $?
+                echo "Flush the sealed AES key"
+                ${PREFIX}flushcontext -ha 80000002 > run.out
+                checkSuccess $?
 
-    echo "Flush the policy session"
-    ${PREFIX}flushcontext -ha 03000000 > run.out
-    checkSuccess $?
+                echo "Flush the policy session"
+                ${PREFIX}flushcontext -ha 03000000 > run.out
+                checkSuccess $?
 
+
+                echo "Undefine the Kyber EK certificate index"
+                ${PREFIX}nvundefinespace -hi p -ha 01c0000d
+                checkSuccess $?
+            done
+        done
+    else
+        for CAALG in "rsa" "ec" "dilithium"
+        do
+            echo "ALG: $ALG CAALG: $CAALG"
+
+            echo "Target: Provision a target ${ALG} EK certificate"
+            ${PREFIX}createekcert -alg ${ALG} -cakey cakey${CAALG}.pem -capwd rrrr -caalg ${CAALG} > run.out
+            checkSuccess $?
+
+            echo "Target: Recreate the ${ALG} EK at 80000001"
+            ${PREFIX}createek -alg ${ALG} -cp -noflush > run.out
+            checkSuccess $?
+
+            echo "Target: Convert the EK public key to PEM format for transmission to source"
+            ${PREFIX}readpublic -ho 80000001 -opem tmpekpub.pem > run.out
+            checkSuccess $?
+
+            echo "Target: Flush the EK"
+            ${PREFIX}flushcontext -ha 80000001 > run.out
+            checkSuccess $?
+
+            # Here, target would send the EK PEM public key to the source
+
+            # The real source would
+            #
+            # 1 - walk the EK X509 certificate chain.  I have to add that sample code to createEK or make a new utility.
+            # 2 - use openssl to convert the X509 EK certificate the the PEM public key file
+            #
+            # for now, the source trusts the target EK PEM public key
+
+            # Source
+
+            echo "Source: Create an AES 256 bit key"
+            ${PREFIX}getrandom -by 32 -ns -of tmpaeskeysrc.bin > run.out
+            checkSuccess $?
+
+            echo "Source: Create primary duplicable sealed AES key 80000001"
+            ${PREFIX}createprimary -bl -kt nf -kt np -if tmpaeskeysrc.bin -pol policies/policyccduplicate.bin -opu tmpsdbpub.bin > run.out
+            checkSuccess $?
+
+            echo "Source: Load the target ${ALG} EK public key as a storage key 80000002"
+            ${PREFIX}loadexternal -${ALG} -st -ipem tmpekpub.pem > run.out
+            checkSuccess $?
+
+            echo "Source: Start a policy session, duplicate needs a policy 03000000"
+            ${PREFIX}startauthsession -se p > run.out
+            checkSuccess $?
+
+            echo "Source: Policy command code, duplicate"
+            ${PREFIX}policycommandcode -ha 03000000 -cc 14b > run.out
+            checkSuccess $?
+
+            echo "Source: Read policy digest, for debug"
+            ${PREFIX}policygetdigest -ha 03000000 > run.out
+            checkSuccess $?
+
+            echo "Source: Wrap the sealed AES key with the target EK public key"
+            ${PREFIX}duplicate -ho 80000001 -hp 80000002 -od tmpsdbdup.bin -oss tmpss.bin -se0 03000000 0 > run.out
+            checkSuccess $?
+
+            echo "Source: Flush the sealed AES key 80000001"
+            ${PREFIX}flushcontext -ha 80000001 > run.out
+            checkSuccess $?
+
+            echo "Source: Flush the EK public key 80000002"
+            ${PREFIX}flushcontext -ha 80000002 > run.out
+            checkSuccess $?
+
+            # Transmit the sealed AEK key wrapped with the target EK back to the target
+            # tmpsdbdup.bin private part wrapped in EK public key, via symmetric seed
+            # tmpsdbpub.bin public part
+            # tmpss.bin symmetric seed, encrypted with EK public key
+
+            # Target
+
+            # NOTE This assumes that the endorsement hierarchy password is Empty.
+            # This may be a bad assumption if an attacker can get access and
+            # change it.
+
+            echo "Target: Recreate the -${ALG} EK at 80000001"
+            ${PREFIX}createek -alg ${ALG} -cp -noflush > run.out
+            checkSuccess $?
+
+            echo "Target: Start a policy session, EK use needs a policy"
+            ${PREFIX}startauthsession -se p > run.out
+            checkSuccess $?
+
+            echo "Target: Policy Secret with PWAP session and (Empty) endorsement auth"
+            ${PREFIX}policysecret -ha 4000000b -hs 03000000 -pwde "" > run.out
+            checkSuccess $?
+
+            echo "Target: Read policy digest for debug"
+            ${PREFIX}policygetdigest -ha 03000000 > run.out
+            checkSuccess $?
+
+            echo "Target: Import the sealed AES key under the EK storage key"
+            ${PREFIX}import -hp 80000001 -ipu tmpsdbpub.bin -id tmpsdbdup.bin -iss tmpss.bin -opr tmpsdbpriv.bin -se0 03000000 1 > run.out
+            checkSuccess $?
+
+            echo "Target: Restart the policy session"
+            ${PREFIX}policyrestart -ha 03000000 > run.out
+            checkSuccess $?
+
+            echo "Target: Policy Secret with PWAP session and (Empty) endorsement auth"
+            ${PREFIX}policysecret -ha 4000000b -hs 03000000 -pwde "" > run.out
+            checkSuccess $?
+
+            echo "Target: Read policy digest for debug"
+            ${PREFIX}policygetdigest -ha 03000000 > run.out
+            checkSuccess $?
+
+            echo "Target: Load the sealed AES key under the EK storage key"
+            ${PREFIX}load -hp 80000001 -ipu tmpsdbpub.bin -ipr tmpsdbpriv.bin -se0 03000000 1 > run.out
+            checkSuccess $?
+
+            echo "Target: Unseal the AES key"
+            ${PREFIX}unseal -ha 80000002 -of tmpaeskeytgt.bin > run.out
+            checkSuccess $?
+
+            # A real target would not have access to tmpaeskeysrc.bin for the compare
+
+            echo "Target: Verify the unsealed result, same at source, for debug"
+            diff tmpaeskeytgt.bin tmpaeskeysrc.bin > run.out
+            checkSuccess $?
+
+            echo "Flush the EK"
+            ${PREFIX}flushcontext -ha 80000001 > run.out
+            checkSuccess $?
+
+            echo "Flush the sealed AES key"
+            ${PREFIX}flushcontext -ha 80000002 > run.out
+            checkSuccess $?
+
+            echo "Flush the policy session"
+            ${PREFIX}flushcontext -ha 03000000 > run.out
+            checkSuccess $?
+
+            if [ "${ALG}" = "rsa" ]
+            then
+                echo "Undefine the RSA EK certificate index"
+                ${PREFIX}nvundefinespace -hi p -ha 01c00002
+                checkSuccess $?
+            fi
+            if [ "${ALG}" = "ecc" ]
+            then
+                echo "Undefine the ECC EK certificate index"
+                ${PREFIX}nvundefinespace -hi p -ha 01c0000a
+                checkSuccess $?
+            fi
+            if [ "${ALG}" = "nttru" ]
+            then
+                echo "Undefine the NTTRU EK certificate index"
+                ${PREFIX}nvundefinespace -hi p -ha 01c00010
+                checkSuccess $?
+            fi
+        done
+    fi
 done
-
-echo "Undefine the RSA EK certificate index"
-${PREFIX}nvundefinespace -hi p -ha 01c00002
-checkSuccess $?
-
-echo "Undefine the ECC EK certificate index"
-${PREFIX}nvundefinespace -hi p -ha 01c0000a
-checkSuccess $?
 
 rm -f tmpo1name.bin
 rm -f tmpsignpriv.bin

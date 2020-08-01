@@ -443,6 +443,22 @@ int main(int argc, char *argv[])
 					  pemKeyFilename);
 		break;
 #endif	/* TPM_TSS_NOECC */
+#ifndef TPM_TSS_NOKYBER
+        case TPM_ALG_KYBER:
+          rc = convertKyberPemToPublic(&in.inPublic,
+                                       keyType,
+                                       nalg,
+                                       pemKeyFilename);
+          break;
+#endif	/* TPM_TSS_NOKYBER */
+#ifndef TPM_TSS_NONTTRU
+        case TPM_ALG_NTTRU:
+          rc = convertNTTRUPemToPublic(&in.inPublic,
+                                       keyType,
+                                       nalg,
+                                       pemKeyFilename);
+          break;
+#endif	/* TPM_TSS_NONTTRU */
 	      default:
 		printf("-rsa algorithm %04x not supported\n", algPublic);
 		rc = TPM_RC_ASYMMETRIC;

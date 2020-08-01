@@ -230,7 +230,7 @@ int main(int argc, char *argv[])
     /* save the optional PEM public key */
     if ((rc == 0) && (pemFilename != NULL)) {
 	rc = convertPublicToPEM(&out.outPublic,
-				pemFilename);
+                            pemFilename);
     }
     if (rc == 0) {
 	if (verbose) printReadPublic(&out);

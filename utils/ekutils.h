@@ -48,17 +48,21 @@
 
 /* legacy TCG IWG NV indexes */
 
-#define EK_CERT_RSA_INDEX 	0x01c00002
-#define EK_NONCE_RSA_INDEX 	0x01c00003
-#define EK_TEMPLATE_RSA_INDEX 	0x01c00004
+#define EK_CERT_RSA_INDEX       0x01c00002
+#define EK_NONCE_RSA_INDEX      0x01c00003
+#define EK_TEMPLATE_RSA_INDEX   0x01c00004
 
-#define EK_CERT_EC_INDEX 	0x01c0000a
-#define EK_NONCE_EC_INDEX 	0x01c0000b
-#define EK_TEMPLATE_EC_INDEX 	0x01c0000c
+#define EK_CERT_EC_INDEX        0x01c0000a
+#define EK_NONCE_EC_INDEX       0x01c0000b
+#define EK_TEMPLATE_EC_INDEX    0x01c0000c
 
 #define EK_CERT_KYBER_INDEX 	0x01c0000d
 #define EK_NONCE_KYBER_INDEX 	0x01c0000e
 #define EK_TEMPLATE_KYBER_INDEX 0x01c0000f
+
+#define EK_CERT_NTTRU_INDEX 	0x01c00010
+#define EK_NONCE_NTTRU_INDEX 	0x01c00011
+#define EK_TEMPLATE_NTTRU_INDEX 0x01c00012
 
 #define MAX_ROOTS		100	/* 100 should be more than enough */
 
@@ -82,6 +86,7 @@ extern "C" {
     void getRsaTemplate(TPMT_PUBLIC *tpmtPublic);
     void getEccTemplate(TPMT_PUBLIC *tpmtPublic);
     void getKyberTemplate(TPMT_PUBLIC *tpmtPublic, TPM_KYBER_SECURITY kyber_k);
+    void getNTTRUTemplate(TPMT_PUBLIC *tpmtPublic);
     TPM_RC getIndexX509Certificate(TSS_CONTEXT *tssContext,
 				   X509 **certificate,
 				   TPMI_RH_NV_INDEX nvIndex);
@@ -195,6 +200,8 @@ extern "C" {
     TPM_RC addCertKeyKyber(X509 *x509Certificate,
 		       const TPM2B_KYBER_PUBLIC_KEY *tpm2bKyber,
 		       TPM_KYBER_SECURITY kyber_k);
+    TPM_RC addCertKeyNTTRU(X509 *x509Certificate,
+                           const TPM2B_NTTRU_PUBLIC_KEY *tpm2bNTTRU);
     TPM_RC addCertSignatureRoot(X509 *x509Certificate,
 				const char *caKeyFileName,
 				const char *caKeyPassword);

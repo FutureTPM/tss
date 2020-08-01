@@ -80,14 +80,15 @@ static void printUsage(void);
 
 /* possible utility commands */
 
-#define EKTemplateType		1
-#define EKNonceType		2
-#define EKCertType		3
-#define CreateprimaryType	4
+#define EKTemplateType	  1
+#define EKNonceType       2
+#define EKCertType        3
+#define CreateprimaryType 4
 
-#define AlgRSA			1
-#define AlgEC			2
-#define AlgKYBER		3
+#define AlgRSA	 1
+#define AlgEC	 2
+#define AlgKYBER 3
+#define AlgNTTRU 4
 
 int verbose = FALSE;
 
@@ -154,36 +155,54 @@ int main(int argc, char *argv[])
 	    }
 	}
 	else if (strcmp(argv[i],"-alg") == 0) {
-	    i++;
-	    if (i < argc) {
+      i++;
+      if (i < argc) {
 		if (strcmp(argv[i],"rsa") == 0) {
-		    algType = AlgRSA;
-		    ekCertIndex = EK_CERT_RSA_INDEX;
-		    ekNonceIndex = EK_NONCE_RSA_INDEX;
-		    ekTemplateIndex = EK_TEMPLATE_RSA_INDEX;
+          algType = AlgRSA;
+          ekCertIndex = EK_CERT_RSA_INDEX;
+          ekNonceIndex = EK_NONCE_RSA_INDEX;
+          ekTemplateIndex = EK_TEMPLATE_RSA_INDEX;
 		}
 		else if (strcmp(argv[i],"ecc") == 0) {
-		    algType = AlgEC;
-		    ekCertIndex = EK_CERT_EC_INDEX;
-		    ekNonceIndex = EK_NONCE_EC_INDEX;
-		    ekTemplateIndex = EK_TEMPLATE_EC_INDEX;
+          algType = AlgEC;
+          ekCertIndex = EK_CERT_EC_INDEX;
+          ekNonceIndex = EK_NONCE_EC_INDEX;
+          ekTemplateIndex = EK_TEMPLATE_EC_INDEX;
 		}
 		else if (strcmp(argv[i],"kyber") == 0) {
-		    algType = AlgKYBER;
-		    ekCertIndex = EK_CERT_KYBER_INDEX;
-		    ekNonceIndex = EK_NONCE_KYBER_INDEX;
-		    ekTemplateIndex = EK_TEMPLATE_KYBER_INDEX;
+          algType = AlgKYBER;
+          ekCertIndex = EK_CERT_KYBER_INDEX;
+          ekNonceIndex = EK_NONCE_KYBER_INDEX;
+          ekTemplateIndex = EK_TEMPLATE_KYBER_INDEX;
+          i++;
+          if (i < argc) {
+            if (strcmp(argv[i],"k=2") == 0) {
+              kyber_k = TPM_KYBER_SECURITY_2;
+            } else if (strcmp(argv[i],"k=3") == 0) {
+              kyber_k = TPM_KYBER_SECURITY_3;
+            } else if (strcmp(argv[i],"k=4") == 0) {
+              kyber_k = TPM_KYBER_SECURITY_4;
+            } else {
+              printf("Bad parameter %s for -kyber\n", argv[i]);
+              printUsage();
+            }
+          } else {
+            printf("-kyber option needs a value\n");
+            printUsage();
+          }
 		}
-		else {
-		    printf("Bad parameter %s for -alg\n", argv[i]);
-		    printUsage();
-		}
+        else if (strcmp(argv[i],"nttru") == 0) {
+          algType = AlgNTTRU;
+          ekCertIndex = EK_CERT_NTTRU_INDEX;
+          ekNonceIndex = EK_NONCE_NTTRU_INDEX;
+          ekTemplateIndex = EK_TEMPLATE_NTTRU_INDEX;
 	    }
 	    else {
-		printf("-alg option needs a value\n");
-		printUsage();
+          printf("-alg option needs a value\n");
+          printUsage();
 	    }
-	}
+      }
+    }
 	else if (strcmp(argv[i],"-noflush") == 0) {
 	    noFlush = 1;
 	}
@@ -193,11 +212,6 @@ int main(int argc, char *argv[])
 	else if (strcmp(argv[i],"-v") == 0) {
 	    verbose = TRUE;
 	    TSS_SetProperty(NULL, TPM_TRACE_LEVEL, "2");
-	}
-	else if (strcmp(argv[i],"-kyber_security") == 0) {
-	    i++;
-	    if (i < argc)
-		kyber_k = atoi(argv[i]);
 	}
 	else {
  	    printf("\n%s is not a valid option\n", argv[i]);
@@ -297,12 +311,11 @@ static void printUsage(void)
     printf("\t-ce\tprint EK certificate \n");
     printf("\t-cp\tCreatePrimary using the EK template and EK nonce.\n");
     printf("\t\tValidate the EK against the EK certificate\n");
-    printf("\t[-kyber_security <level>\tKyber security level (default 3)]\n");
     printf("\t[-noflush\tDo not flush the primary key after validation]\n");
     printf("\t[-root\tfilename - validate EK certificate against the root]\n");
     printf("\t\tfilename contains a list of PEM format CA root certificate\n"
 	   "\t\tfilenames, one per line.\n");
     printf("\t\tThe list may contain up to %u certificates.\n", MAX_ROOTS);
     printf("\t-alg (rsa or ecc) \n");
-    exit(1);	
+    exit(1);
 }

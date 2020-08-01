@@ -212,26 +212,57 @@ extern "C" {
 		      const EC_KEY *ecKey);
     
  #endif	/* TPM_TSS_NOECC */
+
     TPM_RC convertDilithiumPublicToEvpPubKey(EVP_PKEY **evpPubkey,
 			const TPM2B_DILITHIUM_PUBLIC_KEY *tpm2bDilithium,
 			TPMI_DILITHIUM_MODE dilithium_mode);
-    TPM_RC convertKyberPublicToEvpPubKey(EVP_PKEY **evpPubkey,
-			const TPM2B_KYBER_PUBLIC_KEY *tpm2bKyber,
-			TPM_KYBER_SECURITY kyber_k);
-    TPM_RC convertKyberKeyToPublicKeyBin(int *modulusBytes,
-					 uint8_t **modulusBin,
-					 TPM_KYBER_SECURITY *kyber_k,
-					 const Kyber *kyberKey);
-    TPM_RC convertKyberPublicKeyBinToPublic(TPM2B_PUBLIC 	*objectPublic,
-					    int			keyType,
-					    TPMI_ALG_HASH 	nalg,
-					    TPM_KYBER_SECURITY	kyber_k,
-				            int 		modulusBytes,
-					    uint8_t 		*modulusBin);
-    TPM_RC convertKyberKeyToPublic(TPM2B_PUBLIC 	*objectPublic,
-				   int			keyType,
-				   TPMI_ALG_HASH 	nalg,
-				   Kyber 		*kyberKey);
+#ifndef TPM_TSS_NOKYBER
+    TPM_RC convertEvpPkeyToKyberkey(Kyber    **KyberKey,
+                                    EVP_PKEY *evpPkey);
+    TPM_RC convertKyberPemToPublic(TPM2B_PUBLIC  *objectPublic,
+                                   int            keyType,
+                                   TPMI_ALG_HASH  nalg,
+                                   const char    *pemKeyFilename);
+    TPM_RC convertKyberPublicToEvpPubKey(EVP_PKEY                     **evpPubkey,
+                                         const TPM2B_KYBER_PUBLIC_KEY  *tpm2bKyber,
+                                         TPM_KYBER_SECURITY             kyber_k);
+    TPM_RC convertKyberKeyToPublicKeyBin(int                 *modulusBytes,
+                                         uint8_t            **modulusBin,
+                                         TPM_KYBER_SECURITY  *kyber_k,
+                                         const Kyber         *kyberKey);
+    TPM_RC convertKyberPublicKeyBinToPublic(TPM2B_PUBLIC       *objectPublic,
+                                            int                 keyType,
+                                            TPMI_ALG_HASH       nalg,
+                                            TPM_KYBER_SECURITY  kyber_k,
+                                            int                 modulusBytes,
+                                            uint8_t            *modulusBin);
+    TPM_RC convertKyberKeyToPublic(TPM2B_PUBLIC  *objectPublic,
+                                   int            keyType,
+                                   TPMI_ALG_HASH  nalg,
+                                   Kyber         *kyberKey);
+#endif	/* TPM_TSS_NOKYBER */
+#ifndef TPM_TSS_NONTTRU
+    TPM_RC convertEvpPkeyToNTTRUkey(NTTRU    **NTTRUKey,
+                                    EVP_PKEY *evpPkey);
+    TPM_RC convertNTTRUPemToPublic(TPM2B_PUBLIC  *objectPublic,
+                                   int            keyType,
+                                   TPMI_ALG_HASH  nalg,
+                                   const char    *pemKeyFilename);
+    TPM_RC convertNTTRUPublicToEvpPubKey(EVP_PKEY                     **evpPubkey,
+                                         const TPM2B_NTTRU_PUBLIC_KEY  *tpm2bNTTRU);
+    TPM_RC convertNTTRUKeyToPublicKeyBin(int          *modulusBytes,
+                                         uint8_t     **modulusBin,
+                                         const NTTRU  *nttruKey);
+    TPM_RC convertNTTRUPublicKeyBinToPublic(TPM2B_PUBLIC  *objectPublic,
+                                            int            keyType,
+                                            TPMI_ALG_HASH  nalg,
+                                            int            modulusBytes,
+                                            uint8_t       *modulusBin);
+    TPM_RC convertNTTRUKeyToPublic(TPM2B_PUBLIC  *objectPublic,
+                                   int            keyType,
+                                   TPMI_ALG_HASH  nalg,
+                                   NTTRU         *nttruKey);
+#endif	/* TPM_TSS_NONTTRU */
 #ifdef __cplusplus
 }
 #endif
